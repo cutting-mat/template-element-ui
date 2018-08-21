@@ -1,21 +1,9 @@
-# blank
 
-## Project setup
-```
-npm install
-```
+# vuecli3-element-template
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+> 基于Vue-Cli-3/element-ui/axios/vue-router的PC端项目模板
 
-### Compiles and minifies for production
-```
-npm run build
-```
 
-### Lints and fixes files
-```
-npm run lint
-```
+- 路由按需加载
+- axios统一异常拦截
+- 基于token的登录校验
