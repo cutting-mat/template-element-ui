@@ -118,7 +118,7 @@ let bus = new Vue();
 //监听事件
 export const on = function (eventName, eventHandle) {
   if (eventName && (typeof eventHandle === 'function'))
-    return bus.$once(eventName, eventHandle)
+    return bus.$on(eventName, eventHandle)
 };
 //触发事件
 export const emit = function (eventName, msg) {
