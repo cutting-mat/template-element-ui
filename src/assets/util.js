@@ -106,10 +106,18 @@ export const catchError = function (error) {
         });
     }
   } else if (error.message) {
+  	let message = error.message;
+    if(message.indexOf('timeout')>-1){
+      message = '请求超时，请重试'
+    }
+    if(message.indexOf('Network')>-1){
+      message = '网络异常'
+    }
     Vue.prototype.$message({
-      message: error.message,
+      message,
       type: 'error'
     });
+    
   }
   return Promise.reject(error);
 }
