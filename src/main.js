@@ -10,7 +10,7 @@ Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
   if(to.name){
-    document.title = to.name;
+    document.title = to.meta.name || to.name;
   }
   next()
 })
