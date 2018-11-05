@@ -13,33 +13,32 @@ import routers from './router/routers';
 export default {
   name: 'app',
   methods: {
-    signin: function(localUser) {
+    signin: function(token) {
       //检查登录状态
-      if (!localUser) {
-        return console.warn("未登录！");
+      if (!token) {
+        return null;
       }
+      //全局挂载
+      this.$root.token = localUser;
       //设置请求头统一携带token
-      instance.defaults.headers.common["Authorization"] = localUser;
+      instance.defaults.headers.common["Authorization"] = token;
       //注入路由
       this.$router.addRoutes(routers.concat([{
         path: '*',
         redirect: '/404'
       }]));
     },
-    getUserToken: function(token){
-      let vm = this;
-      if(token){
-        vm.$root.token = token;
-        vm.signin(token);
+    getUserToken: function(){
+      let localUser = util.session('token');
+      if(localUser){
+        this.signin(localUser);
       }else{
-        console.warn('缺少参数');
+        this.$router.push('/401')
       }
     }
   },
   created: function() {
-    if(!this.$root.token){
-      this.getUserToken('b9cdf44483f0c7e0abd51d90109d5dd1');
-    }
+    this.getUserToken();
   }
 }
 </script>
