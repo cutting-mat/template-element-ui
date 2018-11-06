@@ -55,23 +55,7 @@ html,body{
     -ms-flex-pack: center;
     justify-content: center;
   }
-  /* 路由动画 */
-  .child-view {
-    position: absolute;
-    transition: all .5s cubic-bezier(.55,0,.1,1);
-    width:100%;
-    background:#fff;
-  }
-  .slide-left-enter, .slide-right-leave-active {
-    opacity: 0;
-    -webkit-transform: translate(30px, 0);
-    transform: translate(30px, 0);
-  }
-  .slide-left-leave-active, .slide-right-enter {
-    opacity: 0;
-    -webkit-transform: translate(-30px, 0);
-    transform: translate(-30px, 0);
-  }
+
 /* 单行文字省略号 */
 .el {
   overflow: hidden;
