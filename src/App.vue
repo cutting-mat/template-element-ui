@@ -13,15 +13,15 @@ import routers from './router/routers';
 export default {
   name: 'app',
   methods: {
-    signin: function(token) {
+    signin: function(localUser) {
       //检查登录状态
-      if (!token) {
+      if (!localUser) {
         return null;
       }
       //全局挂载
-      this.$root.token = localUser;
+      this.$root.user = localUser;
       //设置请求头统一携带token
-      instance.defaults.headers.common["Authorization"] = token;
+      instance.defaults.headers.common["Authorization"] = localUser.token;
       //注入路由
       this.$router.addRoutes(routers.concat([{
         path: '*',
@@ -29,7 +29,7 @@ export default {
       }]));
     },
     getUserToken: function(){
-      let localUser = util.session('token');
+      let localUser = util.session('user');
       if(localUser){
         this.signin(localUser);
       }else{

@@ -18,7 +18,7 @@ router.beforeEach((to, from, next) => {
 new Vue({
   data(){
     return {
-      token: null
+      user: {}
     }
   },
   router,
