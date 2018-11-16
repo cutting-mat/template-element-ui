@@ -249,3 +249,27 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+/* scrollbar */
+.scrollbar{overflow-x: hidden;overflow-y: auto;overscroll-behavior: contain;}
+.scrollbar::-webkit-scrollbar {
+  position: absolute;
+  width: 10px;
+  margin-left: -10px;
+  -webkit-appearance: none;
+}
+.scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar::-webkit-scrollbar-thumb {
+  border-width: 1px 2px;
+  border-style: solid;
+  border-color: transparent;
+  background: transparent;
+  background-clip: content-box;
+}
+.scrollbar:hover::-webkit-scrollbar-track{
+  background: rgba(0,0,0,.1);
+}
+.scrollbar:hover::-webkit-scrollbar-thumb {
+  background: #ccc;
+}
