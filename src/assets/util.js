@@ -44,34 +44,31 @@ export const deepcopy = function (source) {
 };
 
 //日期格式化
-export const dateFormat = function (source, ignore_minute) {
-  var myDate;
-  var separate = '-';
-  var minute = '';
-  if (source === void(0)) {
-    source = new Date();
+export const dateFormat = function(source, ignore_minute) {
+  const separate = '-';
+  if (!source) {
+      source = new Date();
   }
-  if (source) {
-    if (source.split) {
-      source = source.replace(/\-/g, '/');
-    } else if (isNaN(parseInt(source))) {
-      source = source.toString().replace(/\-/g, '/');
-    } else {
-      source = new Date(source*1000);
-    }
 
-    if (new Date(source) && (new Date(source)).getDate) {
-      myDate = new Date(source);
+  if (!isNaN(parseInt(source))) {
+      //时间戳（秒）
+      source = source * 1000
+  } else if (source.split) {
+      //字符串过滤'-'
+      source = source.replace(/\-/g, '/');
+  }
+
+  if (new Date(source) && (new Date(source)).getDate) {
+      let myDate = new Date(source);
+      let minute = '';
       if (!ignore_minute) {
-        minute = (myDate.getHours() < 10 ? " 0" : " ") + myDate.getHours() + ":" + (myDate.getMinutes() < 10 ? "0" : "") + myDate.getMinutes();
+          minute = (myDate.getHours() < 10 ? " 0" : " ") + myDate.getHours() + ":" + (myDate.getMinutes() < 10 ? "0" : "") + myDate.getMinutes();
       }
       return myDate.getFullYear() + separate + (myDate.getMonth() + 1) + separate + (myDate.getDate() < 10 ? '0' : '') + myDate.getDate() + minute;
-    } else {
-      return source.slice(0, 16);
-    }
   } else {
-    return source
+      return source.slice(0, 16);
   }
+
 };
 //ajax错误处理
 export const catchError = function (error) {
