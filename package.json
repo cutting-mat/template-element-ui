@@ -9,15 +9,15 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.4.6",
-    "vue": "^2.5.16",
+    "element-ui": "^2.4.10",
+    "vue": "^2.5.17",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.0-rc.10",
-    "@vue/cli-plugin-eslint": "^3.0.0-rc.10",
-    "@vue/cli-service": "^3.0.0-rc.10",
-    "vue-template-compiler": "^2.5.16"
+    "@vue/cli-plugin-babel": "^3.1.1",
+    "@vue/cli-plugin-eslint": "^3.1.5",
+    "@vue/cli-service": "^3.1.4",
+    "vue-template-compiler": "^2.5.17"
   },
   "eslintConfig": {
     "root": true,
@@ -41,6 +41,6 @@
   "browserslist": [
     "> 1%",
     "last 2 versions",
-    "not ie <= 8"
+    "ie 10"
   ]
 }
