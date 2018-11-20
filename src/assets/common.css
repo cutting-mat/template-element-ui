@@ -115,10 +115,6 @@ input[type='search']::-webkit-search-decoration {
     -webkit-appearance: none;
 }
 
-input[type='file'] {
-    display: block;
-}
-
 input[type='range'] {
     display: block;
     width: 100%;
