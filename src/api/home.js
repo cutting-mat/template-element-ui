@@ -1,4 +1,4 @@
-import instance from './index';
+import {instance} from './index';
 
 //获取
 export const request = params => {

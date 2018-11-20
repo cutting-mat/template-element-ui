@@ -3,7 +3,7 @@ import * as util from '../assets/util.js';
 
 export const baseURL = '/';
 
-const instance = axios.create({
+export const instance = axios.create({
   baseURL: baseURL,
   timeout: 10000,
   headers: {
@@ -27,5 +27,3 @@ instance.interceptors.response.use(function(response) {
   }
   return response;
 }, util.catchError);
-
-export default instance;

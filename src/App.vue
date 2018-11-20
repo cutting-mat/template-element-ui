@@ -6,7 +6,7 @@
 
 <script>
 import * as util from "./assets/util.js";
-import instance from "./api";
+import {instance} from "./api";
 import routers from './router/routers';
 
 
