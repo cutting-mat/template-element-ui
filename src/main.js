@@ -1,3 +1,6 @@
+// 根据package.json [browserslist]配置加载polyfill，需同时替换babel.config.js中注释的presets配置
+// import '@babel/polyfill'
+
 import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
@@ -24,8 +27,3 @@ new Vue({
   router,
   render: h => h(App)
 }).$mount('#app')
-
-// 异常处理
-Vue.config.errorHandler = function (err, vm, info) {
-  console.warn(err, info)
-}

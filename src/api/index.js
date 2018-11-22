@@ -1,7 +1,7 @@
 import axios from 'axios';
 import * as util from '../assets/util.js';
 
-export const baseURL = '/';
+export const baseURL = 'http://rap2api.taobao.org/app/mock/3567';
 
 export const instance = axios.create({
   baseURL: baseURL,
