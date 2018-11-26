@@ -21,9 +21,7 @@ instance.interceptors.request.use(function (config) {
 //错误处理
 instance.interceptors.response.use(function(response) {
   if(response.data.status!=200){
-    return util.catchError({
-      message: response.data.statusCode || `${response.config.url}请求失败`
-    });
+    return util.catchError(response);
   }
   return response;
 }, util.catchError);
