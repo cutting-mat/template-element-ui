@@ -1,10 +1,16 @@
 import axios from 'axios';
 import * as util from '../assets/util.js';
 
-export const baseURL = 'http://rap2api.taobao.org/app/mock/3567';
+const URLHASH = {
+  mock: 'http://rap2api.taobao.org/app/mock/3567',
+  dev: 'http://view.sooc.com',
+  test: ''
+};
+
+export const baseURL = URLHASH.mock;
 
 export const instance = axios.create({
-  baseURL: baseURL,
+  baseURL,
   timeout: 10000,
   headers: {
     'Content-Type':'application/json'
