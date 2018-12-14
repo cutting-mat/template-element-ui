@@ -42,32 +42,41 @@ export const deepcopy = function (source) {
 };
 
 //日期格式化
-export const dateFormat = function(source, ignore_minute) {
-  const separate = '-';
-  if (!source) {
-      source = new Date();
+export const formatDate = (value,fmt) => {
+  if(!value){
+      return "--"
   }
-
-  if (!isNaN(parseInt(source))) {
+  if(fmt == undefined){
+      fmt = "yyyy/MM/dd hh:mm"
+  }
+  if(fmt===true){
+      fmt = "yyyy/MM/dd"
+  }
+  if (!isNaN(parseInt(value))) {
       //时间戳（秒）
-      source = source * 1000
-  } else if (source.split) {
-      //字符串过滤'-'
-      source = source.replace(/\-/g, '/');
+      value = value * 1000
   }
-
-  if (new Date(source) && (new Date(source)).getDate) {
-      let myDate = new Date(source);
-      let minute = '';
-      if (!ignore_minute) {
-          minute = (myDate.getHours() < 10 ? " 0" : " ") + myDate.getHours() + ":" + (myDate.getMinutes() < 10 ? "0" : "") + myDate.getMinutes();
+  
+  let getDate = new Date(value);
+  let o = {
+      'M+': getDate.getMonth() + 1,
+      'd+': getDate.getDate(),
+      'h+': getDate.getHours(),
+      'm+': getDate.getMinutes(),
+      's+': getDate.getSeconds(),
+      'q+': Math.floor((getDate.getMonth() + 3) / 3),
+      'S': getDate.getMilliseconds()
+  }
+  if (/(y+)/.test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
+  }
+  for (let k in o) {
+      if (new RegExp('(' + k + ')').test(fmt)) {
+      fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
       }
-      return myDate.getFullYear() + separate + (myDate.getMonth() + 1) + separate + (myDate.getDate() < 10 ? '0' : '') + myDate.getDate() + minute;
-  } else {
-      return source.slice(0, 16);
   }
-
-};
+  return fmt
+}
 //ajax错误处理
 export const catchError = function (error) {
   //业务代码拦截

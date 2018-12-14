@@ -9,6 +9,10 @@ import router from './router'
 
 Vue.use(ElementUI);
 
+//全局资源
+import globalResource from '@/plugins/global-resource'
+Vue.use(globalResource);
+
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
