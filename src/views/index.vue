@@ -1,6 +1,6 @@
 <template>
   <div>
-    <HelloWorld />
+    <HelloWorld msg="HelloWorld" />
     <div>
       <el-button @click="logout">退出登录</el-button>
     </div>
