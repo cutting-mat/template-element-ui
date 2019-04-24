@@ -9,16 +9,16 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
-    "element-ui": "^2.6.1",
-    "vue": "^2.6.9",
-    "vue-router": "^3.0.2",
+    "element-ui": "^2.7.2",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.6",
     "crypto-js": "^3.1.9-1"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.5.1",
-    "@vue/cli-plugin-eslint": "^3.5.1",
-    "@vue/cli-service": "^3.5.1",
-    "vue-template-compiler": "^2.6.9"
+    "@vue/cli-plugin-babel": "^3.6.0",
+    "@vue/cli-plugin-eslint": "^3.6.0",
+    "@vue/cli-service": "^3.6.0",
+    "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
     "root": true,
