@@ -4,16 +4,16 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
-import App from './App.vue'
-import router from './router'
-
 Vue.use(ElementUI);
 
 //全局资源
-import globalResource from '@/plugins/global-resource'
-Vue.use(globalResource);
+import plugins from '@/main/plugins'
+Vue.use(plugins);
 
-Vue.config.productionTip = false
+//Vue.config.productionTip = false
+
+import App from './App.vue'
+import router from './router'
 
 router.beforeEach((to, from, next) => {
   if(to.name){

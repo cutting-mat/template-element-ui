@@ -1,4 +1,4 @@
-import index from '@/views/index'
+import index from './views/index'
 
 export default [
   {
@@ -8,6 +8,6 @@ export default [
   }, {
     path: '/blank',
     name: '空白',
-    component: (resolve) => require(['../views/blank.vue'], resolve)
+    component: (resolve) => require(['./views/blank.vue'], resolve)
   }
 ]

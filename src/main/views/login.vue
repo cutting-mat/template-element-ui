@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import * as util from "@/assets/util.js";
-import * as account from "@/api/account";
+import * as util from "@/main/assets/util.js";
+import * as account from "@/base/api/account";
 
 export default {
   data() {

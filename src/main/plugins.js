@@ -1,8 +1,8 @@
 // import components
-import HelloWorld from "@/components/HelloWorld"
+import HelloWorld from "./components/HelloWorld"
 
 // import filters
-import {formatDate} from '@/assets/util'
+import {formatDate} from './assets/util'
 
 // filters
 const globalFilters = {

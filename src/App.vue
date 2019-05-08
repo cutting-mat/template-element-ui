@@ -3,9 +3,8 @@
 </template>
 
 <script>
-import * as util from "@/assets/util";
-import {instance} from "@/api";
-import clientRoutes from '@/router/routers';
+import * as util from "@/main/assets/util";
+import {instance} from "@/main/api";
 
 
 export default {
@@ -20,11 +19,7 @@ export default {
       this.$root.user = localUser;
       //设置请求头统一携带token
       instance.defaults.headers.common["Authorization"] = localUser.token;
-      //动态注入路由
-      this.$router.addRoutes(clientRoutes.concat([{
-        path: '*',
-        redirect: '/404'
-      }]));
+      
       //执行回调
       typeof callback === 'function' && callback();
     },
@@ -49,5 +44,5 @@ export default {
 </script>
 
 <style>
-@import url(assets/common.css);
+@import url(main/assets/common.css);
 </style>
