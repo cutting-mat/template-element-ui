@@ -7,7 +7,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 //全局资源
-import plugins from '@/main/plugins'
+import plugins from '@/base/plugins'
 Vue.use(plugins);
 
 //Vue.config.productionTip = false

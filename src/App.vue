@@ -3,8 +3,8 @@
 </template>
 
 <script>
-import * as util from "@/main/assets/util";
-import {instance} from "@/main/api";
+import * as util from "@/base/assets/util";
+import {instance} from "@/base/api";
 
 
 export default {
@@ -44,5 +44,5 @@ export default {
 </script>
 
 <style>
-@import url(main/assets/common.css);
+@import url(base/assets/common.css);
 </style>

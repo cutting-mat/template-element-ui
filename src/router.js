@@ -3,13 +3,13 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import main from '@/main/index'
-import base from '@/base/index'
+import base from '@/base'
+import layout from '@/layout'
 
 export default new Router({
   routes: [
-    ...main,
     ...base,
+    ...layout,
     {
       path: '*',
       redirect: '/404'

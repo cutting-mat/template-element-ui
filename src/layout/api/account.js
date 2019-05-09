@@ -1,4 +1,4 @@
-import {instance} from '@/main/api';
+import {instance} from '@/base/api';
 import CryptoJS from "crypto-js";
 //登录
 export const login = params => {

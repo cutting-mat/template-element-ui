@@ -1,8 +1,8 @@
 
-# vuecli3-element-template
+# vue-scaffold
 
-> 基于Vue-Cli-3/element-ui/axios/vue-router的PC端项目模板
+> Vue项目脚手架
 
-- 功能模块文件夹分隔
+- 开发文件按模块分隔
 - axios统一异常拦截
 - 基于token的登录校验

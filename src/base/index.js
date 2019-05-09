@@ -1,13 +1,13 @@
-import index from './views/index'
-
-export default [
-  {
-    path: '/',
-    name: '首页',
-    component: index
-  }, {
-    path: '/blank',
-    name: '空白',
-    component: (resolve) => require(['./views/blank.vue'], resolve)
-  }
-]
+export default [{
+    path: '/login',
+    name: '登录',
+    component: (resolve) => require(['./views/login.vue'], resolve)
+}, {
+    path: '/401',
+    name: '无权访问',
+    component: (resolve) => require(['./views/401.vue'], resolve)
+}, {
+    path: '/404',
+    name: '找不到页面',
+    component: (resolve) => require(['./views/404.vue'], resolve)
+}]
