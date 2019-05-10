@@ -25,7 +25,7 @@
 
 <script>
 import * as util from "@/base/assets/util.js";
-import * as account from "@/layout/api/account";
+import * as account from "../api/account";
 
 export default {
   data() {
