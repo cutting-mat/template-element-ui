@@ -5,16 +5,14 @@ import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
+import App from './App.vue'
 
 //全局资源
 import plugins from '@/base/plugins'
 Vue.use(plugins);
 
-//Vue.config.productionTip = false
-
-import App from './App.vue'
+//路由
 import router from './router'
-
 router.beforeEach((to, from, next) => {
   if(to.name){
     document.title = to.meta.name || to.name;
@@ -25,7 +23,9 @@ router.beforeEach((to, from, next) => {
 new Vue({
   data(){
     return {
-      user: {}
+      globalData: {
+        user: {}
+      }
     }
   },
   router,

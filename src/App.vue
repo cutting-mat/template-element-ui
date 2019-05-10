@@ -16,7 +16,7 @@ export default {
         return this.$router.replace({path: '/login', query: { from: this.$router.currentRoute.path }})
       }
       //全局挂载
-      this.$root.user = localUser;
+      this.$root.globalData.user = localUser;
       //设置请求头统一携带token
       instance.defaults.headers.common["Authorization"] = localUser.token;
       
