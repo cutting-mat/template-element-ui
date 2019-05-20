@@ -12,4 +12,10 @@ export default [{
     path: '/blank',
     name: '空白',
     component: (resolve) => require(['./views/blank.vue'], resolve)
-}]
+},{
+    path: '/logined',
+    name: '登录之后才能访问',
+    meta: { requiresAuth: true },
+    component: (resolve) => require(['./views/blank.vue'], resolve)
+}
+]

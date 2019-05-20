@@ -17,6 +17,16 @@ router.beforeEach((to, from, next) => {
   if(to.name){
     document.title = to.meta.name || to.name;
   }
+  //如果需要登录的操作
+  if (to.meta.requiresAuth === true) {
+    let user =  util.storage('user')
+    //如果用户没有登录跳转到登录页面
+    if( !user){
+      setTimeout(() => {
+        next({ path: '/login', query: { from: to.path } })
+      },0)
+    }
+  }
   next()
 })
 
