@@ -24,9 +24,8 @@
 </template>
 
 <script>
-import * as util from "@/base/assets/util.js";
+import * as util from "../assets/util.js";
 import * as account from "../api/account";
-
 export default {
   data() {
     return {
@@ -68,11 +67,9 @@ export default {
 </script>
 
 <style scoped>
-
 .login-form {
   width: 419px;
 }
-
 .login-form .submit-item{
   margin-top: 30px;
   padding-left:0;

@@ -5,27 +5,34 @@ import Vue from 'vue'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
-import App from './App.vue'
 
 //全局资源
-import plugins from '@/base/plugins'
+import plugins from '@/common/plugins'
 Vue.use(plugins);
 
 //路由
 import router from './router'
-router.beforeEach((to, from, next) => {
-  if(to.name){
-    document.title = to.meta.name || to.name;
+
+
+/*
+* v-has
+*/
+
+Vue.directive('has', {
+  inserted: function(el, binding) {
+    if (!Vue.prototype.$_has(binding.value)) {
+      el.parentNode.removeChild(el);
+    }
   }
-  next()
-})
+});
+
+import App from './App.vue'
 
 new Vue({
   data(){
     return {
-      globalData: {
-        user: {}
-      }
+      useVSC: false,
+      globalData: {}
     }
   },
   router,

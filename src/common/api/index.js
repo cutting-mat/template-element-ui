@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as util from './assets/util.js';
+import * as util from '../assets/util';
 
 const URLHASH = {
   mock: 'http://rap2api.taobao.org/app/mock/3567',

@@ -1,18 +1,25 @@
 <template>
-  <div>
-    <HelloWorld msg="HelloWorld" />
-    <div>
-      <el-button @click="logout">退出登录</el-button>
-    </div>
+  <div class="mainCont flex-col">
+    <my-header @logout="$emit('logout')" />
+    <template v-if="$route.path=='/'">
+      <dashboard class="flex-1" />
+    </template>
+    <template v-else>
+      <router-view  class="flex-1" id="main" />
+    </template>
   </div>
 </template>
 
 <script>
-//import * as util from "@/base/assets/util";
+//import * as util from "@/common/assets/util";
 
 export default {
   data() {
     return {};
+  },
+  components: {
+    myHeader: () => import("../components/myHeader.vue"),
+    dashboard: () => import("../components/dashboard.vue")
   },
   methods: {
     logout: function() {

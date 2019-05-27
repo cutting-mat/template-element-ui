@@ -3,16 +3,17 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import base from '@/base'
-import layout from '@/layout'
+import common from '@/common'
 
-export default new Router({
-  routes: [
-    ...base,
-    ...layout,
-    {
-      path: '*',
-      redirect: '/404'
-    }
-  ]
+const route = new Router({
+  routes: common
+});
+
+route.beforeEach((to, from, next) => {
+  if(to.name){
+    document.title = to.meta.name || to.name;
+  }
+  next()
 })
+
+export default route
