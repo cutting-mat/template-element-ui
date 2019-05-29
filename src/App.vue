@@ -188,13 +188,9 @@ export default {
       * Get user`s permissions
       * You can also get permission information upon user login, it depends on the implementation of the backend interface
       */
-      if(this.$root.userVSC){
+      if(this.$root.useVSC){
         
-        instance.get(`/signin`, {
-          params: {
-            Authorization: localUser.token
-          }
-        }).then((res) => {
+        instance.get(`/signin`).then((res) => {
           let userPermissions = res.data;
           // Save information, if it is used elsewhere.
           vm.$root.globalData.userPermissions = userPermissions;
