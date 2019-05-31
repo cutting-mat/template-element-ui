@@ -16,7 +16,7 @@
           </el-input>
         </el-form-item>
         <el-form-item class="submit-item">
-          <el-button class="submit-button" @click="login" type="primary" :loading="loading">登录</el-button>
+          <el-button native-type="submit" class="submit-button" @click="login" type="primary" :loading="loading">登录</el-button>
         </el-form-item>
         
       </el-form>

@@ -175,7 +175,7 @@ export default {
       * Set Authorization
       */
 
-      instance.defaults.headers.common['Authorization'] = 'Bearer ' + localUser.token;
+      instance.defaults.headers.common['Authorization'] = localUser.token;
 
       /*
       * Step 2-1(This step is optional.)
