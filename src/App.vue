@@ -11,12 +11,6 @@ import * as util from '@/common/assets/util.js';
 let myInterceptor;
 
 export default {
-  data() {
-    return {
-      menuData: null,
-      userData: null
-    }
-  },
   methods: {
     setInterceptor: function(resourcePermission) {
       myInterceptor = instance.interceptors.request.use(config => {
