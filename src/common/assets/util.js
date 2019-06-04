@@ -93,8 +93,7 @@ export const formatDate = (value,fmt) => {
       fmt = "yyyy/MM/dd"
   }
   if (!isNaN(parseInt(value))) {
-      //时间戳（秒）
-      value = value * 1000
+      value = parseInt(value)
   }
   
   let getDate = new Date(value);
