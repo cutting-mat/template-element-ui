@@ -1,5 +1,5 @@
 // import components
-import HelloWorld from "./components/HelloWorld"
+import myHeader from "./components/myHeader"
 
 // import filters
 import {formatDate} from './assets/util'
@@ -11,7 +11,7 @@ const globalFilters = {
 
 // components
 const globalComponents = {
-    HelloWorld
+    myHeader
 }
 
 export default {

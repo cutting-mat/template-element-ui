@@ -18,7 +18,6 @@ export default {
     return {};
   },
   components: {
-    myHeader: () => import("../components/myHeader.vue"),
     dashboard: () => import("../components/dashboard.vue")
   },
   methods: {

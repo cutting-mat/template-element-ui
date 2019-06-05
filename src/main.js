@@ -7,8 +7,8 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 //全局资源
-import plugins from '@/common/plugins'
-Vue.use(plugins);
+import common from '@/common'
+Vue.use(common.register);
 
 //路由
 import router from './router'

@@ -6,7 +6,7 @@ Vue.use(Router)
 import common from '@/common'
 
 const route = new Router({
-  routes: common
+  routes: common.routes
 });
 
 route.beforeEach((to, from, next) => {

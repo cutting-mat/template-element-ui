@@ -311,5 +311,5 @@ export default {
 </script>
 
 <style>
-  @import url(common/assets/common.css);
+  @import url(common/assets/style.css);
 </style>
