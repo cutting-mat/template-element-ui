@@ -6,7 +6,7 @@ import {formatDate} from './assets/util'
 
 // filters
 const globalFilters = {
-    formatDate
+    date: formatDate
 }
 
 // components
