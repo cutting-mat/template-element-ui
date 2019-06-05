@@ -1,5 +1,5 @@
 
-# vue-scaffold
+# Vue-Scaffold
 
 > Vue项目脚手架
 
