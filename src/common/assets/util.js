@@ -86,11 +86,18 @@ export const formatDate = (value,fmt) => {
   if(!value){
       return "--"
   }
-  if(fmt == undefined){
+  switch(fmt){
+    case 'year':
+        fmt = "yyyy"
+    break;
+    case 'month':
+        fmt = "yyyy/MM"
+    break;
+    case 'day':
+        fmt = "yyyy/MM/dd"
+    break;
+    default: 
       fmt = "yyyy/MM/dd hh:mm"
-  }
-  if(fmt===true){
-      fmt = "yyyy/MM/dd"
   }
   if (!isNaN(parseInt(value))) {
       value = parseInt(value)
