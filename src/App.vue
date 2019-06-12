@@ -167,7 +167,7 @@ export default {
 
       let localUser = util.storage('user');
       if (!localUser || !localUser.token) {
-        return vm.$router.push({ path: '/login', query: { from: vm.$router.currentRoute.path } });
+        return vm.$router.push({ path: '/login', query: { from: vm.$router.currentRoute.fullPath } });
       }
 
       /*
