@@ -5,7 +5,7 @@
 <script>
 import Vue from 'vue';
 import {instance} from '@/common/api/index';
-import AllRoutesData from './packageMain';
+import AllRoutesData from './pkgMain';
 import * as util from '@/common/assets/util.js';
 
 let myInterceptor;

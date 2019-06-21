@@ -246,7 +246,7 @@ body {
     text-overflow: ellipsis;
 }
 /* scrollbar */
-.scrollbar{overflow-x: hidden;overflow-y: auto;overscroll-behavior: contain;}
+.scrollbar{overflow-x: hidden;overflow-y: auto;}
 .scrollbar::-webkit-scrollbar {
   position: absolute;
   width: 10px;

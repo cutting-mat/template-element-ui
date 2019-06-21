@@ -1,6 +1,6 @@
 import index from './views/index'
 
-import package1 from '../package1'
+import package1 from '../pkg1'
 
 export default [{
     path: '/',
