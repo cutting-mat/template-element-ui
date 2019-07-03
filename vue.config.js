@@ -3,5 +3,9 @@ module.exports = {
     productionSourceMap: false,
     css: {
         sourceMap: true
-    }
+    },
+    outputDir: 'docs',
+    publicPath: process.env.NODE_ENV === 'production'
+      ? '/Vue-Scaffold/'
+      : '/'
 }

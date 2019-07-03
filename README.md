@@ -1,7 +1,9 @@
 
 # Vue-Scaffold
 
-> Vue项目脚手架
+> 基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架
+
+(演示项目的mock数据来自RAP2，由于不支持https请求，如无法正常登录，请自行下载代码本地运行)
 
 ## 特性
 

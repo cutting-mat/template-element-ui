@@ -7,6 +7,8 @@
       class="login-form"
       @keyup.enter="login"
     >
+      <h1 class="main-title">Vue-Scaffold</h1>
+      <p class="des">基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架</p>
       <el-form-item prop="userNo">
         <el-input :autofocus="true" placeholder="输入用户名" v-model="queryParam.userNo"></el-input>
       </el-form-item>
@@ -55,13 +57,16 @@ export default {
       this.$refs.validForm.validate(valid => {
         if (valid) {
           this.loading = true;
-          user.login(this.queryParam).then(res => {
-            this.loading = false;
-            util.storage("user", res.data.data);
-            this.$emit("login", this.$router.currentRoute.query.from);
-          }).catch(err => {
-            this.loading = false
-          });
+          user
+            .login(this.queryParam)
+            .then(res => {
+              this.loading = false;
+              util.storage("user", res.data.data);
+              this.$emit("login", this.$router.currentRoute.query.from);
+            })
+            .catch(err => {
+              this.loading = false;
+            });
         } else {
           return false;
         }
@@ -72,11 +77,22 @@ export default {
 </script>
 
 <style scoped>
+.main-title {
+  text-align: center;
+}
+.des {
+  text-align: center;
+  color: #999;
+  margin-bottom: 2em;
+}
+
 .login-form {
   width: 419px;
 }
-.login-form .submit-item {
+.submit-item {
   margin-top: 30px;
-  padding-left: 0;
+}
+.submit-button{
+   width: 100%;
 }
 </style>

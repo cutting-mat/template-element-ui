@@ -21,10 +21,13 @@ export default {
   },
   computed: {
     mainMenus: function(){
-      return this.$root.globalData.menu.concat([{
-        name: '首页',
-        path: '/'
-      }])
+      if(this.$root.globalData.menu){
+        return this.$root.globalData.menu.concat([{
+          name: '首页',
+          path: '/'
+        }])
+      }
+      return []
     },
     subMenu: function() {
       const targetIndex = this.mainMenus.findIndex(e => {
