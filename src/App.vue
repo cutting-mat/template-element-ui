@@ -5,6 +5,7 @@
 <script>
 import Vue from 'vue';
 import {instance} from '@/common/api/index';
+import * as user from "@/common/api/user";
 import AllRoutesData from './pkgMain';
 import * as util from '@/common/assets/util.js';
 
@@ -15,28 +16,27 @@ export default {
     setInterceptor: function(resourcePermission) {
       myInterceptor = instance.interceptors.request.use(config => {
         // Get request path
-        
         let perName = config.url.replace(config.baseURL, '').split('?')[0];
-        //RESTful type 1 /path/**
-        let reg1 = perName.match(/^(\/[^\/]+\/)[^\/]+$/);
-        if (reg1) {
-          perName = reg1[1] + '**';
-        }
-        //RESTful type 2 /path/*/path
-        let reg2 = perName.match(/^\/[^\/]+\/([^\/]+)\/[^\/]+$/);
-        if (reg2) {
-          perName = perName.replace(reg2[1], '*');
-        }
+        if(config.url.charAt(config.url.length - 1)!=='/'){
+          //RESTful type 1 /path/**
+          let reg1 = perName.match(/^(\/[^\/]+\/)[^\/]+$/);
+          if (reg1) {
+            perName = reg1[1] + '*';
+          }
+          //RESTful type 2 /path/*/path
+          let reg2 = perName.match(/^\/[^\/]+\/([^\/]+)\/[^\/]+$/);
+          if (reg2) {
+            perName = perName.replace(reg2[1], '*');
+          }
 
+        }
+        
         // Check permissions
         
         if (!resourcePermission[config.method + ',' + perName]) {
-          this.$message({
-            message: '无访问权限，请联系企业管理员',
-            type: 'warning'
-          });
+          console.warn(config.method + ',' + perName)
           return Promise.reject({
-            message: 'no permission'
+            message: '无访问权限'
           });
         }
         return config;
@@ -183,9 +183,17 @@ export default {
       * You can also get permission information upon user login, it depends on the implementation of the backend interface
       */
       if(this.$root.useVSC){
-        
-        instance.get(`/signin`).then((res) => {
-          let userPermissions = res.data;
+        user.permission.r().then((res) => {
+          let userPermissions = res.data.data;
+          //格式处理
+          userPermissions.menus = userPermissions.menus.map(e => {
+            return {
+              name: e.name,
+              route: e.url,
+              id: e.id,
+              pid: e.pid
+            }
+          })
           // Save information, if it is used elsewhere.
           vm.$root.globalData.userPermissions = userPermissions;
 
@@ -265,7 +273,7 @@ export default {
           redirect: '/404'
         }]));
 
-        this.$root.globalData.menu = [AllRoutesData[0], ...AllRoutesData[0].children].map(e => {
+        this.$root.globalData.menu = AllRoutesData[0].children.map(e => {
             if (!e.meta) {
               e.meta = {}
             }

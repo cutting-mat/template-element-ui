@@ -44,7 +44,7 @@ export const deepcopy = function (source) {
 export const buildMenu = function (array, ckey) {
   let menuData = [];
   let indexKeys = Array.isArray(array) ? array.map((e) => {return e.id}) : [];
-  ckey = ckey || 'parent_id';
+  ckey = ckey || 'pid';
   array.forEach(function (e) {
     //一级菜单
     if (!e[ckey] || (e[ckey]===e.id)) {
@@ -133,15 +133,16 @@ export const catchError = function (error) {
   if (error.response) {
     switch (error.response.status) {
       case 400:
+        console.log(error.response)
         Vue.prototype.$message({
-          message: error.response.message || '请求参数异常',
+          message: error.response.data.message || '请求参数异常',
           type: 'error'
         });
         break;
       case 401:
         sessionStorage.removeItem('user');
         Vue.prototype.$message({
-          message: error.response.message || '密码错误或账号不存在！',
+          message: error.response.data.message || '密码错误或账号不存在！',
           type: 'warning',
           onClose: function () {
             storage('user','');
@@ -151,13 +152,13 @@ export const catchError = function (error) {
         break;
       case 403:
         Vue.prototype.$message({
-          message: error.response.message || '无访问权限，请联系企业管理员',
+          message: error.response.data.message || '无访问权限，请联系企业管理员',
           type: 'warning'
         });
         break;
       default:
         Vue.prototype.$message({
-          message: error.response.message || '服务端异常，请联系技术支持',
+          message: error.response.data.message || '服务端异常，请联系技术支持',
           type: 'error'
         });
     }

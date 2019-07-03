@@ -31,7 +31,7 @@ import App from './App.vue'
 new Vue({
   data(){
     return {
-      useVSC: false,
+      useVSC: true,
       globalData: {}
     }
   },

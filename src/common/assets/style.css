@@ -1,3 +1,4 @@
+/* reset */
 html {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
@@ -245,7 +246,7 @@ body {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
-/* scrollbar */
+/* 滚动条 */
 .scrollbar{overflow-x: hidden;overflow-y: auto;}
 .scrollbar::-webkit-scrollbar {
   position: absolute;
@@ -269,3 +270,7 @@ body {
 .scrollbar:hover::-webkit-scrollbar-thumb {
   background: #ccc;
 }
+/* 常用 */
+.wrap{width:1200px;margin-left:auto;margin-right:auto;}
+.pagination{text-align: center;margin: 20px 0}
+.pageHeader{margin-bottom: 20px;}
