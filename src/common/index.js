@@ -1,6 +1,5 @@
-import register from '@/common/register'
 
-const routes = [{
+export default [{
     path: '/login',
     name: '登录',
     component: (resolve) => require(['./views/login.vue'], resolve)
@@ -13,8 +12,3 @@ const routes = [{
     name: '找不到页面',
     component: (resolve) => require(['./views/404.vue'], resolve)
 }];
-
-export default {
-    routes,
-    register
-}

@@ -3,10 +3,10 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import common from '@/common'
+import routes from '@/common'
 
 const route = new Router({
-  routes: common.routes
+  routes
 });
 
 route.beforeEach((to, from, next) => {

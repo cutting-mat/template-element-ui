@@ -2,8 +2,8 @@ import axios from 'axios';
 import * as util from '../assets/util';
 
 const URLHASH = {
-  mock: 'http://rap2api.taobao.org/app/mock/3567',
-  dev: 'http://view.sooc.com',
+  mock: 'http://rap2api.taobao.org/app/mock/223572',
+  dev: 'http://172.16.6.152:1112',
   test: '',
   online: ''
 };
@@ -27,7 +27,7 @@ instance.interceptors.request.use(function (config) {
 
 //错误处理
 instance.interceptors.response.use(function(response) {
-  if(response.data.status!=200){
+  if(response.status!=200){
     return util.catchError(response);
   }
   return response;

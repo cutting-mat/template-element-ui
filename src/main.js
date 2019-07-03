@@ -7,12 +7,11 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 //全局资源
-import common from '@/common'
-Vue.use(common.register);
+import register from '@/common/register'
+Vue.use(register);
 
 //路由
 import router from './router'
-
 
 /*
 * v-has
