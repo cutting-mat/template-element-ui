@@ -9,7 +9,7 @@
             :route="route"
             :index="route.name"
             :key="'nav'+index"
-          >{{route.meta.title || route.name}}</el-menu-item>
+          >{{(route.meta && route.meta.title) || route.name}}</el-menu-item>
         </template>
         <el-menu-item v-if="user && user.token" @click="logout">退出登录</el-menu-item>
       </el-menu>
