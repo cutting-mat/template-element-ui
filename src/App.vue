@@ -123,25 +123,19 @@ export default {
         return document.body.innerHTML = ('<h1>账号访问受限，请联系系统管理员！</h1>');
       }
       
-      actualRouter.map(e => {
+      actualRouter = actualRouter.map(e => {
 
         // Copy 'children' to 'meta' for rendering menu.(This step is optional.)
 
         if (e.children) {
-          if (!e.meta) e.meta = {};
+          if (!e.meta) {
+            e.meta = {}
+          }
+
           e.meta.children = e.children;
         }
-        
-        // Add Per-Route Guard
-        // To prevent manual access to ultra vires routing after switching accounts
-        
-        return e.beforeEnter = (to, from, next) => {
-          if(routePermission[to.path]){
-            next()
-          }else{
-            next('/401')
-          }
-        }
+
+        return e
       });
 
       // Add actual routing to application
@@ -298,15 +292,10 @@ export default {
       * Monitor logout events
       * Will trigger the events in views/index.vue
       */
-      this.$root.globalData = {}
-      //Clear local user information
+
       util.storage('user','');
-      //Clear request permission
-      instance.interceptors.request.eject(myInterceptor);
-      //Clear Authorization
-      instance.defaults.headers.common['Authorization'] = '';
-      //Back to login page
-      this.$router.replace({path: '/login'});
+      
+      window.location.href = '/'
     }
   },
   created: function() {
