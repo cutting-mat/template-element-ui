@@ -158,7 +158,7 @@ export default {
       this.$set(this.editForm, 'roleIds', checked ? this.rolesList.map(x => x.roleId) : [])
       this.isIndeterminate = false;
     },
-    handleCheckedChange(value) {
+    handleCheckedChange() {
       let checkedCount = this.editForm.roleIds.length;
       this.checkAll = checkedCount === this.rolesList.length;
       this.isIndeterminate = checkedCount > 0 && checkedCount < this.rolesList.length;
@@ -224,7 +224,6 @@ export default {
       });
     },
     remove(item) {
-      let vm = this;
       if (!item) {
         return null;
       }

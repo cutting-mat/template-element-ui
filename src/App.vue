@@ -9,12 +9,10 @@ import * as user from "@/common/api/user";
 import AllRoutesData from './pkgMain';
 import * as util from '@/common/assets/util.js';
 
-let myInterceptor;
-
 export default {
   methods: {
     setInterceptor: function(resourcePermission) {
-      myInterceptor = instance.interceptors.request.use(config => {
+      instance.interceptors.request.use(config => {
         // Get request path
         let perName = config.url.replace(config.baseURL, '').split('?')[0];
         if(config.url.charAt(config.url.length - 1)!=='/'){

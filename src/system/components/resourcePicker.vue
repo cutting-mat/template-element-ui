@@ -75,7 +75,7 @@ export default {
     }
   },
   methods: {
-    handleCheckChange(data, checked, indeterminate) {
+    handleCheckChange(data, checked) {
       this.$emit('checked', this.$refs.tree.getCheckedKeys())
     },
     fetchData: function(){

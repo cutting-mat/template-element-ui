@@ -178,7 +178,6 @@ export default {
       });
     },
     remove(item) {
-      let vm = this;
       if (!item) {
         return null;
       }
