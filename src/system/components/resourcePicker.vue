@@ -17,10 +17,10 @@
         <el-tag size="mini" type="info"><i class="el-icon-link"></i> {{data.url}}</el-tag>
       </div>
       <span class="extendGroup" v-if="!picker">
-        <el-button size="small" type="text" @click.stop="$emit('edit',data)">编辑</el-button>
-        <el-button v-if="data.type===1" size="small" type="text" @click.stop="$emit('append', data)">添加子菜单</el-button>
-        <el-button v-if="data.type===1" size="small" type="text" @click.stop="$emit('addResource', data)">添加资源</el-button>
-        <el-button size="small" type="text" @click.stop="$emit('remove', data)">删除</el-button>
+        <el-button v-has="resource.edit" size="small" type="text" @click.stop="$emit('edit',data)">编辑</el-button>
+        <el-button v-has="resource.add" v-if="data.type===1" size="small" type="text" @click.stop="$emit('append', data)">添加子菜单</el-button>
+        <el-button v-has="resource.add" v-if="data.type===1" size="small" type="text" @click.stop="$emit('addResource', data)">添加资源</el-button>
+        <el-button v-has="resource.remove" size="small" type="text" @click.stop="$emit('remove', data)">删除</el-button>
       </span>
     </div>
   </el-tree>
@@ -48,6 +48,7 @@ export default {
   },
   data() {
     return {
+      resource,
       list: [],
       defaultProps: {
         children: 'children',

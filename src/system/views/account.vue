@@ -26,10 +26,9 @@
         </el-table-column>
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <!--  v-has="[account.edit]" -->
-            <el-button size="mini" type="info" @click="edit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="warning" @click="resetPassword(scope.row)">重置密码</el-button>
-            <el-button size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
+            <el-button v-has="account.edit" size="mini" type="info" @click="edit(scope.row)">编辑</el-button>
+            <el-button v-has="account.resetPassword" size="mini" type="warning" @click="resetPassword(scope.row)">重置密码</el-button>
+            <el-button v-has="account.remove" size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>

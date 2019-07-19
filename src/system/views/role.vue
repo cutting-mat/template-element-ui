@@ -15,8 +15,8 @@
         
         <el-table-column label="操作" width="300" align="center">
           <template slot-scope="scope">
-            <el-button size="mini" type="info" @click="edit(scope.row)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
+            <el-button v-has="role.edit" size="mini" type="info" @click="edit(scope.row)">编辑</el-button>
+            <el-button v-has="role.remove" size="mini" type="danger" @click="remove(scope.row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
