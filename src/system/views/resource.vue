@@ -28,13 +28,13 @@
       @closed="resetForm">
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="名称" prop="name">
-          <el-input v-model="editForm.name" ></el-input>
+          <el-input v-model.trim="editForm.name" ></el-input>
         </el-form-item>
         <el-form-item label="序号">
-          <el-input v-model="editForm.orderNum" type="number"></el-input>
+          <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
         </el-form-item>
         <el-form-item label="方法" v-if="editForm.type===2" prop="method">
-          <el-select v-model="editForm.method" placeholder="请选择">
+          <el-select v-model.trim="editForm.method" placeholder="请选择">
             <el-option
               v-for="(item, i) in rMethods"
               :key="'m'+i"
