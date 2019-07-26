@@ -34,7 +34,7 @@
           <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
         </el-form-item>
         <el-form-item label="方法" v-if="editForm.type===2" prop="method">
-          <el-select v-model.trim="editForm.method" placeholder="请选择">
+          <el-select v-model="editForm.method" placeholder="请选择">
             <el-option
               v-for="(item, i) in rMethods"
               :key="'m'+i"
@@ -45,7 +45,7 @@
           </el-select>
         </el-form-item>
         <el-form-item :label="editForm.type==1? '路由' : 'URL'" prop="url">
-          <el-input v-model="editForm.url" ></el-input>
+          <el-input v-model.trim="editForm.url" ></el-input>
         </el-form-item>
         <el-form-item label="父级">
           <el-cascader
