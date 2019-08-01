@@ -6,15 +6,15 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
-//全局资源
-import register from '@/common/register'
+// 注册全局资源
+import register from '@/register'
 Vue.use(register);
 
-//路由
+// 加载路由
 import router from './router'
 
 /*
-* v-has
+* 注册 v-has 指令（权限控制）
 */
 
 Vue.directive('has', {
@@ -30,8 +30,7 @@ import App from './App.vue'
 new Vue({
   data(){
     return {
-      useVSC: true,
-      globalData: {}
+      AccessControl: false
     }
   },
   router,

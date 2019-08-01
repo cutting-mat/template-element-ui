@@ -4,10 +4,11 @@
 
 <script>
 import Vue from 'vue';
-import {instance} from '@/common/api/index';
-import * as user from "@/common/api/user";
-import AllRoutesData from './pkgMain';
 import * as util from '@/common/assets/util.js';
+import {store} from '@/store';
+import {instance} from '@/api';
+import * as user from "@/common/api/user";
+import AllRoutesData from './main/index';
 
 export default {
   methods: {
@@ -116,7 +117,7 @@ export default {
 
       if (!actualRouter || !actualRouter.length) {
         // clear token, refresh page will jump to login screen.
-        util.storage('token','');
+        util.storage('auth','');
         // Interface hints
         return document.body.innerHTML = ('<h1>账号访问受限，请联系系统管理员！</h1>');
       }
@@ -147,8 +148,7 @@ export default {
 
       // Save information for rendering menu.(This step is optional.)
       
-      this.$root.globalData.menu = actualRouter;
-
+      store.set('menu', actualRouter)
     },
     signin: function(callback) {
       let vm = this;
@@ -157,8 +157,8 @@ export default {
       * Check whether the user has access
       */
 
-      let localUser = util.storage('user');
-      if (!localUser || !localUser.token) {
+      let localUser = util.storage('auth');
+      if (!localUser || !localUser.access_token) {
         return vm.$router.push({ path: '/login', query: { from: vm.$router.currentRoute.fullPath } });
       }
 
@@ -167,14 +167,14 @@ export default {
       * Set Authorization
       */
 
-      instance.defaults.headers.common['Authorization'] = localUser.token;
+      instance.defaults.headers.common['Authorization'] = localUser.access_token;
 
       /*
       * Step 2-1(This step is optional.)
       * Get user`s permissions
       * You can also get permission information upon user login, it depends on the implementation of the backend interface
       */
-      if(this.$root.useVSC){
+      if(this.$root.AccessControl){
         user.permission.r().then((res) => {
           let userPermissions = res.data.data;
           //格式处理
@@ -186,8 +186,6 @@ export default {
               pid: e.pid
             }
           })
-          // Save information, if it is used elsewhere.
-          vm.$root.globalData.userPermissions = userPermissions;
 
           /*
           * Step 3
@@ -265,24 +263,28 @@ export default {
           redirect: '/404'
         }]));
 
-        this.$root.globalData.menu = AllRoutesData[0].children.map(e => {
+        const currentUserMenu = AllRoutesData[0].children.map(e => {
             if (!e.meta) {
               e.meta = {}
             }
             return e
         });
 
+        store.set('menu', currentUserMenu);
+
         typeof callback === 'function' && callback();
       }
     },
-    loginDirect: function(newPath){
+    loginDirect: function(res){
       /*
       * Monitor login events
       * Will trigger the events in views/login.vue
       */
+      util.storage("auth", res.data);
 
       this.signin(() => {
-        this.$router.replace({path: newPath || '/'});
+        this.initUser()
+        this.$router.replace({path: res.from || '/'});
       });
     },
     logoutDirect: function(){
@@ -291,16 +293,21 @@ export default {
       * Will trigger the events in views/index.vue
       */
 
-      util.storage('user','');
+      util.storage('auth','');
       
       window.location.href = '/'
+    },
+    initUser: function(){
+      user.info.r().then(res => {
+        store.set('user', res.data.data)
+      })
     }
   },
   created: function() {
     /*
     * Start from here!
     */
-    this.signin();
+    this.signin(this.initUser);
   }
 }
 </script>

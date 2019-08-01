@@ -167,7 +167,22 @@ td,
 th {
     padding: 0;
 }
-
+/* icon */
+/* font */
+@font-face {font-family: "iconfont";
+    src: url('font/iconfont.woff') format('woff'),
+    url('font/iconfont.ttf?t=1542333212698') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+    url('font/iconfont.svg?t=1542333212698#iconfont') format('svg'); /* iOS 4.1- */
+  }
+  
+  .ion {
+    font-family:"iconfont" !important;
+    font-size: 1.1em;
+    font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
 /* page */
 html,
 body {
@@ -270,7 +285,22 @@ body {
 .scrollbar:hover::-webkit-scrollbar-thumb {
   background: #ccc;
 }
-/* 常用 */
+/* 
+* 自定义UI
+*/
+
+/* 限制宽度区域 */
 .wrap{width:1200px;margin-left:auto;margin-right:auto;}
+/* 翻页 */
 .pagination{text-align: center;margin: 20px 0}
+/* 页头 */
 .pageHeader{margin-bottom: 20px;}
+/* 内容快 */
+.blockLayout{
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 0 6px rgba(0,0,0,.1);
+    margin: 0 20px 20px 0;
+    padding: 10px;
+    box-sizing:border-box;
+}

@@ -9,8 +9,8 @@
     >
       <h1 class="main-title">Vue-Scaffold</h1>
       <p class="des">基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架</p>
-      <el-form-item prop="userNo">
-        <el-input :autofocus="true" placeholder="输入用户名" v-model="queryParam.userNo"></el-input>
+      <el-form-item prop="username">
+        <el-input :autofocus="true" placeholder="输入用户名" v-model="queryParam.username"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <el-input placeholder="输入密码" type="password" v-model="queryParam.password"></el-input>
@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import * as util from "../assets/util.js";
 import * as user from "../api/user";
 
 export default {
@@ -37,11 +36,11 @@ export default {
     return {
       loading: false,
       queryParam: {
-        userNo: "",
+        username: "",
         password: ""
       },
       rules: {
-        userNo: [
+        username: [
           { required: true, message: "请输入用户名", trigger: "blur" },
           { min: 3, max: 10, message: "长度在 3 到 10 个字符", trigger: "blur" }
         ],
@@ -61,8 +60,11 @@ export default {
             .login(this.queryParam)
             .then(res => {
               this.loading = false;
-              util.storage("user", res.data.data);
-              this.$emit("login", this.$router.currentRoute.query.from);
+             
+              this.$emit("login", {
+                from: this.$router.currentRoute.query.from,
+                data: res.data.data
+              });
             })
             .catch(err => {
               this.loading = false;
