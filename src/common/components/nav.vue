@@ -1,12 +1,11 @@
 <template>
   <el-menu :collapse="state.isCollapse" 
     :default-active="$route.name" 
-    :default-openeds="[activeMenu.name]"
     router 
     unique-opened
     class="custom-menu">
     <template v-for="(route, index) in state.menu">
-      <!-- 两层 -->
+      
       <el-submenu v-if="route.children && route.children.length"
         :route="route"
         :index="route.name"
@@ -16,15 +15,35 @@
           <i class="ion" v-html="(route.meta && route.meta.icon) || '&#xe731;'"></i>
           <span slot="title">{{(route.meta && route.meta.title) || route.name}}</span>
         </template>
-        <el-menu-item-group>
-          <el-menu-item v-for="(child, ci) in route.children"
+        <template v-for="(child, ci) in route.children">
+          <!-- 三层 -->
+          <el-submenu v-if="child.children && child.children.length"
             :route="child"
             :index="child.name"
             :key="'child'+ci"
             >
-            {{(child.meta && child.meta.title) || child.name}}
+            <template slot="title">
+              <span slot="title">{{(child.meta && child.meta.title) || child.name}}</span>
+            </template>
+            <el-menu-item v-for="(grandson, grandsonindex) in child.children"
+              :route="grandson"
+              :index="grandson.name"
+              :key="'grandson'+grandsonindex"
+            >
+              <span slot="title">{{(grandson.meta && grandson.meta.title) || grandson.name}}</span>
+            </el-menu-item>
+          </el-submenu>
+          <!-- 两层 -->
+          <el-menu-item v-else
+            :route="child"
+            :index="child.name"
+            :key="'child'+ci"
+          >
+            <i class="ion" v-html="(child.meta && child.meta.icon) || '&#xe731;'"></i>
+            <span slot="title">{{(child.meta && child.meta.title) || child.name}}</span>
           </el-menu-item>
-        </el-menu-item-group>
+        </template>
+        
       </el-submenu>
       <!-- 一层 -->
       <el-menu-item v-else
@@ -50,26 +69,7 @@ export default {
     };
   },
   computed: {
-    mainMenus: function() {
-      if (this.state.menu) {
-        return this.state.menu.concat([
-          {
-            name: "首页",
-            path: "/"
-          }
-        ]);
-      }
-      return [];
-    },
-    activeMenu: function() {
-      const targetIndex = this.mainMenus.findIndex(e => {
-        return this.$route.fullPath.indexOf(e.path) === 0;
-      });
-      if (targetIndex !== -1) {
-        return this.mainMenus[targetIndex];
-      }
-      return this.$route;
-    }
+    
   }
 };
 </script>
