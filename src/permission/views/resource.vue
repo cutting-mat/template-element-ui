@@ -124,7 +124,7 @@ export default {
       this.dialogVisible = true;
     },
     append(item) {
-      this.editForm.pid = {
+      this.editForm = {
         pid: item.id,
         type: 1,
         name: '',
