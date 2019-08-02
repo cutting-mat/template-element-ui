@@ -1,7 +1,7 @@
 <template>
   <div class="mainCont flex-col">
     <!-- 头部 -->
-    <global-header @logout="$emit('logout')" />
+    <global-header />
     <div class="flex-1 flex-row">
       <!-- 菜单 -->
       <global-nav  />
@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import * as util from "@/common/assets/util";
 
 export default {
   components: {
@@ -33,15 +32,7 @@ export default {
     }
   },
   methods: {
-    logout: function() {
-      this.$confirm("确认退出?", "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(() => {
-        this.$emit("logout");
-      });
-    }
+    
   }
 };
 </script>

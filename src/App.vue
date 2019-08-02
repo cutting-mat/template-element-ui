@@ -1,5 +1,5 @@
 <template>
-  <router-view id="app" @login="loginDirect" @logout="logoutDirect" />
+  <router-view id="app" />
 </template>
 
 <script>
@@ -17,7 +17,7 @@ export default {
         // Get request path
         let perName = config.url.replace(config.baseURL, '').split('?')[0];
         if(config.url.charAt(config.url.length - 1)!=='/'){
-          //RESTful type 1 /path/**
+          //RESTful type 1 /path/*
           let reg1 = perName.match(/^(\/[^\/]+\/)[^\/]+$/);
           if (reg1) {
             perName = reg1[1] + '*';
@@ -308,6 +308,10 @@ export default {
     * Start from here!
     */
     this.signin(this.initUser);
+
+    // global event 
+    util.on('login', this.loginDirect);
+    util.on('logout', this.logoutDirect)
   }
 }
 </script>

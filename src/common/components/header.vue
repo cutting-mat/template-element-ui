@@ -23,7 +23,8 @@
 </template>
 
 <script>
-import {store} from "@/store"
+import {store} from '@/store'
+import {emit} from '../assets/util'
 
 export default {
   data() {
@@ -51,7 +52,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        this.$emit("logout");
+        emit("logout");
       });
     }
   }

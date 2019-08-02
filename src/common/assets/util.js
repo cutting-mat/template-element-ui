@@ -1,9 +1,14 @@
 /* eslint-disable */
 import Vue from 'vue'
-//sessionStorage
+
+/*
+* 本地存储
+*/
 export const storage = function(key, value) {
+  const store = sessionStorage;
+
   if (value === void(0)) {
-      let lsVal = sessionStorage.getItem(key);
+      let lsVal = store.getItem(key);
       if (lsVal && lsVal.indexOf('autostringify-') === 0) {
           return JSON.parse(lsVal.split('autostringify-')[1]);
       } else {
@@ -13,23 +18,28 @@ export const storage = function(key, value) {
       if (typeof(value) === "object" || Array.isArray(value)) {
           value = 'autostringify-' + JSON.stringify(value);
       };
-      return sessionStorage.setItem(key, value);
+      return store.setItem(key, value);
   }
 }
-//生成随机数
+
+/*
+* 生成随机数
+*/
 export const getUUID = function (len) {
-  len = len || 6;
   len = parseInt(len, 10);
-  len = isNaN(len) ? 6 : len;
-  var seed = "0123456789abcdefghijklmnopqrstubwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ";
-  var seedLen = seed.length - 1;
-  var uuid = "";
+  len = isNaN(len) ? 32 : len;
+  const seed = "0123456789abcdefghijklmnopqrstubwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ";
+  const seedLen = seed.length - 1;
+  let uuid = [];
   while (len--) {
-    uuid += seed[Math.round(Math.random() * seedLen)];
+    uuid.push(seed[Math.round(Math.random() * seedLen)]);
   }
-  return uuid;
+  return uuid.join('');
 };
-//深拷贝
+
+/*
+* 深拷贝
+*/
 export const deepcopy = function (source) {
   if (!source) {
     return source;
@@ -40,7 +50,10 @@ export const deepcopy = function (source) {
   }
   return sourceCopy;
 };
-//菜单数据组织
+
+/*
+* 一维数组转树形结构
+*/
 export const buildMenu = function (array, ckey) {
   let menuData = [];
   let indexKeys = Array.isArray(array) ? array.map((e) => {return e.id}) : [];
@@ -81,7 +94,10 @@ export const buildMenu = function (array, ckey) {
   findChildren(menuData);
   return menuData;
 }
-//日期格式化
+
+/*
+* 日期格式化
+*/
 export const formatDate = (value,fmt) => {
   if(!value){
       return "--"
@@ -123,7 +139,24 @@ export const formatDate = (value,fmt) => {
   }
   return fmt
 }
-//ajax错误处理
+
+/*
+* 事件总线
+*/
+const bus = new Vue();
+//监听事件
+export const on = function (eventName, eventHandle) {
+  if (eventName && (typeof eventHandle === 'function'))
+    return bus.$on(eventName, eventHandle)
+};
+//触发事件
+export const emit = function (eventName, msg) {
+  return bus.$emit(eventName, msg)
+};
+
+/*
+* ajax错误处理
+*/
 export const catchError = function (error) {
   //业务代码拦截
   if(error.data){
@@ -133,20 +166,18 @@ export const catchError = function (error) {
   if (error.response) {
     switch (error.response.status) {
       case 400:
-        console.log(error.response)
         Vue.prototype.$message({
           message: error.response.data.message || '请求参数异常',
           type: 'error'
         });
         break;
       case 401:
-        storage('auth','');
 
         Vue.prototype.$message({
           message: error.response.data.message || '密码错误或账号不存在！',
           type: 'warning',
           onClose: function () {
-            location.reload();
+            emit('logout')
           }
         });
         break;
@@ -178,14 +209,3 @@ export const catchError = function (error) {
   }
   return Promise.reject(error);
 }
-
-let bus = new Vue();
-//监听事件
-export const on = function (eventName, eventHandle) {
-  if (eventName && (typeof eventHandle === 'function'))
-    return bus.$on(eventName, eventHandle)
-};
-//触发事件
-export const emit = function (eventName, msg) {
-  return bus.$emit(eventName, msg)
-};

@@ -29,7 +29,8 @@
 </template>
 
 <script>
-import * as user from "../api/user";
+import * as user from '../api/user';
+import {emit} from '../assets/util'
 
 export default {
   data() {
@@ -61,7 +62,7 @@ export default {
             .then(res => {
               this.loading = false;
              
-              this.$emit("login", {
+              emit("login", {
                 from: this.$router.currentRoute.query.from,
                 data: res.data.data
               });
