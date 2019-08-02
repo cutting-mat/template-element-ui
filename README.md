@@ -211,6 +211,7 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 
 #### 简单store模式
 
+- 根目录下的store.js，`common/components/nav.vue`和`common/components/header.vue`里都有用例
 - 是的，我们不需要vuex
 
 其他没了。
