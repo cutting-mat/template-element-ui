@@ -140,12 +140,12 @@ export const catchError = function (error) {
         });
         break;
       case 401:
-        sessionStorage.removeItem('user');
+        storage('auth','');
+
         Vue.prototype.$message({
           message: error.response.data.message || '密码错误或账号不存在！',
           type: 'warning',
           onClose: function () {
-            storage('user','');
             location.reload();
           }
         });
