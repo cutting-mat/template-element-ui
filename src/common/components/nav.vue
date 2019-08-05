@@ -17,7 +17,7 @@
         </template>
         <template v-for="(child, ci) in route.children">
           <!-- 三层 -->
-          <el-submenu v-if="child.children && child.children.length"
+          <el-menu-item-group v-if="child.children && child.children.length"
             :route="child"
             :index="child.name"
             :key="'child'+ci"
@@ -32,7 +32,7 @@
             >
               <span slot="title">{{(grandson.meta && grandson.meta.title) || grandson.name}}</span>
             </el-menu-item>
-          </el-submenu>
+          </el-menu-item-group>
           <!-- 两层 -->
           <el-menu-item v-else
             :route="child"
