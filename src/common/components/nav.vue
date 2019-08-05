@@ -39,7 +39,6 @@
             :index="child.name"
             :key="'child'+ci"
           >
-            <i class="ion" v-html="(child.meta && child.meta.icon) || '&#xe731;'"></i>
             <span slot="title">{{(child.meta && child.meta.title) || child.name}}</span>
           </el-menu-item>
         </template>
