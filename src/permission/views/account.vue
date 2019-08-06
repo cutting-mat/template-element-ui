@@ -1,6 +1,6 @@
 <template>
   <div class="scrollbar blockLayout" v-loading="loading">
-    <div class="flex-row align-center pageHeader">
+    <div class="flex-row align-center toolBar">
       <div class="flex-1">
         <!-- title -->
       </div>

@@ -167,8 +167,7 @@ td,
 th {
     padding: 0;
 }
-/* icon */
-/* font */
+/* icon font */
 @font-face {font-family: "iconfont";
     src: url('font/iconfont.woff') format('woff'),
     url('font/iconfont.ttf?t=1542333212698') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
@@ -183,7 +182,7 @@ th {
     -moz-osx-font-smoothing: grayscale;
   }
   
-/* page */
+/* page layout */
 html,
 body {
     height: 100%;
@@ -255,12 +254,6 @@ body {
     justify-content: center;
 }
 
-/* 单行文字省略号 */
-.el {
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
 /* 滚动条 */
 .scrollbar{overflow-x: hidden;overflow-y: auto;}
 .scrollbar::-webkit-scrollbar {
@@ -289,18 +282,43 @@ body {
 * 自定义UI
 */
 
-/* 限制宽度区域 */
-.wrap{width:1200px;margin-left:auto;margin-right:auto;}
+/* 单行文字省略号 */
+.el {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+/* 版心区域 */
+.wrap {
+    width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 /* 翻页 */
-.pagination{text-align: center;margin: 20px 0}
-/* 页头 */
-.pageHeader{margin-bottom: 20px;}
+.pagination {
+    text-align: center;
+    margin: 20px 0
+}
+
+/* 工具栏 */
+.toolBar {
+    margin-bottom: 20px;
+}
+
+/* 左边栏 */
+.sideBar {
+    width: 260px;
+    margin-right: 20px;
+}
+
 /* 内容快 */
-.blockLayout{
+.blockLayout {
     background: #fff;
     border-radius: 4px;
-    box-shadow: 0 0 6px rgba(0,0,0,.1);
+    box-shadow: 0 0 6px rgba(0, 0, 0, .1);
     margin: 0 20px 20px 0;
     padding: 10px;
-    box-sizing:border-box;
+    box-sizing: border-box;
 }
