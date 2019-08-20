@@ -43,7 +43,7 @@ export default {
   },
   methods: {
     getType: function(item){
-      return item.path === this.$route.fullPath ? 'primary' : 'info'
+      return item.path === this.$route.path ? 'primary' : 'info'
     },
     closeTags(index) {
       const delItem = this.list.splice(index, 1)[0];
@@ -68,7 +68,7 @@ export default {
     },
     setTags(route) {
       const targetIndex = this.list.findIndex(item => {
-        return item.path === route.fullPath;
+        return item.path === route.path;
       });
       if(targetIndex===-1){
         this.list.push(route);
