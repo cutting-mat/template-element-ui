@@ -5,7 +5,7 @@
       :model="queryParam"
       :rules="rules"
       class="login-form"
-      @keyup.enter="login"
+      @submit.native.prevent="login"
     >
       <h1 class="main-title">Vue-Scaffold</h1>
       <p class="des">基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架</p>
@@ -19,7 +19,6 @@
         <el-button
           native-type="submit"
           class="submit-button"
-          @click="login"
           type="primary"
           :loading="loading"
         >登录</el-button>

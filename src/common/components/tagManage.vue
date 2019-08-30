@@ -51,7 +51,7 @@ export default {
         ? this.list[index]
         : this.list[index - 1];
       if (item) {
-        delItem.path === this.$route.fullPath && this.$router.push(item.path);
+        delItem.path === this.$route.fullPath && this.$router.push(item);
       } else {
         this.$router.push("/");
       }
