@@ -77,7 +77,14 @@ export default {
   },
   methods: {
     handleCheckChange(data, checked) {
-      this.$emit('checked', this.$refs.tree.getCheckedKeys())
+      if(Array.isArray(data.children) && data.children.length){
+        data.children.forEach(cnode => {
+          this.$refs.tree.setChecked(cnode, checked)
+        })
+      }
+      this.$nextTick(() => {
+        this.$emit('checked', this.$refs.tree.getCheckedKeys())
+      })
     },
     fetchData: function(){
       resource.list.r().then(res => {
