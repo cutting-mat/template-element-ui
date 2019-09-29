@@ -295,7 +295,7 @@ export default {
 
       util.storage('auth','');
       
-      window.location.href = '/'
+      window.location.href = process.env.BASE_URL || '/'
     },
     initUser: function(){
       user.info.r().then(res => {
