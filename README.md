@@ -40,33 +40,33 @@ Vue-Scaffold
     |   |--permission/                  // 权限管理模块
     |   |   |--...
     |   |
-    |--api.js                         // axios实例化配置（仅开发用，不提交代码仓库）
-    |--api.sample.js                  // axios实例化配置（生产环境提交，运维部门修改host配置后将文件名改成index.js）
+    |--api.js                           // axios实例化配置（仅开发用，不提交代码仓库）
+    |--api.sample.js                    // axios实例化配置（生产环境提交，运维部门修改host配置，并将文件名改成api.js）
     |--App.vue                          // 根组件
     |--main.js                          // 入口文件
     |--register.js                      // 全局资源注册
     |--router.js                        // 路由实例（仅包含基础路由）
-    |--store.js                         // 管理一个简单store模式
+    |--store.js                         // 维护一个简单store模式
 ```
 
 ### 模块文件结构
 
 ```
 [Moudle Folder]
-    |--api/                     // 接口
+    |--api/                             // 接口
     |   `--user.js 
-    |--assets/                  // 静态资源/样式/脚本
+    |--assets/                          // 静态资源/样式/脚本
     |   |--img/ 
     |   |--style.css 
     |   `--util.js 
-    |--components/              // 组件
+    |--components/                      // 组件
     |   |--myHeader.vue
     |   `--subMenu.vue
-    |--views/                   // 页面
+    |--views/                           // 页面
     |   |--401.vue
     |   |--404.vue
     |   `--login.vue
-    `--index.js                 // 模块路由
+    `--index.js                         // 模块路由
 ```
 
 ### 代码拆分的思路和实现
@@ -136,11 +136,9 @@ export default [{
 
 [Vue-Access-Control](https://github.com/tower1229/Vue-Access-Control)提供了可能是目前最灵活、细致的前端权限控制能力，完全兼容RESTful，教科书级的权限关系，清晰易懂，`菜单 + 请求 = 角色`， 通过角色为账号赋权。
 
-脚手架基于Vue-Access-Control实现了动态菜单和请求拦截，在此基础上将菜单权限和请求权限合二为一集中管理，好处是他们可以通过上下级关系组成一棵树，让权限配置界面更容易理解。
+脚手架基于Vue-Access-Control实现了动态菜单和请求拦截，在此基础上将菜单权限和请求权限关联起来，使它们通过上下级关系组成一棵树，让权限配置界面更容易理解。
 
-体现在后端的区别就是，菜单和请求维护在一个表里，二者通过`type`字段区分。
-
-一个小小的代价是定义api时要一起加上权限定义：
+Vue-Access-Control为了支持RESTful，导致定义api时要一起加上权限定义：
 
 ```
 // 获取用户列表
@@ -152,8 +150,24 @@ export const list = {
 }
 ```
 
-p代表permission权限，r代表request请求，一个api的permission就是这个请求的方法+URL，我们实现了一个axios拦截器，会根据服务端给出用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是在RESTful环境中就不行了，因为RESTful请求的URL允许携带参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以就需要用户手动定义每个api的permission。
+p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的请求动词+URL，我们实现了一个axios拦截器，会根据服务端给出用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是在RESTful环境中就不行了，因为RESTful请求的URL中可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以就需要用户手动定义每个api的permission。
 
+这里我们为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数：
+
+```
+// RESTFul
+
+get member/1
+
+// URL参数改成常规参数
+
+get member?id=1
+
+```
+
+这样就可以跟平常一样的定义API，axios拦截器可以自动拼出permission，校验请求权限。
+
+这里会产生一个小问题，有的英文名词单词不区分单复数，比如 *news*，去掉URL参数后请求列表和请求单条数据都是`get /news`，没办法区分，这里我们使用一种简单粗暴的方式去解决，遇到这种单词，请求列表时强制加上*es*。
 
 #### 权限控制工具
 

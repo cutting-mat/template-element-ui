@@ -177,15 +177,6 @@ export default {
       if(this.$root.AccessControl){
         user.permission.r().then((res) => {
           let userPermissions = res.data.data;
-          //格式处理
-          userPermissions.menus = userPermissions.menus.map(e => {
-            return {
-              name: e.name,
-              route: e.url,
-              id: e.id,
-              pid: e.pid
-            }
-          })
 
           /*
           * Step 3
