@@ -39,7 +39,7 @@
         <el-form-item label="序号">
           <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
         </el-form-item>
-        <el-form-item label="方法" v-if="editForm.type!=1" prop="method">
+        <el-form-item label="方法" v-if="!!editForm.url" prop="method">
           <el-select v-model="editForm.method" placeholder="请选择">
             <el-option
               v-for="(item, i) in requestMethods"
@@ -49,8 +49,11 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item :label="editForm.type==1? '路由' : 'URL'" prop="url">
+        <el-form-item v-if="!!editForm.url" label="URL" prop="url">
           <el-input v-model.trim="editForm.url"></el-input>
+        </el-form-item>
+        <el-form-item v-else label="路由" prop="route">
+          <el-input v-model.trim="editForm.route"></el-input>
         </el-form-item>
         <el-form-item label="父级">
           <el-cascader
@@ -70,7 +73,10 @@
 
 <script>
 import * as util from "@/common/assets/util";
-import * as resource from "../api/resource";
+import * as resource from '../api/resource';
+import * as menu from '../api/menu';
+import * as user from "@/common/api/user";
+import {store} from '@/store';
 
 export default {
   components: {
@@ -126,16 +132,14 @@ export default {
     append(item) {
       this.editForm = {
         pid: item.id,
-        type: 1,
         name: '',
-        url: ''
+        route: ''
       };
       this.dialogVisible = true;
     },
     addResource(item) {
       this.editForm = {
         pid: item.id,
-        type: 2,
         method: "get",
         name: '',
         url: ''
@@ -157,7 +161,7 @@ export default {
           this.loading = true;
           if (!formData.id) {
             //添加菜单
-            resource.add.r(formData).then(() => {
+            resource.add(formData).then(() => {
               this.fetchData();
               this.$message({
                 message: "添加成功",
@@ -166,7 +170,7 @@ export default {
               this.dialogVisible = false;
             });
           } else {
-            resource.edit.r(formData).then(() => {
+            resource.edit(formData).then(() => {
               this.fetchData();
               this.$message({
                 message: "编辑成功",
@@ -192,7 +196,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        resource.remove.r(item).then(() => {
+        resource.remove(item).then(() => {
           this.fetchData();
           this.$message({
             message: "删除成功",
@@ -203,10 +207,12 @@ export default {
     },
     fetchData: function() {
       this.loading = true;
-      resource.list.r().then(res => {
+      user.permission().then(res => {
         this.loading = false;
-        //const menuArray = res.data.data.filter(e => e.type===1);
-        this.list = util.buildMenu(res.data.data);
+        let userPermissions = res.data.data;
+        store.set('permission', userPermissions);
+        this.list = util.buildMenu(userPermissions.menus.concat(userPermissions.resources));
+      
       });
     }
   },

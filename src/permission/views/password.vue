@@ -80,7 +80,7 @@ export default {
     },
     submit: function(){
       this.loading = true;
-      user.editPassword.r(this.ruleForm).then(() => {
+      user.editPassword(this.ruleForm).then(() => {
         this.loading = false;
         this.resetForm();
         this.$message({

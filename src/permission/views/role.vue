@@ -91,7 +91,7 @@ export default {
           let formData = util.deepcopy(vm.editForm);
 
           if (!formData.id) {
-            role.add.r(formData).then(() => {
+            role.add(formData).then(() => {
               vm.fetchData();
               vm.$message({
                 message: "添加成功",
@@ -99,7 +99,7 @@ export default {
               });
             });
           } else {
-            role.edit.r(formData).then(() => {
+            role.edit(formData).then(() => {
               vm.fetchData();
               vm.$message({
                 message: "编辑成功",
@@ -129,7 +129,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        role.remove.r(item).then(() => {
+        role.remove(item).then(() => {
           this.fetchData();
           this.$message({
             message: "删除成功",
@@ -143,7 +143,7 @@ export default {
         this.queryParam.page = 1;
       }
       this.loading = true;
-      role.list.r(this.queryParam).then(res => {
+      role.list(this.queryParam).then(res => {
         this.loading = false;
         this.list = res.data.data;
       });

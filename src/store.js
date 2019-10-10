@@ -4,6 +4,7 @@ export const store = {
         menu: [],               // 导航菜单
         user: {},               // 用户信息
         isCollapse: false,      // 菜单收起状态 
+        permission: []          // 用户权限
     },
     set(key, newValue) {
         if(this.state[key]!==void(0)){

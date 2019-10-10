@@ -1,30 +1,18 @@
 import {instance} from '@/api';
 
 //
-export const list = {
-  p: ['get,/roles'],
-  r: params => {
+export const list = params => {
     return instance.get(`/roles`, {params})
-  }
 }
 
-export const add = {
-  p: ['post,/role'],
-  r: params => {
+export const add = params => {
     return instance.post(`/role`, params)
-  }
 }
 
-export const edit = {
-  p: ['put,/role'],
-  r: params => {
+export const edit = params => {
     return instance.put(`/role`, params)
-  }
 }
 
-export const remove = {
-  p: ['delete,/role'],
-  r: params => {
+export const remove = arams => {
     return instance.delete(`/role`, {params})
-  }
 }

@@ -48,7 +48,7 @@
       layout="prev, pager, next"
       :page-size="queryParam.limit"
       :current-page="queryParam.page"
-      :total="totalRows"
+      :total="totalCount"
       @current-change="handleCurrentChange"
     ></el-pagination>
     <!-- 弹窗 -->
@@ -155,7 +155,7 @@ export default {
         limit: 10,
         page: 1
       },
-      totalRows: 0,
+      totalCount: 0,
       rules: {
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
         realname: [
@@ -198,7 +198,7 @@ export default {
         type: "warning"
       }).then(() => {
         this.loading = true;
-        account.resetPassword.r(data).then(() => {
+        account.resetPassword(data).then(() => {
           this.fetchData();
           this.$alert(`密码已重置！`, {
             confirmButtonText: "我知道了"
@@ -217,7 +217,7 @@ export default {
           let formData = util.deepcopy(vm.editForm);
 
           if (!formData.id) {
-            account.add.r(formData).then(() => {
+            account.add(formData).then(() => {
               vm.fetchData();
               vm.$message({
                 message: "添加成功",
@@ -225,7 +225,7 @@ export default {
               });
             });
           } else {
-            account.edit.r(formData).then(() => {
+            account.edit(formData).then(() => {
               vm.fetchData();
               vm.$message({
                 message: "编辑成功",
@@ -255,7 +255,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        account.remove.r({
+        account.remove({
           id: item.id
         }).then(() => {
           this.fetchData();
@@ -271,14 +271,18 @@ export default {
         this.queryParam.page = 1;
       }
       this.loading = true;
-      account.list.r(this.queryParam).then(res => {
+      account.list(this.queryParam).then(res => {
         this.loading = false;
-        this.list = res.data.data;
-        this.totalRows = res.data.totalRows;
+        const data = res.data.data;
+        if(data){
+          this.list = data.list;
+          this.totalCount = data.totalCount;
+        }
+        
       });
     },
     fetchRoles: function() {
-      requestRoles.r().then(res => {
+      requestRoles().then(res => {
         this.rolesList = res.data.data;
       });
     }

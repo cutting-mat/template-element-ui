@@ -16,26 +16,12 @@ export default {
       instance.interceptors.request.use(config => {
         // Get request path
         let perName = config.url.replace(config.baseURL, '').split('?')[0];
-        if(config.url.charAt(config.url.length - 1)!=='/'){
-          //RESTful type 1 /path/*
-          let reg1 = perName.match(/^(\/[^\/]+\/)[^\/]+$/);
-          if (reg1) {
-            perName = reg1[1] + '*';
-          }
-          //RESTful type 2 /path/*/path
-          let reg2 = perName.match(/^\/[^\/]+\/([^\/]+)\/[^\/]+$/);
-          if (reg2) {
-            perName = perName.replace(reg2[1], '*');
-          }
-
-        }
         
         // Check permissions
         
         if (!resourcePermission[config.method + ',' + perName]) {
-          console.warn(config.method + ',' + perName)
           return Promise.reject({
-            message: '无访问权限'
+            message: config.method + ',' + perName + '无访问权限'
           });
         }
         return config;
@@ -175,9 +161,9 @@ export default {
       * You can also get permission information upon user login, it depends on the implementation of the backend interface
       */
       if(this.$root.AccessControl){
-        user.permission.r().then((res) => {
+        user.permission().then((res) => {
           let userPermissions = res.data.data;
-
+          store.set('permission', userPermissions)
           /*
           * Step 3
           * Get resourcePermission form user permissions
@@ -220,16 +206,22 @@ export default {
           Vue.prototype.$_has = function(rArray) {
             let RequiredPermissions = [];
             let permission = true;
-            
+            let regex = new RegExp(/\.([^(]+)\("([^"]+)"/);
+
             if (Array.isArray(rArray)) {
               rArray.forEach(e => {
-                if(e && e.p){
-                  RequiredPermissions = RequiredPermissions.concat(e.p);
+                const res = e.toString().match(regex);
+                if(res && res.length>2){
+                  RequiredPermissions.push([res[1], res[2]].join(','));
                 }
               });
             } else {
-              if(rArray && rArray.p){
-                RequiredPermissions = rArray.p;
+              if(typeof rArray==='function'){
+                const res = rArray.toString().match(regex);
+                if(res && res.length>2){
+                  RequiredPermissions = [res[1], res[2]].join(',');
+                }
+                
               }
               
             }
@@ -289,7 +281,7 @@ export default {
       window.location.href = process.env.BASE_URL || '/'
     },
     initUser: function(){
-      user.info.r().then(res => {
+      user.info().then(res => {
         store.set('user', res.data.data)
       })
     }

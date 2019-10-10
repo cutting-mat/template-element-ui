@@ -19,6 +19,7 @@ import router from './router'
 
 Vue.directive('has', {
   inserted: function(el, binding) {
+    console.log(binding.value)
     if (Vue.prototype.$_has && !Vue.prototype.$_has(binding.value)) {
       el.parentNode.removeChild(el);
     }
