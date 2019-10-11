@@ -14,7 +14,7 @@
     </div>
     <el-table :data="list" style="width: 100%">
       <el-table-column prop="name" label="角色名称" align="center"></el-table-column>
-      <el-table-column prop="remark" label="备注"></el-table-column>
+      <el-table-column prop="description" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
@@ -38,12 +38,17 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model="editForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="备注" prop="remark">
-          <el-input v-model="editForm.remark" type="textarea"></el-input>
+        <el-form-item label="备注" prop="description">
+          <el-input v-model="editForm.description" type="textarea"></el-input>
         </el-form-item>
 
         <el-form-item label="权限">
-          <resourcePicker picker :checked="editForm.resources" @checked="editForm.resources = $event" />
+          <resourcePicker 
+            picker 
+            :checked="resourceIds" 
+            @checkResource="checkResource" 
+            @checkMenu="checkMenu" 
+          />
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -71,16 +76,28 @@ export default {
       list: [],
       editForm: {
         name: "",
-        remark: "",
-        rules: []
+        description: "",
+        resource: [],
+        menu: []
       },
       rules: {
         name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
       }
     };
   },
+  computed: {
+    resourceIds: function(){
+      return this.editForm.resource.concat(this.editForm.menu)
+    },
+  },
   methods: {
-    edit: function(data) {
+    checkResource(ids) {
+      this.editForm.resource = ids;
+    },
+    checkMenu(ids) {
+      this.editForm.menu = ids;
+    },
+    edit(data) {
       this.editForm = data;
       this.dialogVisible = true;
     },
@@ -113,8 +130,9 @@ export default {
     resetForm: function() {
       this.editForm = {
         name: "",
-        remark: "",
-        resources: []
+        description: "",
+        resource: [],
+        menu: []
       };
       this.$nextTick(function() {
         this.$refs["editForm"].resetFields();

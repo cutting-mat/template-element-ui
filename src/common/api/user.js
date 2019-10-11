@@ -13,16 +13,16 @@ export const login = params => {
 
 //用户权限
 export const permission = params => {
-    return instance.get(`/currentUser/permissions/`)
+    return instance.get(`/currentUser/permissions`)
 }
 
 //用户信息
 export const info = params => {
-    return instance.get(`/currentUser/userInfo/`)
+    return instance.get(`/currentUser/userInfo`)
 }
 //修改密码
 export const editPassword = params => {
-    return instance.put(`/currentUser/password/`, {
+    return instance.put(`/currentUser/password`, {
         password: CryptoJS.MD5(params.password).toString(),
         old_password: CryptoJS.MD5(params.old_password).toString()
     })

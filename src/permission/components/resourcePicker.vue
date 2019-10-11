@@ -90,7 +90,9 @@ export default {
         })
       }
       this.$nextTick(() => {
-        this.$emit('checked', this.$refs.tree.getCheckedKeys())
+        const checked = this.$refs.tree.getCheckedNodes();
+        this.$emit('checkResource', checked.filter(e => !!e.url).map(e => e.id));
+        this.$emit('checkMenu', checked.filter(e => !!e.route).map(e => e.id))
       })
     },
     fetchData: function(){

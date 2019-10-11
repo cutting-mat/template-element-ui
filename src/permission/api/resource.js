@@ -10,15 +10,15 @@ export const list = params => {
 }
 
 export const add = params => {
-    return instance.post(`/resources`, params)
+    return instance.post(`/resource`, params)
 }
 
 export const edit = params => {
-    return instance.put(`/resources`, params)
+    return instance.put(`/resource`, params)
 }
 
 export const remove = params => {
-    return instance.delete(`/resources`, {
+    return instance.delete(`/resource`, {
         params
     })
 }

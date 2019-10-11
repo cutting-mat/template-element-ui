@@ -215,17 +215,13 @@ export default {
                   RequiredPermissions.push([res[1], res[2]].join(','));
                 }
               });
-            } else {
-              if(typeof rArray==='function'){
-                const res = rArray.toString().match(regex);
-                if(res && res.length>2){
-                  RequiredPermissions = [res[1], res[2]].join(',');
-                }
-                
+            } else if(typeof rArray === 'function'){
+              const res = rArray.toString().match(regex);
+              if(res && res.length>2){
+                RequiredPermissions.push([res[1].trim(), res[2].trim()].join(','));
               }
-              
             }
-            
+            //console.log(RequiredPermissions, resourcePermission)
             for(let i=0;i<RequiredPermissions.length;i++){
               let p = RequiredPermissions[i];
               if (!resourcePermission[p]) {

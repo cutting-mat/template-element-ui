@@ -19,5 +19,5 @@ export const remove = params => {
 
 //重置密码
 export const resetPassword = params => {
-  return instance.put(`/user/password/`, params)
+  return instance.put(`/user/password`, params)
 }
