@@ -150,9 +150,9 @@ export const list = {
 }
 ```
 
-p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的请求动词+URL，我们实现了一个axios拦截器，会根据服务端给出用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是在RESTful环境中就不行了，因为RESTful请求的URL中可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以就需要用户手动定义每个api的permission。
+p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的请求动词+URL，然后实现了一个axios拦截器，会根据服务端给的用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是在RESTful环境中因为请求URL可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以就需要用户手动定义每个api的permission，axios拦截器也会先对符合规则的url进行转换，再进行权限校验。
 
-这里我们为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数：
+这里我们为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数，全部改用常规参数：
 
 ```
 // RESTFul
