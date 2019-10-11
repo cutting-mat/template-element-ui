@@ -167,6 +167,13 @@ get member?id=1
 
 这样就可以跟平常一样的定义API，axios拦截器可以通过请求配置拼出permission，`v-has`指令可以通过正则匹配从请求方法的字符串中拿到permission，完成权限验证。
 
+```
+// 获取用户列表
+export const list = params => {
+    return instance.get(`/user`, {params})
+}
+```
+
 这里会产生一个小问题，有的英文名词单词不区分单复数，比如 *news*，去掉URL参数后请求列表和请求单条数据都是`get /news`，没办法区分，这里我们使用一种简单粗暴的方式去解决，遇到这种单词，请求列表时强制加上*es*。
 
 #### 权限控制工具
