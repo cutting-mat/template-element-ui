@@ -1,10 +1,10 @@
 <template>
   <el-menu :collapse="state.isCollapse" 
-    :default-active="$route.name" 
+    :default-active="activeIndex" 
     router 
     unique-opened
     class="custom-menu">
-    <template v-for="(route, index) in state.menu">
+    <template v-for="(route, index) in list">
       
       <el-submenu v-if="route.children && route.children.length"
         :route="route"
@@ -68,7 +68,26 @@ export default {
     };
   },
   computed: {
-    
+    activeIndex(){
+      if(this.$route.meta && this.$route.meta.belong){
+        return this.$route.meta.belong
+      }
+      return this.$route.name
+    },
+    list: function(){
+      const filt = (arr) => {
+        let res = arr.filter(e => !e.meta || !e.meta.hide);
+        res = res.map(e => {
+          let _route = Object.assign({}, e);
+          if(_route.children){
+            _route.children = filt(_route.children);
+          }
+          return _route
+        })
+        return res;
+      }
+      return filt(this.state.menu)
+    }
   }
 };
 </script>

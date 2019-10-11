@@ -134,7 +134,7 @@ export default [{
 
 #### 权限控制方案
 
-[Vue-Access-Control](https://github.com/tower1229/Vue-Access-Control)提供了可能是目前最灵活、细致的前端权限控制能力，完全兼容RESTful，教科书级的权限关系，清晰易懂，`菜单 + 请求 = 角色`， 通过角色为账号赋权。
+[Vue-Access-Control](https://github.com/tower1229/Vue-Access-Control)提供了可能是目前最灵活、细致的前端权限控制能力，完全兼容RESTful，教科书级的权限关系，清晰易懂，`菜单 + 请求 => 角色 => 账号`。
 
 脚手架基于Vue-Access-Control实现了动态菜单和请求拦截，在此基础上将菜单权限和请求权限关联起来，使它们通过上下级关系组成一棵树，让权限配置界面更容易理解。
 
@@ -150,7 +150,7 @@ export const list = {
 }
 ```
 
-p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的请求动词+URL，然后实现了一个axios拦截器，会根据服务端给的用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是在RESTful环境中因为请求URL可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以就需要用户手动定义每个api的permission，axios拦截器也会先对符合规则的url进行转换，再进行权限校验。
+p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的Method+URL，axios拦截器里会根据服务端给的用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是RESTful请求的URL可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以只能用户手动定义每个api的permission。
 
 这里我们为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数，全部改用常规参数：
 
@@ -174,7 +174,7 @@ export const list = params => {
 }
 ```
 
-这里会产生一个小问题，有的英文名词单词不区分单复数，比如 *news*，去掉URL参数后请求列表和请求单条数据都是`get /news`，没办法区分，这里我们使用一种简单粗暴的方式去解决，遇到这种单词，请求列表时强制加上*es*。
+去掉URL参数后我们约定请求数据的结合用单词复数形式，请求单条数据用单数形式，这里会产生一个小问题，有的英文名词单词不区分单复数，比如 *news*，这里我们使用一种简单粗暴的方式去解决，遇到这种单词，请求列表时强制加上*es*。
 
 #### 权限控制工具
 
