@@ -11,7 +11,7 @@ const route = new Router({
 
 route.beforeEach((to, from, next) => {
   if(to.name){
-    document.title = to.meta.name || to.name;
+    document.title = to.meta.title || to.name;
   }
   next()
 })
