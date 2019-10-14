@@ -1,13 +1,12 @@
 // 全局组件
-import globalHeader from "@/common/components/header.vue"
-const globalNav = () => import(/* webpackChunkName: "global-components" */ "@/common/components/nav.vue")
-const globalTagManage = () => import(/* webpackChunkName: "global-components" */ "@/common/components/tagManage.vue")
-
 const globalComponents = {
-    globalHeader,
-    globalNav,
-    globalTagManage
+    globalHeader: () => import(/* webpackChunkName: "global-components" */ "@/common/components/header.vue"),
+    globalNav: () => import(/* webpackChunkName: "global-components" */ "@/common/components/nav.vue"),
+    globalTagManage: () => import(/* webpackChunkName: "global-components" */ "@/common/components/tagManage.vue"),
+    globalPagination: () => import(/* webpackChunkName: "global-components" */ "@/common/components/pagination.vue"),
+    globalPlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/common/components/placeholder.vue")
 }
+
 
 // 全局过滤器
 import {formatDate} from '@/common/assets/util'

@@ -41,16 +41,13 @@
       </el-table-column>
     </el-table>
     <!-- page -->
-    <el-pagination
+    <global-pagination
       v-if="list.length"
-      class="pagination"
-      background
-      layout="prev, pager, next"
-      :page-size="queryParam.limit"
-      :current-page="queryParam.page"
-      :total="totalCount"
+      :page-size="queryParam.pageSize"
+      :current-page="queryParam.p"
+      :total-count="totalCount"
       @current-change="handleCurrentChange"
-    ></el-pagination>
+    ></global-pagination>
     <!-- 弹窗 -->
     <el-dialog
       title="账号信息"
@@ -152,8 +149,8 @@ export default {
         status: 1
       },
       queryParam: {
-        limit: 10,
-        page: 1
+        pageSize: 10,
+        p: 1
       },
       totalCount: 0,
       rules: {
@@ -185,7 +182,7 @@ export default {
         checkedCount > 0 && checkedCount < this.rolesList.length;
     },
     handleCurrentChange: function(currentPage) {
-      this.queryParam.page = currentPage;
+      this.queryParam.p = currentPage;
       this.fetchData();
     },
     resetPassword: function(data) {
@@ -268,7 +265,7 @@ export default {
     },
     fetchData: function(reload) {
       if (reload) {
-        this.queryParam.page = 1;
+        this.queryParam.p = 1;
       }
       this.loading = true;
       account.list(this.queryParam).then(res => {
