@@ -36,9 +36,6 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model.trim="editForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="序号">
-          <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
-        </el-form-item>
         <el-form-item label="方法" v-if="!!editForm.method" prop="method">
           <el-select v-model="editForm.method" placeholder="请选择">
             <el-option
@@ -62,11 +59,13 @@
             :props="{ checkStrictly: true, label: 'name', value: 'id' }"
           ></el-cascader>
         </el-form-item>
-        
+        <el-form-item label="序号">
+          <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
       </div>
     </el-dialog>
   </div>
@@ -160,6 +159,10 @@ export default {
         if (valid) {
           let formData = util.deepcopy(this.editForm);
           const handleApi = formData.route ? menu : resource;
+          //处理级联pid数组为单一pid
+          if(Array.isArray(formData.pid)){
+            formData.pid = formData.pid.pop()
+          }
           //处理method
           if (formData.method) {
             formData.method = formData.method.toLowerCase();
