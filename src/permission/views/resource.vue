@@ -9,7 +9,7 @@
         type="primary"
         size="small"
         icon="el-icon-plus"
-        @click="editForm.type=1;editForm.pid=null;dialogVisible=true"
+        @click="createRoot"
       >添加</el-button>
     </div>
 
@@ -39,7 +39,7 @@
         <el-form-item label="序号">
           <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
         </el-form-item>
-        <el-form-item label="方法" v-if="!!editForm.url" prop="method">
+        <el-form-item label="方法" v-if="!!editForm.method" prop="method">
           <el-select v-model="editForm.method" placeholder="请选择">
             <el-option
               v-for="(item, i) in requestMethods"
@@ -49,7 +49,7 @@
             ></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item v-if="!!editForm.url" label="URL" prop="url">
+        <el-form-item v-if="!!editForm.method" label="URL" prop="url">
           <el-input v-model.trim="editForm.url"></el-input>
         </el-form-item>
         <el-form-item v-else label="路由" prop="route">
@@ -62,11 +62,12 @@
             :props="{ checkStrictly: true, label: 'name', value: 'id' }"
           ></el-cascader>
         </el-form-item>
+        
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="save">确 定</el-button>
-      </span>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -125,8 +126,16 @@ export default {
     };
   },
   methods: {
+    createRoot() {
+      this.editForm = {
+        pid: '',
+        name: '',
+        route: ''
+      };
+      this.dialogVisible = true;
+    },
     edit: function(data) {
-      this.editForm = data;
+      this.editForm = util.deepcopy(data);
       this.dialogVisible = true;
     },
     append(item) {
@@ -150,10 +159,7 @@ export default {
       this.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(this.editForm);
-          //处理pid
-          if (Array.isArray(formData.pid)) {
-            formData.pid = formData.pid[formData.pid.length - 1];
-          }
+          const handleApi = formData.route ? menu : resource;
           //处理method
           if (formData.method) {
             formData.method = formData.method.toLowerCase();
@@ -161,7 +167,7 @@ export default {
           this.loading = true;
           if (!formData.id) {
             //添加菜单
-            resource.add(formData).then(() => {
+            handleApi.add(formData).then(() => {
               this.fetchData();
               this.$message({
                 message: "添加成功",
@@ -170,7 +176,7 @@ export default {
               this.dialogVisible = false;
             });
           } else {
-            resource.edit(formData).then(() => {
+            handleApi.edit(formData).then(() => {
               this.fetchData();
               this.$message({
                 message: "编辑成功",
@@ -183,20 +189,21 @@ export default {
       });
     },
     resetForm: function() {
-      this.$nextTick(function() {
-        this.$refs["editForm"].resetFields();
-      });
+      this.editForm = {}
     },
     remove(item) {
-      if (!item) {
+      if (!item || !item.id) {
         return null;
       }
+      const handleApi = this.editForm.route ? menu : resource;
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        resource.remove(item).then(() => {
+        handleApi.remove({
+          id: item.id
+        }).then(() => {
           this.fetchData();
           this.$message({
             message: "删除成功",
