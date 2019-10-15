@@ -46,8 +46,10 @@
       :page-size="queryParam.pageSize"
       :current-page="queryParam.p"
       :total-count="totalCount"
+      :total-page="totalPage"
       @current-change="handleCurrentChange"
     ></global-pagination>
+
     <!-- 弹窗 -->
     <el-dialog
       title="账号信息"
@@ -153,6 +155,7 @@ export default {
         p: 1
       },
       totalCount: 0,
+      totalPage: 0,
       rules: {
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
         realname: [
@@ -274,6 +277,7 @@ export default {
         if(data){
           this.list = data.list;
           this.totalCount = data.totalCount;
+          this.totalPage = data.totalPage;
         }
         
       });

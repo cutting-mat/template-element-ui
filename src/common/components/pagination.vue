@@ -27,6 +27,10 @@ export default {
     totalCount: {
       type: Number,
       required: true
+    },
+    totalPage: {
+      type: Number,
+      required: false
     }
   },
   data() {
@@ -34,8 +38,12 @@ export default {
       
     }
   },
-  methods: {
-    
+  watch: {
+    totalPage: function(){
+      if(this.totalPage<this.currentPage){
+        this.$emit('current-change', 1)
+      }
+    }
   }
 };
 </script>
