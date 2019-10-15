@@ -13,7 +13,7 @@
       >添加</el-button>
     </div>
     <el-table :data="list" style="width: 100%">
-      <el-table-column prop="name" label="角色名称" align="center"></el-table-column>
+      <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
       <el-table-column prop="description" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="300" align="center">
@@ -35,8 +35,8 @@
       @close="resetForm"
     >
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
-        <el-form-item label="角色名称" prop="name">
-          <el-input v-model="editForm.name"></el-input>
+        <el-form-item label="角色名称" prop="roleName">
+          <el-input v-model="editForm.roleName"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="description">
           <el-input v-model="editForm.description" type="textarea"></el-input>
@@ -52,8 +52,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="save();dialogVisible = false">确 定</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
   </div>
@@ -75,20 +75,20 @@ export default {
       loading: false,
       list: [],
       editForm: {
-        name: "",
+        roleName: "",
         description: "",
         resource: [],
         menu: []
       },
       rules: {
-        name: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
+        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
       }
     };
   },
   computed: {
     resourceIds: function(){
       return this.editForm.resource.concat(this.editForm.menu)
-    },
+    }
   },
   methods: {
     checkResource(ids) {
@@ -99,6 +99,8 @@ export default {
     },
     edit(data) {
       this.editForm = data;
+      this.$set(this.editForm, 'resource', data.resource)
+      this.$set(this.editForm, 'menu', data.menu)
       this.dialogVisible = true;
     },
     save() {
@@ -129,7 +131,7 @@ export default {
     },
     resetForm: function() {
       this.editForm = {
-        name: "",
+        roleName: "",
         description: "",
         resource: [],
         menu: []
@@ -139,7 +141,7 @@ export default {
       });
     },
     remove(item) {
-      if (!item) {
+      if (!item || !item.id) {
         return null;
       }
       this.$confirm("是否删除?", "提示", {
@@ -147,7 +149,9 @@ export default {
         cancelButtonText: "取消",
         type: "warning"
       }).then(() => {
-        role.remove(item).then(() => {
+        role.remove({
+          id: item.id
+        }).then(() => {
           this.fetchData();
           this.$message({
             message: "删除成功",

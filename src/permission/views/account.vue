@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollbar blockLayout" v-loading="loading">
+  <div class="scrollbar blockLayout" v-loading.fullpage="loading">
     <div class="flex-row align-center toolBar">
       <div class="flex-1">
         <!-- title -->
@@ -16,10 +16,14 @@
     <el-table :data="list" style="width: 100%">
       <el-table-column prop="username" label="账号" width="150" align="center"></el-table-column>
       <el-table-column prop="realname" label="用户名" width="150" align="center"></el-table-column>
-      <el-table-column prop="roleName" label="角色" align="center"></el-table-column>
+      <el-table-column label="角色" align="center">
+        <template slot-scope="scope">
+          {{scope.row.roles && scope.row.roles.map(e => e.roleName).join('、')}}
+        </template>
+      </el-table-column>
       <el-table-column label="状态" width="80" align="center">
         <template slot-scope="scope">
-          <template v-if="scope.row.status!=1">
+          <template v-if="!scope.row.status">
             <span style="color:#ff4949">已禁用</span>
           </template>
           <template v-else>
@@ -29,7 +33,7 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
-          <el-button v-has="account.edit" size="mini" type="info" @click="edit(scope.row)">编辑</el-button>
+          <el-button v-has="account.edit" size="mini" @click="edit(scope.row)">编辑</el-button>
           <el-button
             v-has="account.resetPassword"
             size="mini"
@@ -42,14 +46,12 @@
     </el-table>
     <!-- page -->
     <global-pagination
-      v-if="list.length"
       :page-size="queryParam.pageSize"
       :current-page="queryParam.p"
       :total-count="totalCount"
       :total-page="totalPage"
       @current-change="handleCurrentChange"
     ></global-pagination>
-
     <!-- 弹窗 -->
     <el-dialog
       title="账号信息"
@@ -75,19 +77,12 @@
           </el-form-item>
         </template>
         <el-form-item label="角色">
-          <el-checkbox
-            :indeterminate="isIndeterminate"
-            v-model="checkAll"
-            @change="handleCheckAllChange"
-          >全选</el-checkbox>
           <el-checkbox-group
-            style="margin: 15px 0;"
-            v-model="editForm.roleIds"
-            @change="handleCheckedChange"
+            v-model="editForm.roles"
           >
             <el-row :gutter="20">
               <el-col :span="10" v-for="role in rolesList" :key="'role'+ role.id">
-                <el-checkbox :label="role.id">{{role.name}}</el-checkbox>
+                <el-checkbox :label="role.id">{{role.roleName}}</el-checkbox>
               </el-col>
             </el-row>
           </el-checkbox-group>
@@ -97,8 +92,6 @@
             v-model="editForm.status"
             active-text="启用"
             inactive-text="禁用"
-            :active-value="1"
-            :inactive-value="2"
           ></el-switch>
         </el-form-item>
       </el-form>
@@ -121,8 +114,8 @@ export default {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
+        if (this.editForm.checkPass !== "") {
+          this.$refs.editForm.validateField("checkPass");
         }
         callback();
       }
@@ -130,7 +123,7 @@ export default {
     const validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.password) {
+      } else if (value !== this.editForm.password) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -147,8 +140,8 @@ export default {
         username: '',
         realname: '',
         password: '',
-        roleIds: [],
-        status: 1
+        roles: [],
+        status: true
       },
       queryParam: {
         pageSize: 10,
@@ -164,26 +157,10 @@ export default {
         password: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }]
       },
-      isIndeterminate: true,
-      checkAll: true,
       rolesList: []
     };
   },
   methods: {
-    handleCheckAllChange(checked) {
-      this.$set(
-        this.editForm,
-        "roleIds",
-        checked ? this.rolesList.map(x => x.id) : []
-      );
-      this.isIndeterminate = false;
-    },
-    handleCheckedChange() {
-      let checkedCount = this.editForm.roleIds.length;
-      this.checkAll = checkedCount === this.rolesList.length;
-      this.isIndeterminate =
-        checkedCount > 0 && checkedCount < this.rolesList.length;
-    },
     handleCurrentChange: function(currentPage) {
       this.queryParam.p = currentPage;
       this.fetchData();
@@ -198,7 +175,9 @@ export default {
         type: "warning"
       }).then(() => {
         this.loading = true;
-        account.resetPassword(data).then(() => {
+        account.resetPassword({
+          id: data.id
+        }).then(() => {
           this.fetchData();
           this.$alert(`密码已重置！`, {
             confirmButtonText: "我知道了"
@@ -207,7 +186,9 @@ export default {
       });
     },
     edit: function(data) {
-      this.editForm = Object.assign({}, data);
+      const editObj = Object.assign({}, data);
+      editObj.roles = editObj.roles.map(e => e.roleId)
+      this.editForm = editObj;
       this.dialogVisible = true;
     },
     save() {
@@ -242,12 +223,12 @@ export default {
         username: '',
         realname: '',
         password: '',
-        roleIds: [],
-        status: 1
+        roles: [],
+        status: true
       };
     },
     remove(item) {
-      if (!item || !item.id) {
+      if (!item) {
         return null;
       }
       this.$confirm("是否删除?", "提示", {
