@@ -160,12 +160,9 @@ export default {
         });
       });
     },
-    fetchData: function(reload) {
-      if (reload) {
-        this.queryParam.page = 1;
-      }
+    fetchData: function() {
       this.loading = true;
-      role.list(this.queryParam).then(res => {
+      role.list().then(res => {
         this.loading = false;
         this.list = res.data.data;
       });
