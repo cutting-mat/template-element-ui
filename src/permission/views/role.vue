@@ -136,7 +136,7 @@ export default {
         resource: [],
         menu: []
       };
-      
+      this.$refs.editForm && this.$refs.editForm.resetFields()
     },
     remove(item) {
       if (!item || !item.id) {

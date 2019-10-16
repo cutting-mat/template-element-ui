@@ -194,6 +194,7 @@ export default {
     handleCloseDialog: function() {
       this.dialogVisible = false;
       this.editForm = {}
+      this.$refs.editForm && this.$refs.editForm.resetFields()
     },
     remove(item) {
       if (!item || !item.id) {

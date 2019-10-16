@@ -226,6 +226,7 @@ export default {
         roles: [],
         status: true
       };
+      this.$refs.editForm && this.$refs.editForm.resetFields()
     },
     remove(item) {
       if (!item) {
