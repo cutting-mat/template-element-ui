@@ -6,19 +6,20 @@
       :rules="rules"
       ref="ruleForm"
       label-width="100px"
+      @submit.native.prevent="submitForm"
     >
-      <el-form-item label="原密码" prop="old_password">
-        <el-input v-model="ruleForm.old_password"></el-input>
+      <el-form-item label="原密码" prop="password">
+        <el-input v-model="ruleForm.password"></el-input>
       </el-form-item>
-      <el-form-item label="新密码" prop="password">
-        <el-input type="password" v-model="ruleForm.password" autocomplete="off"></el-input>
+      <el-form-item label="新密码" prop="newPassword">
+        <el-input type="password" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
       </el-form-item>
       
       <el-form-item>
-        <el-button type="primary" @click="submitForm">提交</el-button>
+        <el-button type="primary" native-type="submit">提交</el-button>
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
@@ -44,7 +45,7 @@ export default {
     const validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.password) {
+      } else if (value !== this.ruleForm.newPassword) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -54,17 +55,17 @@ export default {
     return {
       loading: false,
       ruleForm: {
-        old_password: "",
+        password: "",
         checkPass: "",
-        password: ""
+        newPassword: ""
       },
       rules: {
-        password: [
+        newPassword: [
           { validator: validatePass, trigger: "blur" },
           { min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' }
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        old_password: [
+        password: [
           { required: true, message: '请输入原密码', trigger: 'blur' }
         ]
       }
@@ -80,13 +81,23 @@ export default {
     },
     submit: function(){
       this.loading = true;
-      user.editPassword(this.ruleForm).then(() => {
+      let queryParam = Object.assign({}, this.ruleForm);
+      delete queryParam.checkPass;
+      user.editPassword(queryParam).then((res) => {
         this.loading = false;
-        this.resetForm();
-        this.$message({
-          message: '操作成功',
-          type: 'success'
-        });
+        if(res.data.code===200){
+          this.resetForm();
+          this.$message({
+            message: '操作成功',
+            type: 'success'
+          });
+        }else{
+          this.$message({
+            message: res.data.msg,
+            type: 'warning'
+          });
+        }
+        
       })
     },
     resetForm() {
