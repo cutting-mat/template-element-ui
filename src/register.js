@@ -1,6 +1,8 @@
 // 全局组件
+import globalHeader from '@/common/components/header.vue'
+
 const globalComponents = {
-    globalHeader: () => import(/* webpackChunkName: "global-components" */ "@/common/components/header.vue"),
+    globalHeader,
     globalNav: () => import(/* webpackChunkName: "global-components" */ "@/common/components/nav.vue"),
     globalTagManage: () => import(/* webpackChunkName: "global-components" */ "@/common/components/tagManage.vue"),
     globalPagination: () => import(/* webpackChunkName: "global-components" */ "@/common/components/pagination.vue"),
