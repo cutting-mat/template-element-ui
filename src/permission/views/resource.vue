@@ -37,14 +37,13 @@
           <el-input v-model.trim="editForm.name"></el-input>
         </el-form-item>
         <el-form-item label="方法" v-if="!!editForm.method" prop="method">
-          <el-select v-model="editForm.method" placeholder="请选择">
-            <el-option
+          <el-radio-group v-model="editForm.method">
+            <el-radio 
               v-for="(item, i) in requestMethods"
               :key="'m'+i"
-              :label="item.label"
-              :value="item.label.toLowerCase()"
-            ></el-option>
-          </el-select>
+              :label="item.label.toLowerCase()"
+            >{{item.label}}</el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item v-if="!!editForm.method" label="URL" prop="url">
           <el-input v-model.trim="editForm.url"></el-input>
