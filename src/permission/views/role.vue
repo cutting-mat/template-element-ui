@@ -30,9 +30,7 @@
       title="权限信息"
       :visible="dialogVisible"
       width="800px"
-      :show-close="false"
-      :close-on-click-modal="false"
-      @close="resetForm"
+      @close="handleCloseDialog"
     >
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="角色名称" prop="roleName">
@@ -52,7 +50,7 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="save();dialogVisible = false">确 定</el-button>
+        <el-button type="primary" @click="save">确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
     </el-dialog>
@@ -108,6 +106,7 @@ export default {
       vm.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(vm.editForm);
+          this.handleCloseDialog();
 
           if (!formData.id) {
             role.add(formData).then(() => {
@@ -129,16 +128,15 @@ export default {
         }
       });
     },
-    resetForm: function() {
+    handleCloseDialog: function() {
+      this.dialogVisible = false;
       this.editForm = {
         roleName: "",
         description: "",
         resource: [],
         menu: []
       };
-      this.$nextTick(function() {
-        this.$refs["editForm"].resetFields();
-      });
+      
     },
     remove(item) {
       if (!item || !item.id) {

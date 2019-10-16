@@ -57,9 +57,7 @@
       title="账号信息"
       :visible="dialogVisible"
       width="800px"
-      :show-close="false"
-      :close-on-click-modal="false"
-      @close="resetForm"
+      @close="handleCloseDialog"
     >
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="账号" prop="username">
@@ -96,8 +94,8 @@
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="save">确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="save();dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -196,7 +194,8 @@ export default {
       vm.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(vm.editForm);
-
+          this.handleCloseDialog();
+          
           if (!formData.id) {
             account.add(formData).then(() => {
               vm.fetchData();
@@ -217,7 +216,8 @@ export default {
         }
       });
     },
-    resetForm: function() {
+    handleCloseDialog: function() {
+      this.dialogVisible = false;
       this.editForm = {
         id: '',
         username: '',

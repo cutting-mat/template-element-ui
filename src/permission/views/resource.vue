@@ -28,9 +28,7 @@
       :title="editForm.type==1 ? '路由信息' : '资源信息'"
       :visible="dialogVisible"
       width="800px"
-      :show-close="false"
-      :close-on-click-modal="false"
-      @closed="resetForm"
+      @close="handleCloseDialog"
     >
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="名称" prop="name">
@@ -44,6 +42,7 @@
               :label="item.label.toLowerCase()"
             >{{item.label}}</el-radio>
           </el-radio-group>
+          
         </el-form-item>
         <el-form-item v-if="!!editForm.method" label="URL" prop="url">
           <el-input v-model.trim="editForm.url"></el-input>
@@ -157,6 +156,8 @@ export default {
       this.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(this.editForm);
+          this.handleCloseDialog()
+
           const handleApi = formData.route ? menu : resource;
           //处理级联pid数组为单一pid
           if(Array.isArray(formData.pid)){
@@ -190,7 +191,8 @@ export default {
         }
       });
     },
-    resetForm: function() {
+    handleCloseDialog: function() {
+      this.dialogVisible = false;
       this.editForm = {}
     },
     remove(item) {
