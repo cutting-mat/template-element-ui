@@ -220,7 +220,7 @@ export default {
         this.loading = false;
         let userPermissions = res.data.data;
         store.set('permission', userPermissions);
-        this.list = util.buildMenu(userPermissions.menus.concat(userPermissions.resources));
+        this.list = util.buildTree(userPermissions.menus.concat(userPermissions.resources));
       
       });
     }

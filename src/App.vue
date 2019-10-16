@@ -69,7 +69,7 @@ export default {
       *   route: "some-route"
       * }]
       */
-        let arrayMenus = util.buildMenu(userPermissions.menus);
+        let arrayMenus = util.buildTree(userPermissions.menus);
         setMenu2Hash(arrayMenus);
       }
       // Get hash structure

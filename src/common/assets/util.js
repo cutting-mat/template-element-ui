@@ -54,7 +54,7 @@ export const deepcopy = function (source) {
 /*
 * 一维数组转树形结构
 */
-export const buildMenu = function (array, ckey) {
+export const buildTree = function (array, ckey) {
   let menuData = [];
   let indexKeys = Array.isArray(array) ? array.map((e) => {return e.id}) : [];
   ckey = ckey || 'pid';

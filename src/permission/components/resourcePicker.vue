@@ -99,7 +99,7 @@ export default {
       user.permission().then(res => {
           let userPermissions = res.data.data;
           store.set('permission', userPermissions);
-          this.list = util.buildMenu(userPermissions.menus.concat(userPermissions.resources));
+          this.list = util.buildTree(userPermissions.menus.concat(userPermissions.resources));
           //设置已勾选
           if(Array.isArray(this.checked)){
             this.$nextTick(() => {
