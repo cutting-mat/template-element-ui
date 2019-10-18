@@ -78,11 +78,7 @@
           <el-checkbox-group
             v-model="editForm.roles"
           >
-            <el-row :gutter="20">
-              <el-col :span="10" v-for="role in rolesList" :key="'role'+ role.id">
-                <el-checkbox :label="role.id">{{role.roleName}}</el-checkbox>
-              </el-col>
-            </el-row>
+            <el-checkbox v-for="role in rolesList" :key="'role'+ role.id" :label="role.id">{{role.roleName}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
         <el-form-item label="状态">
