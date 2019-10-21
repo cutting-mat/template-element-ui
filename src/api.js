@@ -31,4 +31,6 @@ instance.interceptors.response.use(function(response) {
     return util.catchError(response);
   }
   return response;
-}, util.catchError);
+}, function (error) {
+  return util.catchError(error);
+});
