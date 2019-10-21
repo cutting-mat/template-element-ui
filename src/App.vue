@@ -279,6 +279,10 @@ export default {
     initUser: function(){
       user.info().then(res => {
         store.set('user', res.data.data)
+        // 如果当前是登录页，跳回首页
+        if(this.$router.currentRoute.path=='/login'){
+          this.$router.replace({path: '/'});
+        }
       })
     }
   },
