@@ -144,7 +144,7 @@ export default {
       */
 
       let localUser = util.storage('auth');
-      if (!localUser || !localUser.access_token) {
+      if (!localUser || !localUser.accessToken) {
         return vm.$router.push({ path: '/login', query: { from: vm.$router.currentRoute.fullPath } });
       }
 
@@ -153,7 +153,7 @@ export default {
       * Set Authorization
       */
 
-      instance.defaults.headers.common['Authorization'] = localUser.access_token;
+      instance.defaults.headers.common['Authorization'] = localUser.accessToken;
 
       /*
       * Step 2-1(This step is optional.)
