@@ -1,5 +1,5 @@
 <template>
-  <div class="mainCont flex-row align-center justify-center">
+  <div class="mainCont flex-row align-center justify-center loginPage">
     <el-form
       ref="validForm"
       :model="queryParam"
@@ -23,7 +23,7 @@
           :loading="loading"
         >登录</el-button>
       </el-form-item>
-      <p class="footer-info">Author：<a href="https://refined-x.com" target="blank">雅X共赏</a> Github：<a href="https://github.com/tower1229/Vue-Scaffold" target="_blank">Vue-Scaffold</a></p>
+      <p class="footer-info">Author：<el-link type="primary" href="https://refined-x.com" target="blank">雅X共赏</el-link> Github：<el-link type="primary" href="https://github.com/tower1229/Vue-Scaffold" target="_blank">Vue-Scaffold</el-link></p>
     </el-form>
   </div>
 </template>
@@ -80,6 +80,16 @@ export default {
 </script>
 
 <style scoped>
+.loginPage{
+  background: #f4f4f4;
+}
+
+.login-form {
+  width: 320px;
+  background:#fff;
+  border-radius: 10px;
+  padding: 20px 50px;
+}
 .main-title {
   text-align: center;
 }
@@ -89,22 +99,16 @@ export default {
   margin-bottom: 2em;
 }
 
-.login-form {
-  width: 419px;
-}
 .submit-item {
   margin-top: 30px;
 }
 .submit-button{
    width: 100%;
 }
-
 .footer-info{
   text-align: center;
   font-size: .9em;
   color: #999;
 }
-.footer-info a{
-  color: #3a8ee6;
-}
+
 </style>
