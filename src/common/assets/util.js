@@ -174,7 +174,7 @@ export const catchError = function (error) {
       case 401:
 
         Vue.prototype.$message({
-          message: error.response.data.message || '密码错误或账号不存在！',
+          message: error.response.data.message || '未授权或授权已过期',
           type: 'warning',
           onClose: function () {
             emit('logout')
