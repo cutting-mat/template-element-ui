@@ -5,7 +5,7 @@
 </template>
 
 <script>
-//import * as util from '@/base/assets/util';
+//import * as util from '@/common/assets/util';
 
 export default {
   data () {

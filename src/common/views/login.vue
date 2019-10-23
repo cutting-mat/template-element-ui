@@ -23,6 +23,7 @@
           :loading="loading"
         >登录</el-button>
       </el-form-item>
+      <p class="footer-info">Author：<a href="https://refined-x.com" target="blank">雅X共赏</a> Github：<a href="https://github.com/tower1229/Vue-Scaffold" target="_blank">Vue-Scaffold</a></p>
     </el-form>
   </div>
 </template>
@@ -96,5 +97,14 @@ export default {
 }
 .submit-button{
    width: 100%;
+}
+
+.footer-info{
+  text-align: center;
+  font-size: .9em;
+  color: #999;
+}
+.footer-info a{
+  color: #3a8ee6;
 }
 </style>

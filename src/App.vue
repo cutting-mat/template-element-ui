@@ -154,7 +154,14 @@ export default {
       */
 
       instance.defaults.headers.common['Authorization'] = localUser.accessToken;
-
+      // Update token info
+      try{
+        const tokenInfoPart = localUser.accessToken.split('.')[1];
+        const tokenInfo = JSON.parse(atob(tokenInfoPart));
+        store.set('tokenInfo', tokenInfo)
+      }catch(err) {
+        console.log('token异常',res.data)
+      }
       /*
       * Step 2-1(This step is optional.)
       * Get user`s permissions
