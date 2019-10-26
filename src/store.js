@@ -15,5 +15,26 @@ export const store = {
         }else{
             console.warn(`this key [${key}] is not register in store!`)
         }
+    },
+    get(key) {
+        return new Promise((resolve, reject) => {
+            switch (key) {
+                case "someKey":
+                    if (this.state[key].length) {
+                        resolve(this.state[key])
+                    } else {
+                        
+                    }
+                    break;
+                default:
+                    if (this.state[key] !== void(0)) {
+                        resolve(this.state[key])
+                    } else {
+                        reject(`this key [${key}] is not register in store!`)
+                    }
+
+            }
+        })
+
     }
 }
