@@ -26,7 +26,7 @@ export const store = {
                     if (this.state[key].length) {
                         resolve(this.state[key])
                     } else {
-
+                        // ajax or do something
                     }
                     break;
                 default:
