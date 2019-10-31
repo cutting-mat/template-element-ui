@@ -200,7 +200,7 @@ export default {
       if (!item || !item.id) {
         return null;
       }
-      const handleApi = this.editForm.route ? menu : resource;
+      const handleApi = item.route ? menu : resource;
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
