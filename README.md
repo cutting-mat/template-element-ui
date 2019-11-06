@@ -1,5 +1,6 @@
-
 # Vue-Scaffold
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold?ref=badge_shield)
+
 
 > :hamburger:基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架
 
@@ -237,3 +238,7 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 - 是的，我们不需要vuex
 
 其他没了。
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold?ref=badge_large)
