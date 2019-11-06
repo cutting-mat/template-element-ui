@@ -1,6 +1,9 @@
 
 # Vue-Scaffold
 
+[![license](https://img.shields.io/github/license/tower1229/Vue-Scaffold.svg)]()
+
+
 > :hamburger:基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架
 
 (演示项目接口数据来自RAP2，由于不支持https请求，演示项目可能无法正常登录，请自行下载代码，本地运行)
@@ -8,7 +11,7 @@
 ## 特性
 
 - 成熟的基础设施 ElementUI/Axios/Vue-Router
-- 灵活的权限控制方案 [Vue-Access-Control](https://github.com/tower1229/Vue-Access-Control)
+- 灵活的权限控制方案 [Vue-Scaffold](https://github.com/tower1229/Vue-Scaffold)
 - 微服务化代码组织
 - 简单 store 模式
 - 开箱即用的控制台脚手架
@@ -134,11 +137,11 @@ export default [{
 
 #### 权限控制方案
 
-[Vue-Access-Control](https://github.com/tower1229/Vue-Access-Control)提供了可能是目前最灵活、细致的前端权限控制能力，完全兼容RESTful，教科书级的权限关系，清晰易懂，`菜单 + 请求 => 角色 => 账号`。
+[Vue-Scaffold](https://github.com/tower1229/Vue-Scaffold)提供了可能是目前最灵活、细致的前端权限控制能力，完全兼容RESTful，教科书级的权限关系，清晰易懂，`菜单 + 请求 => 角色 => 账号`。
 
-脚手架基于Vue-Access-Control实现了动态菜单和请求拦截，在此基础上将菜单权限和请求权限关联起来，使它们通过上下级关系组成一棵树，让权限配置界面更容易理解。
+脚手架基于Vue-Scaffold实现了动态菜单和请求拦截，在此基础上将菜单权限和请求权限关联起来，使它们通过上下级关系组成一棵树，让权限配置界面更容易理解。
 
-Vue-Access-Control为了支持RESTful，导致定义api时要一起加上权限定义：
+Vue-Scaffold为了支持RESTful，导致定义api时要一起加上权限定义：
 
 ```
 // 获取用户列表
@@ -237,3 +240,18 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 - 是的，我们不需要vuex
 
 其他没了。
+
+
+## 下载
+
+演示地址：http://refined-x.com/Vue-Scaffold/
+
+git：`git clone https://github.com/tower1229/Vue-Scaffold.git`
+
+
+
+## 许可证
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Ftower1229%2FVue-Scaffold?ref=badge_large)
+
+Copyright (c) 2017-present, [前端路上](http://refined-x.com)
