@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <div class="wrap">
+    template homepage
+  </div>
 </template>
 
 <script>
