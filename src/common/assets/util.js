@@ -144,10 +144,15 @@ export const formatDate = (value,fmt) => {
 * 事件总线
 */
 const bus = new Vue();
+let busQueue = {};
 //监听事件
 export const on = function (eventName, eventHandle) {
   if (eventName && (typeof eventHandle === 'function'))
-    return bus.$on(eventName, eventHandle)
+  if(busQueue[eventName]){
+    bus.$off(eventName, busQueue[eventName])
+  }
+  busQueue[eventName] = eventHandle;
+  return bus.$on(eventName, eventHandle)
 };
 //触发事件
 export const emit = function (eventName, msg) {
