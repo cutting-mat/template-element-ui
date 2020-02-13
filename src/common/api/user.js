@@ -2,13 +2,9 @@ import {
     instance
 } from '@/api';
 
-import CryptoJS from "crypto-js";
 //登录
 export const login = params => {
-    return instance.post(`/login`, {
-        username: params.username,
-        password: CryptoJS.MD5(params.password).toString()
-    })
+    return instance.post(`/login`, params)
 }
 
 //用户权限
@@ -22,8 +18,5 @@ export const info = params => {
 }
 //修改密码
 export const editPassword = params => {
-    return instance.put(`/currentUser/password`, {
-        password: CryptoJS.MD5(params.password).toString(),
-        old_password: CryptoJS.MD5(params.old_password).toString()
-    })
+    return instance.put(`/currentUser/password`, params)
 }

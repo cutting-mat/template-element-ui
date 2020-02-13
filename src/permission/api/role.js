@@ -13,6 +13,6 @@ export const edit = params => {
     return instance.put(`/role`, params)
 }
 
-export const remove = arams => {
+export const remove = params => {
     return instance.delete(`/role`, {params})
 }
