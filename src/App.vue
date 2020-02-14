@@ -160,7 +160,7 @@ export default {
         const tokenInfo = JSON.parse(atob(tokenInfoPart));
         store.set('tokenInfo', tokenInfo)
       }catch(err) {
-        console.log('token异常',res.data)
+        console.log('token异常', localUser.accessToken)
       }
       /*
       * Step 2-1(This step is optional.)
