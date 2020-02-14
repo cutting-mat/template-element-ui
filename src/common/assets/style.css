@@ -322,3 +322,7 @@ body {
     padding: 10px;
     box-sizing: border-box;
 }
+
+/* element-iu el-drawer flex fix */
+.el-drawer__body{overflow: hidden;}
+
