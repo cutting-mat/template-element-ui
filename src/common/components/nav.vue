@@ -3,7 +3,7 @@
     :default-active="activeIndex" 
     router 
     unique-opened
-    class="custom-menu">
+    class="custom-menu scrollbar">
     <template v-for="(route, index) in list">
       
       <el-submenu v-if="route.children && route.children.length"
@@ -99,7 +99,6 @@ export default {
 }
 .custom-menu:not(.el-menu--collapse) {
   width: 200px;
-  min-height: 400px;
 }
 .custom-menu >>> .ion{font-size:1.4em;margin-right:6px;}
 .custom-menu >>> .el-menu-item-group{
