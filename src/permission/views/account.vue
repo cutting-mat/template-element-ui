@@ -105,7 +105,7 @@ import { list as requestRoles } from "../api/role";
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
-      if (value === "") {
+      if (!value) {
         callback(new Error("请输入密码"));
       } else {
         if (this.editForm.checkPass !== "") {
@@ -115,7 +115,7 @@ export default {
       }
     };
     const validatePass2 = (rule, value, callback) => {
-      if (value === "") {
+      if (!value) {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.editForm.password) {
         callback(new Error("两次输入密码不一致!"));
