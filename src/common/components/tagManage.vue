@@ -9,9 +9,7 @@
         effect="plain"
         @close="closeTags(index)"
         @click.native="$router.push(item)"
-      >
-        {{(item.meta && item.meta.title) || item.name}}
-      </el-tag>
+      >{{(item.meta && item.meta.title) || item.name}}</el-tag>
     </div>
     <!-- 其他操作按钮 -->
     <el-dropdown @command="handleTags">
@@ -27,7 +25,7 @@
 </template>
 
 <script>
-import {store} from "@/store"
+import { store } from "@/store";
 
 export default {
   data() {
@@ -38,7 +36,7 @@ export default {
   },
   computed: {
     allMenuFlat() {
-      return this.state.permission.menus || []
+      return this.state.permission.menus || [];
     }
   },
   watch: {
@@ -50,22 +48,22 @@ export default {
     }
   },
   methods: {
-    isCurrent: function(item){
+    isCurrent: function(item) {
       let result = false;
-      if(this.$route.meta && this.$route.meta.belong){
+      if (this.$route.meta && this.$route.meta.belong) {
         result = this.$route.meta.belong === item.name;
-      }else{
-        result = item.path === this.$route.path
+      } else {
+        result = item.path === this.$route.path;
       }
-      return result
+      return result;
     },
     closeTags(index) {
-      this.list.splice(index, 1)
-      const item = this.list[index]
-        ? this.list[index]
-        : this.list[index - 1];
+      const delItem = this.list.splice(index, 1)[0];
+      const item = this.list[index] ? this.list[index] : this.list[index - 1];
       if (item) {
-        this.$router.push(item);
+        if (this.isCurrent(delItem)) {
+          this.$router.push(item);
+        }
       } else {
         this.$router.push("/");
       }
@@ -82,15 +80,16 @@ export default {
     },
     setTags(route) {
       let targetRoute = route;
-      if(route.meta && route.meta.belong){
-        targetRoute = this.allMenuFlat.filter(e => {
-          return e.name===route.meta.belong
-        })[0] || route
+      if (route.meta && route.meta.belong) {
+        targetRoute =
+          this.allMenuFlat.filter(e => {
+            return e.name === route.meta.belong;
+          })[0] || route;
       }
       const targetIndex = this.list.findIndex(item => {
         return item.path === targetRoute.path;
       });
-      if(targetIndex===-1){
+      if (targetIndex === -1) {
         this.list.push(targetRoute);
       }
     },
@@ -103,14 +102,16 @@ export default {
 
 <style scoped>
 .tags {
-  padding-right:20px;
-  box-sizing:border-box;
+  padding-right: 20px;
+  box-sizing: border-box;
   margin: 10px 0;
 }
-.tagsWrap{
-  overflow-x:auto;
-  overflow-y:hidden;
+.tagsWrap {
+  overflow-x: auto;
+  overflow-y: hidden;
 }
-.tagsWrap .el-tag{margin-right: 5px;cursor:pointer}
-
+.tagsWrap .el-tag {
+  margin-right: 5px;
+  cursor: pointer;
+}
 </style>
