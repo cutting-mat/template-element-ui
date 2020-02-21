@@ -25,7 +25,7 @@
     </el-table>
 
     <!-- 弹窗 -->
-    <el-dialog
+    <el-dialog :close-on-click-modal="false"
       class="comDialog"
       title="权限信息"
       :visible="dialogVisible"

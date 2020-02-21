@@ -53,7 +53,7 @@
       @current-change="handleCurrentChange"
     ></global-pagination>
     <!-- 弹窗 -->
-    <el-dialog
+    <el-dialog :close-on-click-modal="false"
       title="账号信息"
       :visible="dialogVisible"
       width="800px"

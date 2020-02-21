@@ -46,7 +46,7 @@
     </template>
 
     <!-- 图片预览 -->
-    <el-dialog :visible.sync="previewVisible" append-to-body>
+    <el-dialog :close-on-click-modal="false" :visible.sync="previewVisible" append-to-body>
       <img width="100%" :src="dialogImageUrl" alt />
     </el-dialog>
   </div>

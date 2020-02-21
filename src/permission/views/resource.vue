@@ -24,7 +24,7 @@
     </div>
 
     <!-- 弹窗 -->
-    <el-dialog
+    <el-dialog :close-on-click-modal="false"
       :title="editForm.type==1 ? '路由信息' : '资源信息'"
       :visible="dialogVisible"
       width="800px"
