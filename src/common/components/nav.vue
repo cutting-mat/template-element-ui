@@ -6,7 +6,7 @@
     class="custom-menu scrollbar">
     <template v-for="(route, index) in list">
       
-      <el-submenu v-if="route.children && route.children.length"
+      <el-submenu v-if="route.children && filterShowMenu(route.children).length"
         :route="route"
         :index="route.name"
         :key="'nav'+index"
@@ -15,9 +15,9 @@
           <i class="ion" v-html="(route.meta && route.meta.icon) || '&#xe731;'"></i>
           <span slot="title">{{(route.meta && route.meta.title) || route.name}}</span>
         </template>
-        <template v-for="(child, ci) in route.children">
+        <template v-for="(child, ci) in filterShowMenu(route.children)">
           <!-- 三层 -->
-          <el-menu-item-group v-if="child.children && child.children.length"
+          <el-menu-item-group v-if="child.children && filterShowMenu(child.children).length"
             :route="child"
             :index="child.name"
             :key="'child'+ci"
@@ -25,7 +25,7 @@
             <template slot="title">
               <span slot="title">{{(child.meta && child.meta.title) || child.name}}</span>
             </template>
-            <el-menu-item v-for="(grandson, grandsonindex) in child.children"
+            <el-menu-item v-for="(grandson, grandsonindex) in filterShowMenu(child.children)"
               :route="grandson"
               :index="grandson.name"
               :key="'grandson'+grandsonindex"
@@ -87,6 +87,13 @@ export default {
         return res;
       }
       return filt(this.state.menu)
+    }
+  },
+  methods: {
+    filterShowMenu(routes) {
+      return routes.filter(e => {
+        return !e.meta || !e.meta.hide
+      })
     }
   }
 };
