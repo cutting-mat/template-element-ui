@@ -1,7 +1,7 @@
 export const store = {
     debug: true,
     state: {
-        tokenInfo: {}, // token携带信息
+        accessToken: null, // token
         menu: [], // 导航菜单
         user: {}, // 用户信息
         isCollapse: false, // 菜单收起状态 

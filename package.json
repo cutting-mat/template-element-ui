@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "element-ui": "^2.13.0",
+    "ios-photo-repair": "^1.0.7",
     "vue": "^2.6.11",
     "vue-router": "^3.1.5"
   },
