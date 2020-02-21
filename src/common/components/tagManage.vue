@@ -5,7 +5,7 @@
         v-for="(item,index) in list"
         :key="index"
         closable
-        :type="getType(item)"
+        :type="isCurrent(item) ? 'primary' : 'info'"
         effect="plain"
         @close="closeTags(index)"
         @click.native="$router.push(item)"
@@ -27,11 +27,19 @@
 </template>
 
 <script>
+import {store} from "@/store"
+
 export default {
   data() {
     return {
+      state: store.state,
       list: []
     };
+  },
+  computed: {
+    allMenuFlat() {
+      return this.state.permission.menus || []
+    }
   },
   watch: {
     $route: {
@@ -42,16 +50,22 @@ export default {
     }
   },
   methods: {
-    getType: function(item){
-      return item.path === this.$route.path ? 'primary' : 'info'
+    isCurrent: function(item){
+      let result = false;
+      if(this.$route.meta && this.$route.meta.belong){
+        result = this.$route.meta.belong === item.name;
+      }else{
+        result = item.path === this.$route.path
+      }
+      return result
     },
     closeTags(index) {
-      const delItem = this.list.splice(index, 1)[0];
+      this.list.splice(index, 1)
       const item = this.list[index]
         ? this.list[index]
         : this.list[index - 1];
       if (item) {
-        delItem.path === this.$route.fullPath && this.$router.push(item);
+        this.$router.push(item);
       } else {
         this.$router.push("/");
       }
@@ -67,11 +81,17 @@ export default {
       this.list = curItem;
     },
     setTags(route) {
+      let targetRoute = route;
+      if(route.meta && route.meta.belong){
+        targetRoute = this.allMenuFlat.filter(e => {
+          return e.name===route.meta.belong
+        })[0] || route
+      }
       const targetIndex = this.list.findIndex(item => {
-        return item.path === route.path;
+        return item.path === targetRoute.path;
       });
       if(targetIndex===-1){
-        this.list.push(route);
+        this.list.push(targetRoute);
       }
     },
     handleTags(command) {
