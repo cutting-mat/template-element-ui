@@ -79,12 +79,23 @@ export default {
       this.list = curItem;
     },
     setTags(route) {
-      let targetRoute = route;
+      let targetRoute;
+      // 如果新路由有归属路由
       if (route.meta && route.meta.belong) {
+        // 找到新路由的归属路由
         targetRoute =
           this.allMenuFlat.filter(e => {
             return e.name === route.meta.belong;
-          })[0] || route;
+          })[0]
+        if(targetRoute){
+          // 找到已经在队列中的归属路由
+          targetRoute = this.list.filter(e => {
+            return e.name===targetRoute.name;
+          })[0]
+        }
+      }
+      if(!targetRoute){
+        targetRoute = route
       }
       const targetIndex = this.list.findIndex(item => {
         return item.path === targetRoute.path;
