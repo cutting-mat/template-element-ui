@@ -89,9 +89,12 @@ export default {
           })[0]
         if(targetRoute){
           // 找到已经在队列中的归属路由
-          targetRoute = this.list.filter(e => {
+          const targetRouteInQueue = this.list.filter(e => {
             return e.name===targetRoute.name;
           })[0]
+          if(targetRouteInQueue){
+            targetRoute = targetRouteInQueue
+          }
         }
       }
       if(!targetRoute){
