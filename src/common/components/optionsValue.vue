@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      optionsValue: ""
+     
     };
   },
   computed: {
@@ -56,46 +56,45 @@ export default {
       };
 
       return trans(this.options);
-    }
-  },
-  watch: {
-    value: {
-      handler(value) {
-        if (Array.isArray(value)) {
-          let result = [];
-          let _catch = this.optionsData;
-          for (let i = 0; i < value.length; i++) {
-            const v = value[i];
-            const targetIndex = _catch.findIndex(e => {
-              return e.value === v;
-            });
-            if (targetIndex !== -1) {
-              result.push(_catch[targetIndex].label);
-              if (Array.isArray(_catch[targetIndex].children)) {
-                _catch = _catch[targetIndex].children;
-              } else {
-                break;
-              }
+    },
+    optionsValue() {
+      let value = this.value;
+      let __ = '';
+      if (Array.isArray(value)) {
+        let result = [];
+        let _catch = this.optionsData;
+        for (let i = 0; i < value.length; i++) {
+          const v = value[i];
+          const targetIndex = _catch.findIndex(e => {
+            return e.value === v;
+          });
+          //console.log(_catch, targetIndex)
+          if (targetIndex !== -1) {
+            result.push(_catch[targetIndex].label);
+            if (Array.isArray(_catch[targetIndex].children)) {
+              _catch = _catch[targetIndex].children;
             } else {
               break;
             }
-          }
-          this.optionsValue = result.join(this.propsData.split);
-        } else if (value !== void 0) {
-          const targetIndex = this.optionsData.findIndex(e => {
-            return e.value === value;
-          });
-          if (targetIndex !== -1) {
-            this.optionsValue = this.optionsData[targetIndex].label;
           } else {
-            this.optionsValue = "";
+            break;
           }
         }
-      },
-      immediate: true,
-      deep: true
+        __ = result.join(this.propsData.split);
+      } else if (value !== void 0) {
+        const targetIndex = this.optionsData.findIndex(e => {
+          return e.value === value;
+        });
+        if (targetIndex !== -1) {
+          __ = this.optionsData[targetIndex].label;
+        } else {
+          __ = "";
+        }
+      }
+      return __
     }
   }
+  
 };
 </script>
 
