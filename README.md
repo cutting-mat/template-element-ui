@@ -200,7 +200,6 @@ export const list = params => {
 
 - 代码仓库一般来说有dev\test\master三个分支，开发、测试、运维各用一个分支，每个环境的后端地址在api.js中配置
 - 开发团队如果是多模块并行，且独立提测的情况，可以开dev_module1,dev_module2...分支，各分支分别开发并提交test，任意开发分支提交后，通知其他开发分支合并orgin/test代码
-- 代码仓库只管理源码，开发者不负责部署。需要部署的环节（测试部门、运维部门）拉取代码后自行配置`api.js`，构建生产环境代码。因为多分支修改`api.js`会产生冲突，所以`api.js`文件不提交到代码仓库
 - 导航菜单乃至整个项目的图标，都尽可能用[图标字体](https://www.iconfont.cn)实现，图标项目由设计师创建、维护。
 - 大多数项目其实不需要vuex，`store.js`维护了一个[简单store模式](https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8)
 - IE兼容问题[解决方案](https://refined-x.com/2018/12/04/VueCLI3%20%E5%85%BC%E5%AE%B9%E6%80%A7%E9%85%8D%E7%BD%AE/)

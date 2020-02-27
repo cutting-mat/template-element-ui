@@ -3,12 +3,17 @@ import * as util from '@/common/assets/util';
 
 const URLHASH = {
   mock: 'http://rap2api.taobao.org/app/mock/223572',
-  dev: 'http://view.sooc.com',
-  test: 'http://kshdjadmin.sooc.com',
-  master: 'http://newblzadmin.soocedu.com'
+  dev: 'http://172.17.2.1:8187',
+  test: '//test.com/api',
+  master: '//master.com/api'
 };
 
-export const baseURL = URLHASH.mock;
+const SERVER = {
+  "test.com": "/api",
+  "master.com" : "/api"
+}
+
+export const baseURL = SERVER[window.location.host] || URLHASH.mock;
 
 export const instance = axios.create({
   baseURL,
