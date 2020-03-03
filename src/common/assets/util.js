@@ -71,7 +71,7 @@ export const buildTree = function(array, ckey) {
                 return id == e[ckey];
             });
             if (parentIndex === -1) {
-                menuData.push(e);
+                menuData.push(deepcopy(e));
             }
         }
     });
@@ -81,9 +81,9 @@ export const buildTree = function(array, ckey) {
                 array.forEach(function(node) {
                     if (parentNode.id === node[ckey]) {
                         if (parentNode.children) {
-                            parentNode.children.push(node);
+                            parentNode.children.push(deepcopy(node));
                         } else {
-                            parentNode.children = [node];
+                            parentNode.children = [deepcopy(node)];
                         }
                     }
                 });
@@ -219,30 +219,30 @@ export const catchError = function(error) {
 
 // filePreview 预览
 export const filePreview = (item) => {
-  window.open(item.url)
+    window.open(item.url)
 }
 // 上传前检查
 export const checkUpload = function(file) {
-  if(!file.size){
-      return Vue.prototype.$message.warning('文件异常')
-  }
-  const limitSize = 50 * 1024; // KB
-  if(file.size > limitSize * 1024){
-      Vue.prototype.$message.warning('文件超出最大限制')
-      return false
-  }
+    if (!file.size) {
+        return Vue.prototype.$message.warning('文件异常')
+    }
+    const limitSize = 50 * 1024; // KB
+    if (file.size > limitSize * 1024) {
+        Vue.prototype.$message.warning('文件超出最大限制')
+        return false
+    }
 
-  return true
+    return true
 }
 
 // 获取扩展名
 export const get_suffix = (filename) => {
-  let pos = filename.lastIndexOf('.')
-  let suffix = ''
-  if (pos != -1) {
-      suffix = filename.substring(pos+1)
-  }
-  return suffix;
+    let pos = filename.lastIndexOf('.')
+    let suffix = ''
+    if (pos != -1) {
+        suffix = filename.substring(pos + 1)
+    }
+    return suffix;
 }
 
 // 获取url文件名
@@ -258,18 +258,20 @@ export const getUrlName = (url) => {
 import {
     download
 } from '@/common/api/common';
-import {mime} from "./mime";
+import {
+    mime
+} from "./mime";
 
 export const downloadFile = (config) => {
-  /* config:
-  {
-    name: "xxx.jpg",
-    url: ""
-  }
-  */
+    /* config:
+    {
+      name: "xxx.jpg",
+      url: ""
+    }
+    */
     const fileName = config.name || getUrlName(url);
     const extName = get_suffix(fileName);
-    
+
     download(url).then(res => {
         const blob = new Blob([res.data], {
             type: mime[extName] || 'application/vnd.ms-excel'
@@ -277,7 +279,7 @@ export const downloadFile = (config) => {
 
         const objectURL = URL.createObjectURL(blob);
         if (objectURL) {
-          Vue.prototype.$alert(`<div style="text-align:center"><a href="${objectURL}" download="${fileName}" target="_blank" class="el-button el-button--default">点击下载</a></div>`, '文件下载', {
+            Vue.prototype.$alert(`<div style="text-align:center"><a href="${objectURL}" download="${fileName}" target="_blank" class="el-button el-button--default">点击下载</a></div>`, '文件下载', {
                 dangerouslyUseHTMLString: true,
                 showConfirmButton: false,
                 beforeClose(action, instance, done) {
@@ -286,7 +288,7 @@ export const downloadFile = (config) => {
                 }
             });
         } else {
-          Vue.prototype.$message.warning('下载失败，请联系技术支持')
+            Vue.prototype.$message.warning('下载失败，请联系技术支持')
         }
     })
 }
