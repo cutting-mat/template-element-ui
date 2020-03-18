@@ -85,7 +85,7 @@ export default {
       const result = this.multiple ? this.files : [this.files[0]];
       this.$emit("change", result);
     },
-    handleSuccess(res, file, filelist) {
+    handleSuccess(res) {
       this.loading = false;
       if(res && res.data){
         if (this.multiple) {

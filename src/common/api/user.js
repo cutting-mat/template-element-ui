@@ -9,12 +9,12 @@ export const login = params => {
 
 //用户权限
 export const permission = params => {
-    return instance.get(`/currentUser/permissions`)
+    return instance.get(`/currentUser/permissions`, {params})
 }
 
 //用户信息
 export const info = params => {
-    return instance.get(`/currentUser/userInfo`)
+    return instance.get(`/currentUser/userInfo`, {params})
 }
 //修改密码
 export const editPassword = params => {

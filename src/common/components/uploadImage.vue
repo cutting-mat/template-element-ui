@@ -55,7 +55,7 @@
 <script>
 import { uploadImg } from "@/common/api/common";
 import * as util from "@/common/assets/util";
-let { fixBySelector, fixImgFile } = require("ios-photo-repair")
+let { fixImgFile } = require("ios-photo-repair")
 import {store} from "@/store"
 
 export default {
@@ -126,7 +126,7 @@ export default {
       this.dialogImageUrl = file.url;
       this.previewVisible = true;
     },
-    handleSuccess: function(res, file) {
+    handleSuccess: function(res) {
       this.loading = false;
       if(res && res.data){
         if (!this.multiple) {
@@ -137,7 +137,7 @@ export default {
       }
       
     },
-    handleRemove(file, fileList) {
+    handleRemove(file) {
       this.list = this.list.filter(e => {
         return e.id != file.id;
       });

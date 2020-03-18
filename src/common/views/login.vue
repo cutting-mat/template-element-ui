@@ -67,7 +67,7 @@ export default {
                 data: res.data.data
               });
             })
-            .catch(err => {
+            .catch(() => {
               this.loading = false;
             });
         } else {
