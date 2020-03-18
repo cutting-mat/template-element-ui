@@ -53,7 +53,7 @@ export const store = {
     },
     action(key, type) {
         return new Promise((resolve, reject) => {
-            // action数据集中处理
+            // 异步数据处理方法
             const catchActionData = (data) => {
                 this.set(key, data)
                 resolve(data)
@@ -70,10 +70,11 @@ export const store = {
                 }else{
                     // 创建队列
                     promiseQueue[key] = 'action_' + parseInt(Math.random() * 1e8);
-
+                    // 定义异步数据获取逻辑
                     switch (key) {
                         case "someKey":
                             // send ajax and use `catchActionData()` to catch data!
+                            
                             // fetchSomeKey().then(res => {
                             //     catchActionData(res.data)
                             // })

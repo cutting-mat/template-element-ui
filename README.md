@@ -198,10 +198,9 @@ export const list = params => {
 
 以下几点未必是最佳实践，只是做一下说明，使用者自行取舍。
 
-- 代码仓库一般来说有dev\test\master三个分支，开发、测试、运维各用一个分支，每个环境的后端地址在api.js中配置
-- 开发团队如果是多模块并行，且独立提测的情况，可以开dev_module1,dev_module2...分支，各分支分别开发并提交test，任意开发分支提交后，通知其他开发分支合并orgin/test代码
+- 代码仓库一般来说有dev\test\master三个分支对应开发、测试、生产环境，每个环境的后端地址在api.js中配置，前端根据域名host自动切换
+- 如果项目开发是多模块并行，且每个功能模块独立提测，可以开dev_module1,dev_module2...分支，各分支分别开发并提交test，任意开发分支提交后，通知其他开发分支拉取orgin/test的代码合并到当前开发分支，实现代码同步
 - 导航菜单乃至整个项目的图标，都尽可能用[图标字体](https://www.iconfont.cn)实现，图标项目由设计师创建、维护。
-- 大多数项目其实不需要vuex，`store.js`维护了一个[简单store模式](https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8)
 - IE兼容问题[解决方案](https://refined-x.com/2018/12/04/VueCLI3%20%E5%85%BC%E5%AE%B9%E6%80%A7%E9%85%8D%E7%BD%AE/)
 
 ### "开箱即用"都有啥？
@@ -217,6 +216,11 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 - 一个四平八稳的登录界面，加上背景改改名字就完事了 
 - 一个经典控制台框架，少数几个必要的全局组件
 - 公共样式里附赠少量必要的CSS实现，比如flex栅格系统，字体图标，滚动条美化
+- 很常用的组件封装（/src/common/components/）
+- 1. optionsValue 用于实现下拉/级联控件的只读模式，传value和options展示结果文字，做编辑展示二合一的表单很有用
+- 2. tagManage 后台一般都用的标签管理器，功能上额外实现了路由的隐藏、归并
+- 3. uploadImage 图片上传，与文件上传的区别是图片以base64格式提交，且支持自定义尺寸压缩
+- 4. uploader 文件上传，集成了JWT验证和上传的各种细节
 
 #### 完整的权限管理模块
 
@@ -235,8 +239,25 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 
 #### 简单store模式
 
-- 根目录下的store.js，`common/components/nav.vue`和`common/components/header.vue`里都有用例
-- 是的，我们不需要vuex
+大多数项目其实不需要vuex，根目录下`store.js`维护了一个[简单store模式](https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8)，支持同步、异步数据存取，用于共享或缓存数据，`common/components/nav.vue`和`common/components/header.vue`里都有用例。
+
+```
+// API示例：
+import { store } from "@/store";
+// 同步存
+store.set('a', 1);
+// 同步取
+store.get('a'); // 1
+// 异步取
+store.action('someKey').then(res => {
+    // res
+})
+
+```
+
+其中异步数据（action）具有并发请求队列机制，同一时间同一key的多次请求，实际只发起一次ajax，其余请求将进入队列，等候ajax返回后集中resolve。
+
+异步数据获取逻辑需要在store.js内部定义，这里就不贴代码了。
 
 其他没了。
 

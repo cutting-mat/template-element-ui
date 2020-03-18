@@ -25,7 +25,7 @@ export default {
     uploader: resolve =>
       require(["@/common/components/uploader"], resolve),
     uploadImage: resolve =>
-      require(["@/common/components/upload_image"], resolve)
+      require(["@/common/components/uploadImage"], resolve)
   },
   data() {
     return {
