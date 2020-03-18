@@ -68,6 +68,7 @@ export default {
               });
             })
             .catch(() => {
+              console.log(1)
               this.loading = false;
             });
         } else {
