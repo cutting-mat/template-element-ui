@@ -27,14 +27,12 @@ export const store = {
         })
     },
     get(key) {
-        return new Promise((resolve, reject) => {
-            if (this.state[key] !== void(0)) {
-                resolve(this.state[key])
-            } else {
-                reject(`key [${key}] is not register in store!`)
+        if(key && key.split){
+            if (this.state[key] === void(0)) {
+                console.warn(`key [${key}] is not register in store!`)
             }
-
-        })
+            return this.state[key]
+        }
     },
     checkStore(key, type) {
         let result;
