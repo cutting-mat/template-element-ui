@@ -10,10 +10,10 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "axios": "^0.19.2",
-    "element-ui": "^2.13.0",
-    "ios-photo-repair": "^1.0.7",
     "vue": "^2.6.11",
-    "vue-router": "^3.1.6"
+    "vue-router": "^3.1.6",
+    "element-ui": "^2.13.0",
+    "ios-photo-repair": "^1.0.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.2.0",
