@@ -222,7 +222,6 @@ export default {
                 RequiredPermissions.push([res[1].trim(), res[2].trim()].join(','));
               }
             }
-            //console.log(RequiredPermissions, resourcePermission)
             for(let i=0;i<RequiredPermissions.length;i++){
               let p = RequiredPermissions[i];
               if (!resourcePermission[p]) {

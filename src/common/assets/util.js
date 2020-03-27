@@ -292,3 +292,21 @@ export const downloadFile = (config) => {
         }
     })
 }
+
+
+// 非生产环境日志
+export const log = (msg) => {
+    if(process.env.NODE_ENV!=='production'){
+        console.log(msg)
+    }
+}
+export const warn = (msg) => {
+    if(process.env.NODE_ENV!=='production'){
+        console.warn(msg)
+    }
+}
+export const error = (msg) => {
+    if(process.env.NODE_ENV!=='production'){
+        console.error(msg)
+    }
+}

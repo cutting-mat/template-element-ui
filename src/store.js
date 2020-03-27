@@ -1,12 +1,13 @@
 import Vue from 'vue'
 const bus = new Vue();
+import * as util from "@/common/assets/util";
 
 // 队列容器
 let promiseQueue = {};
 
 
 export const store = {
-    debug: true,
+    debug: process.env.NODE_ENV!=='production',
     state: {
         accessToken: null, // token
         menu: [], // 导航菜单
@@ -29,7 +30,7 @@ export const store = {
     get(key) {
         if(key && key.split){
             if (this.state[key] === void(0)) {
-                console.warn(`key [${key}] is not register in store!`)
+                util.warn(`key [${key}] is not register in store!`)
             }
             return this.state[key]
         }
@@ -53,17 +54,20 @@ export const store = {
         return new Promise((resolve, reject) => {
             // 异步数据处理方法
             const catchActionData = (data) => {
-                this.set(key, data)
-                resolve(data)
-                delete promiseQueue[key];
+                if(promiseQueue[key]){
+                    bus.$emit(promiseQueue[key], data)
+                    this.set(key, data)
+                    resolve(data)
+                    delete promiseQueue[key];
+                }
             }
             if (this.checkStore(key, type)) {
                 resolve(this.state[key])
             } else {
                 // 检测并加入队列
                 if(promiseQueue[key]){
-                    bus.$once(promiseQueue[key], (msg) => {
-                        catchActionData(msg)
+                    bus.$once(promiseQueue[key], (data) => {
+                        resolve(data)
                     })
                 }else{
                     // 创建队列
