@@ -292,21 +292,19 @@ export const downloadFile = (config) => {
         }
     })
 }
-
-
 // 非生产环境日志
-export const log = (msg) => {
-    if(process.env.NODE_ENV!=='production'){
-        console.log(msg)
+export const log = function() {
+    if (process.env.NODE_ENV !== 'production') {
+        console.log.call(this, ...arguments)
     }
 }
-export const warn = (msg) => {
-    if(process.env.NODE_ENV!=='production'){
-        console.warn(msg)
+export const warn = function() {
+    if (process.env.NODE_ENV !== 'production') {
+        console.warn.call(this, ...arguments)
     }
 }
-export const error = (msg) => {
-    if(process.env.NODE_ENV!=='production'){
-        console.error(msg)
+export const error = function() {
+    if (process.env.NODE_ENV !== 'production') {
+        console.error.call(this, ...arguments)
     }
 }
