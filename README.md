@@ -43,8 +43,7 @@ Vue-Scaffold
     |   |--permission/                  // 权限管理模块
     |   |   |--...
     |   |
-    |--api.js                           // axios实例化配置（仅开发用，不提交代码仓库）
-    |--api.sample.js                    // axios实例化配置（生产环境提交，运维部门修改host配置，并将文件名改成api.js）
+    |--api.js                           // axios实例配置
     |--App.vue                          // 根组件
     |--main.js                          // 入口文件
     |--register.js                      // 全局资源注册
@@ -153,18 +152,16 @@ export const list = {
 }
 ```
 
-p代表permission（权限），r代表request（请求），一个api的permission就是这个请求的Method+URL，axios拦截器里会根据服务端给的用户权限列表，判断这个请求是否有权发起。在非RESTful环境中其实可以自动拼出permission，但是RESTful请求的URL可能包含参数，因此必须约定参数在权限中的表现规则，比如用`*`代替，所以只能用户手动定义每个api的permission。
-
-这里我们为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数，全部改用常规参数：
+为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数，全部改用常规方式传参：
 
 ```
 // RESTFul
 
-get member/1
+put /member
 
 // URL参数改成常规参数
 
-get member?id=1
+get /member?id=1
 
 ```
 
@@ -177,7 +174,14 @@ export const list = params => {
 }
 ```
 
-去掉URL参数后我们约定请求数据的结合用单词复数形式，请求单条数据用单数形式，这里会产生一个小问题，有的英文名词单词不区分单复数，比如 *news*，这里我们使用一种简单粗暴的方式去解决，遇到这种单词，请求列表时强制加上*es*。
+去掉URL参数后，我们额外约定请求数据集合时给url加上`/s`，比如这样：
+
+```
+// 请求数据集合
+
+get /member/s
+```
+
 
 #### 权限控制工具
 
@@ -187,12 +191,12 @@ export const list = params => {
 #### 可能遇到的问题
 
 - 后端需要一个root用户不受权限限制，拥有平台所有资源，第一批资源创建、角色创建都要由这个root用户来完成
-- 前端刚开始开发的时候，项目里没有任何权限，开启权限控制后应该看不到任何页面，需要先关闭权限控制(`main.js里AccessControl:false`)，用root账号创建第一批权限、角色、账号
+- 项目初始没有任何权限，开启权限控制后应该看不到任何页面，需要先关闭权限控制(`main.js里AccessControl:false`)，用root账号访问权限管理模块，创建第一批权限、角色、账号
 - 拥有创建角色的账号可以创建新角色，但给新角色的赋权不能超过自身权限的范围，这是一个容易忽略的bug 
 
 #### Mock数据
 
-说再多不如看一眼接口，整个项目的Mock数据基于[RAP2](http://rap2.taobao.org)，搜索`"Vue-Scaffold"`可以找到模拟接口仓库。
+说再多不如看一眼接口，演示项目的Mock数据基于[RAP2](http://rap2.taobao.org)生成，[下载该文件可以导入postman](public/RAP-Vue-Scaffold-223572-POSTMAN-20200414012237.json)。
 
 ### 开发相关
 
