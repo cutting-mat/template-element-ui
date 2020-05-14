@@ -13,6 +13,8 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'no-debugger': 'off',
+    'no-unreachable': 'warn',
+    'no-unused-vars': 'warn',
     'vue/no-async-in-computed-properties': 'warn',
     'vue/no-dupe-keys': 'warn',
     'vue/no-duplicate-attributes': 'warn',
