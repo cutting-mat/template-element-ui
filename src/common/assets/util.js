@@ -114,8 +114,9 @@ export const formatDate = (value, fmt) => {
         case 'day':
             fmt = "yyyy/MM/dd"
             break;
-        default:
+        case undefined:
             fmt = "yyyy/MM/dd hh:mm"
+            break;
     }
     if (!isNaN(parseInt(value))) {
         value = parseInt(value)
