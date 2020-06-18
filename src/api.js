@@ -35,6 +35,15 @@ instance.interceptors.response.use(function(response) {
   if(response.status!=200){
     return util.catchError(response);
   }
+  // token续期
+  if(response.headers['jwt-update-token']){
+    util.emit('login', {
+      silent: true,
+      data: {
+        accessToken: response.headers['jwt-update-token']
+      }
+    })
+  }
   return response;
 }, function (error) {
   return util.catchError(error);

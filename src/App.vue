@@ -261,10 +261,15 @@ export default {
       */
       util.storage("auth", res.data);
 
-      this.signin(() => {
-        this.initUser()
-        this.$router.replace({path: res.from || '/'});
-      });
+      this.signin();
+      if(!res.silent){
+        // 如果当前是登录页，跳回首页
+        if(this.$router.currentRoute.path=='/login'){
+          this.$router.replace({path: '/'});
+        }else{
+          this.$router.replace({path: res.from || '/'});
+        }
+      }
     },
     logoutDirect: function(){
       /*
@@ -279,10 +284,6 @@ export default {
     initUser: function(){
       user.info().then(res => {
         store.set('user', res.data.data)
-        // 如果当前是登录页，跳回首页
-        if(this.$router.currentRoute.path=='/login'){
-          this.$router.replace({path: '/'});
-        }
       })
     }
   },
