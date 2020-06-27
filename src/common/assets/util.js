@@ -5,7 +5,7 @@ import Vue from 'vue'
  * 本地存储
  */
 export const storage = function(key, value) {
-    const store = sessionStorage;
+    const store = localStorage;
 
     if (value === void(0)) {
         let lsVal = store.getItem(key);
