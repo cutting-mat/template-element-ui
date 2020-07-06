@@ -135,9 +135,9 @@ export default {
 
       // Add actual routing to application
       originPath[0].children = actualRouter;
-      // redirect 值不在权限中，默认跳第一个有权限的路由
+      // 首页设置了 redirect，且值不在权限中，默认跳第一个有权限的子路由
       if (redirectValuHit === false) {
-        delete originPath[0].redirect;
+        originPath[0].redirect = actualRouter[0];
       }
       this.$router.addRoutes(
         originPath.concat([
