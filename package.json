@@ -1,6 +1,6 @@
 {
     "name": "vue-scaffold",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -12,17 +12,17 @@
         "core-js": "^3.6.5",
         "element-ui": "^2.13.2",
         "ios-photo-repair": "^1.0.8",
-        "vue": "^2.6.11",
-        "vue-router": "^3.4.1"
+        "vue": "^2.6.12",
+        "vue-router": "^3.4.3"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "^4.4.6",
-        "@vue/cli-plugin-eslint": "^4.4.6",
-        "@vue/cli-service": "^4.4.6",
+        "@vue/cli-plugin-babel": "^4.5.4",
+        "@vue/cli-plugin-eslint": "^4.5.4",
+        "@vue/cli-service": "^4.5.4",
         "babel-eslint": "^10.1.0",
-        "eslint": "^7.6.0",
+        "eslint": "^7.7.0",
         "eslint-plugin-vue": "^6.2.2",
-        "vue-template-compiler": "^2.6.11",
+        "vue-template-compiler": "^2.6.12",
         "webpack-subresource-integrity": "^1.4.1"
     }
 }
