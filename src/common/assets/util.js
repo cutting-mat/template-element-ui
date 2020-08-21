@@ -220,9 +220,9 @@ export const catchError = function(error) {
 
 // filePreview 预览
 export const filePreview = (item) => {
-    window.open(item.url)
-}
-// 上传前检查
+        window.open(item.url)
+    }
+    // 上传前检查
 export const checkUpload = function(file) {
     if (!file.size) {
         return Vue.prototype.$message.warning('文件异常')
@@ -264,36 +264,36 @@ import {
 } from "./mime";
 
 export const downloadFile = (config) => {
-    /* config:
-    {
-      name: "xxx.jpg",
-      url: ""
-    }
-    */
-    const fileName = config.name || getUrlName(url);
-    const extName = get_suffix(fileName);
-
-    download(url).then(res => {
-        const blob = new Blob([res.data], {
-            type: mime[extName] || 'application/vnd.ms-excel'
-        })
-
-        const objectURL = URL.createObjectURL(blob);
-        if (objectURL) {
-            Vue.prototype.$alert(`<div style="text-align:center"><a href="${objectURL}" download="${fileName}" target="_blank" class="el-button el-button--default">点击下载</a></div>`, '文件下载', {
-                dangerouslyUseHTMLString: true,
-                showConfirmButton: false,
-                beforeClose(action, instance, done) {
-                    URL.revokeObjectURL(objectURL);
-                    done()
-                }
-            });
-        } else {
-            Vue.prototype.$message.warning('下载失败，请联系技术支持')
+        /* config:
+        {
+          name: "xxx.jpg",
+          url: ""
         }
-    })
-}
-// 非生产环境日志
+        */
+        const fileName = config.name || getUrlName(url);
+        const extName = get_suffix(fileName);
+
+        download(url).then(res => {
+            const blob = new Blob([res.data], {
+                type: mime[extName] || 'application/vnd.ms-excel'
+            })
+
+            const objectURL = URL.createObjectURL(blob);
+            if (objectURL) {
+                Vue.prototype.$alert(`<div style="text-align:center"><a href="${objectURL}" download="${fileName}" target="_blank" class="el-button el-button--default">点击下载</a></div>`, '文件下载', {
+                    dangerouslyUseHTMLString: true,
+                    showConfirmButton: false,
+                    beforeClose(action, instance, done) {
+                        URL.revokeObjectURL(objectURL);
+                        done()
+                    }
+                });
+            } else {
+                Vue.prototype.$message.warning('下载失败，请联系技术支持')
+            }
+        })
+    }
+    // 非生产环境日志
 export const log = function() {
     if (process.env.NODE_ENV !== 'production') {
         console.log.call(this, ...arguments)

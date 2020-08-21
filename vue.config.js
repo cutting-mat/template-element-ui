@@ -16,7 +16,7 @@ module.exports = {
         plugins: [
             new SriPlugin({
                 hashFuncNames: ['sha256', 'sha384'],
-                enabled: true
+                enabled: process.env.NODE_ENV === 'production'
             })
         ],
     }
