@@ -290,15 +290,12 @@ export default {
        */
       util.storage("auth", res.data);
 
-      this.signin();
-      if (!res.silent) {
-        // 如果当前是登录页，跳回首页
-        if (this.$router.currentRoute.path == "/login") {
-          this.$router.replace({ path: "/" });
-        } else {
-          this.$router.replace({ path: res.from || "/" });
+      this.signin(() => {
+        // 登录成功（silent来自token续签）
+        if (!res.silent) {
+          this.initUser()
         }
-      }
+      });
     },
     logoutDirect: function() {
       /*
@@ -313,6 +310,12 @@ export default {
     initUser: function() {
       user.info().then(res => {
         store.set("user", res.data.data);
+        // 如果当前是登录页，跳回首页
+        if (this.$router.currentRoute.path == "/login") {
+          this.$router.replace({ path: "/" });
+        } else {
+          this.$router.replace({ path: res.from || "/" });
+        }
       });
     }
   },
