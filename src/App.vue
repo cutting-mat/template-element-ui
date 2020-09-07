@@ -293,7 +293,7 @@ export default {
       this.signin(() => {
         // 登录成功（silent来自token续签）
         if (!res.silent) {
-          this.initUser()
+          this.initUser(true)
         }
       });
     },
@@ -307,14 +307,16 @@ export default {
 
       window.location.href = process.env.BASE_URL || "/";
     },
-    initUser: function() {
+    initUser: function(redirect) {
       user.info().then(res => {
         store.set("user", res.data.data);
         // 如果当前是登录页，跳回首页
-        if (this.$router.currentRoute.path == "/login") {
-          this.$router.replace({ path: "/" });
-        } else {
-          this.$router.replace({ path: res.from || "/" });
+        if (redirect) {
+          if (this.$router.currentRoute.path == "/login") {
+            this.$router.replace({ path: "/" });
+          } else {
+            this.$router.replace({ path: res.from || "/" });
+          }
         }
       });
     }
