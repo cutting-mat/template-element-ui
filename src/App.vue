@@ -280,6 +280,9 @@ export default {
 
         store.set("menu", currentUserMenu);
 
+        // 容错
+        Vue.prototype.$_has = () => true;
+        
         typeof callback === "function" && callback();
       }
     },
