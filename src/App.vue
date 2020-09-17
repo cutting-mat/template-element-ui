@@ -314,12 +314,10 @@ export default {
       user.info().then(res => {
         store.set("user", res.data.data);
         // 如果当前是登录页，跳回首页
-        if (redirect) {
-          if (this.$router.currentRoute.path == "/login") {
-            this.$router.replace({ path: "/" });
-          } else {
-            this.$router.replace({ path: res.from || "/" });
-          }
+        if (this.$router.currentRoute.path == "/login") {
+          this.$router.replace({ path: "/" });
+        } else if(redirect) {
+          this.$router.replace({ path: res.from || "/" });
         }
       });
     }
