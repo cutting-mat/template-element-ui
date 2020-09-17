@@ -3,7 +3,6 @@
 
 [![license](https://img.shields.io/github/license/tower1229/Vue-Scaffold.svg)]()
 
-
 > :hamburger:基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架
 
 (演示项目接口数据来自RAP2，由于不支持https请求，演示项目可能无法正常登录，请自行下载代码，本地运行)
@@ -27,7 +26,7 @@
 
 ### 项目文件结构
 
-```
+```bash
 Vue-Scaffold
     |--public/ 
     |--src/
@@ -53,7 +52,7 @@ Vue-Scaffold
 
 ### 模块文件结构
 
-```
+```bash
 [Moudle Folder]
     |--api/                             // 接口
     |   `--user.js 
@@ -81,7 +80,7 @@ Vue-Scaffold
 
 以【权限管理模块】为例，看一下这个模块的路由文件里是什么样的：
 
-```
+```javascript
 export default [{
     path: '/permission',
     name: '权限设置',
@@ -112,7 +111,7 @@ export default [{
 
 就是输出了一段普通的路由，这段路由就是这个模块的所有功能体现。怎样将他们添加到项目路由中呢，在主模块路由里（`main/index.js`）
 
-```
+```javascript
 import index from './views/index'
 
 import permission from '../permission'
@@ -142,7 +141,7 @@ export default [{
 
 Vue-Access-Control为了支持RESTful，导致定义api时要一起加上权限定义：
 
-```
+```javascript
 // 获取用户列表
 export const list = {
   p: ['get,/user'],
@@ -154,7 +153,7 @@ export const list = {
 
 为了省掉手动定义permission这一步，约定舍弃RESTFul的URL参数，全部改用常规方式传参：
 
-```
+```javascript
 // RESTFul
 
 put /member
@@ -167,7 +166,7 @@ get /member?id=1
 
 这样就可以跟平常一样的定义API，axios拦截器可以通过请求配置拼出permission，`v-has`指令可以通过正则匹配从请求方法的字符串中拿到permission，完成权限验证。
 
-```
+```javascript
 // 获取用户列表
 export const list = params => {
     return instance.get(`/user`, {params})
@@ -176,12 +175,11 @@ export const list = params => {
 
 去掉URL参数后，我们额外约定请求数据集合时给url加上`/s`，比如这样：
 
-```
+```javascript
 // 请求数据集合
 
 get /member/s
 ```
-
 
 #### 权限控制工具
 
@@ -196,7 +194,7 @@ get /member/s
 
 #### Mock数据
 
-说再多不如看一眼接口，演示项目的Mock数据基于[RAP2](http://rap2.taobao.org)生成，[下载该文件可以导入postman](public/RAP-Vue-Scaffold-223572-POSTMAN-20200414012237.json)。
+说再多不如看一眼接口，演示项目的Mock数据基于[RAP2](http://rap2.taobao.org)生成，[下载该文件可以导入postman](public/RAP-Vue-Scaffold-223572-POSTMAN-20200917055532.json)。
 
 ### 开发相关
 
@@ -209,17 +207,15 @@ get /member/s
 
 ### "开箱即用"都有啥？
 
-首先，我不喜欢那种有不管用没用每样都来一套的杂货铺型脚手架，我觉得这是在侮辱用户的智商，就那些个破烂谁不会做？不会做还不会抄？你捡一麻袋破烂送到我面前是想说明啥？
-
 脚手架讲究的就是个最小依赖，解决的是架构问题，不是业务问题，期望的情况是拿来就接着做，而不是拿来先一顿删。
 
 Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现。
 
 #### UI实现
 
-- 一个四平八稳的登录界面，加上背景改改名字就完事了 
+- 一个四平八稳的登录界面
 - 一个经典控制台框架，少数几个必要的全局组件
-- 公共样式里附赠少量必要的CSS实现，比如flex栅格系统，字体图标，滚动条美化
+- 公共样式里少量必要的CSS实现，比如flex栅格系统，字体图标，滚动条美化
 - 很常用的组件封装（/src/common/components/）
 - 1. optionsValue 用于实现下拉/级联控件的只读模式，传value和options展示结果文字，做编辑展示二合一的表单很有用
 - 2. tagManage 后台一般都用的标签管理器，功能上额外实现了路由的隐藏、归并
@@ -231,7 +227,6 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 - 账号管理
 - 资源管理
 - 角色管理
-- 当前用户修改密码
 
 基本上这块只需要跟后端看明白思路，直接实现接口就行了，真正的开箱即用。
 
@@ -245,7 +240,7 @@ Vue-Scaffold在架构之外，UI和工具集层面只提供少量的必要实现
 
 大多数项目其实不需要vuex，根目录下`store.js`维护了一个[简单store模式](https://cn.vuejs.org/v2/guide/state-management.html#%E7%AE%80%E5%8D%95%E7%8A%B6%E6%80%81%E7%AE%A1%E7%90%86%E8%B5%B7%E6%AD%A5%E4%BD%BF%E7%94%A8)，支持同步、异步数据存取，用于共享或缓存数据，`common/components/nav.vue`和`common/components/header.vue`里都有用例。
 
-```
+```javascript
 // API示例：
 import { store } from "@/store";
 // 同步存
@@ -256,7 +251,10 @@ store.get('a'); // 1
 store.action('someKey').then(res => {
     // res
 })
-
+// 刷新缓存数据
+store.action('someKey', true).then(res => {
+    // res
+})
 ```
 
 其中异步数据（action）具有并发请求队列机制，同一时间同一key的多次请求，实际只发起一次ajax，其余请求将进入队列，等候ajax返回后集中resolve。
@@ -265,14 +263,11 @@ store.action('someKey').then(res => {
 
 其他没了。
 
-
 ## 下载
 
 演示地址：http://refined-x.com/Vue-Scaffold/
 
 git：`git clone https://github.com/tower1229/Vue-Scaffold.git`
-
-
 
 ## 许可证
 
