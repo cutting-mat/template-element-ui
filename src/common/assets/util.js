@@ -4,7 +4,7 @@ import Vue from 'vue'
 /*
  * 本地存储
  */
-export const storage = function(key, value) {
+export const storage = function (key, value) {
     const store = localStorage;
 
     if (value === void(0)) {
@@ -15,7 +15,7 @@ export const storage = function(key, value) {
             return lsVal;
         }
     } else {
-        if (typeof(value) === "object" || Array.isArray(value)) {
+        if (typeof (value) === "object" || Array.isArray(value)) {
             value = 'autostringify-' + JSON.stringify(value);
         };
         return store.setItem(key, value);
@@ -23,24 +23,9 @@ export const storage = function(key, value) {
 }
 
 /*
- * 生成随机数
- */
-export const getUUID = function(len) {
-    len = parseInt(len, 10);
-    len = isNaN(len) ? 32 : len;
-    const seed = "0123456789abcdefghijklmnopqrstubwxyzABCEDFGHIJKLMNOPQRSTUVWXYZ";
-    const seedLen = seed.length - 1;
-    let uuid = [];
-    while (len--) {
-        uuid.push(seed[Math.round(Math.random() * seedLen)]);
-    }
-    return uuid.join('');
-};
-
-/*
  * 深拷贝
  */
-export const deepcopy = function(source) {
+export const deepcopy = function (source) {
     if (!source) {
         return source;
     }
@@ -54,20 +39,20 @@ export const deepcopy = function(source) {
 /*
  * 一维数组转树形结构
  */
-export const buildTree = function(array, ckey) {
+export const buildTree = function (array, ckey) {
     let menuData = [];
     let indexKeys = Array.isArray(array) ? array.map((e) => {
         return e.id
     }) : [];
     ckey = ckey || 'pid';
-    array.forEach(function(e) {
+    array.forEach(function (e) {
         //一级菜单
         if (!e[ckey] || (e[ckey] === e.id)) {
             delete e[ckey];
             menuData.push(deepcopy(e)); //深拷贝
         } else if (Array.isArray(indexKeys)) {
             //检测ckey有效性
-            let parentIndex = indexKeys.findIndex(function(id) {
+            let parentIndex = indexKeys.findIndex(function (id) {
                 return id == e[ckey];
             });
             if (parentIndex === -1) {
@@ -75,10 +60,10 @@ export const buildTree = function(array, ckey) {
             }
         }
     });
-    let findChildren = function(parentArr) {
+    let findChildren = function (parentArr) {
         if (Array.isArray(parentArr) && parentArr.length) {
-            parentArr.forEach(function(parentNode) {
-                array.forEach(function(node) {
+            parentArr.forEach(function (parentNode) {
+                array.forEach(function (node) {
                     if (parentNode.id === node[ckey]) {
                         if (parentNode.children) {
                             parentNode.children.push(deepcopy(node));
@@ -149,7 +134,7 @@ export const formatDate = (value, fmt) => {
 const bus = new Vue();
 let busQueue = {};
 //监听事件
-export const on = function(eventName, eventHandle) {
+export const on = function (eventName, eventHandle) {
     if (eventName && (typeof eventHandle === 'function'))
         if (busQueue[eventName]) {
             bus.$off(eventName, busQueue[eventName])
@@ -158,14 +143,14 @@ export const on = function(eventName, eventHandle) {
     return bus.$on(eventName, eventHandle)
 };
 //触发事件
-export const emit = function(eventName, msg) {
+export const emit = function (eventName, msg) {
     return bus.$emit(eventName, msg)
 };
 
 /*
  * ajax错误处理
  */
-export const catchError = function(error) {
+export const catchError = function (error) {
     //业务代码拦截
     if (error.data) {
         error.response = error.data
@@ -184,7 +169,7 @@ export const catchError = function(error) {
                 Vue.prototype.$message({
                     message: error.response.data.message || '未授权或授权已过期',
                     type: 'warning',
-                    onClose: function() {
+                    onClose: function () {
                         emit('logout')
                     }
                 });
@@ -220,10 +205,11 @@ export const catchError = function(error) {
 
 // filePreview 预览
 export const filePreview = (item) => {
-        window.open(item.url)
-    }
-    // 上传前检查
-export const checkUpload = function(file) {
+    window.open(item.url)
+}
+
+// 上传前检查
+export const checkUpload = function (file) {
     if (!file.size) {
         return Vue.prototype.$message.warning('文件异常')
     }
@@ -237,7 +223,7 @@ export const checkUpload = function(file) {
 }
 
 // 获取扩展名
-export const get_suffix = (filename) => {
+export const getSuffix = (filename) => {
     let pos = filename.lastIndexOf('.')
     let suffix = ''
     if (pos != -1) {
@@ -246,66 +232,45 @@ export const get_suffix = (filename) => {
     return suffix;
 }
 
-// 获取url文件名
-export const getUrlName = (url) => {
-    const str = url.match(/[^\/]+\.[^\.]+$/);
-    if (str.length) {
-        return str[0]
-    }
-    return ''
-}
-
-// 下载文件
-import {
-    download
-} from '@/common/api/common';
-import {
-    mime
-} from "./mime";
-
-export const downloadFile = (config) => {
-        /* config:
-        {
-          name: "xxx.jpg",
-          url: ""
-        }
-        */
-        const fileName = config.name || getUrlName(url);
-        const extName = get_suffix(fileName);
-
-        download(url).then(res => {
-            const blob = new Blob([res.data], {
-                type: mime[extName] || 'application/vnd.ms-excel'
-            })
-
-            const objectURL = URL.createObjectURL(blob);
-            if (objectURL) {
-                Vue.prototype.$alert(`<div style="text-align:center"><a href="${objectURL}" download="${fileName}" target="_blank" class="el-button el-button--default">点击下载</a></div>`, '文件下载', {
-                    dangerouslyUseHTMLString: true,
-                    showConfirmButton: false,
-                    beforeClose(action, instance, done) {
-                        URL.revokeObjectURL(objectURL);
-                        done()
-                    }
-                });
-            } else {
-                Vue.prototype.$message.warning('下载失败，请联系技术支持')
-            }
-        })
-    }
-    // 非生产环境日志
-export const log = function() {
+// 非生产环境日志
+export const log = function () {
     if (process.env.NODE_ENV !== 'production') {
         console.log.call(this, ...arguments)
     }
 }
-export const warn = function() {
+export const warn = function () {
     if (process.env.NODE_ENV !== 'production') {
         console.warn.call(this, ...arguments)
     }
 }
-export const error = function() {
+export const error = function () {
     if (process.env.NODE_ENV !== 'production') {
         console.error.call(this, ...arguments)
     }
 }
+
+
+/*
+ * 函数节流
+ * @method: 函数体; @delay: 过滤执行间隔; @duration: 至少执行一次的间隔
+ */
+export const throttle = function throttle(method, delay, duration) {
+    let timer = null,
+        begin = new Date();
+    delay = delay ? delay : 128;
+    duration = duration ? duration : 1000;
+    return function () {
+        let context = this,
+            args = arguments,
+            current = new Date();
+        clearTimeout(timer);
+        if (current - begin >= duration) {
+            method.apply(context, args);
+            begin = current;
+        } else {
+            timer = setTimeout(function () {
+                method.apply(context, args);
+            }, delay);
+        }
+    };
+};

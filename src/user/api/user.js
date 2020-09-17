@@ -20,3 +20,8 @@ export const info = params => {
 export const editPassword = params => {
     return instance.put(`/currentUser/password`, params)
 }
+
+//切换身份
+export const switchRole = params => {
+    return instance.get(`/currentUser/switchRole`, {params})
+}

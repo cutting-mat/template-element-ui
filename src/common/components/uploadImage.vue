@@ -20,7 +20,7 @@
           'hidePicker': multiple && !(list.length<limit)
         }"
         action=""
-        :headers="{Authorization: state.user.accessToken}"
+        :headers="{Authorization: state.accessToken}"
         accept="image/*"
         :file-list="list"
         :show-file-list="multiple"
@@ -149,7 +149,7 @@ export default {
     beforeUpload: function(file) {
       this.loading = true;
       const imgExt = ["jpg", "jpeg", "png"];
-      const ext = util.get_suffix(file.name);
+      const ext = util.getSuffix(file.name);
       if(ext && imgExt.indexOf(ext)!==-1){
         return true
       }

@@ -7,7 +7,6 @@ import Vue from "vue";
 import * as util from "@/common/assets/util.js";
 import { store } from "@/store";
 import { instance } from "@/api";
-import * as user from "@/common/api/user";
 import AllRoutesData from "./main/index";
 
 export default {
@@ -184,9 +183,7 @@ export default {
        * You can also get permission information upon user login, it depends on the implementation of the backend interface
        */
       if (this.$root.AccessControl) {
-        user.permission().then(res => {
-          let userPermissions = res.data.data;
-          store.set("permission", userPermissions);
+        store.action('permission').then(userPermissions => {
           /*
            * Step 3
            * Get resourcePermission form user permissions
@@ -296,7 +293,7 @@ export default {
       this.signin(() => {
         // 登录成功（silent来自token续签）
         if (!res.silent) {
-          this.initUser(true)
+          this.initUser(res)
         }
       });
     },
@@ -310,14 +307,13 @@ export default {
 
       window.location.href = process.env.BASE_URL || "/";
     },
-    initUser: function(redirect) {
-      user.info().then(res => {
-        store.set("user", res.data.data);
+    initUser: function(loginRes) {
+      store.action('user').then(() => {
         // 如果当前是登录页，跳回首页
-        if (this.$router.currentRoute.path == "/login") {
+        if(loginRes && loginRes.from) {
+          this.$router.replace({ path: loginRes.from});
+        }else if (this.$router.currentRoute.path == "/login") {
           this.$router.replace({ path: "/" });
-        } else if(redirect) {
-          this.$router.replace({ path: res.from || "/" });
         }
       });
     }

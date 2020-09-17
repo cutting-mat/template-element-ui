@@ -1,7 +1,7 @@
 <template>
   <header class="flex-row align-center myheader">
     <h1 class="logo" @click="$router.push('/')">LOGO</h1>
-    <div class="menuToggle" @click="toggle">
+    <div class="menuToggle">
       <i class="ion">&#xe62b;</i>
     </div>
     <div class="flex-1">
@@ -33,9 +33,6 @@ export default {
     }
   },
   methods: {
-    toggle: function(){
-      store.set('isCollapse', !this.state.isCollapse)
-    },
     handleCommand: function(command){
       switch (command) {
         case 'logout':

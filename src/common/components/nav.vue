@@ -1,5 +1,5 @@
 <template>
-  <el-menu :collapse="state.isCollapse" 
+  <el-menu
     :default-active="activeIndex" 
     router 
     unique-opened

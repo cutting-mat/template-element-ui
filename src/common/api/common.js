@@ -11,8 +11,3 @@ export const uploadImg = params => {
 
 //文件上传地址
 export const upload = `${baseURL}/oss/file`
-
-// 下载文件
-export const download = url => {
-    return instance.get(`${url}`, {params: {}, responseType: 'blob'})
-}

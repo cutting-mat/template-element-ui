@@ -1,6 +1,6 @@
 <template>
   <div class="scrollbar blockLayout" v-loading="loading">
-    <div class="flex-row align-center toolBar">
+    <div class="flex-row toolBar">
       <div class="flex-1">
         <!-- title -->
       </div>
@@ -13,7 +13,7 @@
       >添加</el-button>
     </div>
     <el-table :data="list" style="width: 100%">
-      <el-table-column prop="roleName" label="角色名称" align="center"></el-table-column>
+      <el-table-column prop="name" label="角色名称" align="center"></el-table-column>
       <el-table-column prop="description" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="300" align="center">
@@ -33,8 +33,8 @@
       @close="handleCloseDialog"
     >
       <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
-        <el-form-item label="角色名称" prop="roleName">
-          <el-input v-model="editForm.roleName"></el-input>
+        <el-form-item label="角色名称" prop="name">
+          <el-input v-model="editForm.name"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="description">
           <el-input v-model="editForm.description" type="textarea"></el-input>
@@ -43,9 +43,8 @@
         <el-form-item label="权限">
           <resourcePicker 
             picker 
-            :checked="resourceIds" 
-            @checkResource="checkResource" 
-            @checkMenu="checkMenu" 
+            :checked="editForm.resources" 
+            @check="editForm.resources=$event.map(e => e.id)" 
           />
         </el-form-item>
       </el-form>
@@ -73,32 +72,23 @@ export default {
       loading: false,
       list: [],
       editForm: {
-        roleName: "",
+        name: "",
         description: "",
-        resource: [],
-        menu: []
+        resources: []
       },
       rules: {
-        roleName: [{ required: true, message: "请输入角色名称", trigger: "blur" }]
+        name: [{ required: true, message: "请输入角色名称", trigger: "blur" },
+          { min: 1, max: 100, message: '长度 1 到 100 个字符', trigger: 'blur' }],
+        description: [
+          { min: 0, max: 255, message: '长度 0 到 255 个字符', trigger: 'blur' }
+        ]
       }
     };
   },
-  computed: {
-    resourceIds: function(){
-      return this.editForm.resource.concat(this.editForm.menu)
-    }
-  },
   methods: {
-    checkResource(ids) {
-      this.editForm.resource = ids;
-    },
-    checkMenu(ids) {
-      this.editForm.menu = ids;
-    },
     edit(data) {
-      this.editForm = data;
-      this.$set(this.editForm, 'resource', data.resource)
-      this.$set(this.editForm, 'menu', data.menu)
+      this.editForm = util.deepcopy(data);
+      this.$set(this.editForm, 'resources', data.resources)
       this.dialogVisible = true;
     },
     save() {
@@ -131,10 +121,9 @@ export default {
     handleCloseDialog: function() {
       this.dialogVisible = false;
       this.editForm = {
-        roleName: "",
+        name: "",
         description: "",
-        resource: [],
-        menu: []
+        resources: []
       };
       this.$refs.editForm && this.$refs.editForm.resetFields()
     },

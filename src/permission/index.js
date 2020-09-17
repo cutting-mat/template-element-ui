@@ -18,9 +18,5 @@ export default [{
         path: 'resource',
         name: '资源管理',
         component: (resolve) => require(['./views/resource.vue'], resolve)
-    }, {
-        path: 'password',
-        name: '修改密码',
-        component: (resolve) => require(['./views/password.vue'], resolve)
     }]
 }]

@@ -1,6 +1,6 @@
 <template>
   <div class="scrollbar blockLayout" v-loading="loading">
-    <div class="flex-row align-center toolBar">
+    <div class="flex-row toolBar">
       <div class="flex-1">
         <!-- page title -->
       </div>
@@ -18,7 +18,7 @@
         :listdata="list"
         @edit="edit"
         @append="append"
-        @addResource="addResource"
+        @add-resource="addResource"
         @remove="remove"
       />
     </div>
@@ -72,8 +72,7 @@
 <script>
 import * as util from "@/common/assets/util";
 import * as resource from '../api/resource';
-import * as menu from '../api/menu';
-import * as user from "@/common/api/user";
+import * as user from "@/user/api/user";
 import {store} from '@/store';
 
 export default {
@@ -102,7 +101,8 @@ export default {
         url: ''
       },
       rules: {
-        name: [{ required: true, message: "请输入名称", trigger: "blur" }],
+        name: [{ required: true, message: "请输入名称", trigger: "blur" },
+        { min: 1, max: 100, message: '长度 1 到 100 个字符', trigger: 'blur' }],
         url: [{ required: true, message: "请输入路由/URL", trigger: "blur" }],
         method: [{ validator: checkMethod, trigger: "blur" }]
       },
@@ -158,7 +158,7 @@ export default {
           let formData = util.deepcopy(this.editForm);
           this.handleCloseDialog()
 
-          const handleApi = formData.route ? menu : resource;
+          const handleApi = resource;
           //处理级联pid数组为单一pid
           if(Array.isArray(formData.pid)){
             formData.pid = formData.pid.pop()
@@ -200,7 +200,7 @@ export default {
       if (!item || !item.id) {
         return null;
       }
-      const handleApi = item.route ? menu : resource;
+      const handleApi = resource;
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
@@ -219,10 +219,8 @@ export default {
     },
     fetchData: function() {
       this.loading = true;
-      user.permission().then(res => {
+      store.action('permission', true).then(userPermissions => {
         this.loading = false;
-        let userPermissions = res.data.data;
-        store.set('permission', userPermissions);
         this.list = util.buildTree(userPermissions.menus.concat(userPermissions.resources));
       
       });

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 const bus = new Vue();
 import * as util from "@/common/assets/util";
-
+import {permission as getUserPermission, info as getUserInfo} from "@/user/api/user";
 // 队列容器
 let promiseQueue = {};
 
@@ -12,7 +12,6 @@ export const store = {
         accessToken: null, // token
         menu: [], // 导航菜单
         user: {}, // 用户信息
-        isCollapse: false, // 菜单收起状态 
         permission: [] // 用户权限
     },
     set(key, newValue) {
@@ -35,9 +34,13 @@ export const store = {
             return this.state[key]
         }
     },
-    checkStore(key, type) {
+    checkStore(key) {
         let result;
-        type = type || 'array'; // array,object,number,string,boolean
+        let type = typeof(this.state[key]); // array,object,number,string,boolean
+        if(Array.isArray(this.state[key])){
+            type = 'array'
+        }
+        
         switch (type) {
             case 'array':
                 result = !!this.state[key].length
@@ -50,7 +53,7 @@ export const store = {
         }
         return result
     },
-    action(key, type) {
+    action(key, reload) {
         return new Promise((resolve, reject) => {
             // 异步数据处理方法
             const catchActionData = (data) => {
@@ -61,7 +64,7 @@ export const store = {
                     delete promiseQueue[key];
                 }
             }
-            if (this.checkStore(key, type)) {
+            if (!reload && this.checkStore(key)) {
                 resolve(this.state[key])
             } else {
                 // 检测并加入队列
@@ -74,6 +77,20 @@ export const store = {
                     promiseQueue[key] = 'action_' + parseInt(Math.random() * 1e8);
                     // 定义异步数据获取逻辑
                     switch (key) {
+                        case "permission":
+                            getUserPermission().then(res => {
+                                let userPermissions = {
+                                    menus: res.data.data.filter((e) => e.type === 0),
+                                    resources: res.data.data.filter((e) => e.type === 1),
+                                };
+                                catchActionData(userPermissions)
+                            })
+                            break;
+                        case "user":
+                            getUserInfo().then(res => {
+                                catchActionData(res.data.data)
+                            })
+                            break;
                         case "someKey":
                             // send ajax and use `catchActionData()` to catch data!
                             

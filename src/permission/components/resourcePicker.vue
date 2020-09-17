@@ -6,7 +6,7 @@
     node-key="id"
     default-expand-all
     :show-checkbox="picker"
-    :check-strictly="picker"
+    check-strictly
     @check-change="handleCheckChange"
     >
     <div slot-scope="{ node, data }" class="custom-tree-item">
@@ -19,8 +19,11 @@
       <span class="extendGroup" v-if="!picker">
         <el-button v-has="resource.edit" size="small" type="text" @click.stop="$emit('edit',data)">编辑</el-button>
         <el-button v-has="resource.add" v-if="!!data.route" size="small" type="text" @click.stop="$emit('append', data)">添加子菜单</el-button>
-        <el-button v-has="resource.add" v-if="!!data.route" size="small" type="text" @click.stop="$emit('addResource', data)">添加资源</el-button>
+        <el-button v-has="resource.add" v-if="!!data.route" size="small" type="text" @click.stop="$emit('add-resource', data)">添加资源</el-button>
         <el-button v-has="resource.remove" size="small" type="text" @click.stop="$emit('remove', data)">删除</el-button>
+      </span>
+      <span class="extendGroup" v-else>
+        <el-button size="small" type="text" @click.stop="handleCheckChange(data, !node.checked, true)">批量选择</el-button>
       </span>
     </div>
   </el-tree>
@@ -28,9 +31,7 @@
 
 <script>
 import * as util from '@/common/assets/util';
-import * as user from "@/common/api/user";
 import * as resource from '../api/resource';
-import * as menu from '../api/menu';
 import {store} from '@/store';
 
 export default {
@@ -52,7 +53,6 @@ export default {
   data() {
     return {
       resource,
-      menu,
       list: [],
       defaultProps: {
         children: 'children',
@@ -63,7 +63,8 @@ export default {
         post: 'primary',
         put: 'warning',
         delete: 'danger'
-      }
+      },
+      trigger: null
     }
   },
   watch: {
@@ -83,22 +84,24 @@ export default {
     }
   },
   methods: {
-    handleCheckChange(data, checked) {
-      if(Array.isArray(data.children) && data.children.length){
-        data.children.forEach(cnode => {
-          this.$refs.tree.setChecked(cnode, checked)
-        })
+    handleCheckChange(data, checked, checkChild) {
+      const theNode = this.$refs.tree.getNode(data);
+      if(theNode){
+        this.$refs.tree.setChecked(theNode, checked);
+
+        if(checkChild && Array.isArray(data.children) && data.children.length){
+          data.children.forEach(cnode => {
+            this.handleCheckChange(cnode, checked, checkChild)
+          })
+        }
+        
       }
       this.$nextTick(() => {
-        const checked = this.$refs.tree.getCheckedNodes();
-        this.$emit('checkResource', checked.filter(e => !!e.url).map(e => e.id));
-        this.$emit('checkMenu', checked.filter(e => !!e.route).map(e => e.id))
+        this.trigger()
       })
     },
     fetchData: function(){
-      user.permission().then(res => {
-          let userPermissions = res.data.data;
-          store.set('permission', userPermissions);
+      store.action('permission').then(userPermissions => {
           this.list = util.buildTree(userPermissions.menus.concat(userPermissions.resources));
           //设置已勾选
           if(Array.isArray(this.checked)){
@@ -115,6 +118,12 @@ export default {
       this.fetchData()
     }
     
+  },
+  mounted() {
+    this.trigger = util.throttle(() => {
+      const checked = this.$refs.tree.getCheckedNodes();
+      this.$emit('check', checked);
+    })
   }
 }
 </script>

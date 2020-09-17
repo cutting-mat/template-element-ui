@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import * as user from '../api/user';
+import * as user from '@/user/api/user';
 import {emit} from '../assets/util'
 
 export default {

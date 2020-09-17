@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as util from '@/common/assets/util';
 
 const HOST = {
-    mock: 'http://rap2api.taobao.org/app/mock/8',
+    mock: 'http://rap2.taobao.org:38080/app/mock/223572',
     dev: 'http://172.17.2.1:8187',
     test: '//test.com/api',
     master: '//master.com/api'

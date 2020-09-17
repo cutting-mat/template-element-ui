@@ -1,6 +1,6 @@
 {
     "name": "vue-scaffold",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -15,11 +15,11 @@
         "vue-router": "^3.4.3"
     },
     "devDependencies": {
-        "@vue/cli-plugin-babel": "^4.5.4",
-        "@vue/cli-plugin-eslint": "^4.5.4",
-        "@vue/cli-service": "^4.5.4",
+        "@vue/cli-plugin-babel": "^4.5.6",
+        "@vue/cli-plugin-eslint": "^4.5.6",
+        "@vue/cli-service": "^4.5.6",
         "babel-eslint": "^10.1.0",
-        "eslint": "^7.7.0",
+        "eslint": "^7.9.0",
         "eslint-plugin-vue": "^6.2.2",
         "vue-template-compiler": "^2.6.12",
         "webpack-subresource-integrity": "^1.4.1"
