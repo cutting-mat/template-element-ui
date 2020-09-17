@@ -72,7 +72,6 @@
 <script>
 import * as util from "@/common/assets/util";
 import * as resource from '../api/resource';
-import * as user from "@/user/api/user";
 import {store} from '@/store';
 
 export default {
