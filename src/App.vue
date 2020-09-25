@@ -86,7 +86,7 @@ export default {
         let replyResult = [];
         array.forEach(route => {
           let pathKey = (base ? base + "/" : "") + route.path;
-          // 检测redirect值是否在权限中
+          // 首页设置了 redirect，判断在不在权限中
           if (originPath[0].redirect && originPath[0].redirect === pathKey) {
             redirectValuHit = true;
           }
