@@ -79,18 +79,16 @@ export default {
     },
     extendRoutes: function(routePermission) {
       let originPath = util.deepcopy(AllRoutesData);
-      console.log(originPath)
       // Filtering local routes, get actual routing
-      let redirectValuHit = originPath[0].redirect ? false : null;
       let actualRouter = [];
+
       let findLocalRoute = function(array, base) {
         let replyResult = [];
         array.forEach(route => {
           let pathKey = (base ? base + "/" : "") + route.path;
-          // 首页设置了 redirect，判断在不在权限中
-          if (originPath[0].redirect && originPath[0].redirect === pathKey) {
-            redirectValuHit = true;
-          }
+          // 扩展fullPath
+          route.fullPath = pathKey;
+
           if (routePermission[pathKey]) {
             if (Array.isArray(route.children)) {
               route.children = findLocalRoute(
@@ -135,10 +133,27 @@ export default {
 
       // Add actual routing to application
       originPath[0].children = actualRouter;
-      // 首页设置了 redirect，且值不在权限中，默认跳第一个有权限的子路由
-      if (redirectValuHit === false) {
-        originPath[0].redirect = actualRouter[0];
-      }
+
+      // check & set 'redirect' path
+      let checkRouteRedirect = function(array) {
+        array.forEach(route => {
+          const currentRouteRedirect = (route.redirect && route.redirect.split) ? route.redirect : null;
+          if(currentRouteRedirect && Array.isArray(route.children) && route.children.length){
+            const targetIndex = route.children.findIndex(e => {
+              return e.fullPath === currentRouteRedirect
+            })
+            if(targetIndex===-1){
+              console.warn(`${route.redirect}不在路由权限内，自动重置为${route.children[0].fullPath}`)
+              route.redirect = route.children[0].fullPath;
+            }
+          }
+          if(Array.isArray(route.children) && route.children.length){
+            checkRouteRedirect(route.children)
+          }
+        });
+      };
+      checkRouteRedirect(originPath)
+
       this.$router.addRoutes(
         originPath.concat([
           {
