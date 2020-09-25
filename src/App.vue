@@ -79,6 +79,7 @@ export default {
     },
     extendRoutes: function(routePermission) {
       let originPath = util.deepcopy(AllRoutesData);
+      console.log(originPath)
       // Filtering local routes, get actual routing
       let redirectValuHit = originPath[0].redirect ? false : null;
       let actualRouter = [];
