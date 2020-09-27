@@ -11,6 +11,7 @@
         "axios": "^0.20.0",
         "element-ui": "^2.13.2",
         "ios-photo-repair": "^1.0.8",
+        "qs": "^6.9.4",
         "vue": "^2.6.12",
         "vue-router": "^3.4.3"
     },

@@ -1,4 +1,5 @@
 import axios from 'axios';
+import qs from 'qs';
 import * as util from '@/common/assets/util';
 
 const HOST = {
@@ -20,6 +21,9 @@ export const instance = axios.create({
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
+    },
+    paramsSerializer: params => {
+        return qs.stringify(params, { indices: false })
     }
 });
 
