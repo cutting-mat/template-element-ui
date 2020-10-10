@@ -9,11 +9,13 @@
       :on-error="handleError"
       :before-upload="beforeUpload"
       :accept="accept"
-      v-if="!disabled"
+      :disabled="disabled"
     >
-      <el-button size="small" type="primary">点击上传</el-button>
+      <slot>
+        <el-button size="small" type="primary">点击上传</el-button>
+      </slot>
     </el-upload>
-    <div v-if="files.length">
+    <div v-if="showFileList">
       <el-tag
         v-for="file in files"
         :key="'file'+file.id"
@@ -44,6 +46,11 @@ export default {
         */
         return [];
       }
+    },
+    showFileList: {
+      type: Boolean,
+      required: false,
+      default: false
     },
     disabled: {
       type: Boolean,
