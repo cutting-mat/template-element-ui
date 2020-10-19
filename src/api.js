@@ -23,7 +23,7 @@ export const instance = axios.create({
         'Content-Type': 'application/json'
     },
     paramsSerializer: params => {
-        return qs.stringify(params, { indices: false })
+        return qs.stringify(params, { indices: false, skipNulls: true })
     }
 });
 
