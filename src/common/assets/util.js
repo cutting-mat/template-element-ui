@@ -213,8 +213,8 @@ export const checkUpload = function (file) {
     if (!file.size) {
         return Vue.prototype.$message.warning('文件异常')
     }
-    const limitSize = 50 * 1024; // KB
-    if (file.size > limitSize * 1024) {
+    const limitSize = 100 * 1024 * 1024; // 100M
+    if (file.size > limitSize) {
         Vue.prototype.$message.warning('文件超出最大限制')
         return false
     }
