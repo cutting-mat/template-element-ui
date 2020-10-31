@@ -4,8 +4,8 @@ import * as util from '@/common/assets/util';
 
 const HOST = {
     mock: 'http://rap2api.taobao.org/app/mock/223572',
-    dev: 'http://172.17.2.1:8187',
-    test: '//test.com/api',
+    dev: 'http://ysxt.kaifa/japi',
+    test: 'http://test.com/api',
     master: '//master.com/api'
 };
 
@@ -14,7 +14,7 @@ const HASH = {
     "master.com": HOST.master
 }
 
-export const baseURL = HASH[window.location.host] || HOST.mock;
+export const baseURL = HASH[window.location.host] || HOST.dev;
 
 export const instance = axios.create({
     baseURL,
