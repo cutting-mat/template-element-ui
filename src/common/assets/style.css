@@ -48,19 +48,6 @@ ul {
     list-style-type: none;
 }
 
-i,
-em {
-    font-style: normal;
-}
-
-big {
-    font-size: 16px;
-}
-
-small {
-    font-size: 12px;
-}
-
 a {
     transition: all 0.3s ease;
     text-decoration: none;
