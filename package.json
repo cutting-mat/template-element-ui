@@ -1,28 +1,28 @@
 {
-    "name": "vue-scaffold",
-    "version": "0.3.5",
-    "private": true,
-    "scripts": {
-        "serve": "vue-cli-service serve",
-        "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint"
-    },
-    "dependencies": {
-        "axios": "^0.20.0",
-        "element-ui": "^2.13.2",
-        "ios-photo-repair": "^1.0.8",
-        "qs": "^6.9.4",
-        "vue": "^2.6.12",
-        "vue-router": "^3.4.3"
-    },
-    "devDependencies": {
-        "@vue/cli-plugin-babel": "^4.5.6",
-        "@vue/cli-plugin-eslint": "^4.5.6",
-        "@vue/cli-service": "^4.5.6",
-        "babel-eslint": "^10.1.0",
-        "eslint": "^7.9.0",
-        "eslint-plugin-vue": "^6.2.2",
-        "vue-template-compiler": "^2.6.12",
-        "webpack-subresource-integrity": "^1.4.1"
-    }
+  "name": "vue-scaffold",
+  "version": "0.3.5",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "element-ui": "^2.14.1",
+    "ios-photo-repair": "^1.0.9",
+    "qs": "^6.9.4",
+    "vue": "^2.6.12",
+    "vue-router": "^3.4.9"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^4.5.9",
+    "@vue/cli-plugin-eslint": "^4.5.9",
+    "@vue/cli-service": "^4.5.9",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.14.0",
+    "eslint-plugin-vue": "^7.1.0",
+    "vue-template-compiler": "^2.6.12",
+    "webpack-subresource-integrity": "^1.5.2"
+  }
 }

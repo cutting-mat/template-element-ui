@@ -34,7 +34,7 @@ instance.interceptors.request.use(function(config) {
     return Promise.reject(error);
 });
 
-//错误处理
+// 响应处理
 instance.interceptors.response.use(function(response) {
     if (response.status != 200) {
         return util.catchError(response);
