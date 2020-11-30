@@ -129,7 +129,7 @@ export const formatDate = (value, fmt) => {
 }
 
 /*
- * 事件总线
+ * 全局事件
  */
 const bus = new Vue();
 let busQueue = {};
@@ -140,7 +140,6 @@ export const on = function (eventName, eventHandle) {
             bus.$off(eventName, busQueue[eventName])
         }
         busQueue[eventName] = eventHandle;
-        console.log(busQueue)
         return bus.$on(eventName, eventHandle)
     }
 };
