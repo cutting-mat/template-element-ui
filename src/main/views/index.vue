@@ -1,17 +1,17 @@
 <template>
   <div class="mainCont flex-col">
     <!-- 头部 -->
-    <global-header />
+    <BaseHeader />
     <div class="flex-1 flex-row">
       <!-- 菜单 -->
-      <global-nav  />
+      <BaseNav  />
       <!-- 内容 -->
       <template v-if="$route.path=='/'">
         <dashboard class="flex-1" />
       </template>
       <template v-else>
         <div class="flex-1 flex-col">
-          <global-tag-manage />
+          <BaseTagManage />
 
           <router-view class="flex-1" />
         </div>

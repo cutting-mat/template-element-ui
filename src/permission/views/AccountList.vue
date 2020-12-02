@@ -45,13 +45,13 @@
       </el-table-column>
     </el-table>
     <!-- page -->
-    <global-pagination
+    <BasePagination
       :page-size="queryParam.pageSize"
       :current-page="queryParam.p"
       :total-count="totalCount"
       :total-page="totalPage"
       @current-change="handleCurrentChange"
-    ></global-pagination>
+    />
     <!-- 弹窗 -->
     <el-dialog :close-on-click-modal="false"
       title="账号信息"

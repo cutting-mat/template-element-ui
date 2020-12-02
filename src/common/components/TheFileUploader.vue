@@ -18,7 +18,7 @@
         @close="handleRemove(file, files)"
       >{{file.name}}</el-tag>
     </div>
-    <global-placeholder v-else message="暂无" />
+    <BasePlaceholder v-else message="暂无" />
   </div>
 </template>
 
