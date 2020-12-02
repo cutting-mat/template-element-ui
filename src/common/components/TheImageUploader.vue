@@ -9,14 +9,14 @@
       <i class="el-icon-delete-solid _del" title="删除" @click="handleRemove(item)"></i>
     </div>
 
-    <elUploadImage 
+    <BaseUploadImage 
       :disabled="disabled || !(list.length<limit)"
       :multiple="multiple"
       :accept="accept"
       @progress="handleProgress"
       @success="handleSuccess"
     >
-    </elUploadImage>
+    </BaseUploadImage>
 
     <!-- 图片预览 -->
     <el-dialog :close-on-click-modal="false" :visible.sync="previewVisible" append-to-body>
@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import elUploadImage from "../components/elUploadImage";
+import BaseUploadImage from "../components/BaseUploadImage";
 
 export default {
   props: {
@@ -58,7 +58,7 @@ export default {
     },
   },
   components: {
-    elUploadImage,
+    BaseUploadImage,
   },
   data() {
     return {

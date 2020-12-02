@@ -4,10 +4,10 @@ export default [{
     meta: {
         hide: true
     },
-    component: (resolve) => require(['./views/index.vue'], resolve),
+    component: (resolve) => require(['./views/Index.vue'], resolve),
     children: [{
         path: 'password',
         name: '修改密码',
-        component: (resolve) => require(['./views/password.vue'], resolve)
+        component: (resolve) => require(['./views/Password.vue'], resolve)
     }]
 }]

@@ -1,12 +1,12 @@
 // 全局组件
-import globalHeader from '@/common/components/header.vue'
+import BaseHeader from '@/common/components/BaseHeader.vue'
 
 const globalComponents = {
-    globalHeader,
-    globalNav: () => import(/* webpackChunkName: "global-components" */ "@/common/components/nav.vue"),
-    globalTagManage: () => import(/* webpackChunkName: "global-components" */ "@/common/components/tagManage.vue"),
-    globalPagination: () => import(/* webpackChunkName: "global-components" */ "@/common/components/pagination.vue"),
-    globalPlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/common/components/placeholder.vue")
+    BaseHeader,
+    BaseNav: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BaseNav.vue"),
+    BaseTagManage: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BaseTagManage.vue"),
+    BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BasePagination.vue"),
+    BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BasePlaceholder.vue")
 }
 
 

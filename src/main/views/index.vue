@@ -24,7 +24,7 @@
 
 export default {
   components: {
-    dashboard: () => import("../components/dashboard.vue")
+    dashboard: () => import("../components/TheDashboard.vue")
   },
   data () {
     return {

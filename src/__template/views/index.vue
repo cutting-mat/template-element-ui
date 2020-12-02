@@ -12,7 +12,7 @@ export default {
   methods: {
     
   },
-  created: function() {
+  created() {
     
   }
 };

@@ -4,19 +4,19 @@ export default [{
     meta: {
         icon: "&#xe606;"
     },
-    component: (resolve) => require(['./views/index.vue'], resolve),
+    component: (resolve) => require(['./views/Index.vue'], resolve),
     redirect: '/permission/account',
     children: [{
         path: 'account',
         name: '账号管理',
-        component: (resolve) => require(['./views/account.vue'], resolve)
+        component: (resolve) => require(['./views/AccountList.vue'], resolve)
     }, {
         path: 'role',
         name: '角色管理',
-        component: (resolve) => require(['./views/role.vue'], resolve)
+        component: (resolve) => require(['./views/RoleList.vue'], resolve)
     }, {
         path: 'resource',
         name: '资源管理',
-        component: (resolve) => require(['./views/resource.vue'], resolve)
+        component: (resolve) => require(['./views/ResourceList.vue'], resolve)
     }]
 }]

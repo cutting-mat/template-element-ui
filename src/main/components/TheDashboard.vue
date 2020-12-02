@@ -9,10 +9,10 @@
     </div>
     <div class="flex-row">
       <div class="flex-1 box blockLayout">
-        <uploader multiple @change="handleUploadFile" />
+        <TheFileUploader multiple @change="handleUploadFile" />
       </div>
       <div class="flex-1 box blockLayout">
-        <uploadImage @change="handleUploadImage" />
+        <TheImageUploader @change="handleUploadImage" />
       </div>
     </div>
   </div>
@@ -22,10 +22,10 @@
 
 export default {
   components: {
-    uploader: resolve =>
-      require(["@/common/components/uploader"], resolve),
-    uploadImage: resolve =>
-      require(["@/common/components/uploadImage"], resolve)
+    TheFileUploader: resolve =>
+      require(["@/common/components/TheFileUploader"], resolve),
+    TheImageUploader: resolve =>
+      require(["@/common/components/TheImageUploader"], resolve)
   },
   data() {
     return {

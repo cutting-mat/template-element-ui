@@ -41,7 +41,7 @@
         </el-form-item>
 
         <el-form-item label="权限">
-          <resourcePicker 
+          <TheResourcePicker 
             picker 
             :checked="editForm.resources" 
             @check="editForm.resources=$event.map(e => e.id)" 
@@ -62,8 +62,8 @@ import * as role from "../api/role";
 
 export default {
   components: {
-    resourcePicker: resolve =>
-      require(["../components/resourcePicker.vue"], resolve)
+    TheResourcePicker: resolve =>
+      require(["../components/TheResourcePicker.vue"], resolve)
   },
   data() {
     return {

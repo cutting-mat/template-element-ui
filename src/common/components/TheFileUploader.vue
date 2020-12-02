@@ -1,6 +1,6 @@
 <template>
   <div v-loading="loading" :element-loading-text="loadingText">
-    <elUploadFile 
+    <BaseUploadFile 
       :disabled="disabled"
       :multiple="multiple"
       :accept="accept"
@@ -24,7 +24,7 @@
 
 <script>
 import * as util from "@/common/assets/util";
-import elUploadFile from '../components/elUploadFile'
+import BaseUploadFile from '../components/BaseUploadFile'
 
 export default {
   props: {
@@ -60,7 +60,7 @@ export default {
     }
   },
   components: {
-    elUploadFile
+    BaseUploadFile
   },
   data() {
     return {

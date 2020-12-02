@@ -3,22 +3,14 @@
 </template>
 
 <script>
-
 export default {
-  data () {
-    return {
-      
-    }
+  data() {
+    return {};
   },
-  methods: {
-    
-  },
-  created: function(){
-    
-  }
-}
+  methods: {},
+  created: function () {},
+};
 </script>
 
 <style scoped>
-
 </style>

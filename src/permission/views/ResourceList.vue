@@ -14,7 +14,7 @@
     </div>
 
     <div class="resourceWrap">
-      <resourcePicker
+      <TheResourcePicker
         :listdata="list"
         @edit="edit"
         @append="append"
@@ -76,8 +76,8 @@ import {store} from '@/store';
 
 export default {
   components: {
-    resourcePicker: resolve =>
-      require(["../components/resourcePicker.vue"], resolve)
+    TheResourcePicker: resolve =>
+      require(["../components/TheResourcePicker.vue"], resolve)
   },
   data() {
     const checkMethod = (rule, value, callback) => {

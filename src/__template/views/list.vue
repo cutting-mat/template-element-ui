@@ -1,7 +1,5 @@
 <template>
-  <div class="wrap">
-    template homepage
-  </div>
+  <div class="wrap">template homepage</div>
 </template>
 
 <script>
@@ -11,15 +9,10 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    
-  },
-  created: function() {
-    
-  }
+  methods: {},
+  created() {}
 };
 </script>
 
 <style scoped>
-
 </style>

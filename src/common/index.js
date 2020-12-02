@@ -2,7 +2,7 @@
 export default [{
     path: '/login',
     name: '登录',
-    component: (resolve) => require(['./views/login.vue'], resolve)
+    component: (resolve) => require(['./views/Login.vue'], resolve)
 }, {
     path: '/401',
     name: '无权访问',
