@@ -1,6 +1,6 @@
 <template>
   <el-upload
-    :action="upload"
+    :action="uploadUrl"
     :headers="{ Authorization: state.accessToken }"
     :show-file-list="false"
     :on-success="handleSuccess"
@@ -27,24 +27,29 @@ export default {
     disabled: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     multiple: {
       type: Boolean,
       required: false,
-      default: false,
+      default: false
     },
     accept: {
       type: String,
       required: false,
-      default: "*",
+      default: "*"
     },
+    action: {
+      type: String,
+      required: false,
+      default: null
+    }
   },
   data() {
     return {
       state: store.state,
       loading: false,
-      upload,
+      uploadUrl: this.action || upload,
     };
   },
   methods: {
