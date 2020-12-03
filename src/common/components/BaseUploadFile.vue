@@ -48,28 +48,22 @@ export default {
   data() {
     return {
       state: store.state,
-      loading: false,
       uploadUrl: this.action || upload,
     };
   },
   methods: {
     handleSuccess(res) {
-      this.loading = false;
       this.$emit("success", res.data);
     },
     handleError(err) {
-      this.loading = false;
-      return util.catchError(err);
+      util.catchError(err);
+      this.$emit("error", err);
     },
     handleProgress($event) {
       this.$emit("progress", $event);
     },
     beforeUpload(file) {
-      this.loading = true;
       const filePass = util.checkUpload(file);
-      if (!filePass) {
-        this.loading = false;
-      }
       return filePass;
     },
   },

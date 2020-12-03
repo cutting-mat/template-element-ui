@@ -43,30 +43,25 @@ export default {
   data() {
     return {
       state: store.state,
-      loading: false,
     };
   },
   methods: {
     handleSuccess: function(res) {
-      this.loading = false;
       this.$emit("success", res.data);
     },
     handleError: function(err) {
-      this.loading = false;
-      return util.catchError(err);
+      this.$emit("error", err);
     },
     handleProgress($event) {
       this.$emit("progress", $event);
     },
     beforeUpload: function(file) {
-      this.loading = true;
       const imgExt = ["jpg", "jpeg", "png"];
       const ext = util.getSuffix(file.name);
       if(ext && imgExt.indexOf(ext)!==-1){
         return true
       }
       this.$message.warning('文件格式错误');
-      this.loading = false;
       return false;
     },
     customUpload: function(params){

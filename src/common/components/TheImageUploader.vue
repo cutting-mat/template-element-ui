@@ -15,6 +15,7 @@
       :accept="accept"
       @progress="handleProgress"
       @success="handleSuccess"
+      @error="handleError"
     >
     </BaseUploadImage>
 
@@ -100,6 +101,9 @@ export default {
       this.loading = true;
       this.loadingText = `已上传${parseInt(event.percent, 10)}%`;
     },
+    handleError() {
+      this.loading = false;
+    }
   },
   created: function () {},
 };
