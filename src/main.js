@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 
 import Vue from 'vue'
 import ElementUI from 'element-ui';
-import '@/common/assets/theme/index.css';
+import '@/common/theme/index.css';
 Vue.use(ElementUI);
 
 // 注册全局资源
@@ -18,7 +18,7 @@ import router from './router'
  */
 
 Vue.directive('has', {
-    inserted: function(el, binding) {
+    inserted: function (el, binding) {
         if (Vue.prototype.$_has && !Vue.prototype.$_has(binding.value)) {
             el.parentNode.removeChild(el);
         }

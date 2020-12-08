@@ -23,9 +23,9 @@
 export default {
   components: {
     TheFileUploader: resolve =>
-      require(["@/common/components/TheFileUploader"], resolve),
+      require(["@/common/components/FileUploader"], resolve),
     TheImageUploader: resolve =>
-      require(["@/common/components/TheImageUploader"], resolve)
+      require(["@/common/components/ImageUploader"], resolve)
   },
   data() {
     return {
