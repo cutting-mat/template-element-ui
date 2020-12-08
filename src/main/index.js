@@ -1,6 +1,6 @@
 import index from './views/index'
 
-import blank from '../__template'
+import library from '../__library'
 import permission from '../permission'
 import user from '../user'
 
@@ -9,7 +9,7 @@ export default [{
     name: '首页',
     component: index,
     children: [
-        ...blank,
+        ...library,
         ...permission,
         ...user
     ]

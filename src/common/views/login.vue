@@ -1,5 +1,5 @@
 <template>
-  <div class="mainCont flex-row align-center justify-center loginPage">
+  <div class="flex-row align-center justify-center loginPage">
     <el-form
       ref="validForm"
       :model="queryParam"

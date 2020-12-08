@@ -1,42 +1,60 @@
 <template>
-  <div class="mainCont flex-col">
+  <div class="flex-col">
     <!-- 头部 -->
     <BaseHeader />
     <div class="flex-1 flex-row">
       <!-- 菜单 -->
-      <BaseNav  />
-      <!-- 内容 -->
-      <template v-if="$route.path=='/'">
-        <dashboard class="flex-1" />
-      </template>
-      <template v-else>
-        <div class="flex-1 flex-col">
-          <BaseTagManage />
-
-          <router-view class="flex-1" />
-        </div>
-      </template> 
+      <BaseNav />
+      <!-- 首页 -->
+      <dashboard v-if="$route.path == '/'" class="flex-1" />
+      <!-- 内页 -->
+      <div v-else class="flex-1 flex-col">
+        <BaseTagManage />
+        <router-view class="flex-1" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   components: {
-    dashboard: () => import("../components/TheDashboard.vue")
+    dashboard: () => import("../components/TheDashboard.vue"),
   },
-  data () {
-    return {
-      
-    }
+  data() {
+    return {};
   },
-  methods: {
-    
-  }
+  methods: {},
 };
 </script>
 
-<style scoped>
-.mainCont{background:#f5f5f5;}
+<style>
+
+/* 工具栏 */
+
+.toolBar {
+  margin-bottom: 20px;
+}
+
+
+/* 左边栏 */
+
+.sideBar {
+  width: 260px;
+  margin-right: 20px;
+}
+
+
+/* 内容快 */
+
+.blockLayout {
+  background: #fff;
+  border-radius: 4px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, .1);
+  margin: 6px 14px 14px 6px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+
 </style>

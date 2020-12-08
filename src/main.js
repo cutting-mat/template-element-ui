@@ -3,7 +3,7 @@ import 'regenerator-runtime/runtime';
 
 import Vue from 'vue'
 import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import '@/common/assets/theme/index.css';
 Vue.use(ElementUI);
 
 // 注册全局资源
@@ -30,7 +30,7 @@ import App from './App.vue'
 new Vue({
     data() {
         return {
-            AccessControl: true
+            AccessControl: false
         }
     },
     router,

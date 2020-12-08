@@ -161,8 +161,9 @@ th {
 
 @font-face {
     font-family: "iconfont";
-    src: url('font/iconfont.woff') format('woff'), url('font/iconfont.ttf?t=1542333212698') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-    url('font/iconfont.svg?t=1542333212698#iconfont') format('svg');
+    src: url('font/iconfont.woff') format('woff'), url('font/iconfont.ttf?t=1542333212698') format('truetype'),
+        /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+        url('font/iconfont.svg?t=1542333212698#iconfont') format('svg');
     /* iOS 4.1- */
 }
 
@@ -325,31 +326,25 @@ body {
     -webkit-appearance: none;
 }
 
-.scrollbar::-webkit-scrollbar-track {
-    background: transparent;
-}
-
 .scrollbar::-webkit-scrollbar-thumb {
     border-width: 1px 2px;
     border-style: solid;
     border-color: transparent;
-    background: transparent;
     background-clip: content-box;
-}
-
-.scrollbar:hover::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, .1);
-}
-
-.scrollbar:hover::-webkit-scrollbar-thumb {
     background: #ccc;
 }
 
+.scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, .1);
+}
 
-/* 
-* 自定义UI
-*/
+/* 版心区域 */
 
+.wrap {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+}
 
 /* 单行文字省略号 */
 
@@ -357,46 +352,4 @@ body {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
-}
-
-
-/* 版心区域 */
-
-.wrap {
-    width: 1200px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* 工具栏 */
-
-.toolBar {
-    margin-bottom: 20px;
-}
-
-
-/* 左边栏 */
-
-.sideBar {
-    width: 260px;
-    margin-right: 20px;
-}
-
-
-/* 内容快 */
-
-.blockLayout {
-    background: #fff;
-    border-radius: 4px;
-    box-shadow: 0 0 6px rgba(0, 0, 0, .1);
-    margin: 0 20px 20px 0;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-
-/* element-iu el-drawer flex fix */
-
-.el-drawer__body {
-    overflow: hidden;
 }

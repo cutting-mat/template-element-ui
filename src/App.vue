@@ -349,4 +349,5 @@ export default {
 
 <style>
 @import url(common/assets/style.css);
+@import url(common/assets/theme/style.css);
 </style>
