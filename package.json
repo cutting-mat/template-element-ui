@@ -23,6 +23,7 @@
     "eslint": "^7.14.0",
     "eslint-plugin-vue": "^7.1.0",
     "vue-template-compiler": "^2.6.12",
-    "webpack-subresource-integrity": "^1.5.2"
+    "webpack-subresource-integrity": "^1.5.2",
+    "core-js": "^3.8.1"
   }
 }
