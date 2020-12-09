@@ -216,21 +216,6 @@ export const filePreview = (item) => {
     window.open(item.url)
 }
 
-// 上传前检查
-export const checkUpload = function (file) {
-    if (!file.size) {
-        Vue.prototype.$message.warning('文件异常')
-        return false
-    }
-    const limitSize = 100 * 1024 * 1024; // 100M
-    if (file.size > limitSize) {
-        Vue.prototype.$message.warning('文件超出最大限制')
-        return false
-    }
-
-    return true
-}
-
 // 获取扩展名
 export const getSuffix = (filename) => {
     let pos = filename.lastIndexOf('.')
@@ -238,7 +223,7 @@ export const getSuffix = (filename) => {
     if (pos != -1) {
         suffix = filename.substring(pos + 1)
     }
-    return suffix;
+    return suffix.toLowerCase();
 }
 
 // 非生产环境日志

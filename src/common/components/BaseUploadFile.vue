@@ -21,6 +21,7 @@
 import { upload } from "@/common/api/common";
 import * as util from "@/common/assets/util";
 import { store } from "@/store";
+import {getExtByType} from "../assets/FileType";
 
 export default {
   props: {
@@ -51,6 +52,17 @@ export default {
       uploadUrl: this.action || upload,
     };
   },
+  computed: {
+    extWhitelist() {
+      // 根据accept得到的扩展名白名单
+      const typeArray = this.accept.replace(/\./g, '').split(',');
+      let result = [];
+      typeArray.forEach(type => {
+        result = result.concat(getExtByType(type))
+      })
+      return result
+    }
+  },
   methods: {
     handleSuccess(res) {
       this.$emit("success", res.data);
@@ -63,8 +75,22 @@ export default {
       this.$emit("progress", $event);
     },
     beforeUpload(file) {
-      const filePass = util.checkUpload(file);
-      return filePass;
+      // 格式校验
+      const fileExt = util.getSuffix(file.name);
+      if(this.extWhitelist.findIndex(ext => ext==='*' || (ext===fileExt))===-1){
+        this.$message.warning('文件格式错误');
+        return false
+      }
+      
+      // 尺寸校验
+      const limitSize = 100 * 1024 * 1024; // 100M
+      if (file.size > limitSize) {
+          this.$message.warning('文件超出最大限制')
+          return false
+      }
+
+      return true
+
     },
   },
   created: function () {},

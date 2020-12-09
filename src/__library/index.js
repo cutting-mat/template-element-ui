@@ -10,5 +10,9 @@ export default [{
         path: 'dialog',
         name: '弹窗',
         component: (resolve) => require(['./views/Dialog.vue'], resolve)
+    }, {
+        path: 'upload',
+        name: '上传',
+        component: (resolve) => require(['./views/Upload.vue'], resolve)
     }]
 }]

@@ -21,6 +21,7 @@ import { uploadImg } from "@/common/api/common";
 import * as util from "@/common/assets/util";
 let { fixImgFile } = require("ios-photo-repair")
 import {store} from "@/store"
+import {getExtByType} from "../assets/FileType";
 
 export default {
   props: {
@@ -45,6 +46,17 @@ export default {
       state: store.state,
     };
   },
+  computed: {
+    extWhitelist() {
+      // 根据accept得到的扩展名白名单
+      const typeArray = this.accept.replace(/\./g, '').split(',');
+      let result = [];
+      typeArray.forEach(type => {
+        result = result.concat(getExtByType(type))
+      })
+      return result
+    }
+  },
   methods: {
     handleSuccess: function(res) {
       this.$emit("success", res.data);
@@ -56,9 +68,8 @@ export default {
       this.$emit("progress", $event);
     },
     beforeUpload: function(file) {
-      const imgExt = ["jpg", "jpeg", "png"];
       const ext = util.getSuffix(file.name);
-      if(ext && imgExt.indexOf(ext)!==-1){
+      if(ext && this.extWhitelist.indexOf(ext)!==-1){
         return true
       }
       this.$message.warning('文件格式错误');
@@ -93,7 +104,7 @@ export default {
 <style scoped>
 .el-upload-image{
   display:inline-block;
-  vertical-align: top;
+  vertical-align: bottom;
 }
 .avatar-uploader-icon {
   font-size: 28px;
