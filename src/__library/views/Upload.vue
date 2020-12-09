@@ -4,6 +4,17 @@
     <div class="demo">
       <div class="block">
         <TheFileUploader 
+          multiple 
+          @change="handleUploadFile" 
+        />
+      </div>
+      
+    </div>
+
+    <h2>限制格式</h2>
+    <div class="demo">
+      <div class="block">
+        <TheFileUploader 
           accept="t-document"
           multiple 
           @change="handleUploadFile" 

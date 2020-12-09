@@ -93,7 +93,7 @@ export default {
         if(result.length){
           return result.map(ext => `.${ext}`).join(',')
         }else{
-          return "image/*"
+          return "t-image"
         }
       }else{
         return this.accept

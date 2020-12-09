@@ -38,7 +38,7 @@ export default {
     accept: {
       type: String,
       required: false,
-      default: "image/*",
+      default: "t-image",
     },
   },
   data() {
