@@ -4,11 +4,9 @@
     <div class="demo">
       <div class="block">
         <TheFileUploader 
-          multiple 
           @change="handleUploadFile" 
         />
       </div>
-      
     </div>
 
     <h2>限制格式</h2>
@@ -16,11 +14,30 @@
       <div class="block">
         <TheFileUploader 
           accept="t-document"
+          @change="handleUploadFile" 
+        />
+      </div>
+    </div>
+
+    <h2>可以多选</h2>
+    <div class="demo">
+      <div class="block">
+        <TheFileUploader 
           multiple 
           @change="handleUploadFile" 
         />
       </div>
-      
+    </div>
+
+    <h2>限制最大上传数</h2>
+    <div class="demo">
+      <div class="block">
+        <TheFileUploader 
+          multiple 
+          :limit="1"
+          @change="handleUploadFile" 
+        />
+      </div>
     </div>
 
     <h2>图片上传</h2>

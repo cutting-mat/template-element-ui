@@ -6,7 +6,7 @@
     :on-success="handleSuccess"
     :on-error="handleError"
     :on-progress="handleProgress"
-    :before-upload="beforeUpload"
+    :before-upload="handleBeforeUpload"
     :accept="accept"
     :disabled="disabled"
     :multiple="multiple"
@@ -44,6 +44,13 @@ export default {
       type: String,
       required: false,
       default: null
+    },
+    beforeUpload: {
+      type: Function,
+      required: false,
+      default() {
+        return true
+      }
     }
   },
   data() {
@@ -74,7 +81,7 @@ export default {
     handleProgress($event) {
       this.$emit("progress", $event);
     },
-    beforeUpload(file) {
+    handleBeforeUpload(file) {
       // 格式校验
       const fileExt = util.getSuffix(file.name);
       if(this.extWhitelist.findIndex(ext => ext==='*' || (ext===fileExt))===-1){
@@ -89,8 +96,8 @@ export default {
           return false
       }
 
-      return true
-
+     // 扩展校验方法
+    return this.beforeUpload(file)
     },
   },
   created: function () {},

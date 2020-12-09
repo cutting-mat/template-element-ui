@@ -5,7 +5,7 @@
     :show-file-list="false"
     :accept="accept"
     :on-progress="handleProgress"
-    :before-upload="beforeUpload"
+    :before-upload="handleBeforeUpload"
     :http-request="customUpload"
     :disabled="disabled"
     :multiple="multiple"
@@ -40,6 +40,13 @@ export default {
       required: false,
       default: "t-image",
     },
+    beforeUpload: {
+      type: Function,
+      required: false,
+      default() {
+        return true
+      }
+    }
   },
   data() {
     return {
@@ -67,13 +74,16 @@ export default {
     handleProgress($event) {
       this.$emit("progress", $event);
     },
-    beforeUpload: function(file) {
+    handleBeforeUpload: function(file) {
+      // 格式检查
       const ext = util.getSuffix(file.name);
-      if(ext && this.extWhitelist.indexOf(ext)!==-1){
-        return true
+      if(!ext || this.extWhitelist.indexOf(ext)===-1){
+        this.$message.warning('文件格式错误');
+        return false
       }
-      this.$message.warning('文件格式错误');
-      return false;
+
+      // 扩展校验方法
+      return this.beforeUpload(file)
     },
     customUpload: function(params){
       //console.log(params)

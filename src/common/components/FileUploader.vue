@@ -3,8 +3,9 @@
     <div class="flex-row align-center">
       <BaseUploadFile 
         :disabled="disabled"
-        :multiple="multiple"
+        :multiple="multiple && !limit"
         :accept="actualAccept"
+        :beforeUpload="handleBeforeUpload"
         @progress="handleProgress"
         @success="handleSuccess"
         @error="handleError"
@@ -13,14 +14,14 @@
         支持{{actualAccept | typeDescription}}
       </div>
     </div>
-    <div class="data-list-bd" v-if="files&&files.length">
-      <div class="list-item flex-row align-center" v-for="(item, index) in files" :key="index">
+    <div class="data-list-bd" v-if="list&&list.length">
+      <div class="list-item flex-row align-center" v-for="(item, index) in list" :key="index">
         <div class="flex-1"> 
           <i class="icon" :class="getFileType(item.url)">{{getFileType(item.url)}}</i>
           {{ item.name }}
         </div>
         <el-link type="primary" class="tools-btn" @click.native="filePreview(item)">查看</el-link>
-        <el-link type="danger" class="tools-btn" v-if="!disabled" @click="handleRemove(item,files)">删除</el-link>
+        <el-link type="danger" class="tools-btn" v-if="!disabled" @click="handleRemove(item,list)">删除</el-link>
       </div>
     </div>
     <BasePlaceholder v-else message="暂无" />
@@ -38,16 +39,8 @@ export default {
       type: Array,
       required: false,
       default: function() {
-        /*
-        [{id: '', name: "food.jpeg", url:"..."}]
-        */
         return [];
       }
-    },
-    showFileList: {
-      type: Boolean,
-      required: false,
-      default: false
     },
     disabled: {
       type: Boolean,
@@ -58,6 +51,11 @@ export default {
       type: Boolean,
       required: false,
       default: false
+    },
+    limit: {
+      type: Number,
+      required: false,
+      default: 0
     },
     accept: {
       type: String,
@@ -81,7 +79,7 @@ export default {
     return {
       loading: false,
       loadingText: "",
-      files: []
+      list: []
     };
   },
   computed: {
@@ -105,7 +103,7 @@ export default {
   watch: {
     propvalue: {
       handler: function(propvalue) {
-        this.files = propvalue;
+        this.list = propvalue;
       },
       deep: true,
       immediate: true
@@ -115,22 +113,29 @@ export default {
     getFileType, 
     filePreview: util.filePreview,
     triggerSubmit() {
-      this.$emit("change", this.files);
+      this.$emit("change", this.list);
+    },
+    handleBeforeUpload() {
+      if(!(this.limit>this.list.length)){
+        this.$message.warning('已达到最大上传数');
+        return false
+      }
+      return true;
     },
     handleSuccess(file) {
       this.loading = false;
-      this.files.push(file);
+      this.list.push(file);
       this.triggerSubmit()
     },
     handleRemove(file, filelist) {
       if (this.multiple) {
         if (file.url) {
-          this.files = filelist.filter(f => {
+          this.list = filelist.filter(f => {
             return f.url !== file.url;
           });
         }
       } else {
-        this.files.splice(0, 1);
+        this.list.splice(0, 1);
       }
       this.triggerSubmit();
     },

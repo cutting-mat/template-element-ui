@@ -10,9 +10,10 @@
     </div>
 
     <BaseUploadImage 
-      :disabled="disabled || !(list.length<limit)"
-      :multiple="multiple"
+      :disabled="disabled"
+      :multiple="multiple && !limit"
       :accept="actualAccept"
+      :beforeUpload="handleBeforeUpload"
       @progress="handleProgress"
       @success="handleSuccess"
       @error="handleError"
@@ -54,6 +55,7 @@ export default {
     },
     limit: {
       type: Number,
+      required: false,
       default: 9,
     },
     accept: {
@@ -117,7 +119,14 @@ export default {
       this.dialogImageUrl = file.url;
       this.previewVisible = true;
     },
-    handleSuccess: function (file) {
+    handleBeforeUpload() {
+      if(!(this.limit>this.list.length)){
+        this.$message.warning('已达到最大上传数');
+        return false
+      }
+      return true;
+    },
+    handleSuccess(file) {
       this.loading = false;
       this.list.push(file);
       this.triggerSubmit();
