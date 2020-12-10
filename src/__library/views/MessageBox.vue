@@ -1,6 +1,7 @@
 <template>
   <div>
     <h2>基本用法</h2>
+    <p>标题不设置，默认为`消息提示`</p>
     <div class="demo">
       <div class="block">
         <el-button @click="openMessage()">消息提示</el-button>
@@ -14,7 +15,7 @@
         <el-button type="success" @click="openType('success')">成功</el-button>
         <el-button type="info" @click="openType('info')">信息</el-button>
         <el-button type="warning" @click="openType('warning')">警告</el-button>
-        <el-button type="error" @click="openType('error')">错误</el-button>
+        <el-button type="danger" @click="openType('error')">错误</el-button>
       </div>
     </div>
 

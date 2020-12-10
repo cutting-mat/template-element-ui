@@ -7,13 +7,15 @@
         <el-dialog
           title="弹窗标题"
           :visible.sync="dialogVisible1"
-          width="30%"
+          width="640px"
           >
-          <span>这是一段信息</span>
-          <span slot="footer" class="dialog-footer">
+          <div style="padding: 5em 0;">
+            弹窗通常用来展示相对复杂的弹出式界面，弹出内容样式独立，不受弹窗影响
+          </div>
+          <div slot="footer">
             <el-button @click="dialogVisible1 = false">取 消</el-button>
             <el-button type="primary" @click="dialogVisible1 = false">确 定</el-button>
-          </span>
+          </div>
         </el-dialog>
       </div>
       
