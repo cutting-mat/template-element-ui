@@ -1,4 +1,4 @@
-import index from './views/index'
+import index from './views/Index'
 
 import library from '../__library'
 import permission from '../permission'
