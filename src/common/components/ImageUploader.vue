@@ -120,7 +120,7 @@ export default {
       this.previewVisible = true;
     },
     handleBeforeUpload() {
-      if(!(this.limit>this.list.length)){
+      if(this.limit && !(this.limit>this.list.length)){
         this.$message.warning('已达到最大上传数');
         return false
       }
