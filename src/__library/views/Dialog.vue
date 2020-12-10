@@ -5,7 +5,7 @@
       <div class="block">
         <el-button @click="dialogVisible1=true">打开Dialog</el-button>
         <el-dialog
-          title="提示"
+          title="弹窗标题"
           :visible.sync="dialogVisible1"
           width="30%"
           >

@@ -28,6 +28,14 @@
         <el-button type="warning" round>警告按钮</el-button>
         <el-button type="danger" round>危险按钮</el-button>
       </div>
+      <div class="block">
+        <el-button round>圆角朴素按钮</el-button>
+        <el-button type="primary" plain round>主要按钮</el-button>
+        <el-button type="success" plain round>成功按钮</el-button>
+        <el-button type="info" plain round>信息按钮</el-button>
+        <el-button type="warning" plain round>警告按钮</el-button>
+        <el-button type="danger" plain round>危险按钮</el-button>
+      </div>
 
     </div>
 

@@ -1,88 +1,79 @@
+/* Button 按钮 */
 
-/*按钮*/
-
-.el-button--default.is-disabled, .el-button--default.is-disabled:hover {
+.el-button--default.is-disabled,
+.el-button--default.is-disabled:hover {
   color: #888888;
   background-color: #ECF1F4;
   border-color: #ECF1F4;
 }
 
+/* Message 提示框 */
+
+.el-message-box__header{
+  background: #f7f9fb;
+  border-bottom: 1px solid #ebedf4;
+}
+.el-message-box__title{
+  font-size: 16px;
+  line-height: 22px;
+  height: 22px;
+}
+.el-message-box__title>span:empty::before {
+  content: "消息提示"
+}
+.el-message-box__content{
+  text-align: center;
+  padding: 45px 10px 0;
+}
+.el-message-box__message{
+  padding: 10px!important;
+  font-size: 16px;
+}
+.el-message-box__status{
+  position: static;
+  top: auto;
+  transform: none;
+  font-size: 64px!important;
+}
+.el-message-box__btns{
+  text-align: center;
+  padding: 30px 0;
+}
 
 /*Dialog 对话框*/
-.el-dialog {
+.el-dialog{
   border-radius: 6px;
-  box-shadow: 0px 1px 4px 0px #a3a3a3;
+  overflow: hidden;
 }
-.el-dialog .dialog-hd {
-  color: #333;
-}
-.el-dialog .dialog-hd .title-ico{
-  width: 30px;
-  height: 30px;
-  background-color: #257FF7;
-  border-radius: 8px;
-  display: inline-block;
-  vertical-align: middle;
-  margin-right: 10px;
-  color: #fff;
-  text-align: center;
-  line-height: 30px;
-}
-
 .el-dialog__header {
-    border-bottom: 1px solid #ebedf4;
+  background: #f7f9fb;
+  border-bottom: 1px solid #ebedf4;
 }
-.el-dialog--center .el-dialog__header {
-  text-align: left;
+.el-dialog__footer{
+  text-align: center;
 }
 
-/* element-iu el-drawer flex fix */
+/* Drawer flex fix */
 
 .el-drawer__body {
   overflow: hidden;
 }
 
-/*table*/
+/* Table */
 .el-table__empty-text {
   width: 100%;
 }
-.el-table .cell, .el-table--border td:first-child .cell, .el-table--border th:first-child .cell {
+
+.el-table .cell,
+.el-table--border td:first-child .cell,
+.el-table--border th:first-child .cell {
   padding-left: 20px;
 }
+
 .el-table th>.cell {
   padding-left: 20px;
 }
 
-/*MessageBox 弹框 center样式调整 / 图标只能用element*/
-.el-message-box__header {
-  border-bottom: 1px solid #ebedf4;
-}
-.el-message-box--center .el-message-box__header {
-  padding: 15px 15px 10px;
-}
-.el-message-box--center .el-message-box__title {
-  justify-content: left;
-}
-.el-message-box__content {
-  padding: 40px 20px;
-}
-
-.el-message-box__content .delete-title {
-  font-size: 1.42em;
-  color: #333;
-  margin-bottom: 20px;
-}
-.el-message-box__content .delete-title .ion {
-  color: #F1001E;
-  margin-right: 6px;
-}
-.el-message-box__content .delete-tips {
-  color: #F1001E;
-}
-.el-message-box__btns .el-button {
-  min-width: 86px;
-  padding: 10px 15px;
-}
 
 /*form 表单校验*/
 .el-form-item .el-input__validateIcon {
