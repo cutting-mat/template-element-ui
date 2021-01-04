@@ -1,8 +1,6 @@
 import index from './views/Index'
 
 import library from '../__library'
-import permission from '../permission'
-import user from '../user'
 
 export default [{
     path: '/',
@@ -10,7 +8,5 @@ export default [{
     component: index,
     children: [
         ...library,
-        ...permission,
-        ...user
     ]
 }]

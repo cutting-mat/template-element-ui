@@ -1,7 +1,5 @@
 <template>
-<div style="display: table;height:100%;width:100%">
-	<div class="g-center">
-		<h1 style="text-align:center">404</h1>
-	</div>
-</div>
+  <div class="flex-col align-center justify-center">
+    <img src="../assets/img/404.png" alt="" />
+  </div>
 </template>

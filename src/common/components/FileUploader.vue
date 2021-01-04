@@ -24,7 +24,7 @@
         <el-link type="danger" class="tools-btn" v-if="!disabled" @click="handleRemove(item,list)">删除</el-link>
       </div>
     </div>
-    <BasePlaceholder v-else message="暂无" />
+    <BasePlaceholder v-else message="暂无" :img="false" />
   </div>
 </template>
 

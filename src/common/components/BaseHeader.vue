@@ -1,9 +1,7 @@
 <template>
   <header class="flex-row align-center myheader">
     <h1 class="logo" @click="$router.push('/')">LOGO</h1>
-    <div class="menuToggle">
-      <i class="ion">&#xe62b;</i>
-    </div>
+
     <div class="flex-1">
         <!-- head -->
     </div>
@@ -60,16 +58,12 @@ export default {
 .myheader {
   padding: 0 20px;
   height: 60px;
-  background:url(../assets/img/bg.png) center no-repeat;
+  background: #257FF7;
   background-size:cover;
   color:#fff;
 }
 
 .logo{cursor:pointer;margin-right:15px;}
-
-.menuToggle{cursor:pointer;}
-.menuToggle:hover{opacity: .8;}
-.menuToggle .ion{font-size:1.5em;}
 
 .userAvat .el-dropdown-link{
   color:#fff;
