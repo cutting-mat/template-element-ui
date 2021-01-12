@@ -1,27 +1,18 @@
 <template>
-  <div>
-    blank
-  </div>
+  <div>blank</div>
 </template>
 
 <script>
 //import * as util from '@/common/assets/util';
 
 export default {
-  data () {
-    return {
-      
-    }
+  data() {
+    return {};
   },
-  methods: {
-    
-  },
-  created(){
-    
-  }
-}
+  methods: {},
+  created() {},
+};
 </script>
 
 <style scoped>
-
 </style>

@@ -41,6 +41,7 @@ import * as user from "@/user/api/user";
 export default {
   data() {
     const validatePass = (rule, value, callback) => {
+      // 密码校验
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
@@ -51,6 +52,7 @@ export default {
       }
     };
     const validatePass2 = (rule, value, callback) => {
+      // 再次输入密码校验
       if (value === "") {
         callback(new Error("请再次输入密码"));
       } else if (value !== this.ruleForm.newPassword) {
@@ -86,31 +88,32 @@ export default {
   },
   methods: {
     submitForm() {
+      // 表单验证
       this.$refs.ruleForm.validate((valid) => {
         if (valid) {
-          this.submit();
+          this.loading = true;
+          // 预处理提交参数
+          let queryParam = Object.assign({}, this.ruleForm);
+          delete queryParam.checkPass;
+          // 表单提交
+          user
+            .editPassword(queryParam)
+            .then(() => {
+              this.loading = false;
+              this.resetForm();
+              this.$message({
+                message: "操作成功",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         }
       });
     },
-    submit: function () {
-      this.loading = true;
-      let queryParam = Object.assign({}, this.ruleForm);
-      delete queryParam.checkPass;
-      user
-        .editPassword(queryParam)
-        .then(() => {
-          this.loading = false;
-          this.resetForm();
-          this.$message({
-            message: "操作成功",
-            type: "success",
-          });
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
     resetForm() {
+      // 表单重置
       this.$refs.ruleForm.resetFields();
     },
   },

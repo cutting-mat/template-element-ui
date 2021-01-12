@@ -61,7 +61,7 @@ export default {
             .login(this.queryParam)
             .then(res => {
               this.loading = false;
-             
+             // 登录后全局发布 login 事件，将在app.vue里接收
               emit("login", {
                 from: this.$router.currentRoute.query.from,
                 data: res.data.data

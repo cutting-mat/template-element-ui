@@ -17,6 +17,7 @@
         <el-tag size="mini" type="info"><i class="el-icon-link"></i> {{data.route || data.url}}</el-tag>
       </div>
       <span class="extendGroup" v-if="!picker">
+        <!-- 根据!!data.route判断是路由还是请求 -->
         <el-button v-has="resource.edit" size="small" type="text" @click.stop="$emit('edit',data)">编辑</el-button>
         <el-button v-has="resource.add" v-if="!!data.route" size="small" type="text" @click.stop="$emit('append', data)">添加子菜单</el-button>
         <el-button v-has="resource.add" v-if="!!data.route" size="small" type="text" @click.stop="$emit('add-resource', data)">添加资源</el-button>
@@ -87,8 +88,9 @@ export default {
     handleCheckChange(data, checked, checkChild) {
       const theNode = this.$refs.tree.getNode(data);
       if(theNode){
+        // 选中目标节点
         this.$refs.tree.setChecked(theNode, checked);
-
+        // 如果是批量模式，选中下级节点
         if(checkChild && Array.isArray(data.children) && data.children.length){
           data.children.forEach(cnode => {
             this.handleCheckChange(cnode, checked, checkChild)
@@ -96,6 +98,7 @@ export default {
         }
         
       }
+      // 触发数据变更
       this.$nextTick(() => {
         this.trigger()
       })
@@ -120,6 +123,7 @@ export default {
     
   },
   mounted() {
+    // 数据变更监听器，批量模式支持函数节流
     this.trigger = util.throttle(() => {
       const checked = this.$refs.tree.getCheckedNodes();
       this.$emit('check', checked);

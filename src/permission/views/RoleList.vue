@@ -93,11 +93,12 @@ export default {
     },
     save() {
       let vm = this;
+      // 表单验证
       vm.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(vm.editForm);
           this.handleCloseDialog();
-
+          // 分类型提交
           if (!formData.id) {
             role.add(formData).then(() => {
               vm.fetchData();

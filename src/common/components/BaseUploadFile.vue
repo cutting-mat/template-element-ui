@@ -12,7 +12,7 @@
     :multiple="multiple"
   >
     <slot>
-      <el-button size="small" type="primary">点击上传</el-button>
+      <el-button size="small" type="primary" :disabled="disabled">点击上传</el-button>
     </slot>
   </el-upload>
 </template>

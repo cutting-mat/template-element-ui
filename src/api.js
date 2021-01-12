@@ -14,7 +14,7 @@ const HASH = {
     "master.com": HOST.master
 }
 
-export const baseURL = HASH[window.location.host] || HOST.mock;
+export const baseURL = HASH[window.location.host] || HOST.dev;
 
 export const instance = axios.create({
     baseURL,

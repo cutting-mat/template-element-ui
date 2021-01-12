@@ -81,6 +81,7 @@ export default {
   },
   data() {
     const checkMethod = (rule, value, callback) => {
+      // method字段校验
       if (this.editForm.type === 2 && !value) {
         return callback(new Error("请填写Method!"));
       } else {
@@ -123,6 +124,7 @@ export default {
   },
   methods: {
     createRoot() {
+      // 初始化根节点数据
       this.editForm = {
         pid: '',
         name: '',
@@ -135,6 +137,7 @@ export default {
       this.dialogVisible = true;
     },
     append(item) {
+      // 初始化子路由数据
       this.editForm = {
         pid: item.id,
         name: '',
@@ -143,6 +146,7 @@ export default {
       this.dialogVisible = true;
     },
     addResource(item) {
+      // 初始化请求资源数据
       this.editForm = {
         pid: item.id,
         method: "get",
@@ -152,6 +156,7 @@ export default {
       this.dialogVisible = true;
     },
     save() {
+      // 表单验证
       this.$refs["editForm"].validate(valid => {
         if (valid) {
           let formData = util.deepcopy(this.editForm);
@@ -167,6 +172,7 @@ export default {
             formData.method = formData.method.toLowerCase();
           }
           this.loading = true;
+          // 分类型提交
           if (!formData.id) {
             //添加菜单
             handleApi.add(formData).then(() => {
