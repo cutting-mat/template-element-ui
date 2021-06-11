@@ -1,0 +1,354 @@
+/* reset */
+
+html {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+body {
+    overflow-x : hidden;
+    font-family: Arial, 'Hiragino Sans GB', 'WenQuanYi Micro Hei', '\5fae\8f6f\96c5\9ed1', 'SimSun', sans-serif;
+    font-size  : 14px;
+    line-height: 1.7;
+    min-width  : 1200px;
+    color      : #555555;
+    background : #fff;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+ol,
+dd,
+dl,
+form {
+    margin: 0;
+}
+
+hr {
+    margin-top   : 20px;
+    margin-bottom: 20px;
+    border       : 0;
+    border-top   : 1px solid #eee;
+}
+
+img {
+    max-width             : 100%;
+    height                : auto;
+    vertical-align        : top;
+    -ms-interpolation-mode: bicubic;
+    border                : 0;
+}
+
+ul {
+    padding-left   : 0;
+    list-style-type: none;
+}
+
+a {
+    transition     : all 0.3s ease;
+    text-decoration: none;
+    color          : inherit;
+    outline        : 0;
+}
+
+a:hover {
+    color: #2EA9DF;
+}
+
+article,
+aside,
+dialog,
+footer,
+header,
+section,
+nav,
+figure,
+menu,
+audio,
+canvas,
+progress,
+video {
+    display: block;
+}
+
+input,
+select,
+textarea {
+    font-family: inherit;
+    font-size  : 100%;
+    outline    : 0;
+}
+
+input[type='checkbox'],
+input[type='radio'] {
+    box-sizing: border-box;
+    padding   : 0;
+}
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+    height: auto;
+}
+
+input[type='search'] {
+    box-sizing        : border-box;
+    -webkit-appearance: textfield;
+}
+
+input[type='search']::-webkit-search-cancel-button,
+input[type='search']::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+input[type='range'] {
+    display: block;
+    width  : 100%;
+}
+
+select[multiple],
+select[size] {
+    height: auto;
+}
+
+input[type='file']:focus,
+input[type='radio']:focus,
+input[type='checkbox']:focus {
+    outline       : thin dotted;
+    outline       : 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
+
+input[type=submit] {
+    cursor: pointer;
+}
+
+fieldset {
+    min-width: 0;
+    margin   : 0;
+    padding  : 0;
+    border   : 0;
+}
+
+legend {
+    display      : block;
+    font-size    : 16px;
+    font-weight  : 700;
+    line-height  : 2.5;
+    width        : 100%;
+    margin-bottom: 20px;
+    padding      : 0;
+    color        : #333;
+    border       : 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+table {
+    border-spacing  : 0;
+    background-color: transparent;
+}
+
+td,
+th {
+    padding: 0;
+}
+
+
+/* icon font */
+
+@font-face {
+    font-family: "iconfont";
+    src        : url('font/iconfont.woff2') format('woff2'), 
+    url('font/iconfont.woff') format('woff'), 
+    url('font/iconfont.ttf?t=1542333212698') format('truetype');
+}
+
+.ion {
+    font-family            : "iconfont" !important;
+    font-size              : 1.1em;
+    font-style             : normal;
+    -webkit-font-smoothing : antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* page layout */
+
+html,
+body {
+    height : 100%;
+    margin : 0;
+    padding: 0;
+}
+
+#app {
+    width : 100%;
+    height: 100%;
+}
+
+
+/* flex栅格 */
+
+.flex-col {
+    overflow          : hidden;
+    display           : -ms-box;
+    display           : -ms-flexbox;
+    display           : flex;
+    flex-direction    : column;
+    -ms-flex-direction: column;
+}
+
+.flex-row {
+    overflow: hidden;
+    display : -ms-box;
+    display : -ms-flexbox;
+    display : flex;
+}
+
+.flex-1 {
+    -ms-flex : 1;
+    flex     : 1;
+    min-width: 0;
+}
+
+.flex-2 {
+    -ms-flex : 2;
+    flex     : 2;
+    min-width: 0;
+}
+
+.flex-3 {
+    -ms-flex : 3;
+    flex     : 3;
+    min-width: 0;
+}
+
+.flex-4 {
+    -ms-flex : 4;
+    flex     : 4;
+    min-width: 0;
+}
+
+.align-stretch {
+    -ms-align-items: stretch;
+    -ms-flex-align : stretch;
+    align-items    : stretch;
+}
+
+.align-center {
+    -ms-align-items: center;
+    -ms-flex-align : center;
+    align-items    : center;
+}
+
+.justify-center {
+    -ms-box-pack   : center;
+    -ms-flex-pack  : center;
+    justify-content: center;
+}
+
+
+/* 固定比例矩形 */
+
+*[class*="rect-"] {
+    position: relative;
+    display : block;
+    width   : 100%;
+    height  : 0;
+    overflow: hidden;
+}
+
+*[class*="rect-"] ._full {
+    position: absolute;
+    left    : 0;
+    top     : 0;
+    width   : 100%;
+    height  : 100%;
+    *height : auto;
+}
+
+.rect-4854 {
+    padding-bottom: 48.54%;
+}
+
+.rect-50 {
+    padding-bottom: 50%;
+}
+
+.rect-5625 {
+    padding-bottom: 56.25%;
+}
+
+.rect-60 {
+    padding-bottom: 60%;
+}
+
+.rect-618 {
+    padding-bottom: 61.8%;
+}
+
+.rect-70 {
+    padding-bottom: 70%;
+}
+
+.rect-75 {
+    padding-bottom: 75%;
+}
+
+.rect-80 {
+    padding-bottom: 80%;
+}
+
+.rect-90 {
+    padding-bottom: 90%;
+}
+
+.rect-100 {
+    padding-bottom: 100%;
+}
+
+
+/* 滚动条 */
+
+.scrollbar {
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.scrollbar::-webkit-scrollbar {
+    position          : absolute;
+    width             : 10px;
+    margin-left       : -10px;
+    -webkit-appearance: none;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    border-width   : 1px 2px;
+    border-style   : solid;
+    border-color   : transparent;
+    background-clip: content-box;
+    background     : #ccc;
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, .1);
+}
+
+/* 版心区域 */
+
+.wrap {
+    max-width   : 1200px;
+    margin-left : auto;
+    margin-right: auto;
+}
+
+/* 单行文字省略号 */
+
+.el {
+    overflow     : hidden;
+    white-space  : nowrap;
+    text-overflow: ellipsis;
+}

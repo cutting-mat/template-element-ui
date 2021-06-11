@@ -3,14 +3,14 @@
 </template>
 
 <script>
-//import * as util from "@/common/assets/util";
+//import * as util from "@/main/assets/util";
 
 export default {
   data() {
     return {};
   },
   methods: {},
-  created() {}
+  created() {},
 };
 </script>
 

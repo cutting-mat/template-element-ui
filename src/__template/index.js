@@ -1,6 +1,6 @@
 export default [{
     path: '/template',
-    name: '空白模块',
+    name: '模块模板',
     component: (resolve) => require(['./views/Index.vue'], resolve),
     redirect: '/template/list',
     children: [{

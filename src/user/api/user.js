@@ -1,6 +1,5 @@
-import {
-    instance
-} from '@/api';
+import { instance } from '@/api';
+import { requestWrapper } from "@/main/assets/util";
 
 //登录
 export const login = params => {
@@ -8,20 +7,26 @@ export const login = params => {
 }
 
 //用户权限
-export const permission = params => {
-    return instance.get(`/currentUser/permissions`, {params})
+export const permission = (params, opt) => {
+    return requestWrapper(params => {
+        return instance.get(`/getPermissions`, { params })
+    }, params, opt)
 }
 
 //用户信息
-export const info = params => {
-    return instance.get(`/currentUser/userInfo`, {params})
+export const info = (params, opt) => {
+    return requestWrapper(params => {
+        return instance.get(`/getAccountInfo`, { params })
+    }, params, opt)
 }
+
+
 //修改密码
 export const editPassword = params => {
-    return instance.put(`/currentUser/password`, params)
+    return instance.put(`/updatePassword`, params)
 }
 
 //切换身份
 export const switchRole = params => {
-    return instance.get(`/currentUser/switchRole`, {params})
+    return instance.get(`/switchIdentity`, { params })
 }

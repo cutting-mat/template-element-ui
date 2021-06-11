@@ -1,18 +1,27 @@
-import {instance} from '@/api';
+import { instance } from '@/api';
+import { requestWrapper } from "@/main/assets/util";
 
 // get
-export const get = params => {
-  return instance.get(`/login`, {params})
+export const get = (params, opt) => {
+  return requestWrapper(params => {
+    return instance.get(`/url`, { params })
+  }, params, opt)
 }
 // post
-export const add = params => {
-  return instance.post(`/login`, params)
+export const add = (params, opt) => {
+  return requestWrapper(params => {
+    return instance.post(`/url`, params)
+  }, params, opt)
 }
 // put
-export const edit = params => {
-  return instance.put(`/login`, params)
+export const edit = (params, opt) => {
+  return requestWrapper(params => {
+    return instance.put(`/url`, params)
+  }, params, opt)
 }
 // delete
-export const remove = params => {
-  return instance.delete(`/login`, {params})
+export const remove = (params, opt) => {
+  return requestWrapper(params => {
+    return instance.delete(`/url`, { params })
+  }, params, opt)
 }

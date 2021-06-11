@@ -3,14 +3,15 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import routes from '@/common'
+import routes from '@/main/index'
 
 const route = new Router({
   routes
 });
 
+// 全局路由before钩子
 route.beforeEach((to, from, next) => {
-  if(to.name){
+  if (to.name) {
     document.title = to.meta.title || to.name;
   }
   next()

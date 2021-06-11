@@ -1,24 +1,23 @@
 // 全局组件
-import BaseHeader from '@/common/components/BaseHeader.vue'
+import BaseHeader from '@/main/components/BaseHeader.vue'
 
 const globalComponents = {
     BaseHeader,
-    BaseNav: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BaseNav.vue"),
-    BaseTagManage: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BaseTagManage.vue"),
-    BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BasePagination.vue"),
-    BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/common/components/BasePlaceholder.vue")
+    BaseSubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseSubNav.vue"),
+    BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePagination.vue"),
+    BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePlaceholder.vue")
 }
 
 
 // 全局过滤器
-import {formatDate} from '@/common/assets/util'
+import { formatDate } from '@/main/assets/util'
 
 const globalFilters = {
     date: formatDate
 }
 
 export default {
-    install: function(Vue) {
+    install: function (Vue) {
         // 注册过滤器
         Object.keys(globalFilters).forEach(key => {
             Vue.filter(key, globalFilters[key])
@@ -28,6 +27,16 @@ export default {
         Object.keys(globalComponents).forEach(key => {
             Vue.component(key, globalComponents[key])
         })
+
+
+        // v-auth 指令（用于权限控制）
+        Vue.directive('auth', {
+            inserted: function (el, binding) {
+                if (Vue.prototype.$_auth && !Vue.prototype.$_auth(binding.value)) {
+                    el.parentNode.removeChild(el);
+                }
+            }
+        });
 
     }
 }
