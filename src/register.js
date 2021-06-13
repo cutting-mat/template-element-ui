@@ -5,7 +5,13 @@ const globalComponents = {
     BaseHeader,
     BaseSubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseSubNav.vue"),
     BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePagination.vue"),
-    BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePlaceholder.vue")
+    BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePlaceholder.vue"),
+    BaseInputNumber:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseInputNumber.vue"),
+    DictRadio:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictRadio.vue"),
+    DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCheckbox.vue"),
+    DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictSelect.vue"),
+    DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCascader.vue"),
+    
 }
 
 

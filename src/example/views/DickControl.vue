@@ -3,7 +3,7 @@
     <h2>说明</h2>
     <p>字典控件是可以自动请求指定数据字典数据做为选项的表单控件，请求字典接口约定为：`@/system/api/dict => itemList()`</p>
     <h3>公共参数</h3>
-    <p> `dictCode[String]`: 需要请求的字典code，必传</p>
+    <p> `load[String|Function]`: 必传。String类型代表字典code，Function类型代表自定义请求方法，必须返回一个Promise，见示例:级联选择器。</p>
     <p> `valueKey[String]`: 字典数据中用做控件值的字段，默认'id'</p>
     <p> `labelKey[String]`: 用做名称的字段，默认'value'</p>
     <p> `nullAble[Boolean]`: 是否需要添加空值选项，空值为null；DictRadio组件默认false，其他字典组件均默认true</p>
@@ -15,7 +15,7 @@
     <div class="demo">
       <el-form size="small">
           <el-form-item label="单选框">
-            <DictRadio v-model="value1" dictCode="team_approve_state" />
+            <DictRadio v-model="value1" load="team_approve_state" />
           </el-form-item>
         </el-form>
     </div>
@@ -26,7 +26,7 @@
     <div class="demo">
       <el-form size="small">
           <el-form-item label="多选框">
-            <DictCheckbox v-model="value2" dictCode="team_approve_state" />
+            <DictCheckbox v-model="value2" load="team_approve_state" />
           </el-form-item>
         </el-form>
     </div>
@@ -37,7 +37,7 @@
     <div class="demo">
       <el-form size="small">
           <el-form-item label="选择器">
-            <DictSelect v-model="value3" dictCode="team_approve_state" />
+            <DictSelect v-model="value3" load="team_approve_state" />
           </el-form-item>
         </el-form>
     </div>
@@ -48,7 +48,7 @@
     <div class="demo">
       <el-form size="small">
           <el-form-item label="级联选择器">
-            <DictCascader v-model="value4" dictCode="xzgh" />
+            <DictCascader v-model="value4" :load="fetchDict" />
           </el-form-item>
         </el-form>
     </div>
@@ -58,25 +58,31 @@
 
 <script>
 //import * as util from '@/main/assets/util';
+import { buildTree } from "@/main/assets/util";
+import { itemList } from "@/system/api/dict";
 
 export default {
-  components: {
-    DictRadio:  (resolve) => require(["@/main/components/DictRadio"], resolve),
-    DictCheckbox:  (resolve) => require(["@/main/components/DictCheckbox"], resolve),
-    DictSelect:  (resolve) => require(["@/main/components/DictSelect"], resolve),
-    DictCascader:  (resolve) => require(["@/main/components/DictCascader"], resolve),
-  },
   data () {
     return {
       value1: null,
       value2: [498],
       value3: null,
       value4: [],
-      value5: null
     }
   },
   methods: {
-    
+    fetchDict() {
+      return itemList(
+        {
+          dictCode: 'xzgh',
+        },
+        {
+          cache: true,
+        }
+      ).then((res) => {
+        return buildTree(res.data.data);
+      });
+    },
   },
   created(){
     

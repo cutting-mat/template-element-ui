@@ -9,7 +9,7 @@
       引用数字输入组件：<code>@/main/components/BaseInputNumber.vue</code>
     </p>
     <div class="demo">
-      <InputNumber v-model="inputNumber" zeroFill :decimals="2" style="width:800px" />
+      <BaseInputNumber v-model="inputNumber" zeroFill :decimals="2" style="width:800px" />
     </div>
     <h2>日期选择器 - 选择日</h2>
     <div class="demo">
@@ -162,9 +162,6 @@
 //import * as util from '@/main/assets/util';
 
 export default {
-  components: {
-    InputNumber: (resolve) => require(['@/main/components/BaseInputNumber.vue'], resolve)
-  },
   data() {
     var validatePass = (rule, value, callback) => {
       if (value === "") {

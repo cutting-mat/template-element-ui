@@ -28,8 +28,8 @@ export default {
     event: 'change'
   },
   props: {
-    dictCode: {
-      type: String,
+    load: {
+      type: [String, Function],
       required: true,
     },
     value: {
@@ -89,10 +89,10 @@ export default {
     }
   },
   methods: {
-    fetchData() {
+    fetchDict() {
       itemList(
         {
-          dictCode: this.dictCode,
+          dictCode: this.load,
         },
         {
           cache: true,
@@ -101,10 +101,15 @@ export default {
         this.list = buildTree(res.data.data);
       });
     },
+    fetchRemoteData: async function() {
+      this.list = await this.load()
+    }
   },
   created() {
-    if (this.dictCode) {
-      this.fetchData();
+    if (this.load && this.load.split) {
+      this.fetchDict();
+    } else if(typeof this.load === 'function'){
+      this.fetchRemoteData()
     }
   },
 };

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-table :data="list" border>
+    <el-table border default-expand-all row-key="id" :data="list">
       <el-table-column
         v-for="(column, index) in columns"
         :key="'col' + index"
@@ -22,41 +22,59 @@
         :selectable="column.selectable"
       >
         <template slot-scope="scope">
-          <div v-if="Array.isArray(column.actions)">
-            <el-button
-              v-for="(item, btnIndex) in column.actions"
-              :key="btnIndex"
-              :size="item.size"
-              :type="item.type"
-              :plain="item.plain"
-              :round="item.round"
-              :disabled="item.disabled"
-              :icon="item.icon"
-              :native-type="item.nativeType"
-              @click="$emit(item.event, scope.row, scope.$index)"
-            >
-              {{ item.label }}
-            </el-button>
+          <div v-if="column.slot && column.slot.split">
+            <!-- slot自定义内容 -->
+            <slot
+              :name="column.slot"
+              :row="scope.row"
+              :column="scope.column"
+              :index="scope.$index"
+            ></slot>
           </div>
           <div v-else>
-            {{ scope.row[column.prop] | formatterFilter(scope.row, scope.column, scope.$index, column.formatter) }}
+            <!-- 支持formatter内容 -->
+            {{
+              scope.row[column.prop]
+                | formatterFilter(
+                  scope.row,
+                  scope.column,
+                  scope.$index,
+                  column.formatter
+                )
+            }}
           </div>
         </template>
       </el-table-column>
     </el-table>
     <!-- page -->
     <BasePagination
-      :page-size="queryParam.pageSize"
-      :current-page="queryParam.p"
+      v-if="showPagination"
+      :page-size="queryParamFinnal.pageSize"
+      :current-page="queryParamFinnal.p"
       :total-count="totalCount"
       :total-page="totalPage"
       @current-change="handleCurrentChange"
     />
+    <!-- 弹窗 -->
+    <el-dialog
+      :close-on-click-modal="false"
+      title="详情"
+      :visible="dialogVisible"
+      width="800px"
+      @close="handleCloseDialog"
+    >
+      <BaseCURDForm v-if="dialogVisible"
+        ref="editForm"
+        :model="modelData"
+        :default="editForm"
+        :action="editScope"
+      />
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { deepcopy } from "@/main/assets/util";
+import { deepcopy, buildTree } from "@/main/assets/util";
 
 export default {
   props: {
@@ -67,9 +85,9 @@ export default {
         return {
           list() {},
           detail() {},
-          add() {},
-          edit() {},
-          remove() {},
+          create() {},
+          update() {},
+          delete() {},
         };
       },
     },
@@ -77,10 +95,28 @@ export default {
       type: Object,
       required: true,
       default() {
-        // value type:  array,object,number,string,boolean
+        /**
+         * 默认数据模型示例
+         * type 用于推导默认控件和数据校验: array,object,number,string,boolean
+         * scope 用于确认当前模型字段的提交时机，默认更新和创建均提交
+         * */
         return {
-          index: "abc",
-          name: "张三",
+          accountName: {
+            // 数据
+            type: 'string',
+            default: null,
+            // 表单
+            label: "用户名",
+            control: "el-input",
+            controlOption: {
+              // 除 v-model 外的控件属性
+            },
+            scope: ["create","update"],
+            // 校验
+            required: true,
+            validator: null,
+            message: null,
+          },
         };
       },
     },
@@ -88,6 +124,9 @@ export default {
       type: Array,
       required: true,
       default() {
+        /**
+         * 默认列定义示例
+         * */
         return [
           {
             label: "序号",
@@ -106,44 +145,6 @@ export default {
             className: null,
             labelClassName: null,
             selectable: null,
-          },
-          {
-            label: "姓名",
-            prop: "name",
-            width: null,
-            type: null,
-            index: null,
-            minWidth: null,
-            fixed: null,
-            renderHeader: null,
-            resizable: true,
-            formatter: null,
-            showOverflowTooltip: false,
-            align: "left",
-            headerAlign: null,
-            className: null,
-            labelClassName: null,
-            selectable: null,
-          },
-          {
-            label: "操作",
-            actions: [
-              {
-                label: "编辑",
-                event: "handleEdit",
-                size: null,
-                type: null,
-                plain: false,
-                round: false,
-                disabled: false,
-                icon: null,
-                nativeType: "button",
-              },
-              {
-                label: "删除",
-                event: "handleRemove",
-              },
-            ],
           },
         ];
       },
@@ -168,19 +169,22 @@ export default {
   },
   filters: {
     formatterFilter(cellValue, row, column, index, formatter) {
-      if(typeof formatter === 'function'){
-        return formatter(row, column, cellValue, index)
-      }else{
-        return cellValue
+      if (typeof formatter === "function") {
+        return formatter(row, column, cellValue, index);
+      } else {
+        return cellValue;
       }
-    }
+    },
+  },
+  components: {
+    BaseCURDForm: (resolve) => require(["./BaseCURDForm"], resolve),
   },
   data() {
     return {
       dialogVisible: false,
       loading: false,
       list: [],
-      editForm: this.model,
+      editForm: {},
       queryParamFinnal: {
         p: 1,
         pageSize: 10,
@@ -188,6 +192,52 @@ export default {
       totalCount: 0,
       totalPage: 0,
     };
+  },
+  computed: {
+    showPagination() {
+      return this.list.length && this.totalCount && this.totalPage;
+    },
+    modelKey() {
+      return Object.keys(this.model);
+    },
+    modelData() {
+      let result = Object.assign({}, this.model);
+      this.modelKey.map(key => {
+        let obj = result[key];
+        // 默认类型 string
+        if(obj.type===void(0)){
+          obj.type = 'string'
+        }
+        // 默认值 null
+        if(obj.default===void(0)){
+          obj.default = null
+        }
+        //默认控件: string => el-input, number => BaseInputNumber, boolean => el-switch, array => DictCheckbox
+        if(obj.control===void(0)){
+          obj.control = {
+            number: 'BaseInputNumber',
+            boolean: 'el-switch',
+            array: 'DictCheckbox'
+          }[obj.type] || 'el-input'
+        }
+
+        // 默认生成控件时机
+        if(!obj.scope || !obj.scope.indexOf) {
+          obj.scope = ["create","update"]
+        }
+        // 默认非必填
+        obj.required = !!obj.required;
+
+      })
+      return result;
+    },
+    modelValue() {
+      let result = {};
+      this.modelKey.map(key => {
+        result[key] = this.modelData[key].default;
+      })
+      return result;
+    }
   },
   watch: {
     loading() {
@@ -197,15 +247,18 @@ export default {
   methods: {
     handleCurrentChange: function (currentPage) {
       this.queryParamFinnal.p = currentPage;
-      this.fetchData();
+      this.fetchList();
     },
-    add() {
-      console.log('add')
-      this.editForm = this.model;
+    create() {
+      this.editForm = this.modelValue;
+      this.editScope = 'create';
       this.dialogVisible = true;
     },
-    edit: function (data) {
-      this.editForm = deepcopy(data);
+    update: async function (data) {
+      this.editForm = this.getDetailFromListItem
+        ? deepcopy(data)
+        : await this.fetchDetail(data.id);
+      this.editScope = 'update';
       this.dialogVisible = true;
     },
     save() {
@@ -214,14 +267,14 @@ export default {
           this.loading = true;
           let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
-          let doAction = !formData.id ? this.api.add : this.api.edit;
+          let doAction = !formData.id ? this.api.create : this.api.update;
           doAction(formData)
             .then(() => {
-              this.fetchData();
               this.$message({
-                message: "添加成功",
+                message: "操作成功",
                 type: "success",
               });
+              this.fetchList();
             })
             .catch(() => {
               this.loading = false;
@@ -231,10 +284,10 @@ export default {
     },
     handleCloseDialog: function () {
       this.dialogVisible = false;
-      this.editForm = this.model;
-      this.$refs.editForm && this.$refs.editForm.resetFields();
+      this.editForm = this.modelValue;
+      //this.$refs.editForm && this.$refs.editForm.resetFields();
     },
-    remove(item) {
+    delete(item) {
       if (!item) {
         return null;
       }
@@ -242,25 +295,39 @@ export default {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
-      }).then(() => {
-        this.loading = true;
-        this.api
-          .remove({
-            id: item.id,
-          })
-          .then(() => {
-            this.fetchData();
-            this.$message({
-              message: "删除成功",
-              type: "success",
+      })
+        .then(() => {
+          this.loading = true;
+          this.api
+            .delete({
+              id: item.id,
+            })
+            .then(() => {
+              this.fetchList();
+              this.$message({
+                message: "删除成功",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.loading = false;
             });
-          })
-          .catch(() => {
-            this.loading = false;
-          });
-      });
+        })
+        .catch(() => {});
     },
-    fetchData: function (reload) {
+    fetchDetail: function (id) {
+      this.loading = true;
+      return this.api
+        .detail({ id })
+        .then((res) => {
+          this.loading = false;
+          return res.data.data;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
+    },
+    fetchList: function (reload) {
       if (reload) {
         this.queryParamFinnal.p = 1;
       }
@@ -270,8 +337,10 @@ export default {
         .then((res) => {
           this.loading = false;
           const data = res.data.data;
-          if (data) {
-            this.list = data.list;
+          if (Array.isArray(data)) {
+            this.list = buildTree(data);
+          } else if (Array.isArray(data.list)) {
+            this.list = buildTree(data.list);
             this.totalCount = data.totalCount;
             this.totalPage = data.totalPage;
           }
@@ -280,15 +349,17 @@ export default {
           this.loading = false;
         });
     },
-    retrieve() {
-      Object.assign(this.queryParamFinnal, this.queryParam);
-      this.fetchData(true)
-    }
+    search() {
+      Object.assign(this.queryParamFinnal, this.queryParam, {
+        p: this.queryParamFinnal.p,
+        pageSize: this.queryParamFinnal.pageSize,
+      });
+      this.fetchList(true);
+    },
   },
   created() {
     if (this.immediate) {
-      Object.assign(this.queryParamFinnal, this.queryParam);
-      this.fetchData();
+      this.search();
     }
   },
 };
