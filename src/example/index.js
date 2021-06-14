@@ -96,6 +96,14 @@ export default [{
             name: '标签栏',
             component: (resolve) => require(['./views/TagManage.vue'], resolve)
         }, {
+            path: 'upload',
+            name: '上传',
+            component: (resolve) => require(['./views/Upload.vue'], resolve)
+        }, {
+            path: 'DickControl',
+            name: '字典控件',
+            component: (resolve) => require(['./views/DickControl.vue'], resolve)
+        }, {
             path: 'CURD',
             name: '增删改查',
             component: (resolve) => require(['./views/CURD.vue'], resolve),
@@ -121,14 +129,6 @@ export default [{
                     title: '自定义表单校验'
                 }
             },]
-        }, {
-            path: 'upload',
-            name: '上传',
-            component: (resolve) => require(['./views/Upload.vue'], resolve)
-        }, {
-            path: 'DickControl',
-            name: '字典控件',
-            component: (resolve) => require(['./views/DickControl.vue'], resolve)
         }]
     },]
 }]
