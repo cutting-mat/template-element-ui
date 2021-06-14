@@ -77,13 +77,17 @@ import * as resource from "../api/resource";
 import { store } from "@/store";
 
 export default {
+  model: {
+    prop: "value",
+    event: "change",
+  },
   props: {
     picker: {
       type: Boolean,
       required: false,
       default: false,
     },
-    checked: {
+    value: {
       type: Array,
       required: false,
     },
@@ -118,10 +122,13 @@ export default {
       },
       immediate: true,
     },
-    checked: function (checked) {
-      if (Array.isArray(checked)) {
-        this.$refs.tree.setCheckedKeys(checked);
-      }
+    value: {
+      handler: function () {
+        if (Array.isArray(this.value)) {
+          this.$refs.tree.setCheckedKeys(this.value);
+        }
+      },
+      deep: true,
     },
   },
   methods: {
@@ -152,9 +159,9 @@ export default {
           userPermissions.menus.concat(userPermissions.resources)
         );
         //设置已勾选
-        if (Array.isArray(this.checked)) {
+        if (Array.isArray(this.value)) {
           this.$nextTick(() => {
-            this.$refs.tree.setCheckedKeys(this.checked);
+            this.$refs.tree.setCheckedKeys(this.value);
           });
         }
       });
@@ -169,7 +176,10 @@ export default {
     // 数据变更监听器，批量模式支持函数节流
     this.trigger = util.throttle(() => {
       const checked = this.$refs.tree.getCheckedNodes();
-      this.$emit("check", checked);
+      this.$emit(
+        "change",
+        checked.map((e) => e.id)
+      );
     });
   },
 };

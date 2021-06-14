@@ -1,41 +1,48 @@
 <template>
   <div>
-    <el-table :data="list"
+    <el-table ref="table"
+      :data="list"
       v-bind="Object.assign({
         'border': true,
         'default-expand-all': true,
         'row-key': 'id'
       }, tableAttribute)"
+      @select="(selection, row) => $emit('select', selection, row)"
+      @select-all="(selection) => $emit('select-all', selection)"
+      @selection-change="(selection) => $emit('selection-change', selection)"
+      @cell-mouse-enter="(row, column, cell, event) => $emit('cell-mouse-enter', row, column, cell, event)"
+      @cell-mouse-leave="(row, column, cell, event) => $emit('cell-mouse-leave', row, column, cell, event)"
+      @cell-click="(row, column, cell, event) => $emit('cell-click', row, column, cell, event)"
+      @cell-dblclick="(row, column, cell, event) => $emit('cell-dblclick', row, column, cell, event)"
+      @row-click="(row, column, event) => $emit('row-click', row, column, event)"
+      @row-contextmenu="(row, column, event) => $emit('row-click', row, column, event)"
+      @row-dblclick="(row, column, event) => $emit('row-dblclick', row, column, event)"
+      @header-click="(column, event) => $emit('header-click', column, event)"
+      @header-contextmenu="(column, event) => $emit('header-contextmenu', column, event)"
+      @sort-change="(column, prop, order) => $emit('sort-change', column, prop, order)"
+      @filter-change="(filters) => $emit('filter-change', filters)"
+      @current-change="(currentRow, oldCurrentRow) => $emit('current-change', currentRow, oldCurrentRow)"
+      @header-dragend="(newWidth, oldWidth, column, event) => $emit('header-dragend', newWidth, oldWidth, column, event)"
+      @expand-change="(row, expandedRows ) => $emit('expand-change', row, expandedRows)"
     >
       <el-table-column
         v-for="(column, index) in columnsData"
         :key="'col' + index"
-        :prop="column.prop"
-        :label="column.label"
-        :width="column.width"
-        :type="column.type"
-        :index="column.index"
-        :min-width="column.minWidth"
-        :fixed="column.fixed"
-        :render-header="column.renderHeader"
-        :resizable="column.resizable"
-        :formatter="column.formatter"
-        :show-overflow-tooltip="column.showOverflowTooltip"
-        :align="column.align"
-        :header-align="column.headerAlign"
-        :class-name="column.className"
-        :label-class-name="column.labelClassName"
-        :selectable="column.selectable"
+        v-bind="column"
       >
         <template slot-scope="scope">
-          <div v-if="column.slot && column.slot.split">
+          <div v-if="column.slotName && column.slotName.split">
             <!-- slot自定义内容 -->
             <slot
-              :name="column.slot"
+              :name="column.slotName"
               :row="scope.row"
               :column="scope.column"
               :index="scope.$index"
             ></slot>
+          </div>
+          <div v-else-if="column.type==='index'">
+            <!-- index 类型 -->
+            {{scope.$index+1}}
           </div>
           <div v-else>
             <!-- 支持formatter内容 -->
@@ -77,6 +84,7 @@
         :model="modelData"
         :default="editForm"
         :action="editScope"
+        :formAttribute="formAttribute"
       />
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="save">确 定</el-button>
@@ -117,7 +125,7 @@ export default {
             },
             scope: ["create", "update"],
             // 校验
-            required: true,
+            required: false,
             validator: null,
             message: null,
             asynValid: false
@@ -134,26 +142,17 @@ export default {
          * */
         return [
           {
-            label: "序号",
-            prop: "index",
-            width: null,
-            type: null,
-            index: null,
-            minWidth: null,
-            fixed: null,
-            renderHeader: null,
-            resizable: true,
-            formatter: null,
-            showOverflowTooltip: false,
-            align: "center",
-            headerAlign: null,
-            className: null,
-            labelClassName: null,
-            selectable: null,
-            hidden: false
+            // tableColumnAttributes,
+            hidden: false,
+            slotName: ''
           },
         ];
       },
+    },
+    dataKey: {
+      type: String,
+      required: false,
+      default: "id"
     },
     immediate: {
       type: Boolean,
@@ -170,7 +169,7 @@ export default {
     getItemFromDetaiApi: {
       type: Boolean,
       required: false,
-      default: true,
+      default: false,
     },
     tableAttribute: {
       type: Object,
@@ -186,7 +185,13 @@ export default {
         return {}
       }
     },
-    
+    formAttribute: {
+      type: Object,
+      required: false,
+      default(){
+        return {}
+      }
+    },
   },
   filters: {
     formatterFilter(cellValue, row, column, index, formatter) {
@@ -213,6 +218,51 @@ export default {
       },
       totalCount: 0,
       totalPage: 0,
+      table: {
+        // 暴露 el-table 方法
+        clearSelection: () => {
+          return this.$refs.table.clearSelection()
+        },
+        toggleRowSelection: (row, selected) => {
+          return this.$refs.table.toggleRowSelection(row, selected)
+        },
+        toggleAllSelection: () => {
+          return this.$refs.table.toggleAllSelection()
+        },
+        toggleRowExpansion: (row, expanded) => {
+          return this.$refs.table.toggleRowExpansion(row, expanded)
+        },
+        setCurrentRow: (row) => {
+          return this.$refs.table.setCurrentRow(row)
+        },
+        clearSort: () => {
+          return this.$refs.table.clearSort()
+        },
+        clearFilter: (columnKey) => {
+          return this.$refs.table.clearFilter(columnKey)
+        },
+        doLayout: () => {
+          return this.$refs.table.doLayout()
+        },
+        sort: (prop, order) => {
+          return this.$refs.table.clearFilter(prop, order)
+        },
+      },
+      form: {
+        // 暴露 el-form 方法
+        validate: (callback) => {
+          return this.$refs.editForm.validate(callback);
+        },
+        validateField: (props, callback) => {
+          return this.$refs.editForm.validateField(props, callback);
+        },
+        resetFields: () => {
+          return this.$refs.editForm.resetFields();
+        },
+        clearValidate: () => {
+          return this.$refs.editForm.clearValidate();
+        },
+      }
     };
   },
   computed: {
@@ -230,8 +280,12 @@ export default {
         if (obj.type === void 0) {
           obj.type = "string";
         }
-        // 默认值 null
-        if (obj.default === void 0) {
+        // 默认值处理
+        if(obj.type==='array'){
+          obj.default = [];
+        }else if(obj.type==='object'){
+           obj.default = {};
+        }else if (obj.default === void 0) {
           obj.default = null;
         }
         //默认控件: string => el-input, number => BaseInputNumber, boolean => el-switch, array => DictCheckbox
@@ -271,40 +325,51 @@ export default {
         if (!column.align) {
           column.align = "center";
         }
-
+        // type selection/expand 警告
+        if(column.type==='selection' || column.type==='expand'){
+          console.warn('BaseCURD组件：columns=>type属性只支持"default"和"index"')
+        }
         return column;
       });
     },
   },
   watch: {
     loading() {
+      // 暴露loading状态
       this.$emit("loadingState", this.loading);
     },
   },
   methods: {
-    handleCurrentChange: function (currentPage) {
+    handleCurrentChange: function(currentPage) {
+      // 翻页组件回调
       this.queryParamFinnal.p = currentPage;
       this.fetchList();
     },
     create() {
+      // 暴露方法：创建
       this.editForm = Object.assign({}, this.modelValue);
       this.editScope = "create";
       this.dialogVisible = true;
     },
-    update: async function (data) {
+    update: async function(data) {
+      // 暴露方法：更新
       this.editForm = !this.getItemFromDetaiApi
         ? deepcopy(data)
-        : await this.fetchDetail(data.id);
+        : await this.fetchDetail(data[this.dataKey]);
       this.editScope = "update";
       this.dialogVisible = true;
     },
     save() {
+      // 保存
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          this.loading = true;
           let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
-          let doAction = !formData.id ? this.api.create : this.api.update;
+          let doAction = this.api[this.editScope];
+          if(typeof doAction !== 'function'){
+            return console.warn(`api.${this.editScope}()未定义`)
+          }
+          this.loading = true;
           doAction(formData)
             .then(() => {
               this.$message({
@@ -319,13 +384,10 @@ export default {
         }
       });
     },
-    handleCloseDialog: function () {
-      this.dialogVisible = false;
-      this.editForm = Object.assign({}, this.modelValue);
-    },
     delete(item) {
-      if (!item) {
-        return null;
+      // 暴露方法：删除
+      if (!item || !item[this.dataKey]) {
+        return console.warn(`api.delete(): 参数${this.dataKey}无效`);
       }
       this.$confirm("是否删除?", "提示", {
         confirmButtonText: "确定",
@@ -336,7 +398,7 @@ export default {
           this.loading = true;
           this.api
             .delete({
-              id: item.id,
+              [this.dataKey]: item[this.dataKey],
             })
             .then(() => {
               this.fetchList();
@@ -351,10 +413,19 @@ export default {
         })
         .catch(() => {});
     },
-    fetchDetail: function (id) {
+    handleCloseDialog: function() {
+      this.dialogVisible = false;
+      this.editForm = Object.assign({}, this.modelValue);
+    },
+    fetchDetail: function(dataKey) {
+      if(!dataKey){
+        return console.warn(`api.detail(): 参数${this.dataKey}无效`)
+      }
       this.loading = true;
       return this.api
-        .detail({ id })
+        .detail({ 
+          [this.dataKey]: dataKey
+         })
         .then((res) => {
           this.loading = false;
           return res.data.data;
@@ -363,7 +434,7 @@ export default {
           this.loading = false;
         });
     },
-    fetchList: function (reload) {
+    fetchList: function(reload) {
       if (reload) {
         this.queryParamFinnal.p = 1;
       }
@@ -386,26 +457,17 @@ export default {
         });
     },
     search() {
+      // 暴露方法：搜索（应用 queryParam 参数）
       Object.assign(this.queryParamFinnal, this.queryParam, {
         p: this.queryParamFinnal.p,
         pageSize: this.queryParamFinnal.pageSize,
       });
       this.fetchList(true);
     },
-    validate(callback) {
-      return this.$refs.editForm.validate(callback);
-    },
-    validateField(props, callback){
-      return this.$refs.editForm.validateField(props, callback);
-    },
-    resetFields(){
-      return this.$refs.editForm.resetFields();
-    },
-    clearValidate() {
-      return this.$refs.editForm.clearValidate();
-    },
+    
   },
   created() {
+    // props:api检查
     let missingActions = [
       "list",
       "detail",

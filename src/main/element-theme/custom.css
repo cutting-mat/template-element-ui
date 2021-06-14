@@ -88,12 +88,6 @@
   width: 100%;
 }
 
-.el-table .cell,
-.el-table--border td:first-child .cell,
-.el-table--border th:first-child .cell {
-  padding-left: 20px;
-}
-
 .el-table th>.cell {
   padding-left: 20px;
 }

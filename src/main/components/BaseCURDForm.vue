@@ -33,7 +33,7 @@
       ></component>
       <component v-else
         :is="model[key].control"
-        v-model.number="editForm[key]"
+        v-model="editForm[key]"
         v-bind="model[key].controlOption"
         @change="handleChange(key)"
       ></component>

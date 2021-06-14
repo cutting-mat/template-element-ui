@@ -183,16 +183,15 @@ export default {
 .custom-menu >>> .el-menu-item {
   margin-bottom: 9px;
 }
-.custom-menu >>> .second,
-.custom-menu >>> .third.is-active {
+.custom-menu >>> .second{
   padding-left: 40px;
   padding-right: 0;
   box-sizing: border-box;
   color: #555;
   border-radius: 6px;
 }
-.custom-menu >>> .second.is-active,
-.custom-menu >>> .third.is-active {
+
+.custom-menu >>> .second.is-active, .custom-menu >>> .third.is-active{
   color: #fff;
   background: #0265ed;
   box-shadow: 0px 2px 2px 0px rgba(109, 156, 220, 0.49);
@@ -205,8 +204,7 @@ export default {
   display: inline-block;
   margin-right: 5px;
 }
-.custom-menu >>> .second.is-active .point,
-.custom-menu >>> .third.is-active .point {
+.custom-menu >>> .is-active .point{
   background: #fff;
 }
 .custom-menu >>> .el-menu-item-group__title {

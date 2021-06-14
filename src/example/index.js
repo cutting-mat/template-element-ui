@@ -98,7 +98,29 @@ export default [{
         }, {
             path: 'CURD',
             name: '增删改查',
-            component: (resolve) => require(['./views/CURD.vue'], resolve)
+            component: (resolve) => require(['./views/CURD.vue'], resolve),
+            children: [{
+                path: 'CURDRoleList',
+                name: '增删改查-基本应用',
+                component: (resolve) => require(['./views/CURDRoleList.vue'], resolve),
+                meta: {
+                    title: '基本应用'
+                }
+            }, {
+                path: 'CURDDict',
+                name: '增删改查-自定义Table列',
+                component: (resolve) => require(['./views/CURDDict.vue'], resolve),
+                meta: {
+                    title: '自定义Table列'
+                }
+            }, {
+                path: 'CURDAccount',
+                name: '增删改查-自定义表单校验',
+                component: (resolve) => require(['./views/CURDAccount.vue'], resolve),
+                meta: {
+                    title: '自定义表单校验'
+                }
+            },]
         }, {
             path: 'upload',
             name: '上传',

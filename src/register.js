@@ -14,6 +14,7 @@ const globalComponents = {
     DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictSelect.vue"),
     DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCascader.vue"),
     OrgPicker:  () => import(/* webpackChunkName: "global-components" */ "@/system/components/OrgPicker.vue"),
+    TheResourcePicker:  () => import(/* webpackChunkName: "global-components" */ "@/system/components/TheResourcePicker.vue"),
 }
 
 
