@@ -1,9 +1,11 @@
 <template>
   <el-form
-    size="small"
     ref="editForm"
     :model="editForm"
-    :label-width="labelWidth"
+    v-bind="Object.assign({
+      'size': 'small',
+      'label-width': '80px'
+    }, formAttribute)"
   >
     <el-form-item
       v-for="key in modelKey"
@@ -55,15 +57,17 @@ export default {
         return {};
       },
     },
-    labelWidth: {
-      type: String,
-      required: false,
-      default: "80px",
-    },
     action: {
       type: String,
       required: false,
       default: "update",
+    },
+    formAttribute: {
+      type: Object,
+      required: false,
+      default(){
+        return {}
+      }
     },
   },
   data() {

@@ -1,8 +1,6 @@
 <template>
   <el-checkbox-group v-model="bindValue"
-    :disabled="disabled"
-    :border="border"
-    :size="size"
+    v-bind="attribute"
     @change="$emit('change', $event)"
   >
     <el-checkbox :label="null" v-if="nullAble">
@@ -56,21 +54,13 @@ export default {
       required: false,
       default: "请选择",
     },
-    disabled: {
-      type: Boolean,
+    attribute: {
+      type: Object,
       required: false,
-      default: false
-    },
-    border: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    size: {
-      type: String,
-      required: false,
-      default: null
-    },
+      default() {
+        return {}
+      }
+    }
   },
   data() {
     return {

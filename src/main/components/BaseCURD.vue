@@ -1,6 +1,12 @@
 <template>
   <div>
-    <el-table border default-expand-all row-key="id" :data="list">
+    <el-table :data="list"
+      v-bind="Object.assign({
+        'border': true,
+        'default-expand-all': true,
+        'row-key': 'id'
+      }, tableAttribute)"
+    >
       <el-table-column
         v-for="(column, index) in columnsData"
         :key="'col' + index"
@@ -57,11 +63,13 @@
     />
     <!-- 弹窗 -->
     <el-dialog
-      append-to-body
-      :close-on-click-modal="false"
-      :title="formTitle"
       :visible="dialogVisible"
-      :width="formWidth"
+      v-bind="Object.assign({
+        'title': '详情',
+        'width': '800px',
+        'close-on-click-modal': false,
+        'append-to-body': true
+      }, dialogAttribute)"
       @close="handleCloseDialog"
     >
       <BaseCURDForm v-if="dialogVisible"
@@ -142,6 +150,7 @@ export default {
             className: null,
             labelClassName: null,
             selectable: null,
+            hidden: false
           },
         ];
       },
@@ -163,16 +172,21 @@ export default {
       required: false,
       default: true,
     },
-    formTitle: {
-      type: String,
+    tableAttribute: {
+      type: Object,
       required: false,
-      default: "详情"
+      default(){
+        return {}
+      }
     },
-    formWidth: {
-      type: String,
+    dialogAttribute: {
+      type: Object,
       required: false,
-      default: "800px"
-    }
+      default(){
+        return {}
+      }
+    },
+    
   },
   filters: {
     formatterFilter(cellValue, row, column, index, formatter) {
@@ -252,7 +266,7 @@ export default {
       return result;
     },
     columnsData() {
-      return this.columns.map((column) => {
+      return this.columns.filter(column => !column.hidden).map((column) => {
         // 默认居中
         if (!column.align) {
           column.align = "center";

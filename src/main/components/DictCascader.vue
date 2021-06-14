@@ -1,19 +1,11 @@
 <template>
   <el-cascader v-model="bindValue"
     :options="list"
-    :props="useProps"
-    :multiple="multiple"
-    :disabled="disabled"
-    :size="size"
-    :placeholder="placeholder"
-    :clearable="clearable"
-    :show-all-levels="showAllLevels"
-    :collapse-tags="collapseTags"
-    :separator="separator"
-    :filterable="filterable"
-    :filter-method="filterMethod"
-    :debounce="debounce"
-    :before-filter="beforeFilter"
+    :props="{
+      value: this.valueKey,
+      label: this.labelKey
+    }"
+    v-bind="attribute"
     @change="$emit('change', $event)"
   >
   </el-cascader>
@@ -52,71 +44,18 @@ export default {
       required: false,
       default: true
     },
-    props: {
-      type: Object,
-      required: false,
-      default() {
-        return {}
-      }
-    },
     placeholder: {
       type: String,
       required: false,
       default: "请选择",
     },
-    multiple: {
-      type: Boolean,
+    attribute: {
+      type: Object,
       required: false,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    size: {
-      type: String,
-      required: false,
-      default: null
-    },
-    clearable: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    showAllLevels: {
-      type: Boolean,
-      required: false,
-      default: true
-    },
-    collapseTags: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    separator: {
-      type: String,
-      required: false,
-      default: '/'
-    },
-    filterable: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    filterMethod: {
-      type: Function,
-      required: false
-    },
-    debounce: {
-      type: Number,
-      required: false,
-      default: 300
-    },
-    beforeFilter: {
-      type: Function,
-      required: false,
-    },
+      default() {
+        return {}
+      }
+    }
   },
   data() {
     return {

@@ -1,13 +1,6 @@
 <template>
   <el-select v-model="bindValue"
-    :multiple="multiple"
-    :disabled="disabled"
-    :size="size"
-    :clearable="clearable"
-    :collapse-tags="collapseTags"
-    :multiple-limit="multipleLimit"
-    :filterable="filterable"
-    :popper-append-to-body="popperAppendToBody"
+    v-bind="attribute"
     @change="$emit('change', $event)"
   >
     <el-option :label="placeholder" :value="null" v-if="nullAble"> </el-option>
@@ -59,45 +52,12 @@ export default {
       required: false,
       default: "请选择",
     },
-    multiple: {
-      type: Boolean,
+    attribute: {
+      type: Object,
       required: false,
-      default: false
-    },
-    disabled: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    size: {
-      type: String,
-      required: false,
-      default: null
-    },
-    clearable: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    collapseTags: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    multipleLimit: {
-      type: Number,
-      required: false,
-      default: 0
-    },
-    filterable: {
-      type: Boolean,
-      required: false,
-      default: false
-    },
-    popperAppendToBody: {
-      type: Boolean,
-      required: false,
-      default: true
+      default(){
+        return {}
+      }
     },
   },
   data() {

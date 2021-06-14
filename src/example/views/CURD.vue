@@ -28,7 +28,7 @@
           </el-form-item>
         </el-form>
         <el-button size="small" type="primary" @click="$refs.theCURD.create()"
-          >新建</el-button
+          >添加</el-button
         >
       </div>
       <!-- 增删改查列表 -->
@@ -81,13 +81,9 @@
 <script>
 //import * as util from '@/main/assets/util';
 import * as api from "@/system/api/account";
-import BaseCURD from "@/main/components/BaseCURD";
 import { list as requestRoles } from "@/system/api/role";
 
 export default {
-  components: {
-    BaseCURD,
-  },
   data() {
     const validatePass = (editForm, value, callback) => {
       if (!value) {
