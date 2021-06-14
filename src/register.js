@@ -3,6 +3,7 @@ import BaseHeader from '@/main/components/BaseHeader.vue'
 
 const globalComponents = {
     BaseHeader,
+    BaseBreadcrumb: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseBreadcrumb.vue"),
     BaseSubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseSubNav.vue"),
     BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePagination.vue"),
     BasePlaceholder: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePlaceholder.vue"),
@@ -11,7 +12,7 @@ const globalComponents = {
     DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCheckbox.vue"),
     DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictSelect.vue"),
     DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCascader.vue"),
-    
+    OrgPicker:  () => import(/* webpackChunkName: "global-components" */ "@/system/components/OrgPicker.vue"),
 }
 
 

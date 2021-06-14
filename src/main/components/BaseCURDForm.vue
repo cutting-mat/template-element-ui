@@ -21,16 +21,19 @@
         :is="model[key].control"
         v-model.trim="editForm[key]"
         v-bind="model[key].controlOption"
+        @change="handleChange(key)"
       ></component>
       <component v-else-if="model[key].type==='number'"
         :is="model[key].control"
         v-model.number="editForm[key]"
         v-bind="model[key].controlOption"
+        @change="handleChange(key)"
       ></component>
       <component v-else
         :is="model[key].control"
         v-model.number="editForm[key]"
         v-bind="model[key].controlOption"
+        @change="handleChange(key)"
       ></component>
     </el-form-item>
   </el-form>
@@ -96,6 +99,13 @@ export default {
       }
       return this.model[key].validator
     },
+    handleChange(key) {
+      // 异步校验
+      if(this.model[key].asynValid){
+        this.validateField(key);
+      }
+      
+    }
   },
 };
 </script>

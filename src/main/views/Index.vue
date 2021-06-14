@@ -20,7 +20,6 @@
 export default {
   components: {
     dashboard: () => import("../components/TheDashboard.vue"),
-    BaseBreadcrumb: () => import("../components/BaseBreadcrumb.vue"),
   },
   data() {
     return {};

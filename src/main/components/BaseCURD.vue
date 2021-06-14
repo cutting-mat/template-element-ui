@@ -59,13 +59,12 @@
     <el-dialog
       append-to-body
       :close-on-click-modal="false"
-      title="详情"
+      :title="formTitle"
       :visible="dialogVisible"
-      width="800px"
+      :width="formWidth"
       @close="handleCloseDialog"
     >
-      <BaseCURDForm
-        v-if="dialogVisible"
+      <BaseCURDForm v-if="dialogVisible"
         ref="editForm"
         :model="modelData"
         :default="editForm"
@@ -113,6 +112,7 @@ export default {
             required: true,
             validator: null,
             message: null,
+            asynValid: false
           },
         };
       },
@@ -163,6 +163,16 @@ export default {
       required: false,
       default: true,
     },
+    formTitle: {
+      type: String,
+      required: false,
+      default: "详情"
+    },
+    formWidth: {
+      type: String,
+      required: false,
+      default: "800px"
+    }
   },
   filters: {
     formatterFilter(cellValue, row, column, index, formatter) {
@@ -182,6 +192,7 @@ export default {
       loading: false,
       list: [],
       editForm: {},
+      editScope: '',
       queryParamFinnal: {
         p: 1,
         pageSize: 10,
@@ -297,7 +308,6 @@ export default {
     handleCloseDialog: function () {
       this.dialogVisible = false;
       this.editForm = Object.assign({}, this.modelValue);
-      //this.$refs.editForm && this.$refs.editForm.resetFields();
     },
     delete(item) {
       if (!item) {

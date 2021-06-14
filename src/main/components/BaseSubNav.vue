@@ -116,13 +116,13 @@ export default {
         let channelName = newRoute.path.split("/")[1];
         let targetIndex = -1;
         if (Array.isArray(this.list)) {
-          this.list.findIndex((item) => {
+          targetIndex = this.list.findIndex((item) => {
             return item.fullPath.indexOf(channelName) === 1;
           });
         }
 
         if (targetIndex === -1) {
-          //console.log('切换主栏目')
+          console.log('切换主栏目')
           let arr = this.state.menu.slice();
           let result;
           for (let i = 0; i < arr.length; i++) {

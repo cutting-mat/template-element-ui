@@ -4,7 +4,13 @@
     <div class="demo">
       <!-- 搜索 -->
       <div class="flex-row align-center">
-        <el-form inline size="small" ref="searchForm" :model="queryParam" class="flex-1">
+        <el-form
+          inline
+          size="small"
+          ref="searchForm"
+          :model="queryParam"
+          class="flex-1"
+        >
           <el-form-item label="姓名" prop="name">
             <el-input v-model="queryParam.name" />
           </el-form-item>
@@ -21,7 +27,9 @@
             >
           </el-form-item>
         </el-form>
-        <el-button size="small" type="primary" @click="$refs.theCURD.create()">新建</el-button>
+        <el-button size="small" type="primary" @click="$refs.theCURD.create()"
+          >新建</el-button
+        >
       </div>
       <!-- 增删改查列表 -->
       <BaseCURD
@@ -30,6 +38,7 @@
         :model="model"
         :columns="columns"
         :queryParam="queryParam"
+        getItemFromDetaiApi
         @loadingState="loading = $event"
       >
         <!-- 自定义slot: 状态 -->
@@ -81,18 +90,16 @@ export default {
   },
   data() {
     const validatePass = (editForm, value, callback) => {
-      console.log(editForm, value)
       if (!value) {
         callback(new Error("请输入密码"));
       } else {
-        if (editForm.checkPass) {
+        if (value && editForm.checkPass) {
           this.$refs.theCURD.validateField("checkPass");
         }
         callback();
       }
     };
     const validatePass2 = (editForm, value, callback) => {
-      console.log(editForm, value)
       if (!value) {
         callback(new Error("请再次输入密码"));
       } else if (value !== editForm.password) {
@@ -115,12 +122,7 @@ export default {
       model: {
         accountName: {
           label: "用户名",
-          controlOption: {
-            // 除 v-model 外的控件属性
-          },
-          // 校验
           required: true,
-          message: null,
         },
         accountNumber: {
           label: "账号",
@@ -130,31 +132,45 @@ export default {
           label: "密码",
           required: true,
           scope: "create",
-          validator: validatePass
+          validator: validatePass,
         },
         checkPass: {
           label: "确认密码",
           required: true,
           scope: "create",
-          validator: validatePass2
+          validator: validatePass2,
         },
         orgId: {
-          type: 'number',
+          type: "number",
           label: "所属组织",
           required: true,
+          control: "OrgPicker",
+          controlOption: {
+            adapter: (value, obj) => {
+              //console.log(value, obj);
+              if (obj && obj.id) {
+                return obj.fullName;
+              }
+              if(this.$refs.theCURD.editForm.sysOrg){
+                return this.$refs.theCURD.editForm.sysOrg.fullName
+              }
+              return value;
+            },
+          },
+          asynValid: true,  // 异步校验，组件@change时自动校验表单项
         },
         roleId: {
-          type: 'number',
+          type: "number",
           label: "角色",
           required: true,
           control: "DictSelect",
           controlOption: {
             load: this.loadRole,
-            labelKey: 'name'
+            labelKey: "name",
           },
         },
         state: {
-          type: 'number',
+          type: "number",
           default: 1,
           label: "状态",
           required: true,
@@ -181,12 +197,8 @@ export default {
         {
           label: "角色",
           formatter(row) {
-            if (Array.isArray(row.roles)) {
-              return row.roles
-                .map((role) => {
-                  return `${role.orgName} - ${role.roleName}`;
-                })
-                .join("、");
+            if (row.roleName) {
+              return `${row.belongOrgName} - ${row.roleName}`;
             }
             return "无";
           },
@@ -209,6 +221,7 @@ export default {
   },
   methods: {
     resetPassword: function (data) {
+      // 重置密码
       if (!data) {
         return null;
       }
@@ -236,6 +249,7 @@ export default {
         .catch(() => {});
     },
     loadRole() {
+      // 用于字典组件的load方法
       return requestRoles().then((res) => {
         return res.data.data;
       });
