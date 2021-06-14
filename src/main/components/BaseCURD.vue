@@ -2,7 +2,7 @@
   <div>
     <el-table border default-expand-all row-key="id" :data="list">
       <el-table-column
-        v-for="(column, index) in columns"
+        v-for="(column, index) in columnsData"
         :key="'col' + index"
         :prop="column.prop"
         :label="column.label"
@@ -57,18 +57,24 @@
     />
     <!-- 弹窗 -->
     <el-dialog
+      append-to-body
       :close-on-click-modal="false"
       title="详情"
       :visible="dialogVisible"
       width="800px"
       @close="handleCloseDialog"
     >
-      <BaseCURDForm v-if="dialogVisible"
+      <BaseCURDForm
+        v-if="dialogVisible"
         ref="editForm"
         :model="modelData"
         :default="editForm"
         :action="editScope"
       />
+      <div slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="save">确 定</el-button>
+        <el-button @click="dialogVisible = false">取 消</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -81,15 +87,6 @@ export default {
     api: {
       type: Object,
       required: true,
-      default() {
-        return {
-          list() {},
-          detail() {},
-          create() {},
-          update() {},
-          delete() {},
-        };
-      },
     },
     model: {
       type: Object,
@@ -103,7 +100,7 @@ export default {
         return {
           accountName: {
             // 数据
-            type: 'string',
+            type: "string",
             default: null,
             // 表单
             label: "用户名",
@@ -111,7 +108,7 @@ export default {
             controlOption: {
               // 除 v-model 外的控件属性
             },
-            scope: ["create","update"],
+            scope: ["create", "update"],
             // 校验
             required: true,
             validator: null,
@@ -140,7 +137,7 @@ export default {
             resizable: true,
             formatter: null,
             showOverflowTooltip: false,
-            align: "left",
+            align: "center",
             headerAlign: null,
             className: null,
             labelClassName: null,
@@ -161,7 +158,7 @@ export default {
         return {};
       },
     },
-    getDetailFromListItem: {
+    getItemFromDetaiApi: {
       type: Boolean,
       required: false,
       default: true,
@@ -202,42 +199,57 @@ export default {
     },
     modelData() {
       let result = Object.assign({}, this.model);
-      this.modelKey.map(key => {
+      this.modelKey.map((key) => {
         let obj = result[key];
         // 默认类型 string
-        if(obj.type===void(0)){
-          obj.type = 'string'
+        if (obj.type === void 0) {
+          obj.type = "string";
         }
         // 默认值 null
-        if(obj.default===void(0)){
-          obj.default = null
+        if (obj.default === void 0) {
+          obj.default = null;
         }
         //默认控件: string => el-input, number => BaseInputNumber, boolean => el-switch, array => DictCheckbox
-        if(obj.control===void(0)){
-          obj.control = {
-            number: 'BaseInputNumber',
-            boolean: 'el-switch',
-            array: 'DictCheckbox'
-          }[obj.type] || 'el-input'
+        if (obj.control === void 0) {
+          obj.control =
+            {
+              boolean: "el-switch",
+              array: "DictCheckbox",
+            }[obj.type] || "el-input";
         }
-
+        // 默认控件属性
+        if(obj.control==='el-input'){
+          obj.controlOption = Object.assign({
+            maxlength: 100
+          }, obj.controlOption)
+        }
         // 默认生成控件时机
-        if(!obj.scope || !obj.scope.indexOf) {
-          obj.scope = ["create","update"]
+        if (!obj.scope || !obj.scope.indexOf) {
+          obj.scope = ["create", "update"];
         }
         // 默认非必填
         obj.required = !!obj.required;
-
-      })
+ 
+      });
       return result;
     },
     modelValue() {
       let result = {};
-      this.modelKey.map(key => {
+      this.modelKey.map((key) => {
         result[key] = this.modelData[key].default;
-      })
+      });
       return result;
-    }
+    },
+    columnsData() {
+      return this.columns.map((column) => {
+        // 默认居中
+        if (!column.align) {
+          column.align = "center";
+        }
+
+        return column;
+      });
+    },
   },
   watch: {
     loading() {
@@ -250,15 +262,15 @@ export default {
       this.fetchList();
     },
     create() {
-      this.editForm = this.modelValue;
-      this.editScope = 'create';
+      this.editForm = Object.assign({}, this.modelValue);
+      this.editScope = "create";
       this.dialogVisible = true;
     },
     update: async function (data) {
-      this.editForm = this.getDetailFromListItem
+      this.editForm = !this.getItemFromDetaiApi
         ? deepcopy(data)
         : await this.fetchDetail(data.id);
-      this.editScope = 'update';
+      this.editScope = "update";
       this.dialogVisible = true;
     },
     save() {
@@ -284,7 +296,7 @@ export default {
     },
     handleCloseDialog: function () {
       this.dialogVisible = false;
-      this.editForm = this.modelValue;
+      this.editForm = Object.assign({}, this.modelValue);
       //this.$refs.editForm && this.$refs.editForm.resetFields();
     },
     delete(item) {
@@ -356,8 +368,37 @@ export default {
       });
       this.fetchList(true);
     },
+    validate(callback) {
+      return this.$refs.editForm.validate(callback);
+    },
+    validateField(props, callback){
+      return this.$refs.editForm.validateField(props, callback);
+    },
+    resetFields(){
+      return this.$refs.editForm.resetFields();
+    },
+    clearValidate() {
+      return this.$refs.editForm.clearValidate();
+    },
   },
   created() {
+    let missingActions = [
+      "list",
+      "detail",
+      "create",
+      "update",
+      "delete",
+    ].filter((action) => {
+      return typeof this.api[action] !== "function";
+    });
+    if (missingActions.length) {
+      console.warn(
+        `${missingActions
+          .map((actname) => "api." + actname + "()")
+          .join("、")}未定义`
+      );
+    }
+
     if (this.immediate) {
       this.search();
     }

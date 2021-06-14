@@ -3,23 +3,26 @@
     <h2>增删改查组件</h2>
     <div class="demo">
       <!-- 搜索 -->
-      <el-form inline size="small" ref="searchForm" :model="queryParam">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="queryParam.name" />
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="$refs.theCURD.search()"
-            >搜索</el-button
-          >
-          <el-button
-            @click="
-              $refs.searchForm.resetFields();
-              $refs.theCURD.search();
-            "
-            >重置</el-button
-          >
-        </el-form-item>
-      </el-form>
+      <div class="flex-row align-center">
+        <el-form inline size="small" ref="searchForm" :model="queryParam" class="flex-1">
+          <el-form-item label="姓名" prop="name">
+            <el-input v-model="queryParam.name" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="$refs.theCURD.search()"
+              >搜索</el-button
+            >
+            <el-button
+              @click="
+                $refs.searchForm.resetFields();
+                $refs.theCURD.search();
+              "
+              >重置</el-button
+            >
+          </el-form-item>
+        </el-form>
+        <el-button size="small" type="primary" @click="$refs.theCURD.create()">新建</el-button>
+      </div>
       <!-- 增删改查列表 -->
       <BaseCURD
         ref="theCURD"
@@ -27,7 +30,6 @@
         :model="model"
         :columns="columns"
         :queryParam="queryParam"
-        :getDetailFromListItem="false"
         @loadingState="loading = $event"
       >
         <!-- 自定义slot: 状态 -->
@@ -78,6 +80,28 @@ export default {
     BaseCURD,
   },
   data() {
+    const validatePass = (editForm, value, callback) => {
+      console.log(editForm, value)
+      if (!value) {
+        callback(new Error("请输入密码"));
+      } else {
+        if (editForm.checkPass) {
+          this.$refs.theCURD.validateField("checkPass");
+        }
+        callback();
+      }
+    };
+    const validatePass2 = (editForm, value, callback) => {
+      console.log(editForm, value)
+      if (!value) {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== editForm.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
+
     return {
       apiObj: {
         list: api.list,
@@ -106,6 +130,13 @@ export default {
           label: "密码",
           required: true,
           scope: "create",
+          validator: validatePass
+        },
+        checkPass: {
+          label: "确认密码",
+          required: true,
+          scope: "create",
+          validator: validatePass2
         },
         orgId: {
           type: 'number',
@@ -124,6 +155,7 @@ export default {
         },
         state: {
           type: 'number',
+          default: 1,
           label: "状态",
           required: true,
           control: "el-switch",
@@ -140,17 +172,14 @@ export default {
           label: "账号",
           prop: "accountNumber",
           width: 150,
-          align: "center",
         },
         {
           label: "用户名",
           prop: "accountName",
           width: 150,
-          align: "center",
         },
         {
           label: "角色",
-          align: "center",
           formatter(row) {
             if (Array.isArray(row.roles)) {
               return row.roles
@@ -165,13 +194,11 @@ export default {
         {
           label: "状态",
           width: 80,
-          align: "center",
           slot: "status",
         },
         {
           label: "操作",
-          width: 300,
-          align: "center",
+          width: 260,
           slot: "action",
         },
       ],
