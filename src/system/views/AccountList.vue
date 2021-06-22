@@ -90,10 +90,16 @@
         label-width="80px"
       >
         <el-form-item label="账号" prop="accountNumber">
-          <el-input v-model.trim="editForm.accountNumber" :maxlength="100"></el-input>
+          <el-input
+            v-model.trim="editForm.accountNumber"
+            :maxlength="100"
+          ></el-input>
         </el-form-item>
         <el-form-item label="用户名" prop="accountName">
-          <el-input v-model.trim="editForm.accountName" :maxlength="100"></el-input>
+          <el-input
+            v-model.trim="editForm.accountName"
+            :maxlength="100"
+          ></el-input>
         </el-form-item>
         <template v-if="!editForm.id">
           <el-form-item label="密码" prop="password">
@@ -111,6 +117,9 @@
             ></el-input>
           </el-form-item>
         </template>
+        <el-form-item label="所属组织" prop="orgId">
+          <OrgPicker v-model="editForm.orgId" :adapter="orgAdapter" @change="$refs.editForm.validateField('orgId')"></OrgPicker>
+        </el-form-item>
         <el-form-item label="角色">
           <el-checkbox-group v-model="editForm.roles">
             <el-checkbox
@@ -194,11 +203,24 @@ export default {
         ],
         password: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
+        orgId: [
+          { required: true, message: "请选择所属组织" },
+        ]
       },
       rolesList: [],
     };
   },
   methods: {
+    orgAdapter(value, obj) {
+      console.log(value, obj);
+      if (obj && obj.id) {
+        return obj.fullName;
+      }
+      if (this.editForm.belongOrgFullName) {
+        return this.editForm.belongOrgFullName;
+      }
+      return value;
+    },
     handleCurrentChange: function (currentPage) {
       this.queryParam.p = currentPage;
       this.fetchData();
@@ -231,7 +253,9 @@ export default {
     edit: function (data) {
       const editObj = Object.assign({}, data);
       // 角色数据格式转换
-      editObj.roles = Array.isArray(editObj.roles) ? editObj.roles.map((e) => e.roleId) : [];
+      editObj.roles = Array.isArray(editObj.roles)
+        ? editObj.roles.map((e) => e.roleId)
+        : [];
       this.editForm = editObj;
       this.dialogVisible = true;
     },

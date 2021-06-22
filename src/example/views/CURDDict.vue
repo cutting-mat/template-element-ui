@@ -24,7 +24,7 @@
       :dialogAttribute="{
         title: '字典信息'
       }"
-      @loadingState="loading = $event"
+      @loading-state="loading = $event"
       @row-click="handleRowClick"
     >
       <template v-slot:pick="scope">

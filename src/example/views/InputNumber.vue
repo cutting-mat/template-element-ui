@@ -6,7 +6,11 @@
       引用数字输入组件：<code>@/main/components/BaseInputNumber.vue</code>
     </p>
     <div class="demo">
-      <BaseInputNumber v-model="inputNumber" zeroFill :decimals="2" style="width:800px" />
+      <el-form>
+        <el-form-item label="保留两位小数">
+          <BaseInputNumber v-model="inputNumber" zeroFill :decimals="2" style="width:800px" />
+        </el-form-item>
+      </el-form>
     </div>
   </div>
 </template>
@@ -15,8 +19,10 @@
 //import * as util from '@/main/assets/util';
 
 export default {
+  components: {
+    BaseInputNumber:  () => import("@/main/components/BaseInputNumber.vue"),
+  },
   data() {
-    
     return {
       inputNumber: null,
       

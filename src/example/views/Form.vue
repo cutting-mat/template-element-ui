@@ -4,13 +4,7 @@
     <div class="demo">
       <el-input v-model="input" placeholder="请输入内容" style="width:800px"></el-input>
     </div>
-    <h2>数字输入框</h2>
-    <p>
-      引用数字输入组件：<code>@/main/components/BaseInputNumber.vue</code>
-    </p>
-    <div class="demo">
-      <BaseInputNumber v-model="inputNumber" zeroFill :decimals="2" style="width:800px" />
-    </div>
+
     <h2>日期选择器 - 选择日</h2>
     <div class="demo">
       <el-date-picker v-model="value1" type="date" placeholder="选择日期" style="width:240px"></el-date-picker>

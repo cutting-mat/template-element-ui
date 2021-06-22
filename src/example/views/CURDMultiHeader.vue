@@ -22,6 +22,7 @@
       :dialogAttribute="{
         title: '角色信息',
       }"
+      @selection-change="handleSelectionChange"
       @loading-state="loading = $event"
     >
       <template v-slot:action="scope">
@@ -41,7 +42,6 @@
         >
       </template>
     </BaseCURD>
-    
   </div>
 </template>
 
@@ -73,22 +73,31 @@ export default {
           },
         },
         resources: {
-          type: 'array',
+          type: "array",
           label: "权限",
           control: "TheResourcePicker",
           controlOption: {
-            picker: true
-          }
-        }
+            picker: true,
+          },
+        },
       },
       columns: [
         {
-          label: "角色名称",
-          prop: "name",
+          type: "selection",
+          align: "center"
         },
         {
-          label: "备注",
-          prop: "remark",
+          label: "基本信息",
+          children: [
+            {
+              label: "角色名称",
+              prop: "name",
+            },
+            {
+              label: "备注",
+              prop: "remark",
+            },
+          ],
         },
         {
           label: "操作",
@@ -97,6 +106,11 @@ export default {
         },
       ],
     };
+  },
+  methods: {
+    handleSelectionChange(selection) {
+      console.log('selection:', selection)
+    }
   }
 };
 </script>

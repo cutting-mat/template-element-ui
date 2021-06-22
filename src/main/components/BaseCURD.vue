@@ -25,39 +25,26 @@
       @header-dragend="(newWidth, oldWidth, column, event) => $emit('header-dragend', newWidth, oldWidth, column, event)"
       @expand-change="(row, expandedRows ) => $emit('expand-change', row, expandedRows)"
     >
+      <!-- 支持el-table append插槽 -->
+      <template slot="append">
+        <slot name="append"></slot>
+      </template>
+      <!-- 支持多选 -->
       <el-table-column
+        v-if="selectionNode && selectionNode.type==='selection'"
+        v-bind="selectionNode"
+        >
+      </el-table-column>
+      <!-- 列循环 -->
+      <BaseCURDColumn
         v-for="(column, index) in columnsData"
         :key="'col' + index"
-        v-bind="column"
+        :column="column"
       >
-        <template slot-scope="scope">
-          <div v-if="column.slotName && column.slotName.split">
-            <!-- slot自定义内容 -->
-            <slot
-              :name="column.slotName"
-              :row="scope.row"
-              :column="scope.column"
-              :index="scope.$index"
-            ></slot>
-          </div>
-          <div v-else-if="column.type==='index'">
-            <!-- index 类型 -->
-            {{scope.$index+1}}
-          </div>
-          <div v-else>
-            <!-- 支持formatter内容 -->
-            {{
-              scope.row[column.prop]
-                | formatterFilter(
-                  scope.row,
-                  scope.column,
-                  scope.$index,
-                  column.formatter
-                )
-            }}
-          </div>
+        <template v-for="slotName in Object.keys($scopedSlots)"  :slot="slotName" slot-scope="scope" >
+          <slot :name="slotName" :column="scope.column" :row="scope.row" :prop="scope.prop"></slot>
         </template>
-      </el-table-column>
+      </BaseCURDColumn>
     </el-table>
     <!-- page -->
     <BasePagination
@@ -204,6 +191,7 @@ export default {
   },
   components: {
     BaseCURDForm: (resolve) => require(["./BaseCURDForm"], resolve),
+    BaseCURDColumn: (resolve) => require(["./BaseCURDColumn"], resolve),
   },
   data() {
     return {
@@ -218,6 +206,7 @@ export default {
       },
       totalCount: 0,
       totalPage: 0,
+      selectionNode: null,
       table: {
         // 暴露 el-table 方法
         clearSelection: () => {
@@ -274,41 +263,29 @@ export default {
     },
     modelData() {
       let result = Object.assign({}, this.model);
-      this.modelKey.map((key) => {
-        let obj = result[key];
-        // 默认类型 string
-        if (obj.type === void 0) {
-          obj.type = "string";
-        }
-        // 默认值处理
-        if(obj.type==='array'){
-          obj.default = [];
-        }else if(obj.type==='object'){
-           obj.default = {};
-        }else if (obj.default === void 0) {
-          obj.default = null;
-        }
-        //默认控件: string => el-input, number => BaseInputNumber, boolean => el-switch, array => DictCheckbox
-        if (obj.control === void 0) {
-          obj.control =
-            {
+      this.modelKey.forEach((key) => {
+        // 模型默认配置
+        let obj = Object.assign({}, result[key]);
+        result[key] = Object.assign({
+          type: "string",
+          default: {
+            array: [],
+            object: {}
+          }[obj.type] || null,
+          control: {
               boolean: "el-switch",
               array: "DictCheckbox",
-            }[obj.type] || "el-input";
-        }
-        // 默认控件属性
+            }[obj.type] || "el-input",
+            scope: ["create", "update"],
+            required: !!obj.required
+        }, obj);
+        // 输入控件默认长度限制
         if(obj.control==='el-input'){
           obj.controlOption = Object.assign({
             maxlength: 100
           }, obj.controlOption)
         }
-        // 默认生成控件时机
-        if (!obj.scope || !obj.scope.indexOf) {
-          obj.scope = ["create", "update"];
-        }
-        // 默认非必填
-        obj.required = !!obj.required;
- 
+
       });
       return result;
     },
@@ -320,23 +297,31 @@ export default {
       return result;
     },
     columnsData() {
-      return this.columns.filter(column => !column.hidden).map((column) => {
-        // 默认居中
-        if (!column.align) {
-          column.align = "center";
+      return this.columns.filter(column => {
+        // 支持el-table 多选功能
+        if(column.type==='selection'){
+          this.selectionNode = Object.assign({}, column);
+          return false;
         }
+        return !column.hidden;
+      }).map((column) => {
+        // 列默认配置
+        let result = Object.assign({
+          align: "center"
+        }, column)
+
         // type selection/expand 警告
-        if(column.type==='selection' || column.type==='expand'){
+        if(result.type==='selection' || result.type==='expand'){
           console.warn('BaseCURD组件：columns=>type属性只支持"default"和"index"')
         }
-        return column;
+        return result;
       });
     },
   },
   watch: {
     loading() {
       // 暴露loading状态
-      this.$emit("loadingState", this.loading);
+      this.$emit("loading-state", this.loading);
     },
   },
   methods: {
@@ -489,6 +474,10 @@ export default {
       this.search();
     }
   },
+  render: function (createElement) {
+   console.log(this.$slots)
+   return null
+  }
 };
 </script>
 

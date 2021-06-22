@@ -89,9 +89,10 @@ export default {
   methods: {
     fillZero(result) {
       // 补零
-      if (result === null || result === void 0) {
+      if (result === null || result === void 0 || result === '') {
         return null;
       }
+
       const dec = this.decimals;
 
       if (result.split && this.zeroFill && dec > 0) {

@@ -105,7 +105,7 @@ export default [{
             component: (resolve) => require(['./views/DickControl.vue'], resolve)
         }, {
             path: 'CURD',
-            name: '增删改查',
+            name: '增删改查组件',
             component: (resolve) => require(['./views/CURD.vue'], resolve),
             children: [{
                 path: 'CURDRoleList',
@@ -116,19 +116,27 @@ export default [{
                 }
             }, {
                 path: 'CURDDict',
-                name: '增删改查-自定义Table列',
+                name: '增删改查-Table高级配置',
                 component: (resolve) => require(['./views/CURDDict.vue'], resolve),
                 meta: {
-                    title: '自定义Table列'
+                    title: 'Table高级配置'
                 }
             }, {
                 path: 'CURDAccount',
-                name: '增删改查-自定义表单校验',
+                name: '增删改查-From高级配置',
                 component: (resolve) => require(['./views/CURDAccount.vue'], resolve),
                 meta: {
-                    title: '自定义表单校验'
+                    title: 'From高级配置'
                 }
-            },]
+            },{
+                path: 'CURDMultiHeader',
+                name: '增删改查-多级表头',
+                component: (resolve) => require(['./views/CURDMultiHeader.vue'], resolve),
+                meta: {
+                    title: '多级表头'
+                }
+            }
+            ]
         }]
     },]
 }]

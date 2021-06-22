@@ -1,11 +1,19 @@
 <template>
   <div>
     <h2>说明</h2>
-    <p>增删改查组件基于`el-table + el-dialog + el-form`实现，用于快速实现数据模型的CURD操作。</p>
+    <p>增删改查组件用于快速实现数据模型的CURD功能。只需要定义请求函数、列表配置、数据模型配置，就可以获得完整的CURD功能，省掉低级重复工作。</p>
+    <h3>基础扩展能力</h3>
+    <p>列表基于`el-table`实现，支持el-table的所有属性和方法，支持el-table-colums的所有属性，支持通过slot自定义单元格。</p>
+    <p>表单基于`el-form`实现，支持el-form的所有属性和方法，支持el-form的校验和自定义校验功能。</p>
+    <p>弹窗基于`el-dialog`实现，支持el-dialog的所有属性。</p>
+    <h3>高级扩展能力</h3>
+    <p>支持表单嵌入自定义组件（组件要实现`v-model`指令）</p>
+    <p>TODO: 支持表单组件联动</p>
+    <p>TODO: 支持多级表头</p>
     <h2>属性</h2>
-    <p>`api[Object]`: 必传。必要的请求函数。list: 列表请求函数；detail：详情请求函数，当`getItemFromDetaiApi:true`时必须；create：新增请求函数；update：更新请求函数；delete：删除请求函数；</p>
-    <p>`model[Object]`：必传。数据模型定义，控制动态表单生成、表单校验、自定义控件交互。对象的key对应数据的key，key的值为该数据的具体描述，详见【model props】</p>
-    <p>`columns[Array]`：必传。Table列定义，详见【columns props】</p>
+    <p>`api[Object]`: 必传。增删改查axios请求函数。list: 列表请求函数；detail：详情请求函数，当`getItemFromDetaiApi:true`时必须；create：新增请求函数；update：更新请求函数；delete：删除请求函数；</p>
+    <p>`model[Object]`：必传。数据模型配置，控制动态表单生成、表单校验、自定义控件交互。对象的key对应数据的key，key的值为该数据的具体描述，详见【model props】</p>
+    <p>`columns[Array]`：必传。列表配置，详见【columns props】</p>
     <p>`dataKey[String]`：数据主键，默认'id'。影响`api.detail()`和`api.delete()`方法的传参。</p>
     <p>`immediate[Boolean]`：是否创建组件后立即请求列表，默认true。</p>
     <p>`queryParam[Object]`：初始加载及调用`search()`方法时将做为api.list()的请求参数。</p>
@@ -33,7 +41,7 @@
 
     <h2>事件</h2>
     <p>支持el-table的所有事件，详见<el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/table#table-events" target="_blank">Element文档</el-link></p>
-    <p>loadingState:(state[Boolean])，当请求状态发生变化时触发事件。</p>
+    <p>loading-state:(state[Boolean])，当请求状态发生变化时触发事件。</p>
     
     <h2>方法</h2>
     <p>create()，用于弹出创建数据表单。</p>
@@ -43,13 +51,16 @@
     <p>通过'table'命名空间支持el-table的所有方法，例如table.clearSelection()。详见<el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/table#table-methods" target="_blank">Element文档</el-link></p>
     <p>通过'form'命名空间支持el-form的所有方法，例如form.validate()。详见<el-link type="primary" href="https://element.eleme.cn/#/zh-CN/component/form#form-methods" target="_blank">Element文档</el-link></p>
     <h2>示例</h2>
-    <p>基本应用：重构数据字典列表，文件位置`src\example\views\CURDDict.vue`，实现效果一致，代码行数对比`184: 309`</p>
-    <p>自定义Table列：重构角色列表，文件位置`src\example\views\CURDRoleList.vue`，实现效果一致，代码行数对比`105: 210`</p>
-    <p>自定义表单校验：重构账号列表，文件位置`src\example\views\CURDAccount.vue`，在原基础上增加列表筛选功能，代码行数对比`255: 331`</p>
+    <p>基本应用：重构角色列表，文件位置`src\example\views\CURDRoleList.vue`，实现效果一致，代码行数对比`105: 210`</p>
+    <p>Table高级配置：重构数据字典列表，文件位置`src\example\views\CURDDict.vue`，实现效果一致，代码行数对比`184: 309`</p>
+    <p>From高级配置：重构账号列表，文件位置`src\example\views\CURDAccount.vue`，在原基础上增加列表筛选功能，代码行数对比`255: 355`</p>
+    <p>多级表头和支持多选：文件位置`src\example\views\CURDMultiHeader.vue`，在基本应用基础上修改</p>
     <el-button-group>
       <el-button @click="$router.push({name: '增删改查-基本应用'})">基本应用</el-button>
-      <el-button @click="$router.push({name: '增删改查-自定义Table列'})">自定义Table列</el-button>
-      <el-button @click="$router.push({name: '增删改查-自定义表单校验'})">自定义表单校验</el-button>
+      <el-button @click="$router.push({name: '增删改查-Table高级配置'})">Table高级配置</el-button>
+      <el-button @click="$router.push({name: '增删改查-From高级配置'})">From高级配置</el-button>
+      <el-button @click="$router.push({name: '增删改查-多级表头'})">多级表头</el-button>
+      
     </el-button-group>
     <router-view  class="demo" />
   </div>

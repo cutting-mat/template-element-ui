@@ -37,7 +37,7 @@
       :columns="columns"
       :queryParam="queryParam"
       getItemFromDetaiApi
-      @loadingState="loading = $event"
+      @loading-state="handleLoading"
     >
       <!-- 自定义slot: 状态 -->
       <template v-slot:status="scope">
@@ -213,6 +213,10 @@ export default {
     };
   },
   methods: {
+    handleLoading($event){
+      console.log($event)
+      this.loading = $event
+    },
     resetPassword: function (data) {
       // 重置密码
       if (!data) {
