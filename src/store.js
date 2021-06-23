@@ -9,20 +9,21 @@ export const store = {
     },
     set(key, newValue) {
         return new Promise((resolve, reject) => {
-            if (this.state[key] !== void (0)) {
+            if(newValue === void(0)){
+                reject(`store.set("${key}", value): value cound not be undefined!`)
+            }else if (this.state[key] !== void (0)) {
                 this.state[key] = newValue;
-
                 console.log('store update:', key, '=>', this.state[key])
                 resolve(true)
             } else {
-                reject(`this key [${key}] is not register in store!`)
+                reject(`store.set("${key}", value): key is not register in store!`)
             }
         })
     },
     get(key) {
         if (key && key.split) {
             if (this.state[key] === void (0)) {
-                console.warn(`key [${key}] is not register in store!`)
+                console.warn(`store.get("${key}"): key is not register in store!`)
             }
             return this.state[key]
         }
@@ -85,7 +86,7 @@ export const store = {
                         break;
 
                     default:
-                        reject(`key [${key}] has not define an action!`)
+                        reject(`store.action("${key}", ${reload}): action is not define!`)
                 }
             }
         })

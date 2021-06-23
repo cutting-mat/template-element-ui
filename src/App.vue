@@ -7,10 +7,13 @@ import Vue from "vue";
 import * as util from "@/main/assets/util.js";
 import { store } from "@/store";
 import { instance } from "@/api";
-import { moduleRoute } from "./main/index";
+import {default as FullRoute, mainRoute, moduleRoute} from "./main/index";
 
 let checkRouteRedirectResult = []; // 临时变量
-let routeAuthWhiteList = moduleRoute.map((e) => e.path);  // 顶级路由均为白名单
+let routeAuthWhiteList = mainRoute.map((e) => e.path); // 主模块路由加入白名单
+if (process.env.VUE_APP_AUTH === "true") {
+  console.warn("权限已开启，路由白名单:", routeAuthWhiteList);
+}
 
 export default {
   methods: {
@@ -159,20 +162,11 @@ export default {
        * Step 1
        * 检查用户登录状态
        */
-
-      let localUser = util.storage("auth");
-
-      if (localUser && localUser.accessToken) {
-        instance.defaults.headers.common["Authorization"] = localUser.accessToken;
-        store.set("accessToken", localUser.accessToken);
+      if (store.get("accessToken")) {
+        // 已登录
+        instance.defaults.headers.common["Authorization"] =store.get("accessToken");
       } else {
-        if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
-          let query = {};
-          if (this.$router.currentRoute.path !== "/login") {
-            query["from"] = this.$router.currentRoute.fullPath;
-          }
-          return this.$router.push({ path: "/login", query });
-        }
+        return console.warn('未登录')
       }
 
       if (process.env.VUE_APP_AUTH === "true") {
@@ -266,7 +260,7 @@ export default {
          * 权限控制关闭模式
          */
         checkRouteRedirectResult = [];
-        this.checkRouteRedirect(moduleRoute[0].children);
+        this.checkRouteRedirect(FullRoute[0].children);
         store.set("menu", checkRouteRedirectResult);
 
         // 容错
@@ -275,33 +269,9 @@ export default {
         typeof callback === "function" && callback();
       }
     },
-    loginDirect: function (res) {
-      /*
-       * 监听 "login" 事件
-       */
-      util.storage("auth", res.data);
-
-      this.signin(() => {
-        // 登录成功（silent来自token续签）
-        if (!res.silent) {
-          this.initUser(res);
-        }
-      });
-    },
-    logoutDirect: function () {
-      /*
-       * 监听 "logout" 事件
-       */
-
-      util.storage("auth", "");
-      if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
-        window.location.href = process.env.BASE_URL || "/";
-      }
-      
-    },
     initUser: function (loginRes) {
       // 初始化用户信息
-      store.action("user").then(() => {
+      store.action("user", true).then(() => {
         if (loginRes && loginRes.from) {
           // 如果携带来路路由，跳转到来路路由
           this.$router.replace({ path: loginRes.from });
@@ -311,16 +281,39 @@ export default {
         }
       });
     },
+    handleLogin: function (res) {
+      /*
+       * 监听 "login" 事件
+       */
+      util.storage("auth", res.data);
+      store.set("accessToken", res.data.accessToken)
+
+      this.signin(() => {
+        // 登录成功（silent来自token续签）
+        if (!res.silent) {
+          this.initUser(res);
+        }
+      });
+    },
+    handleLogout: function () {
+      /*
+       * 监听 "logout" 事件
+       */
+
+      util.storage("auth", "");
+      if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
+        window.location.reload()
+      }
+    },
   },
   created: function () {
     /*
      * Start from here!
      */
     this.signin(this.initUser);
-
     // global event
-    util.on("login", this.loginDirect);
-    util.on("logout", this.logoutDirect);
+    util.on("login", this.handleLogin);
+    util.on("logout", this.handleLogout);
   },
 };
 </script>

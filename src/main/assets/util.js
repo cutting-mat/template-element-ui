@@ -349,7 +349,10 @@ export const requestWrapper = function(axiosRequest, params, opt) {
                     resolve(res)
                     bus.$emit(requestKey, responseCache[requestKey])
                     delete requestQueue[requestKey]
-                }).catch(reject)
+                }).catch(err => {
+                    delete requestQueue[requestKey]
+                    reject(err)
+                })
             }
         }
     })

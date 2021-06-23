@@ -18,7 +18,7 @@ export const moduleRoute = [
 ]
 
 // 主模块（开启权限控制模式下，主模块不受权限控制）
-const mainRoute = [
+export const mainRoute = [
     {
         path: '/login',
         name: '登录',

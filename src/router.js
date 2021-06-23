@@ -3,14 +3,41 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import routes from '@/main/index'
+import { default as FullRoute, mainRoute } from "./main/index";
 
 const route = new Router({
-  routes
+  routes: FullRoute
 });
 
-// 全局路由before钩子
+// 全局路由钩子
+import { store } from "@/store";
+import { storage } from "@/main/assets/util";
+let routeAuthWhiteList = mainRoute.map((e) => e.path); // 主模块路由加入白名单
+// 获取用户登录状态
+if (!store.get("accessToken")) {
+  let localUser = storage("auth") || {};
+  if (localUser.accessToken) {
+    store.set("accessToken", localUser.accessToken);
+  }
+}
+
 route.beforeEach((to, from, next) => {
+
+  if (!store.get("accessToken")) {
+    if (routeAuthWhiteList.indexOf(to.path) !== -1) {
+      // 未登录访问白名单
+      return next();
+    } else if (to.path !== "/login") {
+      // 未登录跳转登录页
+      let query = {};
+      query["from"] = to.fullPath;
+      return next({
+        path: "/login",
+        query
+      });
+    }
+  }
+
   if (to.name) {
     document.title = to.meta.title || to.name;
   }
