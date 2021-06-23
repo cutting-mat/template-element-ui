@@ -24,6 +24,10 @@ const mainRoute = [
         name: '登录',
         component: (resolve) => require(['./views/Login.vue'], resolve)
     }, {
+        path: '/public',
+        name: '公开页面',
+        component: (resolve) => require(['./views/Public.vue'], resolve)
+    }, {
         path: '/404',
         name: '找不到页面',
         component: (resolve) => require(['./views/404.vue'], resolve)

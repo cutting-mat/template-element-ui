@@ -473,10 +473,6 @@ export default {
     if (this.immediate) {
       this.search();
     }
-  },
-  render: function (createElement) {
-   console.log(this.$slots)
-   return null
   }
 };
 </script>

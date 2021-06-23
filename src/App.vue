@@ -10,6 +10,7 @@ import { instance } from "@/api";
 import { moduleRoute } from "./main/index";
 
 let checkRouteRedirectResult = []; // 临时变量
+let routeAuthWhiteList = moduleRoute.map((e) => e.path);  // 顶级路由均为白名单
 
 export default {
   methods: {
@@ -161,21 +162,18 @@ export default {
 
       let localUser = util.storage("auth");
 
-      if (!localUser || !localUser.accessToken) {
-        let query = {};
-        if (this.$router.currentRoute.path !== "/login") {
-          query["from"] = this.$router.currentRoute.fullPath;
+      if (localUser && localUser.accessToken) {
+        instance.defaults.headers.common["Authorization"] = localUser.accessToken;
+        store.set("accessToken", localUser.accessToken);
+      } else {
+        if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
+          let query = {};
+          if (this.$router.currentRoute.path !== "/login") {
+            query["from"] = this.$router.currentRoute.fullPath;
+          }
+          return this.$router.push({ path: "/login", query });
         }
-        return this.$router.push({ path: "/login", query });
       }
-
-      /*
-       * Step 2
-       * 初始化用户凭据
-       */
-
-      instance.defaults.headers.common["Authorization"] = localUser.accessToken;
-      store.set("accessToken", localUser.accessToken);
 
       if (process.env.VUE_APP_AUTH === "true") {
         /*
@@ -296,8 +294,10 @@ export default {
        */
 
       util.storage("auth", "");
-
-      window.location.href = process.env.BASE_URL || "/";
+      if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
+        window.location.href = process.env.BASE_URL || "/";
+      }
+      
     },
     initUser: function (loginRes) {
       // 初始化用户信息
@@ -321,11 +321,10 @@ export default {
     // global event
     util.on("login", this.loginDirect);
     util.on("logout", this.logoutDirect);
-  }
+  },
 };
 </script>
 
 <style>
 @import url(main/assets/global.css);
-
 </style>
