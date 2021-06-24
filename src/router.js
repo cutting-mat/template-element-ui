@@ -9,10 +9,11 @@ const route = new Router({
   routes: FullRoute
 });
 
-// 全局路由钩子
+// 全局路由守卫
 import { store } from "@/store";
 import { storage } from "@/main/assets/util";
-let routeAuthWhiteList = mainRoute.map((e) => e.path); // 主模块路由加入白名单
+// 主模块路由加入白名单
+let routeAuthWhiteList = mainRoute.map((e) => e.path); 
 // 获取用户登录状态
 if (!store.get("accessToken")) {
   let localUser = storage("auth") || {};
@@ -22,7 +23,6 @@ if (!store.get("accessToken")) {
 }
 
 route.beforeEach((to, from, next) => {
-
   if (!store.get("accessToken")) {
     if (routeAuthWhiteList.indexOf(to.path) !== -1) {
       // 未登录访问白名单

@@ -166,6 +166,7 @@ export default {
         // 已登录
         instance.defaults.headers.common["Authorization"] =store.get("accessToken");
       } else {
+        // 未登录逻辑通过路由守卫（@/router.js）处理
         return console.warn('未登录')
       }
 
@@ -299,9 +300,9 @@ export default {
       /*
        * 监听 "logout" 事件
        */
-
       util.storage("auth", "");
       if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
+        // 非白名单路由刷新，触发路由守卫的未登录逻辑
         window.location.reload()
       }
     },
