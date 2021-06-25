@@ -3,15 +3,15 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
-import { default as FullRoute, mainRoute } from "./main/index";
+import { default as FullRoute, mainRoute } from "@/main/index";
 
 const route = new Router({
   routes: FullRoute
 });
 
 // 全局路由守卫
-import { store } from "@/store";
-import { storage } from "@/main/assets/util";
+import { store } from "@/core/store";
+import { storage } from "@/core";
 // 主模块路由加入白名单
 let routeAuthWhiteList = mainRoute.map((e) => e.path); 
 // 获取用户登录状态

@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { buildTree } from "@/main/assets/util";
+import { buildTree } from "@/core";
 import * as api from "../api/org";
 
 export default {

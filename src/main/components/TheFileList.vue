@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import * as util from "@/main/assets/util";
+import * as util from "@/core";
 
 export default {
   props: {

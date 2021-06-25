@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { deepcopy, buildTree } from "@/main/assets/util";
+import { deepcopy, buildTree } from "@/core";
 
 export default {
   props: {

@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { buildTree } from "@/main/assets/util";
+import { buildTree } from "@/core";
 import { itemList } from "@/system/api/dict";
 
 export default {

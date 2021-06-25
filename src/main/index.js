@@ -1,5 +1,4 @@
 import index from './views/Index'
-import example from '../example'
 import system from '../system'
 import user from '../user'
 
@@ -10,7 +9,6 @@ export const moduleRoute = [
         name: '首页',
         component: index,
         children: [
-            ...example,
             ...system,
             ...user
         ]

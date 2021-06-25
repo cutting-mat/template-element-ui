@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import { store } from "@/store";
-import { emit } from "../assets/util";
+import { store } from "@/core/store";
+import { emit } from "@/core";
 
 export default {
   data() {

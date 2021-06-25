@@ -25,8 +25,8 @@
 
 <script>
 import { upload, uploadImg } from "@/main/api/common";
-import * as util from "@/main/assets/util";
-import { store } from "@/store";
+import * as util from "@/core";
+import { store } from "@/core/store";
 import { getExtByType } from "../assets/file-type";
 let { fixImgFile } = require("ios-photo-repair");
 

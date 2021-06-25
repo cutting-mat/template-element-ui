@@ -4,10 +4,10 @@
 
 <script>
 import Vue from "vue";
-import * as util from "@/main/assets/util.js";
-import { store } from "@/store";
-import { instance } from "@/api";
-import {default as FullRoute, mainRoute, moduleRoute} from "./main/index";
+import * as util from "@/core";
+import { store } from "@/core/store";
+import { instance } from "@/core/api";
+import {default as FullRoute, mainRoute, moduleRoute} from "@/main/index";
 
 let checkRouteRedirectResult = []; // 临时变量
 let routeAuthWhiteList = mainRoute.map((e) => e.path); // 主模块路由加入白名单
@@ -320,5 +320,5 @@ export default {
 </script>
 
 <style>
-@import url(main/assets/global.css);
+@import url(./global.css);
 </style>

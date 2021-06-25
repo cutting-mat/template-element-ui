@@ -1,5 +1,5 @@
-import { instance } from '@/api';
-import { requestWrapper } from "@/main/assets/util";
+import { instance } from '@/core/api';
+import { requestWrapper } from "@/core";
 
 //
 export const list = params => {

@@ -18,7 +18,7 @@ const globalComponents = {
 
 
 // 全局过滤器
-import { formatDate } from '@/main/assets/util'
+import { formatDate } from '@/core'
 
 const globalFilters = {
     date: formatDate

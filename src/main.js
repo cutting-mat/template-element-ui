@@ -6,19 +6,19 @@ import Vue from 'vue'
 
 // UI库
 import ElementUI from 'element-ui';
-import '@/main/element-theme/index.css';
-import '@/main/element-theme/custom.css';
+import '@/core/element-theme/index.css';
+import '@/core/element-theme/custom.css';
 Vue.use(ElementUI);
 
 // 全局资源
-import register from '@/register'
+import register from '@/core/register'
 Vue.use(register);
 
 // 路由
-import router from './router'
+import router from '@/core/router'
 
 // 应用启动
-import App from './App.vue'
+import App from '@/core/App.vue'
 new Vue({
     router,
     render: h => h(App)

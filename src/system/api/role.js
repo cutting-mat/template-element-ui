@@ -1,4 +1,4 @@
-import { instance } from '@/api';
+import { instance } from '@/core/api';
 
 //
 export const list = params => {

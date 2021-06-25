@@ -8,23 +8,17 @@ export const store = {
         permission: [] // 用户权限
     },
     set(key, newValue) {
-        return new Promise((resolve, reject) => {
-            if(newValue === void(0)){
-                reject(`store.set("${key}", value): value cound not be undefined!`)
-            }else if (this.state[key] !== void (0)) {
-                this.state[key] = newValue;
-                console.log('store update:', key, '=>', this.state[key])
-                resolve(true)
-            } else {
-                reject(`store.set("${key}", value): key is not register in store!`)
+        return new Promise((resolve) => {
+            if (this.state[key] === void (0)) {
+                console.warn(`store.set("${key}", value): key has not registered yet!`)
             }
+            this.state[key] = newValue;
+            console.log('store update:', key, '=>', this.state[key])
+            resolve(true)
         })
     },
     get(key) {
         if (key && key.split) {
-            if (this.state[key] === void (0)) {
-                console.warn(`store.get("${key}"): key is not register in store!`)
-            }
             return this.state[key]
         }
     },
@@ -86,7 +80,7 @@ export const store = {
                         break;
 
                     default:
-                        reject(`store.action("${key}", ${reload}): action is not define!`)
+                        reject(`store.action("${key}", ${reload}): action has not registered yet!`)
                 }
             }
         })

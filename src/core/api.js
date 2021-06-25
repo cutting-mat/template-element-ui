@@ -1,5 +1,5 @@
 import axios from 'axios';
-import * as util from '@/main/assets/util';
+import * as util from '@/core';
 // 环境配置
 const ENVIRONMENT = {
     mock: 'http://rap2api.taobao.org/app/mock/223572',

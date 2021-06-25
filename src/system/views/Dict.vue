@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import * as util from "@/main/assets/util";
+import * as util from "@/core";
 import * as dict from "../api/dict";
 
 export default {

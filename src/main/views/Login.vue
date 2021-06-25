@@ -54,7 +54,7 @@
 
 <script>
 import * as user from "@/user/api/user";
-import { emit } from "../assets/util";
+import { emit } from "@/core";
 
 export default {
   data() {

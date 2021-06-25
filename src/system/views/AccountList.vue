@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import * as util from "@/main/assets/util";
+import * as util from "@/core";
 import * as account from "../api/account";
 import { list as requestRoles } from "../api/role";
 

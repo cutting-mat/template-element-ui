@@ -42,7 +42,7 @@
 </template>
 
 <script>
-//import { deepcopy } from "@/main/assets/util";
+//import { deepcopy } from "@/core";
 
 export default {
   props: {
