@@ -3,7 +3,7 @@ import Vue from 'vue'
 /**
  * 本地存储
  * @param key[String] 要存/取的键
- * @param value[any] 要存的值
+ * @param value[any] 要存的值，若缺省则返回key的值
  * @return 只传key会返回该key的值
  * */
 export const storage = function (key, value) {
@@ -25,9 +25,9 @@ export const storage = function (key, value) {
 }
 
 /**
- * 深拷贝
- * @param source[Object] 要拷贝的对象
- * @return 深拷贝后的对象
+ * 对象/数组深拷贝
+ * @param source[Object|Array] 要拷贝的对象
+ * @return 深拷贝后的对象/数组
  * */
 export const deepcopy = function (source) {
     if (!source) {
@@ -42,8 +42,8 @@ export const deepcopy = function (source) {
 
 /**
  * 一维对象数组转树形结构
- * @param array[对象数组] 对象数组中的对象必须包含id和[parentKey]键，如{id: 1, pid: 0}，pid值为假或等于自身id，则判定为一级节点
- * @param parentKey[String]
+ * @param array[对象数组] 对象数组中的对象必须包含id和[parentKey]键，如{id: 1, pid: 0}。pid值为假或等于自身id，则判定为一级节点
+ * @param parentKey[String] 指向上级id的key，默认"pid"
  * @return 由children键建立层级的对象数组
  * */
 export const buildTree = function (array, parentKey) {
@@ -92,12 +92,15 @@ export const buildTree = function (array, parentKey) {
 /**
  * 日期格式化
  * @param value[milliseconds/dateString] 可以通过new Date()方法创建日期对象的毫秒数或日期字符串
- * @param fmt[String/undefined] 日期格式化模板字符串，内置四种快捷方式："year","month","day",undefined 
+ * @param fmt[String/undefined] 日期格式化模板字符串，内置四种快捷方式："year","month","day","day-time" 
  * @return 格式化后的日期字符串
  * */
 export const formatDate = (value, fmt) => {
     if (!value) {
         return null
+    }
+    if(fmt === void(0)){
+        fmt = 'day-time'
     }
     switch (fmt) {
         case 'year':
@@ -109,7 +112,7 @@ export const formatDate = (value, fmt) => {
         case 'day':
             fmt = "yyyy/MM/dd"
             break;
-        case undefined:
+        case 'day-time':
             fmt = "yyyy/MM/dd hh:mm"
             break;
     }
@@ -159,13 +162,15 @@ export const on = function (eventName, eventHandle) {
         if (typeof eventHandle === 'function') {
             busQueue[eventName] = eventHandle;
             return bus.$on(eventName, eventHandle)
+        } else {
+            bus.$off(eventName)
         }
     }
 };
 /**
  * 全局事件触发
- * @param eventName[String] 要触发的事件名称，不需要包含别名部分，如 myEvent__1，只需要传入 myEvent
- * @param msg[any] 触发事件携带的参数
+ * @param eventName[String] 要触发的事件名称，不需要包含别名部分，如 myEvent__alias1，只需要传入 myEvent
+ * @param msg[any] 触发事件时携带的参数
 */
 export const emit = function (eventName, msg) {
     const busQueueKeys = Object.keys(busQueue);
@@ -234,7 +239,7 @@ export const catchError = function (error) {
 }
 
 /**
- * 获取扩展名
+ * 提取文件名中的扩展名
  * @param filename[String] 要提取扩展名的字符串
  * @return 转小写后的扩展名字符串
 */
@@ -250,8 +255,8 @@ export const getSuffix = (filename) => {
 /**
  * 函数节流
  * @param method[Function] 要节流的函数方法
- * @param delay[Number] 过滤执行的间隔毫秒数 
- * @param duration 至少执行一次的间隔毫秒数 
+ * @param delay[Number] 过滤执行的间隔毫秒数，默认128
+ * @param duration 至少执行一次的间隔毫秒数，默认1000
  * @return 具有节流特性的新函数
 */
 
@@ -277,7 +282,7 @@ export const throttle = function throttle(method, delay, duration) {
 };
 
 /**
- * 获取url中的query参数值
+ * 获取url中的query值
  * @param keyName[String] 要获取的参数名
  * @param url[String] 目标url，默认当前窗口url
  * @return keyName参数的值
