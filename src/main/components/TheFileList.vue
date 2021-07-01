@@ -16,7 +16,7 @@
       </div>
     </li>
   </ul>
-  <BasePlaceholder v-else message="暂无" :img="false" />
+  <el-empty v-else description="描述文字"></el-empty>
 </template>
 
 <script>
