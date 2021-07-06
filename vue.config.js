@@ -25,6 +25,6 @@ module.exports = {
     },
     outputDir: 'docs',   // 构建目录，默认'dist'
     publicPath: process.env.NODE_ENV === 'production'
-    ? '/'
+    ? '/template-element-ui/'
     : '/'      // 根路径，需要配置服务器转发
 }

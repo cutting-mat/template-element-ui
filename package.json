@@ -6,6 +6,7 @@
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
+  "homepage": "https://cutting-mat.github.io/template-element-ui/",
   "dependencies": {
     "axios": "^0.21.1",
     "element-ui": "^2.15.3",
