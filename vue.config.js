@@ -23,7 +23,7 @@ module.exports = {
             })
         ],
     },
-    // outputDir: 'docs',   // 构建目录，默认'dist'
+    outputDir: 'docs',   // 构建目录，默认'dist'
     publicPath: process.env.NODE_ENV === 'production'
     ? '/'
     : '/'      // 根路径，需要配置服务器转发
