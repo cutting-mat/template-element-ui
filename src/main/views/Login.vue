@@ -7,7 +7,7 @@
       class="login-form"
       @submit.native.prevent="login"
     >
-      <h1 class="main-title">Vue-Scaffold</h1>
+      <h1 class="main-title">用户登录</h1>
       <p class="des">
         基于 Vue / Element-UI / Axios / Vue-Router 的大中型项目脚手架
       </p>
@@ -39,13 +39,13 @@
           type="primary"
           href="https://refined-x.com"
           target="blank"
-          >雅X共赏</el-link
+          >refined-x</el-link
         >
         Github：<el-link
           type="primary"
-          href="https://github.com/tower1229/Vue-Scaffold"
+          href="https://github.com/cutting-mat"
           target="_blank"
-          >Vue-Scaffold</el-link
+          >cutting-mat</el-link
         >
       </p>
     </el-form>
