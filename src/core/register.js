@@ -11,10 +11,10 @@ const globalComponents = {
     DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCheckbox.vue"),
     DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictSelect.vue"),
     DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCascader.vue"),
-    OrgPicker:  () => import(/* webpackChunkName: "global-components" */ "@/system/components/OrgPicker.vue"),
-    TheResourcePicker:  () => import(/* webpackChunkName: "global-components" */ "@/system/components/TheResourcePicker.vue"),
+    OrgPicker:  (resolve) => require(["@/system/components/OrgPicker.vue"], resolve),
+    TheResourcePicker:  (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve),
+    
 }
-
 
 // 全局过滤器
 import { formatDate } from '@/core'
@@ -34,7 +34,6 @@ export default {
         Object.keys(globalComponents).forEach(key => {
             Vue.component(key, globalComponents[key])
         })
-
 
         // v-auth 指令（用于权限控制）
         Vue.directive('auth', {

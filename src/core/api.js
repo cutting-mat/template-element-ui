@@ -42,6 +42,7 @@ instance.interceptors.request.use(function (config) {
 
 // 响应后处理
 instance.interceptors.response.use(function (response) {
+    // 响应失败
     if (response.status != 200) {
         return util.catchError(response);
     }
