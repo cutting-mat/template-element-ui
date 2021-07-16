@@ -44,42 +44,69 @@ export const deepcopy = function (source) {
  * 一维对象数组转树形结构
  * @param array[对象数组] 对象数组中的对象必须包含id和[parentKey]键，如{id: 1, pid: 0}。pid值为假或等于自身id，则判定为一级节点
  * @param parentKey[String] 指向上级id的key，默认"pid"
+ * @param sortFunction[Function] 用于arrayObject.sort(sortFunction)的排序方法，默认不排序
  * @return 由children键建立层级的对象数组
  * */
-export const buildTree = function (array, parentKey) {
+export const buildTree = function (flatArray, parentKey, sortFunction) {
+    let array = deepcopy(flatArray);
+    parentKey = parentKey || 'pid';
+
+    let _cleanIndexQueue = [];
+    let _learnQueue = function(){
+        if (_cleanIndexQueue.length) {
+            array = array.filter((e, i) => {
+                return _cleanIndexQueue.indexOf(i) === -1
+            })
+        }
+    }
     let menuData = [];
     let indexKeys = Array.isArray(array) ? array.map((e) => {
         return e.id
     }) : [];
-    parentKey = parentKey || 'pid';
-    array.forEach(function (e) {
-        //一级节点
+
+    //一级节点
+    array.forEach(function (e, index) {
         if (!e[parentKey] || (e[parentKey] === e.id)) {
-            delete e[parentKey];
             menuData.push(deepcopy(e)); //深拷贝
-        } else if (Array.isArray(indexKeys)) {
+            _cleanIndexQueue.push(index)
+        } else {
             //检测parentKey有效性
-            let parentIndex = indexKeys.findIndex(function (id) {
-                return id == e[parentKey];
-            });
-            if (parentIndex === -1) {
+            if (indexKeys.indexOf(e[parentKey]) === -1) {
                 menuData.push(deepcopy(e));
+                _cleanIndexQueue.push(index)
             }
         }
     });
+    // 清理元素队列
+    _learnQueue()
+    // 一级节点排序
+    if(typeof sortFunction === 'function'){
+        menuData.sort(sortFunction)
+    }
+    // 遍历子级
     let findChildren = function (parentArr) {
         if (Array.isArray(parentArr) && parentArr.length) {
             parentArr.forEach(function (parentNode) {
-                array.forEach(function (node) {
-                    if (parentNode.id === node[parentKey]) {
-                        if (parentNode.children) {
-                            parentNode.children.push(deepcopy(node));
+                _cleanIndexQueue = [];
+                array.forEach((e, targetChildIndex) => {
+                    if (e[parentKey] === parentNode.id) {
+                        if (Array.isArray(parentNode.children)) {
+                            parentNode.children.push(array[targetChildIndex]);
                         } else {
-                            parentNode.children = [deepcopy(node)];
+                            parentNode.children = [array[targetChildIndex]];
                         }
+                        _cleanIndexQueue.push(targetChildIndex)
                     }
-                });
-                if (parentNode.children) {
+                })
+                // 清理元素队列
+                _learnQueue()
+
+                if (Array.isArray(parentNode.children)) {
+                    // 子级排序
+                    if(typeof sortFunction === 'function'){
+                        parentNode.children.sort(sortFunction)
+                    }
+                    
                     findChildren(parentNode.children);
                 }
             });
@@ -99,7 +126,7 @@ export const formatDate = (value, fmt) => {
     if (!value) {
         return null
     }
-    if(fmt === void(0)){
+    if (fmt === void (0)) {
         fmt = 'day-time'
     }
     switch (fmt) {
@@ -304,13 +331,13 @@ export const getUrlParam = function (keyName, url) {
  * 从axios请求函数中提取请求信息
  * @param axiosRequest[Function] axios请求方法
  * @return 请求信息字符串，例如 'get,/url1'
- * */ 
-export const matchRequest = function(axiosRequest) {
+ * */
+export const matchRequest = function (axiosRequest) {
     let result = null;
-    if(typeof axiosRequest === 'function'){
+    if (typeof axiosRequest === 'function') {
         let regex = new RegExp(/\.([^(]+)\("([^"]+)"/); // 匹配请求函数：instance.post("/org", params)
         result = axiosRequest.toString().match(regex);
-        if(result && result.length > 2){
+        if (result && result.length > 2) {
             result = [result[1], result[2]].join(",")
         }
     }
@@ -323,30 +350,30 @@ export const matchRequest = function(axiosRequest) {
  * @param params[Object] axios请求参数
  * @param opt[Object] 扩展配置，默认值{cache: false}
  * @return 携带请求响应的Promse对象
- * */ 
- let responseCache = {};
- let requestQueue= {}
-export const requestWrapper = function(axiosRequest, params, opt) {
+ * */
+let responseCache = {};
+let requestQueue = {}
+export const requestWrapper = function (axiosRequest, params, opt) {
     opt = Object.assign({
         cache: false
     }, opt || {})
     let requestStr = matchRequest(axiosRequest)
-    if(!requestStr){
+    if (!requestStr) {
         return console.warn('requestWrapper解析失败：', axiosRequest)
     }
-    let paramsStr =  (Object.prototype.toString.call(params) === '[object Object]') ? JSON.stringify(params) : ''
+    let paramsStr = (Object.prototype.toString.call(params) === '[object Object]') ? JSON.stringify(params) : ''
     let requestKey = (`request_${requestStr}?${paramsStr}`)
     return new Promise((resolve, reject) => {
-        if(requestQueue[requestKey]){
+        if (requestQueue[requestKey]) {
             //console.log('并发情况，无条件等待缓存')
             bus.$once(requestKey, res => {
                 resolve(res)
             })
-        }else{
-            if(opt.cache && responseCache[requestKey]){
+        } else {
+            if (opt.cache && responseCache[requestKey]) {
                 //console.log('希望缓存且有缓存')
                 resolve(responseCache[requestKey])
-            }else{
+            } else {
                 //console.log('无需缓存或无缓存')
                 requestQueue[requestKey] = true;
                 return axiosRequest(params).then(res => {

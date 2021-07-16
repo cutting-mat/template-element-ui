@@ -5,14 +5,18 @@
 </template>
 
 <script>
-//import * as util from "@/core";
+// import {buildTree} from "@/core";
 
 export default {
   data() {
-    return {};
+    return {
+      
+    };
   },
   methods: {},
-  created() {},
+  created() {
+    
+  },
 };
 </script>
 
