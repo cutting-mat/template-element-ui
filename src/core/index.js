@@ -48,72 +48,63 @@ export const deepcopy = function (source) {
  * @return 由children键建立层级的对象数组
  * */
 export const buildTree = function (flatArray, parentKey, sortFunction) {
-    let array = deepcopy(flatArray);
+    // 存储id map
+    let IdMap = {};
+    // 数组浅拷贝
+    let items = flatArray.map(item => {
+        // 生成id map
+        IdMap[item.id] = true;
+        return Object.assign({}, item)
+    });
     parentKey = parentKey || 'pid';
+    // 存放结果集
+    const result = [];
+    // 存放中转map
+    const itemMap = {};
+    // 一次遍历
+    for (const item of items) {
+        const id = item.id;
+        const pid = item[parentKey];
 
-    let _cleanIndexQueue = [];
-    let _learnQueue = function(){
-        if (_cleanIndexQueue.length) {
-            array = array.filter((e, i) => {
-                return _cleanIndexQueue.indexOf(i) === -1
-            })
-        }
-    }
-    let menuData = [];
-    let indexKeys = Array.isArray(array) ? array.map((e) => {
-        return e.id
-    }) : [];
-
-    //一级节点
-    array.forEach(function (e, index) {
-        if (!e[parentKey] || (e[parentKey] === e.id)) {
-            menuData.push(deepcopy(e)); //深拷贝
-            _cleanIndexQueue.push(index)
-        } else {
-            //检测parentKey有效性
-            if (indexKeys.indexOf(e[parentKey]) === -1) {
-                menuData.push(deepcopy(e));
-                _cleanIndexQueue.push(index)
+        if (!itemMap[id]) {
+            itemMap[id] = {
+                children: []
             }
         }
-    });
-    // 清理元素队列
-    _learnQueue()
-    // 一级节点排序
-    if(typeof sortFunction === 'function'){
-        menuData.sort(sortFunction)
-    }
-    // 遍历子级
-    let findChildren = function (parentArr) {
-        if (Array.isArray(parentArr) && parentArr.length) {
-            parentArr.forEach(function (parentNode) {
-                _cleanIndexQueue = [];
-                array.forEach((e, targetChildIndex) => {
-                    if (e[parentKey] === parentNode.id) {
-                        if (Array.isArray(parentNode.children)) {
-                            parentNode.children.push(array[targetChildIndex]);
-                        } else {
-                            parentNode.children = [array[targetChildIndex]];
-                        }
-                        _cleanIndexQueue.push(targetChildIndex)
-                    }
-                })
-                // 清理元素队列
-                _learnQueue()
 
-                if (Array.isArray(parentNode.children)) {
-                    // 子级排序
-                    if(typeof sortFunction === 'function'){
-                        parentNode.children.sort(sortFunction)
-                    }
-                    
-                    findChildren(parentNode.children);
-                }
-            });
+        itemMap[id] = {
+            ...item,
+            children: itemMap[id]['children']
         }
-    };
-    findChildren(menuData);
-    return menuData;
+
+        const treeItem = itemMap[id];
+
+        if (!pid || pid === id || !IdMap[pid]) {
+            // 无可用pid视为根节点
+            result.push(treeItem);
+        } else {
+            if (!itemMap[pid]) {
+                itemMap[pid] = {
+                    children: []
+                }
+            }
+            itemMap[pid].children.push(treeItem)
+        }
+
+    }
+    // 排序
+    if(typeof sortFunction === 'function'){
+        let sortByFun = function(objectArray) {
+            objectArray.sort(sortFunction);
+            objectArray.forEach(item => {
+                if(Array.isArray(item.children) && item.children.length){
+                    sortByFun(item.children)
+                }
+            })
+        }
+        sortByFun(result);
+    }
+    return result;
 }
 
 /**

@@ -5,17 +5,27 @@
 </template>
 
 <script>
-// import {buildTree} from "@/core";
+import {buildTree} from "@/core";
 
 export default {
   data() {
     return {
-      
+      list: require('../assets/big-tree.json').data,
+      tree: []
     };
   },
-  methods: {},
+  methods: {
+    runBuild() {
+      let now = Date.now();
+      let tree = buildTree(this.list, 'pid', function(a, b){
+        return a.name.length - b.name.length
+      });
+      this.tree = tree;
+      console.log(Date.now() - now);
+    }
+  },
   created() {
-    
+    this.runBuild()
   },
 };
 </script>
