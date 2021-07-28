@@ -67,14 +67,12 @@ export const buildTree = function (flatArray, parentKey, sortFunction) {
         const pid = item[parentKey];
 
         if (!itemMap[id]) {
-            itemMap[id] = {
-                children: []
-            }
+            itemMap[id] = {}
         }
 
         itemMap[id] = {
             ...item,
-            children: itemMap[id]['children']
+            children: Array.isArray(itemMap[id]['children']) ? itemMap[id]['children'] : null
         }
 
         const treeItem = itemMap[id];
@@ -88,16 +86,19 @@ export const buildTree = function (flatArray, parentKey, sortFunction) {
                     children: []
                 }
             }
+            if (!Array.isArray(itemMap[pid].children)) {
+                itemMap[pid].children = []
+            }
             itemMap[pid].children.push(treeItem)
         }
 
     }
     // 排序
-    if(typeof sortFunction === 'function'){
-        let sortByFun = function(objectArray) {
+    if (typeof sortFunction === 'function') {
+        let sortByFun = function (objectArray) {
             objectArray.sort(sortFunction);
             objectArray.forEach(item => {
-                if(Array.isArray(item.children) && item.children.length){
+                if (Array.isArray(item.children) && item.children.length) {
                     sortByFun(item.children)
                 }
             })
