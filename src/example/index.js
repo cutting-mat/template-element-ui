@@ -2,10 +2,12 @@ export default [{
     path: '/library',
     name: '组件示例',
     component: (resolve) => require(['./views/Index.vue'], resolve),
+    redirect: '/library/Element',
     children: [{
         path: 'Element',
         name: 'Element组件',
         component: (resolve) => require(['./views/Index.vue'], resolve),
+        redirect: '/library/Element/button',
         children: [{
             path: 'button',
             name: '按钮',

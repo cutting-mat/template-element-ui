@@ -7,10 +7,10 @@ import Vue from "vue";
 import * as util from "@/core";
 import { store } from "@/core/store";
 import { instance } from "@/core/api";
-import {default as FullRoute, mainRoute, moduleRoute} from "@/main/index";
+import {default as FullRoute, moduleRoute} from "@/main/index";
+import {routeAuthWhiteList} from "@/core/router";
 
 let checkRouteRedirectResult = []; // 临时变量
-let routeAuthWhiteList = mainRoute.map((e) => e.path); // 主模块路由加入白名单
 if (process.env.VUE_APP_AUTH === "true") {
   console.warn("权限已开启，路由白名单:", routeAuthWhiteList);
 }
@@ -167,10 +167,10 @@ export default {
         instance.defaults.headers.common["Authorization"] =store.get("accessToken");
       } else {
         // 未登录逻辑通过路由守卫（@/router.js）处理
-        return console.warn('未登录')
+        console.warn('未登录')
       }
 
-      if (process.env.VUE_APP_AUTH === "true") {
+      if (store.get("accessToken") && process.env.VUE_APP_AUTH === "true") {
         /*
          * Step 2-1
          * 权限控制开启模式
@@ -267,7 +267,7 @@ export default {
         // 容错
         Vue.prototype.$_auth = () => true;
 
-        typeof callback === "function" && callback();
+        store.get("accessToken") && typeof callback === "function" && callback();
       }
     },
     initUser: function (loginRes) {
@@ -301,7 +301,8 @@ export default {
        * 监听 "logout" 事件
        */
       util.storage("auth", "");
-      if (routeAuthWhiteList.indexOf(this.$router.currentRoute.path) === -1) {
+      console.log(routeAuthWhiteList,'/'+this.$router.currentRoute.path.split('/')[1])
+      if (routeAuthWhiteList.indexOf('/'+this.$router.currentRoute.path.split('/')[1]) === -1) {
         // 非白名单路由刷新，触发路由守卫的未登录逻辑
         window.location.reload()
       }

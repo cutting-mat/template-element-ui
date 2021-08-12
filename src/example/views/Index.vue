@@ -21,7 +21,7 @@ export default {
         return a.name.length - b.name.length
       });
       this.tree = tree;
-      console.log(Date.now() - now);
+      console.log('runBuild耗时：', Date.now() - now);
     }
   },
   created() {

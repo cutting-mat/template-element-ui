@@ -12,8 +12,10 @@ const route = new Router({
 // 全局路由守卫
 import { store } from "@/core/store";
 import { storage } from "@/core";
-// 主模块路由加入白名单
-let routeAuthWhiteList = mainRoute.map((e) => e.path); 
+
+// 路由访问免登录白名单
+export let routeAuthWhiteList = [...mainRoute.map((e) => e.path), '/library']; 
+
 // 获取用户登录状态
 if (!store.get("accessToken")) {
   let localUser = storage("auth") || {};
@@ -24,7 +26,8 @@ if (!store.get("accessToken")) {
 
 route.beforeEach((to, from, next) => {
   if (!store.get("accessToken")) {
-    if (routeAuthWhiteList.indexOf(to.path) !== -1) {
+    console.log(routeAuthWhiteList, to.path)
+    if (routeAuthWhiteList.indexOf('/'+to.path.split('/')[1]) !== -1) {
       // 未登录访问白名单
       return next();
     } else if (to.path !== "/login") {
