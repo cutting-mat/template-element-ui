@@ -3,4 +3,4 @@
 
 [![license](https://img.shields.io/github/license/cutting-mat/template-element-ui.svg)]()
 
-> :hamburger:基于 Vue2 / Vue-Router / Axios / Element-UI 的项目脚手架
+> 基于Element-UI的PC端项目脚手架
