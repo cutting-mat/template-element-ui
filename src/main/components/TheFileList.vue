@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import * as util from "@/core";
+import { dynamicAlbum } from "../assets/util";
 
 export default {
   props: {
@@ -36,56 +36,7 @@ export default {
     },
   },
   filters: {
-    dynamicAlbum(url) {
-      const fileTypes = {
-        img: {
-          type: ["png", "jpg", "jpeg"],
-          album: require("../assets/img/file/img.png"),
-        },
-        word: {
-          type: ["doc", "docx"],
-          album: require("../assets/img/file/word.png"),
-        },
-        excel: {
-          type: ["xls", "xlsx"],
-          album: require("../assets/img/file/excel.png"),
-        },
-        pdf: {
-          type: ["pdf"],
-          album: require("../assets/img/file/pdf.png"),
-        },
-        video: {
-          type: ["mp4","wmv","mov"],
-          album: require("../assets/img/file/video.png"),
-        },
-        txt: {
-          type: ["txt"],
-          album: require("../assets/img/file/txt.png"),
-        },
-        rar: {
-          type: ["rar","zip"],
-          album: require("../assets/img/file/rar.png"),
-        }
-      };
-      // other
-      let fileAlbum = require("../assets/img/file/other.png");
-
-      let fileExt = util.getSuffix(url);
-      const typeIndex = Object.keys(fileTypes).findIndex(type => {
-        const targetIndex = fileTypes[type].type.findIndex(ext => ext===fileExt)
-        return targetIndex !==-1
-      })
-      if(typeIndex!==-1){
-        let fileType = Object.keys(fileTypes)[typeIndex];
-        if(fileType==='img'){
-          fileAlbum = url
-        }else{
-          fileAlbum = (fileTypes[fileType].album)
-        }
-        
-      }
-      return fileAlbum;
-    },
+    dynamicAlbum,
   },
 };
 </script>

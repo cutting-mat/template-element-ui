@@ -6,7 +6,8 @@ import Vue from 'vue'
 
 // UI库
 import ElementUI from 'element-ui';
-import '@/core/element-theme/index.css';
+import 'element-ui/lib/theme-chalk/index.css';
+//import '@/core/element-theme/index.css';
 import '@/core/element-theme/custom.css';
 Vue.use(ElementUI);
 
