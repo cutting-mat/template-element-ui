@@ -7,6 +7,13 @@ import { getSuffix } from "@/core";
  * @return fileAlbum[src] 封面图地址
 */
 export const dynamicAlbum = (url, previewImg) => {
+    // other
+    let fileAlbum = require("./img/file/other.png");
+
+    if (!url) {
+        console.warn(url, previewImg)
+        return fileAlbum
+    }
     const fileTypes = {
         img: {
             type: ["png", "jpg", "jpeg"],
@@ -19,6 +26,10 @@ export const dynamicAlbum = (url, previewImg) => {
         excel: {
             type: ["xls", "xlsx"],
             album: require("./img/file/excel.png"),
+        },
+        ppt: {
+            type: ["ppt", "pptx"],
+            album: require("./img/file/ppt.png"),
         },
         pdf: {
             type: ["pdf"],
@@ -37,8 +48,6 @@ export const dynamicAlbum = (url, previewImg) => {
             album: require("./img/file/rar.png"),
         }
     };
-    // other
-    let fileAlbum = require("./img/file/other.png");
 
     let fileExt = getSuffix(url);
     const typeIndex = Object.keys(fileTypes).findIndex(type => {
