@@ -13,6 +13,10 @@
 <script>
 export default {
   name: "el-number",
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
     value: {
       /*外部传值*/
@@ -81,7 +85,7 @@ export default {
     },
     myValue: {
       handler() {
-        this.$emit("input", this.myValue);
+        this.$emit("change", this.myValue);
       },
       immediate: true,
     },
