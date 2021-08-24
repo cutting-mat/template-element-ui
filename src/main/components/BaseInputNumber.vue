@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "el-number",
+  name: "el-input-number",
   model: {
     prop: 'value',
     event: 'change'
@@ -116,6 +116,20 @@ export default {
       return result;
     },
     handleChange() {
+      let inputValue = this.myValue;
+      // 输入区间校验
+      if (Array.isArray(this.range) && this.range.length === 2) {
+        const rangeNumber = this.range.map((e) => parseFloat(e));
+        if (!isNaN(rangeNumber[0]) && inputValue < rangeNumber[0]) {
+          inputValue = rangeNumber[0];
+        }
+        if (!isNaN(rangeNumber[1]) && inputValue > rangeNumber[1]) {
+          inputValue = rangeNumber[1];
+        }
+      }
+      // 小数位数处理
+      this.myValue = this.retainDecimal(inputValue, this.decimals);
+      // 补零
       if (this.zeroFill && this.decimals > 0) {
         this.$nextTick(() => {
           this.myValue = this.fillZero(this.myValue);
@@ -126,7 +140,7 @@ export default {
       if (newVal === null || newVal === void 0) {
         return null;
       }
-      let n = newVal
+      this.myValue = newVal
         .toString()
         .trim()
         .replace(/[^\d.-]/g, "") // 过滤非数字，非"."，非"-"
@@ -136,18 +150,7 @@ export default {
         .replace(/^-/, "$#$") // 只保留开头的-
         .replace(/-/g, "")
         .replace("$#$", "-");
-      // 输入区间校验
-      if (Array.isArray(this.range) && this.range.length === 2) {
-        const rangeNumber = this.range.map((e) => parseFloat(e));
-        if (!isNaN(rangeNumber[0]) && n < rangeNumber[0]) {
-          n = rangeNumber[0];
-        }
-        if (!isNaN(rangeNumber[1]) && n > rangeNumber[1]) {
-          n = rangeNumber[1];
-        }
-      }
-      // 小数位数处理
-      this.myValue = this.retainDecimal(n, this.decimals);
+      
     },
     retainDecimal(num, dec) {
       // dec合法性校验
