@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <h2>自定义上传列表展示</h2>
+    <h2>自定义上传列表</h2>
     <p>
       通过关闭<code>showFileList[Boolean]</code>，配合： TheFileList 组件<code
         >"@/main/components/TheFileList"</code
@@ -148,7 +148,7 @@ export default {
   },
   methods: {
     handleRemove(index) {
-      this.files.splice(index, 1)
+      this.list.splice(index, 1)
     },
     handlePreview(file) {
       console.log(file);
