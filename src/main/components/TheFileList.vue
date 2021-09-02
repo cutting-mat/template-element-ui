@@ -16,7 +16,7 @@
       </div>
     </li>
   </ul>
-  <el-empty v-else description="描述文字"></el-empty>
+  <el-empty v-else ></el-empty>
 </template>
 
 <script>
