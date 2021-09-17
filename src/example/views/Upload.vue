@@ -153,7 +153,7 @@ export default {
     handlePreview(file) {
       console.log(file);
       if (file && file.url) {
-        window.open(file.url);
+        window.open(encodeURI(file.url));
       }
     },
     handleExceed() {
