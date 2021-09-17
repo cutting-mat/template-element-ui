@@ -308,7 +308,7 @@ export const throttle = function throttle(method, delay, duration) {
 */
 export const getUrlParam = function (keyName, url) {
     if (keyName && keyName.split) {
-        var urlParamReg = new RegExp("(^|&)" + keyName + "=([^&#]*)", "i");
+        var urlParamReg = new RegExp("(^|&)" + keyName + "=([^&#/]*)", "i");
         var s = (url ? url : window.location.href).split('?')[1] || '';
         var r = s.match(urlParamReg);
         if (r !== null) {
