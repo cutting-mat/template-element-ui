@@ -1,5 +1,6 @@
 import axios from 'axios';
 import * as util from '@/core';
+
 // 环境配置
 const ENVIRONMENT = {
     mock: 'http://rap2api.taobao.org/app/mock/223572',
@@ -8,6 +9,7 @@ const ENVIRONMENT = {
     master: '//master.com/api'
 };
 
+// 域名与环境映射配置
 const HASH = {
     "dev.com": ENVIRONMENT.dev,
     "test.com": ENVIRONMENT.test,
@@ -15,7 +17,8 @@ const HASH = {
 }
 
 export const baseURL = HASH[window.location.host] || ENVIRONMENT.dev;
-// 统一请求实例
+
+// 创建请求实例
 export const instance = axios.create({
     baseURL,
     timeout: 10000,
@@ -42,17 +45,16 @@ instance.interceptors.request.use(function (config) {
 
 // 响应后处理
 instance.interceptors.response.use(function (response) {
-    // 响应失败
+    // 请求失败处理
     if (response.status != 200) {
         return util.catchError(response);
     }
+    // 业务失败处理
     if(response.data.code === 500 && response.data.msg) {
-        // 业务失败抛错
         return util.catchError({response})
     }
-    
+    // token临近过期，重新签发token
     if (response.headers['jwt-update-token']) {
-        // token临近过期，后端重新签发token
         util.emit('login', {
             silent: true,
             data: {

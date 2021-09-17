@@ -1,4 +1,4 @@
-import { instance } from '@/core/api';
+import { instance } from '@/core/http';
 import { requestWrapper } from "@/core";
 
 // get

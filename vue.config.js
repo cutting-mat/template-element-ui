@@ -1,9 +1,13 @@
 const SriPlugin = require('webpack-subresource-integrity');
 
-// 本地存储命名空间，多个前端项目设置同一个值可以实现单点登录
+/**
+ * cutting-mat配置
+ * */ 
+
+// 用于util.storage()的本地存储命名空间
 process.env.VUE_APP_STORAGE_SPACE = '';
 
-// 权限控制
+// 权限控制开关
 process.env.VUE_APP_AUTH = false;
 
 module.exports = {

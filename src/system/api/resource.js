@@ -1,6 +1,6 @@
 import {
     instance
-} from '@/core/api';
+} from '@/core/http';
 
 //
 export const list = params => {
