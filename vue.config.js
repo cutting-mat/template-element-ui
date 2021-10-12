@@ -3,20 +3,20 @@ const SriPlugin = require('webpack-subresource-integrity');
 /**
  * cutting-mat配置
  * */ 
+process.env.VUE_APP_STORAGE_SPACE = '';                         // 用于util.storage()的本地存储命名空间
+process.env.VUE_APP_AUTH = false;                               // 权限控制开关
 
-// 用于util.storage()的本地存储命名空间
-process.env.VUE_APP_STORAGE_SPACE = '';
-
-// 权限控制开关
-process.env.VUE_APP_AUTH = false;
-
+/**
+ * vue-cli配置
+ * */ 
 module.exports = {
-    transpileDependencies: [],  // 需要babel编译的依赖包名
+    transpileDependencies: [],                                  // 需要babel编译的依赖包名
     css: {
-        sourceMap: true         // 开启css map
+        sourceMap: true                                         // 开启css map
     },
-    productionSourceMap: false, // 生产环境关闭map
+    productionSourceMap: false,                                 // 生产环境关闭map
     configureWebpack: {
+        entry: './src/core/main.js',                            // 更改入口文件位置
         output: {
             crossOriginLoading: 'anonymous',
         },
@@ -27,8 +27,8 @@ module.exports = {
             })
         ],
     },
-    outputDir: 'docs',   // 构建目录，默认'dist'
-    publicPath: process.env.NODE_ENV === 'production'
+    outputDir: 'docs',                                          // 构建目录，默认'dist'
+    publicPath: process.env.NODE_ENV === 'production'           // 网址根路径，需要配置服务器转发
     ? '/template-element-ui/'
-    : '/'      // 根路径，需要配置服务器转发
+    : '/'      
 }

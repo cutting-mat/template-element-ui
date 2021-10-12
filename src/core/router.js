@@ -3,13 +3,13 @@ import Router from 'vue-router'
 
 Vue.use(Router)
 
+// 引入全部路由和主模块路由
 import { default as FullRoute, mainRoute } from "@/main/index";
 
 const route = new Router({
   routes: FullRoute
 });
 
-// 全局路由守卫
 import { store } from "@/core/store";
 import { storage } from "@/core";
 
@@ -24,6 +24,7 @@ if (!store.get("accessToken")) {
   }
 }
 
+// 全局路由守卫
 route.beforeEach((to, from, next) => {
   if (!store.get("accessToken")) {
     console.log(routeAuthWhiteList, to.path)
