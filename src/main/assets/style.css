@@ -1,0 +1,29 @@
+/* page layout */
+
+html,
+body {
+    height : 100%;
+    margin : 0;
+    padding: 0;
+}
+
+body {
+    overflow-x : hidden;
+    font-family: Arial, 'Hiragino Sans GB', 'WenQuanYi Micro Hei', '\5fae\8f6f\96c5\9ed1', 'SimSun', sans-serif;
+    font-size  : 14px;
+    line-height: 1.7;
+    min-width  : 1200px;
+    color      : #555555;
+    background : #fff;
+}
+
+#app {
+    width : 100%;
+    height: 100%;
+}
+
+.wrap {
+    max-width   : 1200px;
+    margin-left : auto;
+    margin-right: auto;
+}
