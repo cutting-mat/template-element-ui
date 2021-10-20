@@ -151,6 +151,11 @@ export default {
         this.$message.warning("文件超出最大限制");
         return false;
       }
+      // 文件名不得超过500字符
+      if(file.name.length > 500){
+        this.$message.warning("文件名不得超过500字符");
+        return false;
+      }
       // 扩展校验方法
       return this.beforeUpload(file);
     },
