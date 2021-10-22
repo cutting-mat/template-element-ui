@@ -39,14 +39,14 @@ export default {
     },
     data: {
       type: Object,
-      require: false,
+      required: false,
       default() {
         return {};
       },
     },
     name: {
       type: String,
-      require: false,
+      required: false,
       default: "file",
     },
     showFileList: {
@@ -61,12 +61,12 @@ export default {
     },
     listType: {
       type: String,
-      require: false,
+      required: false,
       default: "text",
     },
     fileList: {
       type: Array,
-      require: false,
+      required: false,
       default() {
         return [];
       },

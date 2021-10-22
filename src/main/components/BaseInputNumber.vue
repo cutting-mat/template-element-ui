@@ -21,13 +21,13 @@ export default {
     value: {
       /*外部传值*/
       type: [String, Number],
-      require: false,
+      required: false,
       default: "",
     },
     range: {
       /*控制输入区间*/
       type: Array,
-      require: false,
+      required: false,
       default: () => {
         return [];
       },
@@ -35,39 +35,39 @@ export default {
     decimals: {
       /*保留小数位*/
       type: Number,
-      require: false,
+      required: false,
       default: 0,
     },
     round: {
       /*是否四舍五入*/
       type: Boolean,
-      require: false,
+      required: false,
       default: false,
     },
     zeroFill: {
       /*是否补零*/
       type: Boolean,
-      require: false,
+      required: false,
       default: false,
     },
     placeholder: {
       type: String,
-      require: false,
+      required: false,
       default: "请输入",
     },
     disabled: {
       type: Boolean,
-      require: false,
+      required: false,
       default: false,
     },
     size: {
       type: String,
-      require: false,
+      required: false,
       default: "",
     },
     readonly: {
       type: Boolean,
-      require: false,
+      required: false,
       default: false,
     },
   },
