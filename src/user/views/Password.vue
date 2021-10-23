@@ -1,5 +1,5 @@
 <template>
-  <div class="scrollbar blockLayout flex-col" v-loading.fullpage="loading">
+  <div class="scrollbar blockLayout flex-col" v-loading.fullscreen="loading">
     <div class="flex-row align-center toolBar">
       <div class="flex-1">
         <!-- title -->
