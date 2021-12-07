@@ -151,9 +151,9 @@ th {
 
 @font-face {
     font-family: "iconfont";
-    src        : url('font/iconfont.woff2') format('woff2'), 
-    url('font/iconfont.woff') format('woff'), 
-    url('font/iconfont.ttf?t=1542333212698') format('truetype');
+    src        : url('font/iconfont.woff2') format('woff2'),
+        url('font/iconfont.woff') format('woff'),
+        url('font/iconfont.ttf?t=1542333212698') format('truetype');
 }
 
 .ion {
@@ -284,31 +284,38 @@ th {
 }
 
 
-/* 滚动区域 */
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width : 6px;
+    height: 6px;
+}
 
+::-webkit-scrollbar-track {
+    width                : 6px;
+    background           : rgba(16, 31, 28, 0.1);
+    -webkit-border-radius: 2em;
+    -moz-border-radius   : 2em;
+    border-radius        : 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color     : rgba(16, 31, 28, 0.5);
+    background-clip      : padding-box;
+    min-height           : 28px;
+    -webkit-border-radius: 2em;
+    -moz-border-radius   : 2em;
+    border-radius        : 2em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(16, 31, 28, 1);
+}
+/* 纵向滚动区域 */
 .scrollbar {
     overflow-x: hidden;
     overflow-y: auto;
 }
 
-.scrollbar::-webkit-scrollbar {
-    position          : absolute;
-    width             : 10px;
-    margin-left       : -10px;
-    -webkit-appearance: none;
-}
-
-.scrollbar::-webkit-scrollbar-thumb {
-    border-width   : 1px 2px;
-    border-style   : solid;
-    border-color   : transparent;
-    background-clip: content-box;
-    background     : #ccc;
-}
-
-.scrollbar::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, .1);
-}
 
 /* 单行文字 */
 
