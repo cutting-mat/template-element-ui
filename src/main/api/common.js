@@ -1,6 +1,6 @@
 import {
     instance
-} from '@/core/http';
+} from '@/core/request';
 
 
 //上传图片base64

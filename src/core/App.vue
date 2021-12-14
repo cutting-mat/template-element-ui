@@ -6,7 +6,7 @@
 import Vue from "vue";
 import * as util from "@/core";
 import { store } from "@/core/store";
-import { instance } from "@/core/http";
+import { instance } from "@/core/request";
 import {default as FullRoute, moduleRoute} from "@/main/index";
 import {routeAuthWhiteList} from "@/core/router";
 
