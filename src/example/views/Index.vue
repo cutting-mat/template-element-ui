@@ -30,7 +30,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import url(../assets/style.css);
 
 </style>

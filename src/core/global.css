@@ -147,6 +147,33 @@ th {
 }
 
 
+/* 滚动条美化 */
+::-webkit-scrollbar {
+    width : 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    width                : 6px;
+    background           : rgba(16, 31, 28, 0.1);
+    -webkit-border-radius: 2em;
+    -moz-border-radius   : 2em;
+    border-radius        : 2em;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color     : rgba(16, 31, 28, 0.5);
+    background-clip      : padding-box;
+    min-height           : 28px;
+    -webkit-border-radius: 2em;
+    -moz-border-radius   : 2em;
+    border-radius        : 2em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(16, 31, 28, 1);
+}
+
 /* icon font */
 
 @font-face {
@@ -225,7 +252,7 @@ th {
 }
 
 
-/* 固定比例矩形 */
+/* 固定宽高比矩形 */
 
 *[class*="rect-"] {
     position: relative;
@@ -283,33 +310,6 @@ th {
     padding-bottom: 100%;
 }
 
-
-/* 滚动条美化 */
-::-webkit-scrollbar {
-    width : 6px;
-    height: 6px;
-}
-
-::-webkit-scrollbar-track {
-    width                : 6px;
-    background           : rgba(16, 31, 28, 0.1);
-    -webkit-border-radius: 2em;
-    -moz-border-radius   : 2em;
-    border-radius        : 2em;
-}
-
-::-webkit-scrollbar-thumb {
-    background-color     : rgba(16, 31, 28, 0.5);
-    background-clip      : padding-box;
-    min-height           : 28px;
-    -webkit-border-radius: 2em;
-    -moz-border-radius   : 2em;
-    border-radius        : 2em;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background-color: rgba(16, 31, 28, 1);
-}
 /* 纵向滚动区域 */
 .scrollbar {
     overflow-x: hidden;
