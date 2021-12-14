@@ -16,6 +16,7 @@ const HASH = {
     "master.com": ENVIRONMENT.master
 }
 
+// 输出 baseURL
 export const baseURL = HASH[window.location.host] || ENVIRONMENT.dev;
 
 // 创建请求实例

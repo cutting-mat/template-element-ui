@@ -1,3 +1,7 @@
+/* 静态资源检测标记 */
+#app::after {
+    display: none;
+}
 /* reset */
 
 html {
