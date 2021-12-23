@@ -8,20 +8,14 @@ export const get = (params, opt) => {
   }, params, opt)
 }
 // post
-export const add = (params, opt) => {
-  return requestWrapper(params => {
-    return instance.post(`/url`, params)
-  }, params, opt)
+export const add = (params) => {
+  return instance.post(`/url`, params)
 }
 // put
-export const edit = (params, opt) => {
-  return requestWrapper(params => {
-    return instance.put(`/url`, params)
-  }, params, opt)
+export const edit = (params) => {
+  return instance.put(`/url`, params)
 }
 // delete
-export const remove = (params, opt) => {
-  return requestWrapper(params => {
-    return instance.delete(`/url`, { params })
-  }, params, opt)
+export const remove = (params) => {
+  return instance.delete(`/url`, { params })
 }
