@@ -1,5 +1,5 @@
-import { instance } from '@/core/request';
-import { requestWrapper } from "@/core";
+import { instance, cacheAxios } from "@/core";
+cacheAxios.create(instance)
 
 //登录
 export const login = params => {
@@ -7,19 +7,14 @@ export const login = params => {
 }
 
 //用户权限
-export const permission = (params, opt) => {
-    return requestWrapper(params => {
-        return instance.get(`/getPermissions`, { params })
-    }, params, opt)
+export const permission = (params) => {
+    return instance.get(`/getPermissions`, { params })
 }
 
 //用户信息
 export const info = (params, opt) => {
-    return requestWrapper(params => {
-        return instance.get(`/getAccountInfo`, { params })
-    }, params, opt)
+    return cacheAxios.get(`/getAccountInfo`, { params }, opt)
 }
-
 
 //修改密码
 export const editPassword = params => {

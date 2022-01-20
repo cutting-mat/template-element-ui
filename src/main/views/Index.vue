@@ -1,15 +1,15 @@
 <template>
   <div class="flex-col">
     <!-- 头部 -->
-    <BaseHeader />
+    <Header />
     <div class="flex-1 flex-row">
       <!-- 菜单 -->
-      <BaseSubNav v-if="$route.path !== '/'" />
+      <SubNav v-if="$route.path !== '/'" />
       <!-- 首页 -->
       <dashboard v-if="$route.path == '/'" class="flex-1" />
       <!-- 内页 -->
       <div v-else class="flex-1 flex-col">
-        <BaseBreadcrumb />
+        <Breadcrumb />
         <router-view class="flex-1" />
       </div>
     </div>
@@ -17,6 +17,8 @@
 </template>
 
 <script>
+import {info} from "@/user/api/user"
+
 export default {
   components: {
     dashboard: () => import("../components/TheDashboard.vue"),
@@ -24,7 +26,25 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    fetchData(mark, reload) {
+      info(null, {
+        cache: !reload
+      }).then(res => {
+        console.log(mark, res)
+      }).catch(err => {
+        console.warn(mark, err)
+      })
+    }
+  },
+  created(){
+    this.fetchData(1);
+    this.fetchData(1.5);
+    
+    setTimeout(() => {
+      this.fetchData(3);
+    }, 2000)
+  }
 };
 </script>
 

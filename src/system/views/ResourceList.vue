@@ -56,9 +56,8 @@
 </template>
 
 <script>
-import * as util from "@/core";
+import { util, store } from "@/core";
 import * as resource from "../api/resource";
-import { store } from "@/core/store";
 
 export default {
   data() {

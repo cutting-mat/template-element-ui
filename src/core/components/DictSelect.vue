@@ -1,23 +1,21 @@
 <template>
-  <el-radio-group v-model="bindValue"
+  <el-select v-model="bindValue"
     v-bind="attribute"
     @change="$emit('change', $event)"
   >
-    <el-radio :label="null" v-if="nullAble">
-      {{placeholder}}
-    </el-radio>
-    <el-radio
+    <el-option :label="placeholder" :value="null" v-if="nullAble"> </el-option>
+    <el-option
       v-for="item in list"
       :key="item.value"
-      :label="item[valueKey]"
+      :label="item[labelKey]"
+      :value="item[valueKey]"
     >
-      {{item[labelKey]}}
-    </el-radio>
-  </el-radio-group>
+    </el-option>
+  </el-select>
 </template>
 
 <script>
-import { buildTree } from "@/core";
+import { util } from "@/core";
 import { itemList } from "@/system/api/dict";
 
 export default {
@@ -47,7 +45,7 @@ export default {
     nullAble: {
       type: Boolean,
       required: false,
-      default: false
+      default: true
     },
     placeholder: {
       type: String,
@@ -57,10 +55,10 @@ export default {
     attribute: {
       type: Object,
       required: false,
-      default() {
+      default(){
         return {}
       }
-    }
+    },
   },
   data() {
     return {
@@ -88,7 +86,7 @@ export default {
           cache: true,
         }
       ).then((res) => {
-        this.list = buildTree(res.data.data);
+        this.list = util.buildTree(res.data.data);
       });
     },
     fetchRemoteData: async function() {

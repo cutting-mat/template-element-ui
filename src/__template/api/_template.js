@@ -1,11 +1,9 @@
-import { instance } from '@/core/request';
-import { requestWrapper } from "@/core";
+import { instance, cacheAxios } from "@/core";
+cacheAxios.create(instance);
 
 // get
 export const get = (params, opt) => {
-  return requestWrapper(params => {
-    return instance.get(`/url`, { params })
-  }, params, opt)
+  return cacheAxios.get(`/url`, { params }, opt)
 }
 // post
 export const add = (params) => {

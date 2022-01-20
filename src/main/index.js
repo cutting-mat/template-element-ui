@@ -1,24 +1,11 @@
 import index from './views/Index'
-import example from '../example'
-import system from '../system'
-import user from '../user'
 
-// 业务模块（开启权限控制模式下，业务模块受登录用户权限控制）
-export const moduleRoute = [
+export default [
     {
         path: '/',
         name: '首页',
-        component: index,
-        children: [
-            ...example,
-            ...system,
-            ...user
-        ]
-    }
-]
-
-// 主模块（开启权限控制模式下，主模块不受权限控制）
-export const mainRoute = [
+        component: index
+    },
     {
         path: '/login',
         name: '登录',
@@ -33,11 +20,3 @@ export const mainRoute = [
         component: (resolve) => require(['./views/404.vue'], resolve)
     }
 ]
-
-// 如果开启权限控制，模块路由初始不注入，将由权限系统动态注入
-const extRoute = process.env.VUE_APP_AUTH === "true" ? [] : moduleRoute;
-
-export default [
-    ...extRoute,
-    ...mainRoute
-];

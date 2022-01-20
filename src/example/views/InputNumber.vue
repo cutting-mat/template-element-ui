@@ -3,7 +3,7 @@
 
     <h2>数字输入框</h2>
     <p>
-      引用数字输入组件：<code>@/main/components/BaseInputNumber.vue</code>
+      引用数字输入组件：<code>@/core/components/BaseInputNumber.vue</code>
     </p>
     <div class="demo">
       <el-form label-width="160px">
@@ -25,11 +25,11 @@
 </template>
 
 <script>
-//import * as util from '@/core';
+//import { util } from '@/core';
 
 export default {
   components: {
-    BaseInputNumber:  () => import("@/main/components/BaseInputNumber.vue"),
+    BaseInputNumber:  () => import("@/core/components/BaseInputNumber.vue"),
   },
   data() {
     return {

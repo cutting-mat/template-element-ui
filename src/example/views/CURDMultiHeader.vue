@@ -46,7 +46,7 @@
 </template>
 
 <script>
-//import * as util from "@/core";
+//import { util } from "@/core";
 import * as api from "@/system/api/role";
 
 export default {

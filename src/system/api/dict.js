@@ -1,5 +1,5 @@
-import { instance } from '@/core/request';
-import { requestWrapper } from "@/core";
+import { instance, cacheAxios } from "@/core";
+cacheAxios.create(instance);
 
 //
 export const list = params => {
@@ -19,9 +19,7 @@ export const remove = params => {
 }
 
 export const itemList = (params, opt) => {
-    return requestWrapper(params => {
-        return instance.get(`/dict/item/s`, { params })
-    }, params, opt)
+    return cacheAxios.get(`/dict/item/s`, { params }, opt)
 }
 
 export const itemAdd = params => {

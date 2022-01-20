@@ -1,4 +1,4 @@
-import { instance } from '@/core/request';
+import { instance } from '@/core';
 
 // get
 export const get = params => {

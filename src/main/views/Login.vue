@@ -54,7 +54,7 @@
 
 <script>
 import * as user from "@/user/api/user";
-import { emit } from "@/core";
+import { util } from "@/core";
 
 export default {
   data() {
@@ -97,7 +97,7 @@ export default {
               this.loading = false;
               if(res.data.code===200){
                 // 登录后全局发布 login 事件，将在app.vue里接收
-                emit("login", {
+                util.emit("login", {
                   from: this.$router.currentRoute.query.from,
                   data: res.data.data,
                 }); 

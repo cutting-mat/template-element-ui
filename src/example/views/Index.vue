@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import {buildTree} from "@/core";
+import { util } from "@/core";
 
 export default {
   data() {
@@ -17,7 +17,7 @@ export default {
   methods: {
     runBuild() {
       let now = Date.now();
-      let tree = buildTree(this.list, 'pid', function(a, b){
+      let tree = util.buildTree(this.list, 'pid', function(a, b){
         return a.name.length - b.name.length
       });
       this.tree = tree;

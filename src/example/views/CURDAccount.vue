@@ -76,7 +76,7 @@
 </template>
 
 <script>
-//import * as util from '@/core';
+//import { util } from '@/core';
 import * as api from "@/system/api/account";
 import { list as requestRoles } from "@/system/api/role";
 

@@ -20,6 +20,7 @@ import router from '@/core/router'
 
 // 应用启动
 import App from '@/core/App.vue'
+
 new Vue({
     router,
     render: h => h(App)

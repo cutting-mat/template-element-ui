@@ -1,26 +1,26 @@
 // 全局组件
-import BaseHeader from '@/main/components/BaseHeader.vue'
+import Header from '@/main/components/Header.vue'
 
 const globalComponents = {
-    BaseHeader,
-    BaseBreadcrumb: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseBreadcrumb.vue"),
-    BaseSubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseSubNav.vue"),
-    BasePagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/BasePagination.vue"),
-    BaseCURD:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/BaseCURD.vue"),
-    DictRadio:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictRadio.vue"),
-    DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCheckbox.vue"),
-    DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictSelect.vue"),
-    DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/main/components/DictCascader.vue"),
+    Header,
+    Breadcrumb: () => import(/* webpackChunkName: "global-components" */ "@/main/components/Breadcrumb.vue"),
+    SubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/SubNav.vue"),
+    Pagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/Pagination.vue"),
+    BaseCURD:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/BaseCURD.vue"),
+    DictRadio:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictRadio.vue"),
+    DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCheckbox.vue"),
+    DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictSelect.vue"),
+    DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCascader.vue"),
     OrgPicker:  (resolve) => require(["@/system/components/OrgPicker.vue"], resolve),
     TheResourcePicker:  (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve),
     
 }
 
 // 全局过滤器
-import { formatDate } from '@/core'
+import { util } from '@/core'
 
 const globalFilters = {
-    date: formatDate
+    date: util.formatDate
 }
 
 export default {

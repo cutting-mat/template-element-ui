@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { store } from "@/core/store";
+import { store } from "@/core";
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);
   res = res.map((e) => {

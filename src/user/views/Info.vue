@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { store } from "@/core/store";
+import { store } from "@/core";
 
 export default {
   data() {

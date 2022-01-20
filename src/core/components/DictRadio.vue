@@ -1,18 +1,23 @@
 <template>
-  <el-cascader v-model="bindValue"
-    :options="list"
-    :props="{
-      value: this.valueKey,
-      label: this.labelKey
-    }"
+  <el-radio-group v-model="bindValue"
     v-bind="attribute"
     @change="$emit('change', $event)"
   >
-  </el-cascader>
+    <el-radio :label="null" v-if="nullAble">
+      {{placeholder}}
+    </el-radio>
+    <el-radio
+      v-for="item in list"
+      :key="item.value"
+      :label="item[valueKey]"
+    >
+      {{item[labelKey]}}
+    </el-radio>
+  </el-radio-group>
 </template>
 
 <script>
-import { buildTree } from "@/core";
+import { util } from "@/core";
 import { itemList } from "@/system/api/dict";
 
 export default {
@@ -26,7 +31,7 @@ export default {
       required: true,
     },
     value: {
-      type: Array,
+      type: [String, Number],
       required: false
     },
     valueKey: {
@@ -42,7 +47,7 @@ export default {
     nullAble: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     },
     placeholder: {
       type: String,
@@ -62,14 +67,6 @@ export default {
       bindValue: null,
       list: [],
     };
-  },
-  computed: {
-    useProps() {
-      return Object.assign({
-        value: this.valueKey,
-        label: this.labelKey
-      }, this.props)
-    }
   },
   watch: {
     value: {
@@ -91,7 +88,7 @@ export default {
           cache: true,
         }
       ).then((res) => {
-        this.list = buildTree(res.data.data);
+        this.list = util.buildTree(res.data.data);
       });
     },
     fetchRemoteData: async function() {

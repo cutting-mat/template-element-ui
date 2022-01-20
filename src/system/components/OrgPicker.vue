@@ -106,7 +106,7 @@
 </template>
 
 <script>
-import { buildTree } from "@/core";
+import { util } from "@/core";
 import * as api from "../api/org";
 
 export default {
@@ -187,7 +187,7 @@ export default {
           this.loading = false;
           const data = res.data.data;
           if (data) {
-            this.list = buildTree(data);
+            this.list = util.buildTree(data);
             this.queryParam.pid = data[0].id;
             this.fetchSchool(true);
           }

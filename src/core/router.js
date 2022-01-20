@@ -1,33 +1,35 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 Vue.use(Router)
+import { util , store } from "@/core";
 
-// 引入全部路由和主模块路由
-import { default as FullRoute, mainRoute } from "@/main/index";
+// 业务模块（开启权限控制模式下，业务模块受登录用户权限控制）
+import moduleRoute from './modules'
+export {moduleRoute}
 
-const route = new Router({
-  routes: FullRoute
-});
-
-import { store } from "@/core/store";
-import { storage } from "@/core";
+// 主模块
+import { default as mainRoute } from "@/main/index";
+mainRoute[0].children = process.env.VUE_APP_AUTH === "true" ? [] : moduleRoute;
+export { mainRoute };
 
 // 路由访问免登录白名单
-export let routeAuthWhiteList = [...mainRoute.map((e) => e.path), '/library']; 
+export let routeAuthWhiteList = [...mainRoute.filter(e => e.path!=='/').map((e) => e.path), '/library']; 
 
 // 获取用户登录状态
 if (!store.get("accessToken")) {
-  let localUser = storage("auth") || {};
+  let localUser = util.storage("auth") || {};
   if (localUser.accessToken) {
     store.set("accessToken", localUser.accessToken);
   }
 }
 
-// 全局路由守卫
+// 路由实例
+const route = new Router({
+  routes: mainRoute
+});
+
 route.beforeEach((to, from, next) => {
   if (!store.get("accessToken")) {
-    console.log(routeAuthWhiteList, to.path)
     if (routeAuthWhiteList.indexOf('/'+to.path.split('/')[1]) !== -1) {
       // 未登录访问白名单
       return next();

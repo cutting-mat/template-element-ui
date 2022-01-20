@@ -1,6 +1,6 @@
-import { permission as getUserPermission, info as getUserInfo } from "@/user/api/user";
+import * as userApi from "@/user/api/user";
 
-export const store = {
+const store = {
     state: {
         accessToken: null, // token
         menu: [], // 导航菜单
@@ -54,7 +54,7 @@ export const store = {
             } else {
                 switch (key) {
                     case "permission":
-                        getUserPermission(null, {
+                        userApi.permission(null, {
                             cache: !reload
                         }).then(res => {
                             let userPermissions = {
@@ -65,7 +65,7 @@ export const store = {
                         })
                         break;
                     case "user":
-                        getUserInfo(null, {
+                        userApi.info(null, {
                             cache: !reload
                         }).then(res => {
                             catchActionData(res.data.data)
@@ -86,3 +86,5 @@ export const store = {
         })
     }
 }
+
+export default store

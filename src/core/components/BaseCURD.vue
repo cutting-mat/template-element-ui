@@ -47,7 +47,7 @@
       </BaseCURDColumn>
     </el-table>
     <!-- page -->
-    <BasePagination
+    <Pagination
       v-if="showPagination"
       :page-size="queryParamFinnal.pageSize"
       :current-page="queryParamFinnal.p"
@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { deepcopy, buildTree } from "@/core";
+import { util } from "@/core";
 
 export default {
   props: {
@@ -339,7 +339,7 @@ export default {
     update: async function(data) {
       // 暴露方法：更新
       this.editForm = !this.getItemFromDetaiApi
-        ? deepcopy(data)
+        ? util.deepcopy(data)
         : await this.fetchDetail(data[this.dataKey]);
       this.editScope = "update";
       this.dialogVisible = true;
@@ -348,7 +348,7 @@ export default {
       // 保存
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          let formData = deepcopy(this.editForm);
+          let formData = util.deepcopy(this.editForm);
           this.handleCloseDialog();
           let doAction = this.api[this.editScope];
           if(typeof doAction !== 'function'){
@@ -430,9 +430,9 @@ export default {
           this.loading = false;
           const data = res.data.data;
           if (Array.isArray(data)) {
-            this.list = buildTree(data);
+            this.list = util.buildTree(data);
           } else if (Array.isArray(data.list)) {
-            this.list = buildTree(data.list);
+            this.list = util.buildTree(data.list);
             this.totalCount = data.totalCount;
             this.totalPage = data.totalPage;
           }

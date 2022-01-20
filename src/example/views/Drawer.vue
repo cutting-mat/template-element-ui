@@ -88,7 +88,7 @@
 </template>
 
 <script>
-//import * as util from '@/core';
+//import { util } from '@/core';
 
 export default {
   data() {

@@ -3,7 +3,7 @@
     <h2>基本文件上传</h2>
     <p>
       Element-Upload二次封装。组件位置：<code
-        >"@/main/components/BaseUploader"</code
+        >"@/core/components/BaseUploader"</code
       >
     </p>
     <p>
@@ -128,13 +128,13 @@
 </template>
 
 <script>
-//import * as util from "@/core";
+//import { util } from "@/core";
 import { upload as uploadFunc } from "@/main/api/common";
 
 export default {
   components: {
     BaseUploader: (resolve) =>
-      require(["@/main/components/BaseUploader"], resolve),
+      require(["@/core/components/BaseUploader"], resolve),
     TheFileList: (resolve) =>
       require(["@/main/components/TheFileList"], resolve),
   },

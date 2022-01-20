@@ -67,13 +67,13 @@
       </el-table-column>
     </el-table>
     <!-- page -->
-    <BasePagination
+    <Pagination
       :page-size="queryParam.pageSize"
       :current-page="queryParam.p"
       :total-count="totalCount"
       :total-page="totalPage"
       @current-change="handleCurrentChange"
-    ></BasePagination>
+    ></Pagination>
     <!-- 弹窗 -->
     <el-dialog
       :close-on-click-modal="false"
@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import * as util from "@/core";
+import { util } from "@/core";
 import * as dict from "../api/dict";
 
 export default {

@@ -1,6 +1,4 @@
-import {
-    instance
-} from '@/core/request';
+import { instance } from '@/core';
 
 
 //上传图片base64

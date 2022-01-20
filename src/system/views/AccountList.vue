@@ -67,7 +67,7 @@
       </el-table-column>
     </el-table>
     <!-- page -->
-    <BasePagination
+    <Pagination
       :page-size="queryParam.pageSize"
       :current-page="queryParam.p"
       :total-count="totalCount"
@@ -149,7 +149,7 @@
 </template>
 
 <script>
-import * as util from "@/core";
+import { util } from "@/core";
 import * as account from "../api/account";
 import { list as requestRoles } from "../api/role";
 

@@ -3,17 +3,17 @@
 
     <h2>标签栏</h2>
     <div class="demo">
-      <BaseTagManage />
+      <TagManage />
     </div>
   </div>
 </template>
 
 <script>
-//import * as util from '@/core';
+//import { util } from '@/core';
 
 export default {
   components: {
-    BaseTagManage:() => import("@/main/components/BaseTagManage.vue")
+    TagManage:() => import("@/main/components/TagManage.vue")
   },
   data() {
     return {

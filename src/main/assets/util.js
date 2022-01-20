@@ -1,4 +1,4 @@
-import { getSuffix } from "@/core";
+import { util } from "@/core";
 
 /**
  * 根据文件url获得封面图
@@ -53,7 +53,7 @@ export const dynamicAlbum = (url, previewImg) => {
         return fileAlbum
     }
 
-    let fileExt = getSuffix(url);
+    let fileExt = util.getSuffix(url);
     const typeIndex = Object.keys(fileTypes).findIndex(type => {
         return fileTypes[type].type.findIndex(ext => ext === fileExt) !== -1
     })

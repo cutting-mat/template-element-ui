@@ -1,21 +1,23 @@
 <template>
-  <el-select v-model="bindValue"
+  <el-checkbox-group v-model="bindValue"
     v-bind="attribute"
     @change="$emit('change', $event)"
   >
-    <el-option :label="placeholder" :value="null" v-if="nullAble"> </el-option>
-    <el-option
+    <el-checkbox :label="null" v-if="nullAble">
+      {{placeholder}}
+    </el-checkbox>
+    <el-checkbox
       v-for="item in list"
       :key="item.value"
-      :label="item[labelKey]"
-      :value="item[valueKey]"
+      :label="item[valueKey]"
     >
-    </el-option>
-  </el-select>
+      {{item[labelKey]}}
+    </el-checkbox>
+  </el-checkbox-group>
 </template>
 
 <script>
-import { buildTree } from "@/core";
+import { util } from "@/core";
 import { itemList } from "@/system/api/dict";
 
 export default {
@@ -29,7 +31,7 @@ export default {
       required: true,
     },
     value: {
-      type: [String, Number],
+      type: Array,
       required: false
     },
     valueKey: {
@@ -45,7 +47,7 @@ export default {
     nullAble: {
       type: Boolean,
       required: false,
-      default: true
+      default: false
     },
     placeholder: {
       type: String,
@@ -55,14 +57,14 @@ export default {
     attribute: {
       type: Object,
       required: false,
-      default(){
+      default() {
         return {}
       }
-    },
+    }
   },
   data() {
     return {
-      bindValue: null,
+      bindValue: [],
       list: [],
     };
   },
@@ -86,7 +88,7 @@ export default {
           cache: true,
         }
       ).then((res) => {
-        this.list = buildTree(res.data.data);
+        this.list = util.buildTree(res.data.data);
       });
     },
     fetchRemoteData: async function() {

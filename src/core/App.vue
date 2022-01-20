@@ -4,11 +4,9 @@
 
 <script>
 import Vue from "vue";
-import * as util from "@/core";
-import { store } from "@/core/store";
+import { util, store } from "@/core";
 import { instance } from "@/core/request";
-import {default as FullRoute, moduleRoute} from "@/main/index";
-import {routeAuthWhiteList} from "@/core/router";
+import { mainRoute, moduleRoute, routeAuthWhiteList } from "@/core/router";
 
 let checkRouteRedirectResult = []; // 临时变量
 if (process.env.VUE_APP_AUTH === "true") {
@@ -91,8 +89,8 @@ export default {
           actualRouter = actualRouter.concat(replyResult);
         }
       };
-      // 此处跳过首页（'/'）的权限校验，也可以传入 moduleRoute 全部校验
-      checkRoutePermission(moduleRoute[0].children);
+
+      checkRoutePermission(moduleRoute);
 
       // 如果没有任何路由权限，判断为非法用户，登出并终止应用执行
       if (!actualRouter || !actualRouter.length) {
@@ -103,13 +101,14 @@ export default {
 
       checkRouteRedirectResult = [];
       this.checkRouteRedirect(actualRouter);
-      moduleRoute[0].children = checkRouteRedirectResult;
-      moduleRoute.push({
+
+      checkRouteRedirectResult.forEach((route) => {
+        this.$router.addRoute("首页", route);
+      });
+
+      this.$router.addRoute({
         path: "*",
         redirect: "/404",
-      });
-      moduleRoute.forEach((route) => {
-        this.$router.addRoute(route);
       });
 
       // 保存菜单数据，用于实现全局导航
@@ -164,10 +163,11 @@ export default {
        */
       if (store.get("accessToken")) {
         // 已登录
-        instance.defaults.headers.common["Authorization"] =store.get("accessToken");
+        instance.defaults.headers.common["Authorization"] =
+          store.get("accessToken");
       } else {
         // 未登录逻辑通过路由守卫（@/router.js）处理
-        console.warn('未登录')
+        console.warn("未登录");
       }
 
       if (store.get("accessToken") && process.env.VUE_APP_AUTH === "true") {
@@ -227,19 +227,16 @@ export default {
           Vue.prototype.$_auth = function (axiosRequest) {
             let RequiredPermissions = [];
             let permission = true;
-
-            if (Array.isArray(axiosRequest)) {
-              axiosRequest.forEach((fun) => {
-                let res = util.matchRequest(fun);
-                if (res) {
-                  RequiredPermissions.push(res);
-                }
-              });
-            } else if (typeof axiosRequest === "function") {
-              let res = util.matchRequest(axiosRequest);
+            let collectPermission = function (fun) {
+              let res = util.matchRequest(fun);
               if (res) {
                 RequiredPermissions.push(res);
               }
+            };
+            if (Array.isArray(axiosRequest)) {
+              axiosRequest.forEach(collectPermission);
+            } else if (typeof axiosRequest === "function") {
+              collectPermission(axiosRequest);
             }
             //console.log(RequiredPermissions, resourcePermission)
             for (let i = 0; i < RequiredPermissions.length; i++) {
@@ -261,13 +258,15 @@ export default {
          * 权限控制关闭模式
          */
         checkRouteRedirectResult = [];
-        this.checkRouteRedirect(FullRoute[0].children);
+        this.checkRouteRedirect(mainRoute[0].children);
         store.set("menu", checkRouteRedirectResult);
 
         // 容错
         Vue.prototype.$_auth = () => true;
 
-        store.get("accessToken") && typeof callback === "function" && callback();
+        store.get("accessToken") &&
+          typeof callback === "function" &&
+          callback();
       }
     },
     initUser: function (loginRes) {
@@ -287,7 +286,7 @@ export default {
        * 监听 "login" 事件
        */
       util.storage("auth", res.data);
-      store.set("accessToken", res.data.accessToken)
+      store.set("accessToken", res.data.accessToken);
 
       this.signin(() => {
         // 登录成功（silent来自token续签）
@@ -301,10 +300,14 @@ export default {
        * 监听 "logout" 事件
        */
       util.storage("auth", "");
-      console.log(routeAuthWhiteList,'/'+this.$router.currentRoute.path.split('/')[1])
-      if (routeAuthWhiteList.indexOf('/'+this.$router.currentRoute.path.split('/')[1]) === -1) {
+
+      if (
+        routeAuthWhiteList.indexOf(
+          "/" + this.$router.currentRoute.path.split("/")[1]
+        ) === -1
+      ) {
         // 非白名单路由刷新，触发路由守卫的未登录逻辑
-        window.location.reload()
+        window.location.reload();
       }
     },
   },

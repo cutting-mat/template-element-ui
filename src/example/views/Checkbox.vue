@@ -86,7 +86,7 @@
 </template>
 
 <script>
-//import * as util from '@/core';
+//import { util } from '@/core';
 const cityOptions = ["上海", "北京", "广州", "深圳"];
 export default {
   data() {

@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import { store } from "@/core/store";
-import { emit } from "@/core";
+import { util , store } from "@/core";
 
 export default {
   data() {
@@ -72,7 +71,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        emit("logout");
+        util.emit("logout");
       });
     },
   },
