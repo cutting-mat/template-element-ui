@@ -13,7 +13,7 @@ mainRoute[0].children = process.env.VUE_APP_AUTH === "true" ? [] : moduleRoute;
 export { mainRoute };
 
 // 路由访问免登录白名单
-export let routeAuthWhiteList = [...mainRoute.filter(e => e.path!=='/').map((e) => e.path), '/library']; 
+export let routeAuthWhiteList = [...mainRoute.filter(e => e.path!=='/').map((e) => e.path)]; 
 
 // 获取用户登录状态
 // console.log('获取用户登录状态')
