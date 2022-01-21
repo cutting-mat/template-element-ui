@@ -17,7 +17,6 @@
 </template>
 
 <script>
-import {info} from "@/user/api/user"
 
 export default {
   components: {
@@ -26,25 +25,7 @@ export default {
   data() {
     return {};
   },
-  methods: {
-    fetchData(mark, reload) {
-      info(null, {
-        cache: !reload
-      }).then(res => {
-        console.log(mark, res)
-      }).catch(err => {
-        console.warn(mark, err)
-      })
-    }
-  },
-  created(){
-    this.fetchData(1);
-    this.fetchData(1.5);
-    
-    setTimeout(() => {
-      this.fetchData(3);
-    }, 2000)
-  }
+  
 };
 </script>
 

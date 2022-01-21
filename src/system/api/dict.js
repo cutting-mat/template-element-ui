@@ -1,5 +1,4 @@
-import { instance, cacheAxios } from "@/core";
-cacheAxios.create(instance);
+import { instance } from "@/core";
 
 //
 export const list = params => {
@@ -19,7 +18,7 @@ export const remove = params => {
 }
 
 export const itemList = (params, opt) => {
-    return cacheAxios.get(`/dict/item/s`, { params }, opt)
+    return instance.get(`/dict/item/s`, { params }, opt)
 }
 
 export const itemAdd = params => {

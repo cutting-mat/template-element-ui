@@ -1,5 +1,4 @@
-import { instance, cacheAxios } from "@/core";
-cacheAxios.create(instance)
+import { instance } from "@/core";
 
 //登录
 export const login = params => {
@@ -13,7 +12,7 @@ export const permission = (params) => {
 
 //用户信息
 export const info = (params, opt) => {
-    return cacheAxios.get(`/getAccountInfo`, { params }, opt)
+    return instance.get(`/getAccountInfo`, { params }, opt)
 }
 
 //修改密码

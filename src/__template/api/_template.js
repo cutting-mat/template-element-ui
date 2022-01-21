@@ -1,9 +1,8 @@
-import { instance, cacheAxios } from "@/core";
-cacheAxios.create(instance);
+import { instance } from "@/core";
 
 // get
 export const get = (params, opt) => {
-  return cacheAxios.get(`/url`, { params }, opt)
+  return instance.get(`/url`, { params }, opt)
 }
 // post
 export const add = (params) => {

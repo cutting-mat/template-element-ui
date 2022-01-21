@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { util } from '@/core';
+//import axios from 'axios';
+import { util, axios } from '@/core';
 
 // 环境配置
 const ENVIRONMENT = {
