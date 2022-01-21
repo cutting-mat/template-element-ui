@@ -7,4 +7,4 @@ export { default as store } from "./assets/store";
 // 请求
 export { baseURL, instance } from "./request";
 // 权限
-export { default as auth } from "./assets/auth";
+export { default as AccessControl } from "./assets/access-control";

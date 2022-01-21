@@ -162,7 +162,7 @@ export default {
             }
         });
 
-        Vue.Auth = function (routeInstance) {
+        Vue.AccessControl = function (routeInstance) {
             
             return new Promise((resolve, reject) => {
                 

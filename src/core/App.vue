@@ -4,11 +4,11 @@
 
 <script>
 import Vue from "vue";
-import { util, store, auth } from "@/core";
+import { util, store, AccessControl } from "@/core";
 import { instance } from "@/core";
 import { routeAuthWhiteList } from "@/core/router";
 
-Vue.use(auth);
+Vue.use(AccessControl);
 
 console.warn("免登录白名单:", routeAuthWhiteList);
 
@@ -16,7 +16,7 @@ export default {
   methods: {
     initAuth: function () {
       instance.defaults.headers.common["Authorization"] = store.get("accessToken");
-      return Vue.Auth(this.$router);
+      return Vue.AccessControl(this.$router);
     },
     initUser: function (loginRes) {
       // 初始化用户信息
