@@ -154,6 +154,9 @@ import * as account from "../api/account";
 import { list as requestRoles } from "../api/role";
 
 export default {
+  components: {
+    OrgPicker: (resolve) => require(["@/system/components/OrgPicker.vue"], resolve)
+  },
   data() {
     const validatePass = (rule, value, callback) => {
       if (!value) {

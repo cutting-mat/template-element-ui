@@ -11,8 +11,6 @@ const globalComponents = {
     DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCheckbox.vue"),
     DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictSelect.vue"),
     DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCascader.vue"),
-    OrgPicker:  (resolve) => require(["@/system/components/OrgPicker.vue"], resolve),
-    TheResourcePicker:  (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve),
     
 }
 
@@ -34,15 +32,6 @@ export default {
         Object.keys(globalComponents).forEach(key => {
             Vue.component(key, globalComponents[key])
         })
-
-        // v-auth 指令（用于权限控制）
-        Vue.directive('auth', {
-            inserted: function (el, binding) {
-                if (Vue.prototype.$_auth && !Vue.prototype.$_auth(binding.value)) {
-                    el.parentNode.removeChild(el);
-                }
-            }
-        });
 
     }
 }

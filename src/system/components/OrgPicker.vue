@@ -82,14 +82,14 @@
             ></el-table-column>
           </el-table>
           <!-- 翻页 -->
-          <base-pagination
+          <Pagination
             class="page-box"
             :page-size="queryParam.pageSize"
             :current-page="queryParam.p"
             :total-count="totalCount"
             :total-page="totalPage"
             @current-change="handleCurrentChange"
-          ></base-pagination>
+          />
         </div>
       </div>
 

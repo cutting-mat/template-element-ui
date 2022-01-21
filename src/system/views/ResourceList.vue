@@ -60,6 +60,9 @@ import { util, store } from "@/core";
 import * as resource from "../api/resource";
 
 export default {
+  components: {
+    TheResourcePicker: (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve)
+  },
   data() {
     const checkMethod = (rule, value, callback) => {
       // method字段校验

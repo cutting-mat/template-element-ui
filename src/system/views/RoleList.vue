@@ -86,6 +86,9 @@ import { util } from "@/core";
 import * as role from "../api/role";
 
 export default {
+  components: {
+    TheResourcePicker: (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve)
+  },
   data() {
     return {
       role,
