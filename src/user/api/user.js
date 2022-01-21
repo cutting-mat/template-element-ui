@@ -6,8 +6,8 @@ export const login = params => {
 }
 
 //用户权限
-export const permission = (params) => {
-    return instance.get(`/getPermissions`, { params })
+export const permission = (params, opt) => {
+    return instance.get(`/getPermissions`, { params }, opt)
 }
 
 //用户信息

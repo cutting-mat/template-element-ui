@@ -16,6 +16,7 @@ export { mainRoute };
 export let routeAuthWhiteList = [...mainRoute.filter(e => e.path!=='/').map((e) => e.path), '/library']; 
 
 // 获取用户登录状态
+// console.log('获取用户登录状态')
 if (!store.get("accessToken")) {
   let localUser = util.storage("auth") || {};
   if (localUser.accessToken) {
@@ -29,6 +30,7 @@ const route = new Router({
 });
 
 route.beforeEach((to, from, next) => {
+  // console.log('路由守卫', to)
   if (!store.get("accessToken")) {
     if (routeAuthWhiteList.indexOf('/'+to.path.split('/')[1]) !== -1) {
       // 未登录访问白名单
@@ -36,7 +38,7 @@ route.beforeEach((to, from, next) => {
     } else if (to.path !== "/login") {
       // 未登录跳转登录页
       let query = {};
-      query["from"] = to.fullPath;
+      query["redirect"] = to.fullPath;
       return next({
         path: "/login",
         query

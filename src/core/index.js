@@ -6,3 +6,5 @@ export { default as axios } from "./assets/cache-axios";
 export { default as store } from "./assets/store";
 // 请求
 export { baseURL, instance } from "./request";
+// 权限
+export { default as auth } from "./assets/auth";
