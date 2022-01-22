@@ -2,7 +2,7 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
-import Vue from 'vue'
+import Vue from 'vue';
 
 // UI库
 import ElementUI from 'element-ui';
@@ -12,16 +12,24 @@ import '@/core/element-theme/custom.css';
 Vue.use(ElementUI);
 
 // 全局资源
-import register from '@/core/register'
+import register from '@/core/register';
 Vue.use(register);
 
+// 账号鉴权
+import { AccountAuth } from "@/core";
+Vue.use(AccountAuth);
+
+// 权限控制
+import { AccessControl } from "@/core";
+Vue.use(AccessControl);
+
 // 路由
-import router from '@/core/router'
+import genRouter from '@/core/router';
 
 // 应用启动
-import App from '@/core/App.vue'
+import App from '@/core/App.vue';
 
 new Vue({
-    router,
+    router: genRouter(),
     render: h => h(App)
-}).$mount('#app')
+}).$mount('#app');

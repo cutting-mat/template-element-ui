@@ -4,7 +4,6 @@ const SriPlugin = require('webpack-subresource-integrity');
  * cutting-mat配置
  * */ 
 process.env.VUE_APP_STORAGE_SPACE = '';                         // 用于util.storage()的本地存储命名空间
-process.env.VUE_APP_AUTH = false;                               // 权限控制开关
 
 /**
  * vue-cli配置

@@ -33,6 +33,7 @@
 
 <script>
 import { util , store } from "@/core";
+import moduleRoute from '@/core/modules';
 
 export default {
   data() {
@@ -42,7 +43,7 @@ export default {
   },
   computed: {
     list: function () {
-      return this.state.menu.filter((e) => !e.meta.hide)
+      return (this.$AccessControl ? this.state.menu : moduleRoute).filter((e) => !e.meta || !e.meta.hide)
     },
   },
   methods: {

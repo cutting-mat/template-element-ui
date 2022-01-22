@@ -1,7 +1,6 @@
 import { util, store, instance } from "@/core";
-import { mainRoute, moduleRoute } from "@/core/router";
+import moduleRoute from "@/core/modules";
 
-let $router;                        // 路由实例
 let checkRouteRedirectResult = []; // 临时变量
 
 const setInterceptor = function (resourcePermission) {
@@ -16,59 +15,6 @@ const setInterceptor = function (resourcePermission) {
         }
         return config;
     });
-}
-
-const extendRoutes = function (routePermission) {
-    // 根据用户权限动态注入路由
-    let actualRouter = [];
-    // 递归校验路由权限
-    let checkRoutePermission = function (array, base) {
-        let replyResult = [];
-        array.forEach((route) => {
-            let pathKey = (base ? base + "/" : "") + route.path;
-            // 扩展fullPath
-            route.fullPath = pathKey;
-
-            if (routePermission[pathKey]) {
-                if (Array.isArray(route.children)) {
-                    route.children = checkRoutePermission(
-                        route.children,
-                        (base ? base + "/" : "") + route.path
-                    );
-                }
-                replyResult.push(route);
-            }
-        });
-        if (base) {
-            return replyResult;
-        } else {
-            actualRouter = actualRouter.concat(replyResult);
-        }
-    };
-
-    checkRoutePermission(moduleRoute);
-
-    // 如果没有任何路由权限，判断为非法用户，登出并终止应用执行
-    if (!actualRouter || !actualRouter.length) {
-        util.storage("auth", "");
-        return (document.body.innerHTML =
-            "<h1>账号访问受限，请联系系统管理员！</h1>");
-    }
-
-    checkRouteRedirectResult = [];
-    checkRouteRedirect(actualRouter);
-
-    checkRouteRedirectResult.forEach((route) => {
-        $router.addRoute("首页", route);
-    });
-
-    $router.addRoute({
-        path: "*",
-        redirect: "/404",
-    });
-
-    return actualRouter;
-    
 }
 
 const getResourcePermission = function (userPermissions) {
@@ -152,7 +98,6 @@ const checkRouteRedirect = function (array, base) {
 
 export default {
     install: function (Vue) {
-
         // v-auth 指令（用于权限控制）
         Vue.directive('auth', {
             inserted: function (el, binding) {
@@ -162,111 +107,136 @@ export default {
             }
         });
 
-        Vue.AccessControl = function (routeInstance) {
-            
+        Vue.prototype.$AccessControl = function () {
+
             return new Promise((resolve, reject) => {
-                
-                if (store.get("accessToken") && process.env.VUE_APP_AUTH === "true") {
-                    if(routeInstance){
-                        $router = routeInstance
-                    }else{
-                        reject('Vue.Auth(routeInstance): 缺少参数')
+                /*
+                 * 请求用户权限
+                 */
+                store.action("permission").then((userPermissions) => {
+                    /*
+                     * 请求用户权限数据，格式如下:
+                      {
+                        menus: [{
+                          id: (...)
+                          method: (...)
+                          name: (...)
+                          remark: (...)
+                          route: (...)
+                          type: 0
+                          url: (...)
+                        }],
+                        resources: [{
+                          id: (...)
+                          method: (...)
+                          name: (...)
+                          pid: (...)
+                          remark: (...)
+                          route: (...)
+                          type: (...)
+                          url: (...)
+                        }]
+                      }
+                     */
+
+                    let resourcePermission = getResourcePermission(userPermissions);
+                    let routePermission = getRoutePermission(userPermissions);
+
+                    /*
+                     * 根据请求权限设置请求拦截
+                     */
+
+                    setInterceptor(resourcePermission);
+
+                    /*
+                     * 根据路由权限动态添加路由
+                     */
+
+                    // 根据用户权限动态注入路由
+                    let actualRouter = [];
+                    // 递归校验路由权限
+                    let checkRoutePermission = function (array, base) {
+                        let replyResult = [];
+                        array.forEach((route) => {
+                            let pathKey = (base ? base + "/" : "") + route.path;
+                            // 扩展fullPath
+                            route.fullPath = pathKey;
+
+                            if (routePermission[pathKey]) {
+                                if (Array.isArray(route.children)) {
+                                    route.children = checkRoutePermission(
+                                        route.children,
+                                        (base ? base + "/" : "") + route.path
+                                    );
+                                }
+                                replyResult.push(route);
+                            }
+                        });
+                        if (base) {
+                            return replyResult;
+                        } else {
+                            actualRouter = actualRouter.concat(replyResult);
+                        }
+                    };
+
+                    checkRoutePermission(moduleRoute);
+
+                    // 如果没有任何路由权限，判断为非法用户，登出并终止应用执行
+                    if (!actualRouter || !actualRouter.length) {
+                        util.storage("auth", "");
+                        return (document.body.innerHTML =
+                            "<h1>账号访问受限，请联系系统管理员！</h1>");
                     }
-    
-                    /*
-                     * Step 2-1
-                     * 权限控制开启模式
-                     */
-                    store.action("permission").then((userPermissions) => {
-                        /*
-                         * Step 3
-                         * 请求用户权限数据，格式如下:
-                          {
-                            menus: [{
-                              id: (...)
-                              method: (...)
-                              name: (...)
-                              remark: (...)
-                              route: (...)
-                              type: 0
-                              url: (...)
-                            }],
-                            resources: [{
-                              id: (...)
-                              method: (...)
-                              name: (...)
-                              pid: (...)
-                              remark: (...)
-                              route: (...)
-                              type: (...)
-                              url: (...)
-                            }]
-                          }
-                         */
 
-                        let resourcePermission = getResourcePermission(userPermissions);
-                        let routePermission = getRoutePermission(userPermissions);
-
-                        /*
-                         * Step 5
-                         * 根据请求权限设置请求拦截
-                         */
-
-                        setInterceptor(resourcePermission);
-
-                        /*
-                         * Step 6
-                         * 根据路由权限动态添加路由
-                         */
-
-                        const actualRouter = extendRoutes(routePermission);
-                        
-                        /*
-                         * Step 7
-                         * 注册 this.$_auth 方法和 v-auth 指令 (指令在@/register.js里注册)
-                         */
-
-                        Vue.prototype.$_auth = function (axiosRequest) {
-                            let RequiredPermissions = [];
-                            let permission = true;
-                            let collectPermission = function (fun) {
-                                let res = util.matchRequest(fun);
-                                if (res) {
-                                    RequiredPermissions.push(res);
-                                }
-                            };
-                            if (Array.isArray(axiosRequest)) {
-                                axiosRequest.forEach(collectPermission);
-                            } else if (typeof axiosRequest === "function") {
-                                collectPermission(axiosRequest);
-                            }
-                            //console.log(RequiredPermissions, resourcePermission)
-                            for (let i = 0; i < RequiredPermissions.length; i++) {
-                                let p = RequiredPermissions[i];
-                                if (!resourcePermission[p]) {
-                                    permission = false;
-                                    break;
-                                }
-                            }
-
-                            return permission;
-                        };
-
-                        resolve(actualRouter);
-                    });
-                } else {
-                    /*
-                     * Step 2-2
-                     * 权限控制关闭模式
-                     */
                     checkRouteRedirectResult = [];
-                    checkRouteRedirect(mainRoute[0].children);
+                    checkRouteRedirect(actualRouter);
 
-                    // 容错
-                    Vue.prototype.$_auth = () => true;
+                    checkRouteRedirectResult.forEach((route) => {
+                        this.$router.addRoute("首页", route);
+                    });
 
-                    resolve(checkRouteRedirectResult)
-                }
+                    this.$router.addRoute({
+                        path: "*",
+                        redirect: "/404",
+                    });
+
+                    /*
+                     * 注册 this.$_auth 方法和 v-auth 指令 (指令在@/register.js里注册)
+                     */
+
+                    Vue.prototype.$_auth = function (axiosRequest) {
+                        let RequiredPermissions = [];
+                        let permission = true;
+                        let collectPermission = function (fun) {
+                            let res = util.matchRequest(fun);
+                            if (res) {
+                                RequiredPermissions.push(res);
+                            }
+                        };
+                        if (Array.isArray(axiosRequest)) {
+                            axiosRequest.forEach(collectPermission);
+                        } else if (typeof axiosRequest === "function") {
+                            collectPermission(axiosRequest);
+                        }
+                        //console.log(RequiredPermissions, resourcePermission)
+                        for (let i = 0; i < RequiredPermissions.length; i++) {
+                            let p = RequiredPermissions[i];
+                            if (!resourcePermission[p]) {
+                                permission = false;
+                                break;
+                            }
+                        }
+
+                        return permission;
+                    };
+
+                    store.set("menu", actualRouter);
+
+                    resolve({ resourcePermission, routePermission, actualRouter });
+                }).catch(err => {
+                    reject(err)
+                })
+
             })
 
         }

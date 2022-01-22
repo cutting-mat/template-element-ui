@@ -21,6 +21,8 @@ const globalFilters = {
     date: util.formatDate
 }
 
+
+
 export default {
     install: function (Vue) {
         // 注册过滤器

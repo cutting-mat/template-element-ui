@@ -82,6 +82,8 @@
 
 <script>
 import { store } from "@/core";
+import moduleRoute from '@/core/modules';
+
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);
   res = res.map((e) => {
@@ -103,6 +105,9 @@ export default {
     };
   },
   computed: {
+    menu: function () {
+      return this.$AccessControl ? this.state.menu : moduleRoute
+    },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {
         return this.$route.meta.belong;
@@ -113,17 +118,16 @@ export default {
   watch: {
     $route: {
       handler(newRoute) {
-        let channelName = newRoute.path.split("/")[1];
         let targetIndex = -1;
         if (Array.isArray(this.list)) {
           targetIndex = this.list.findIndex((item) => {
-            return item.fullPath.indexOf(channelName) === 1;
+            return item.name === newRoute.name;
           });
         }
 
         if (targetIndex === -1) {
           console.log('切换主栏目')
-          let arr = this.state.menu.slice();
+          let arr = this.menu.slice();
           let result;
           for (let i = 0; i < arr.length; i++) {
             if (
