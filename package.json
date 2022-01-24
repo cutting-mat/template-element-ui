@@ -8,7 +8,7 @@
   },
   "homepage": "https://cutting-mat.github.io/template-element-ui/",
   "dependencies": {
-    "axios": "^0.21.1",
+    "@tower1229/axios": "^1.0.1",
     "element-ui": "^2.15.6",
     "ios-photo-repair": "^1.0.12",
     "vue": "^2.6.14",
