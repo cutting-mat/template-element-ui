@@ -27,7 +27,7 @@
 import { upload, uploadImg } from "@/main/api/common";
 import { util , store } from "@/core";
 import { getExtByType } from "../assets/file-type";
-let { fixImgFile } = require("ios-photo-repair");
+import { fixImgFile } from "ios-photo-repair";
 
 export default {
   props: {

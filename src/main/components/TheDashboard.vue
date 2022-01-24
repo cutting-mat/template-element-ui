@@ -3,6 +3,7 @@
     <div class="flex-row" style="margin-top: 20px">
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
+        <BaseUploader />
       </div>
       <div class="flex-1 box blockLayout"></div>
       <div class="flex-1 box blockLayout"></div>
