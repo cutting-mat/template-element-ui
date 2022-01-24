@@ -5,9 +5,9 @@ let routeAuthWhiteList;
 export default {
     install: function (Vue) {
 
-        Vue.setRouterGuards = function (routeInstance, mainRoute) {
+        Vue.setRouterGuards = function (routeInstance, mainModule) {
             // 路由访问免登录白名单
-            routeAuthWhiteList = [...mainRoute.filter(e => e.path !== '/' && (e.path !== '')).map((e) => e.path)];
+            routeAuthWhiteList = [...mainModule.filter(e => e.path !== '/' && (e.path !== '')).map((e) => e.path)];
             console.warn("AccountAuth 开启, 免登录路由白名单:", routeAuthWhiteList);
 
             // 获取用户登录状态
