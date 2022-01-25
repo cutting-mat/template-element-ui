@@ -1,16 +1,22 @@
-import storeConfig from "@/store.config";
+/**
+ * Store 简单 Store 模式
+ * Store.set(key, value)
+ * Store.get(key)
+ * Store.action(key).then().catch()
+ * */
 
 export const store = {
-    state: storeConfig.state || {},
-    actions: storeConfig.actions || {},
+    state: {},
+    actions: {},
     set(key, newValue) {
-        return new Promise((resolve) => {
+        return new Promise((resolve, reject) => {
             if (this.state[key] === void (0)) {
-                console.warn(`this.$store.set("${key}", value): key has not registered yet!`)
+                reject(`this.$store.set("${key}", value): key has not registered yet!`)
+            } else {
+                this.state[key] = newValue;
+                console.log('store update:', key, '=>', this.state[key])
+                resolve(true)
             }
-            this.state[key] = newValue;
-            console.log('store update:', key, '=>', this.state[key])
-            resolve(true)
         })
     },
     get(key) {
@@ -60,7 +66,9 @@ export const store = {
 }
 
 export default {
-    install: function (Vue) {
-        Vue.prototype.$store = store;
+    install: function (Vue, options) {
+        store.state = options.state || {}
+        store.actions = options.actions || {}
+        Vue.prototype.$store = store
     }
 }

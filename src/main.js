@@ -15,7 +15,8 @@ import '@/core/assets/global.css';
 
 // Store
 import store from '@/core/utils/store';
-Vue.use(store);
+import storeConfig from "@/store.config";
+Vue.use(store, storeConfig);
 
 // 全局功能注册
 import { register } from '@/core';
