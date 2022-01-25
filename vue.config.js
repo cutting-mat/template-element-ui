@@ -5,7 +5,7 @@
 module.exports = {
     transpileDependencies: [],                                  // 需要babel编译的依赖包名
     css: {
-        sourceMap: true                                         // 开启css map
+        sourceMap: true                                         // 开启css map，方便调试
     },
     productionSourceMap: false,                                 // 生产环境关闭map
     configureWebpack: {
@@ -15,8 +15,8 @@ module.exports = {
         },
     },
     integrity: process.env.NODE_ENV === 'production',           // 子资源完整性校验（SRI）
-    outputDir: 'docs',                                          // 构建目录，默认'dist'
+    outputDir: 'dist',                                          // 构建目录，默认'dist'
     publicPath: process.env.NODE_ENV === 'production'           
-    ? '/template-element-ui/'                                                       // 构建路径，默认'/'
+    ? '/'                                                       // 生产环境构建路径，默认'/'
     : '/'      
 }
