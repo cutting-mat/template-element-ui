@@ -32,6 +32,9 @@ export const methods = {
 
 // 指令
 export const directives = {
+    'auth': {
+        // 不开启权限控制时避免v-auth指令报错
+    },
     'test': {
         inserted (el) {
             setTimeout(() => {

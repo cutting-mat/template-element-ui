@@ -2,7 +2,7 @@
 // 环境配置
 const ENVIRONMENT = {
     mock: 'http://rap2api.taobao.org/app/mock/223572',
-    dev: 'http://zjsz.kaifa/japi',
+    dev: 'http://retire.kaifa/japi',
     test: 'http://test.com/api',
     master: '//master.com/api'
 };
