@@ -14,7 +14,7 @@ Vue.use(ElementUI);
 import '@/core/assets/global.css';
 
 // Store
-import store from '@/core/utils/store';
+import { store } from '@/core';
 import storeConfig from "@/store.config";
 Vue.use(store, storeConfig);
 
