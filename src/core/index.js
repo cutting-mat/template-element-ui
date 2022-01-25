@@ -1,11 +1,12 @@
 // 工具
-export * as util from "./assets/util";
-// store
-export { default as store } from "./assets/store";
+export * as util from "./utils/util";
+// 注册器
+export { default as register } from "./utils/register";
 // 请求
-export { baseURL, instance } from "./request";
+export { default as instance } from "./utils/request";
 // 账号鉴权
-export { default as AccountAuth } from "./assets/account-auth";
+export { default as AccountAuth } from "./utils/account-auth";
 // 权限控制
-export { default as AccessControl } from "./assets/access-control";
-
+export { default as AccessControl } from "./utils/access-control";
+// 路由
+export { default as routeGenerator } from "./utils/router";

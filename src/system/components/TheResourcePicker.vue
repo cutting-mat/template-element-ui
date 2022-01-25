@@ -72,7 +72,7 @@
 </template>
 
 <script>
-import { util, store } from "@/core";
+import { util } from "@/core";
 import * as resource from "../api/resource";
 
 export default {
@@ -153,7 +153,7 @@ export default {
       });
     },
     fetchData: function () {
-      store.action("permission").then((userPermissions) => {
+      this.$store.action("permission").then((userPermissions) => {
         this.list = util.buildTree(
           userPermissions.menus.concat(userPermissions.resources)
         );

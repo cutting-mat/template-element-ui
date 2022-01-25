@@ -81,8 +81,7 @@
 </template>
 
 <script>
-import { store } from "@/core";
-import moduleRoute from '@/core/modules';
+import {subModules} from '@/module.config';
 
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);
@@ -99,14 +98,14 @@ const filterHide = (arr) => {
 export default {
   data() {
     return {
-      state: store.state,
+      state: this.$store.state,
       list: [],
       showMenu: true,
     };
   },
   computed: {
     menu: function () {
-      return this.$AccessControl ? this.state.menu : moduleRoute
+      return this.$AccessControl ? this.state.menu : subModules
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {
@@ -126,7 +125,7 @@ export default {
         }
 
         if (targetIndex === -1) {
-          console.log('切换主栏目')
+          // console.log('切换主栏目')
           let arr = this.menu.slice();
           let result;
           for (let i = 0; i < arr.length; i++) {

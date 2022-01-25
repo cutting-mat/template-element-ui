@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import { util, store } from "@/core";
+import { util } from "@/core";
 import * as resource from "../api/resource";
 
 export default {
@@ -205,8 +205,9 @@ export default {
     },
     fetchData: function () {
       this.loading = true;
-      store
-        .action("permission", true)
+      this.$store.action("permission", {
+        cache: false
+      })
         .then((userPermissions) => {
           this.loading = false;
           this.list = util.buildTree(

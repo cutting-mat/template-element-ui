@@ -26,12 +26,11 @@
 </template>
 
 <script>
-import { store } from "@/core";
 
 export default {
   data() {
     return {
-      state: store.state,
+      state: this.$store.state,
       list: [],
     };
   },

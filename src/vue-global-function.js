@@ -1,7 +1,7 @@
 // 全局组件
 import Header from '@/main/components/Header.vue'
 
-const globalComponents = {
+export const components = {
     Header,
     Breadcrumb: () => import(/* webpackChunkName: "global-components" */ "@/main/components/Breadcrumb.vue"),
     SubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/SubNav.vue"),
@@ -19,23 +19,31 @@ const globalComponents = {
 // 全局过滤器
 import { util } from '@/core'
 
-const globalFilters = {
+export const filters = {
     date: util.formatDate
 }
 
+// 全局方法
+export const methods = {
+    globalMethod: function(){
+        return ('test globalMethod output!')
+    }
+}
 
+// 指令
+export const directives = {
+    'test': {
+        inserted (el) {
+            setTimeout(() => {
+                el.innerText += ' test directive inject!'
+            }, 0)
+        }
+    }
+}
 
-export default {
-    install: function (Vue) {
-        // 注册过滤器
-        Object.keys(globalFilters).forEach(key => {
-            Vue.filter(key, globalFilters[key])
-        })
-
-        // 注册组件
-        Object.keys(globalComponents).forEach(key => {
-            Vue.component(key, globalComponents[key])
-        })
-
+// 实例方法
+export const $methods = {
+    $myMethod: function(){
+        return ('test instance method output!')
     }
 }

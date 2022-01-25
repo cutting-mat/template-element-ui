@@ -215,7 +215,7 @@ export default {
   },
   methods: {
     orgAdapter(value, obj) {
-      console.log(value, obj);
+      // console.log(value, obj);
       if (obj && obj.id) {
         return obj.fullName;
       }

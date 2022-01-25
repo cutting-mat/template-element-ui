@@ -8,10 +8,10 @@ import Vue from 'vue'
  * */
 const STORAGE_SPACE = '';           // 指定命名空间，防止同域名子项目间存储混淆
 export const storage = function (key, value) {
-    const store = localStorage;
+    const storageFun = localStorage;
     key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;           
     if (value === void (0)) {
-        let lsVal = store.getItem(key);
+        let lsVal = storageFun.getItem(key);
         if (lsVal && lsVal.indexOf('autostringify-') === 0) {
             return JSON.parse(lsVal.split('autostringify-')[1]);
         } else {
@@ -21,7 +21,7 @@ export const storage = function (key, value) {
         if ((Object.prototype.toString.call(value) === '[object Object]') || Array.isArray(value)) {
             value = 'autostringify-' + JSON.stringify(value);
         }
-        return store.setItem(key, value);
+        return storageFun.setItem(key, value);
     }
 }
 
@@ -200,63 +200,6 @@ export const emit = function (eventName, msg) {
         }
     })
 };
-
-/**
- * ajax错误处理
- * @param error[axios正常或异常返回数据] 所有服务器捕获的错误，约定返回数据中用msg字段携带错误信息；
- * @return 401状态码会触发登出操作，其他异常状态码只做提醒
-*/
-export const catchError = function (error) {
-
-    //原生错误对象
-    if (error.response) {
-        // that falls out of the range of 2xx
-        switch (error.response.status) {
-            case 400:
-                Vue.prototype.$message({
-                    message: error.response.data.msg || '请求参数异常',
-                    type: 'error'
-                });
-                break;
-            case 401:
-
-                Vue.prototype.$message({
-                    message: error.response.data.msg || '未授权或授权已过期',
-                    type: 'warning',
-                    onClose: function () {
-                        emit('logout')
-                    }
-                });
-                break;
-            case 403:
-                Vue.prototype.$message({
-                    message: error.response.data.msg || '无访问权限，请联系企业管理员',
-                    type: 'warning'
-                });
-                break;
-            default:
-                Vue.prototype.$message({
-                    message: error.response.data.msg || '服务端异常，请联系技术支持',
-                    type: 'error'
-                });
-        }
-    } else if (error.message) {
-        // Something happened in setting up the request that triggered an Error
-        let message = error.message;
-        if (message.indexOf('timeout') > -1) {
-            message = '请求超时，请重试'
-        }
-        if (message.indexOf('Network') > -1) {
-            message = '网络异常'
-        }
-        Vue.prototype.$message({
-            message,
-            type: 'error'
-        });
-
-    }
-    return Promise.reject(error);
-}
 
 /**
  * 提取文件名中的扩展名

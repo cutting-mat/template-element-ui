@@ -25,8 +25,8 @@
 
 <script>
 import { upload, uploadImg } from "@/main/api/common";
-import { util , store } from "@/core";
-import { getExtByType } from "../assets/file-type";
+import { util } from "@/core";
+import { getExtByType } from "@/core/utils/file-type";
 import { fixImgFile } from "ios-photo-repair";
 
 export default {
@@ -110,7 +110,7 @@ export default {
   },
   data() {
     return {
-      state: store.state,
+      state: this.$store.state,
     };
   },
   computed: {

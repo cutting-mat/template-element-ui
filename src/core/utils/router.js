@@ -3,11 +3,11 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 // 加载所有模块路由
-import { default as moduleRoute, mainModule } from './modules'
+import { subModules, mainModule } from '../../module.config'
 
 export default function () {
   // 拼装路由
-  mainModule[0].children = Vue.prototype.$AccessControl ? [] : moduleRoute;
+  mainModule[0].children = Vue.prototype.$AccessControl ? [] : subModules;
 
   // 路由实例
   const route = new Router({

@@ -3,7 +3,6 @@
 </template>
 
 <script>
-import { store } from "@/core";
 
 export default {
   methods: {},
@@ -14,13 +13,13 @@ export default {
     this.$AccountAuth({
       loginCallback: () => {
         // 初始化用户信息
-        store.action("user", true)
+        this.$store.action("user", true)
       },
     });
   },
 };
 </script>
 
-<style>
-@import url(./global.css);
+<style scoped>
+
 </style>

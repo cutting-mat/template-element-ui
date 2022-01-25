@@ -1,5 +1,7 @@
-import { util, store, instance } from "@/core";
-import moduleRoute from "@/core/modules";
+import { util, instance } from "@/core";
+import {store} from "@/core/utils/store";
+
+import {subModules} from "@/module.config";
 
 let checkRouteRedirectResult = []; // 临时变量
 
@@ -98,6 +100,8 @@ const checkRouteRedirect = function (array, base) {
 
 export default {
     install: function (Vue) {
+        console.warn("AccessControl 开启")
+        
         // v-auth 指令（用于权限控制）
         Vue.directive('auth', {
             inserted: function (el, binding) {
@@ -179,7 +183,7 @@ export default {
                         }
                     };
 
-                    checkRoutePermission(moduleRoute);
+                    checkRoutePermission(subModules);
 
                     // 如果没有任何路由权限，判断为非法用户，登出并终止应用执行
                     if (!actualRouter || !actualRouter.length) {

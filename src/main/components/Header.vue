@@ -32,18 +32,18 @@
 </template>
 
 <script>
-import { util , store } from "@/core";
-import moduleRoute from '@/core/modules';
+import { util } from "@/core";
+import {subModules} from '@/module.config';
 
 export default {
   data() {
     return {
-      state: store.state,
+      state: this.$store.state,
     };
   },
   computed: {
     list: function () {
-      return (this.$AccessControl ? this.state.menu : moduleRoute).filter((e) => !e.meta || !e.meta.hide)
+      return (this.$AccessControl ? this.state.menu : subModules).filter((e) => !e.meta || !e.meta.hide)
     },
   },
   methods: {
