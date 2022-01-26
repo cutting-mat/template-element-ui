@@ -18,17 +18,20 @@
       </div>
       <div class="flex-1 box blockLayout">
         <h2>Store 功能测试</h2>
-        <el-button @click="testStoreFun1"
-          >$store.set('test', random())</el-button
-        >
-        <el-button @click="testStoreFun2"
-          >设置不存在的Store值，观察控制台输出</el-button
-        >
+        <el-button @click="testStoreFun1"> 同步操作 </el-button>
+        <el-button :loading="loading" @click="testStoreFun4">
+          异步操作
+        </el-button>
+        <div > $store.state.testValue = {{ $store.state.testValue }} </div>
 
-        <div>$store.state.test = {{ $store.state.test }}</div>
+        <el-button @click="testStoreFun3">
+          获取异步数据，观察控制台输出
+        </el-button>
+        <div style="width: 100%;white-space: nowrap; overflow-x: auto;">$store.state.user = {{ $store.state.user }}</div>
 
-        <el-button @click="testStoreFun3">获取异步数据，观察控制台输出</el-button>
-        <div>用户信息：{{ $store.state.user }}</div>
+        <el-button @click="testStoreFun2">
+          设置不存在的Store值，观察控制台输出
+        </el-button>
       </div>
     </div>
     <div class="flex-row">
@@ -45,15 +48,11 @@ import Vue from "vue";
 export default {
   data() {
     return {
+      loading: false,
       log: [],
       globalMethodOutput: "",
       instanceMethodOutput: "",
     };
-  },
-  computed: {
-    ctest(){
-      return 'computed' + this.$store.state.test
-    }
   },
   methods: {
     testGlobalFunc() {
@@ -61,20 +60,25 @@ export default {
       this.instanceMethodOutput = this.$myMethod();
     },
     testStoreFun1() {
-      this.$store.set("test", Math.random());
+      this.$store.set("testValue", Math.random());
     },
     testStoreFun2() {
       this.$store.set("non-existent", Math.random());
     },
     testStoreFun3() {
       this.$store.action("user").then((user) => {
-        console.log('获取成功', user)
+        console.log("获取成功", user);
+      });
+    },
+    testStoreFun4() {
+      this.loading = true;
+      this.$store.action("testAction").then(() => {
+        this.loading = false;
       });
     },
   },
   created() {
     this.testGlobalFunc();
-
   },
 };
 </script>

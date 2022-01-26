@@ -27,8 +27,8 @@ import { AccountAuth } from "@/core";
 Vue.use(AccountAuth);
 
 // 权限控制
-import { AccessControl } from "@/core";
-Vue.use(AccessControl);
+// import { AccessControl } from "@/core";
+// Vue.use(AccessControl);
 
 // 路由
 import { routeGenerator } from '@/core';

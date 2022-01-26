@@ -1,5 +1,5 @@
 /**
- * Store 简单 Store 模式
+ * Store Vue状态管理插件
  * Store.set(key, value)
  * Store.get(key)
  * Store.action(key).then().catch()
@@ -8,23 +8,10 @@
 export const store = {
     state: {},
     actions: {},
-    set(key, newValue) {
-        return new Promise((resolve, reject) => {
-            if (this.state[key] === void (0)) {
-                reject(`Store set("${key}", value) the key has not registered yet!`)
-            } else {
-                this.state[key] = newValue;
-                console.log('Store update', key, '=>', this.state[key])
-                resolve(true)
-            }
-        })
+    inStore(key) {
+        return this.state[key] !== void (0)
     },
-    get(key) {
-        if (key && key.split) {
-            return this.state[key]
-        }
-    },
-    checkStore(key) {
+    hasStore(key) {
         let result;
         let type = typeof (this.state[key]); // array,object,number,string,boolean
         if (Array.isArray(this.state[key])) {
@@ -43,21 +30,43 @@ export const store = {
         }
         return result
     },
-    action(key, reload) {
+    set(key, newValue) {
         return new Promise((resolve, reject) => {
-            if (!reload && this.checkStore(key)) {
-                // 缓存命中直接返回结果
-                resolve(this.state[key])
+            if (this.inStore(key)) {
+                this.state[key] = newValue;
+                console.log('Store update', key, '=>', this.state[key])
+                resolve(true)
             } else {
-                if (typeof this.actions[key] === 'function') {
-                    this.actions[key]().then(data => {
-                        this.set(key, data)
+                reject(`Store set("${key}", value) the key has not registered yet!`)
+            }
+        })
+    },
+    get(key) {
+        if (key && key.split) {
+            return this.state[key]
+        }
+    },
+    action(key, payoud) {
+        return new Promise((resolve, reject) => {
+            if (typeof this.actions[key] === 'function') {
+                const actionReturn = this.actions[key]({
+                    get: this.get.bind(store),
+                    set: this.set.bind(store)
+                }, payoud);
+
+                if (actionReturn && (typeof actionReturn.then === 'function')) {
+                    actionReturn.then(data => {
+                        if (this.inStore(key)) {
+                            // 自动模式
+                            this.set(key, data)
+                        }
                         resolve(data)
                     })
                 } else {
-                    reject(`Store action("${key}", ${reload}) the action has not registered yet!`)
+                    resolve(actionReturn)
                 }
-
+            } else {
+                reject(`Store action("${key}", ${payoud}) the action has not registered yet!`)
             }
         })
     }
@@ -68,6 +77,5 @@ export default {
         store.state = options.state || {}
         store.actions = options.actions || {}
         Vue.prototype.$store = store
-        
     }
 }
