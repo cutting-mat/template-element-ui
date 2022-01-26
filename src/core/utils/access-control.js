@@ -100,7 +100,7 @@ const checkRouteRedirect = function (array, base) {
 
 export default {
     install: function (Vue) {
-        console.warn("AccessControl 开启")
+        console.log("AccessControl 开启")
         
         // v-auth 指令（用于权限控制）
         Vue.directive('auth', {

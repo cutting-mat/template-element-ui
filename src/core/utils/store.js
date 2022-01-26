@@ -11,10 +11,10 @@ export const store = {
     set(key, newValue) {
         return new Promise((resolve, reject) => {
             if (this.state[key] === void (0)) {
-                reject(`this.$store.set("${key}", value): key has not registered yet!`)
+                reject(`Store set("${key}", value) the key has not registered yet!`)
             } else {
                 this.state[key] = newValue;
-                console.log('store update:', key, '=>', this.state[key])
+                console.log('Store update', key, '=>', this.state[key])
                 resolve(true)
             }
         })
@@ -45,19 +45,17 @@ export const store = {
     },
     action(key, reload) {
         return new Promise((resolve, reject) => {
-            // 异步数据处理方法
-            const catchActionData = (data) => {
-                this.set(key, data)
-                resolve(data)
-            }
             if (!reload && this.checkStore(key)) {
                 // 缓存命中直接返回结果
                 resolve(this.state[key])
             } else {
                 if (typeof this.actions[key] === 'function') {
-                    this.actions[key]().then(catchActionData)
+                    this.actions[key]().then(data => {
+                        this.set(key, data)
+                        resolve(data)
+                    })
                 } else {
-                    reject(`this.$store.action("${key}", ${reload}): action has not registered yet!`)
+                    reject(`Store action("${key}", ${reload}) the action has not registered yet!`)
                 }
 
             }
@@ -70,5 +68,6 @@ export default {
         store.state = options.state || {}
         store.actions = options.actions || {}
         Vue.prototype.$store = store
+        
     }
 }

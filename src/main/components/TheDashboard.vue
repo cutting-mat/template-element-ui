@@ -19,16 +19,16 @@
       <div class="flex-1 box blockLayout">
         <h2>Store 功能测试</h2>
         <el-button @click="testStoreFun1"
-          >Store.set('test', random())</el-button
+          >$store.set('test', random())</el-button
         >
         <el-button @click="testStoreFun2"
           >设置不存在的Store值，观察控制台输出</el-button
         >
 
-        <div>Store.state.test = {{ $store.state.test }}</div>
+        <div>$store.state.test = {{ $store.state.test }}</div>
 
         <el-button @click="testStoreFun3">获取异步数据，观察控制台输出</el-button>
-        <div>用户信息：{{ userInfo }}</div>
+        <div>用户信息：{{ $store.state.user }}</div>
       </div>
     </div>
     <div class="flex-row">
@@ -48,8 +48,12 @@ export default {
       log: [],
       globalMethodOutput: "",
       instanceMethodOutput: "",
-      userInfo: null,
     };
+  },
+  computed: {
+    ctest(){
+      return 'computed' + this.$store.state.test
+    }
   },
   methods: {
     testGlobalFunc() {
@@ -64,13 +68,13 @@ export default {
     },
     testStoreFun3() {
       this.$store.action("user").then((user) => {
-        this.userInfo = user;
-        console.log('获取信息成功', user)
+        console.log('获取成功', user)
       });
     },
   },
   created() {
     this.testGlobalFunc();
+
   },
 };
 </script>
