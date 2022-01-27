@@ -61,7 +61,7 @@ export const store = {
                             this.set(key, data)
                         }
                         resolve(data)
-                    })
+                    }).catch(reject)
                 } else {
                     resolve(actionReturn)
                 }
