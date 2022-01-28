@@ -1,7 +1,5 @@
 // 工具
 export * as util from "./utils/util";
-// Store
-export { default as store } from "./utils/store";
 // 注册器
 export { default as register } from "./utils/register";
 // 请求

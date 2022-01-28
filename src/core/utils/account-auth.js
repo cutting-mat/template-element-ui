@@ -1,5 +1,4 @@
 import { util, instance } from "@/core";
-import {store} from "@/core/utils/store";
 
 let routeAuthWhiteList;
 
@@ -7,23 +6,23 @@ export default {
     install: function (Vue) {
         console.log("AccountAuth 开启");
 
-        Vue.setRouterGuards = function (routeInstance, mainModule) {
+        Vue.setRouterGuards = (routeInstance, mainModule) => {
             // 路由访问免登录白名单
             routeAuthWhiteList = [...mainModule.filter(e => e.path !== '/' && (e.path !== '')).map((e) => e.path)];
             console.log("AccountAuth 免登录路由白名单:", routeAuthWhiteList);
-
+            
             // 获取用户登录状态
             // console.log('获取用户登录状态')
-            if (!store.get("accessToken")) {
+            if (!Vue.$store.get("accessToken")) {
                 let localUser = util.storage("auth") || {};
                 if (localUser.accessToken) {
-                    store.set("accessToken", localUser.accessToken);
+                    Vue.$store.set("accessToken", localUser.accessToken);
                 }
             }
 
             routeInstance.beforeEach((to, from, next) => {
                 // console.log('路由守卫', to)
-                if (!store.get("accessToken")) {
+                if (!Vue.$store.get("accessToken")) {
                     if (routeAuthWhiteList.indexOf('/' + to.path.split('/')[1]) !== -1) {
                         // 未登录访问白名单
                         return next();
@@ -48,9 +47,9 @@ export default {
             }, config || {})
 
             const checkAccount = (loginRes) => {
-                if (store.get("accessToken")) {
+                if (Vue.$store.get("accessToken")) {
                     // 设置请求头 Authorization
-                    instance.defaults.headers.common["Authorization"] = store.get("accessToken");
+                    instance.defaults.headers.common["Authorization"] = Vue.$store.get("accessToken");
 
                     // 登录后路由重定向
                     const routeRedirect = () => {
@@ -81,7 +80,7 @@ export default {
                  * 监听 "login" 事件
                  */
                 util.storage("auth", res.data);
-                store.set("accessToken", res.data.accessToken);
+                Vue.$store.set("accessToken", res.data.accessToken);
 
                 checkAccount(res)
 

@@ -1,5 +1,4 @@
 import { util, instance } from "@/core";
-import {store} from "@/core/utils/store";
 
 import {subModules} from "@/module.config";
 
@@ -117,7 +116,7 @@ export default {
                 /*
                  * 请求用户权限
                  */
-                store.action("permission").then((userPermissions) => {
+                this.$store.action("permission").then((userPermissions) => {
                     /*
                      * 请求用户权限数据，格式如下:
                       {
@@ -234,7 +233,7 @@ export default {
                         return permission;
                     };
 
-                    store.set("menu", actualRouter);
+                    this.$store.set("menu", actualRouter);
 
                     resolve({ resourcePermission, routePermission, actualRouter });
                 }).catch(err => {

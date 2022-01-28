@@ -20,7 +20,7 @@ export const getExtByType = (type) => {
         let classList = [];
         let extList = [];
         FileTypeMap[type].forEach(e => {
-            if (e.indexOf('t-') === 0) {
+            if (e.indexOf("t-") === 0) {
                 classList.push(e)
             } else {
                 extList.push(e)

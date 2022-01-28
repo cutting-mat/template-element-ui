@@ -97,21 +97,31 @@ export default {
       required: false,
       default: true,
     },
+    imgCompressOption: {
+      type: Object,
+      required: false,
+      default() {
+        return {
+          width: 1000,
+          height: 1000
+        }
+      },
+    },
     uploadFunc: {
       type: Function,
       required: false,
       default: upload
+    },
+    uploadBase64Func: {
+      type: Function,
+      required: false,
+      default: uploadImg
     },
     limitSize: {
       type: Number,
       required: false,
       default: 100 * 1024 * 1024  // 100M
     }
-  },
-  data() {
-    return {
-      state: this.$store.state,
-    };
   },
   computed: {
     actualAccept() {
@@ -161,13 +171,10 @@ export default {
     customUpload: function (params) {
       if (this.imgCompress && params.file.type.indexOf("image/") === 0) {
         // 图片自动压缩
-        fixImgFile(params.file, {
-          width: 1000,
-          height: 1000,
-        }).then((base64) => {
-          const name = params.file.name.split(".")[0] + ".png";
+        fixImgFile(params.file, this.imgCompressOption).then((base64) => {
+          const name = params.file.name.replace(/\.[^.]+\w+$/, ".png");
           if (base64 && name) {
-            uploadImg({
+            this.uploadBase64Func({
               base64,
               name,
             })

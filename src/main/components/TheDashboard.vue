@@ -22,12 +22,12 @@
         <el-button :loading="loading" @click="testStoreFun4">
           异步操作
         </el-button>
-        <div > $store.state.testValue = {{ $store.state.testValue }} </div>
+        <div > $store.state.testValue = {{ state.testValue }} </div>
 
         <el-button @click="testStoreFun3">
           获取异步数据，观察控制台输出
         </el-button>
-        <div style="width: 100%;white-space: nowrap; overflow-x: auto;">$store.state.user = {{ $store.state.user }}</div>
+        <div style="width: 100%;white-space: nowrap; overflow-x: auto;">$store.state.user = {{ state.user }}</div>
 
         <el-button @click="testStoreFun2">
           设置不存在的Store值，观察控制台输出
@@ -53,6 +53,11 @@ export default {
       globalMethodOutput: "",
       instanceMethodOutput: "",
     };
+  },
+  computed: {
+    state(){
+      return this.$store.state
+    }
   },
   methods: {
     testGlobalFunc() {
