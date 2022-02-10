@@ -11,7 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 Vue.use(ElementUI);
 
 // 上传组件
-import ElUploadPlugin from '@tower1229/el-upload';
+import ElUploadPlugin from '@cutting-mat/el-upload';
 import { upload as uploadRequest } from "@/main/api/common";
 Vue.use(ElUploadPlugin, {
     uploadRequest
@@ -21,7 +21,7 @@ Vue.use(ElUploadPlugin, {
 import '@/core/assets/global.css';
 
 // 状态管理插件
-import store from '@tower1229/vue-store';
+import store from '@cutting-mat/vue-store';
 import storeConfig from "@/store.config";
 Vue.use(store, storeConfig);
 

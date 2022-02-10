@@ -1,6 +1,6 @@
 import Vue from 'vue'
 //import axios from 'axios';
-import axios from '@tower1229/axios';
+import axios from '@cutting-mat/axios';
 import { util } from '@/core'
 import requestConfig from '@/request.config';
 
