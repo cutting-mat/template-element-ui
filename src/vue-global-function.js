@@ -3,18 +3,18 @@ import Header from '@/main/components/Header.vue'
 
 export const components = {
     // 内置组件
-    CURD:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/CURD.vue"),
-    InputNumber:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/InputNumber.vue"),
-    InputPassword:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/InputPassword.vue"),
-    DictRadio:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictRadio.vue"),
-    DictCheckbox:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCheckbox.vue"),
-    DictSelect:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictSelect.vue"),
-    DictCascader:  () => import(/* webpackChunkName: "global-components" */ "@/core/components/DictCascader.vue"),
+    CURD:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/CURD.vue"),
+    InputNumber:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/InputNumber.vue"),
+    InputPassword:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/InputPassword.vue"),
+    DictRadio:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictRadio.vue"),
+    DictCheckbox:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictCheckbox.vue"),
+    DictSelect:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictSelect.vue"),
+    DictCascader:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictCascader.vue"),
     // 业务组件
     Header,
-    Breadcrumb: () => import(/* webpackChunkName: "global-components" */ "@/main/components/Breadcrumb.vue"),
-    SubNav: () => import(/* webpackChunkName: "global-components" */ "@/main/components/SubNav.vue"),
-    Pagination: () => import(/* webpackChunkName: "global-components" */ "@/main/components/Pagination.vue"),
+    Breadcrumb: () => import("@/main/components/Breadcrumb.vue"),
+    SubNav: () => import("@/main/components/SubNav.vue"),
+    Pagination: () => import("@/main/components/Pagination.vue"),
 }
 
 // 全局过滤器
