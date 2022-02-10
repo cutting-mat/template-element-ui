@@ -36,7 +36,7 @@
         >
       </el-table-column>
       <!-- 列循环 -->
-      <BaseCURDColumn
+      <CURDColumn
         v-for="(column, index) in columnsData"
         :key="'col' + index"
         :column="column"
@@ -44,7 +44,7 @@
         <template v-for="slotName in Object.keys($scopedSlots)"  :slot="slotName" slot-scope="scope" >
           <slot :name="slotName" :column="scope.column" :row="scope.row" :prop="scope.prop"></slot>
         </template>
-      </BaseCURDColumn>
+      </CURDColumn>
     </el-table>
     <!-- page -->
     <Pagination
@@ -66,7 +66,7 @@
       }, dialogAttribute)"
       @close="handleCloseDialog"
     >
-      <BaseCURDForm v-if="dialogVisible"
+      <CURDForm v-if="dialogVisible"
         ref="editForm"
         :model="modelData"
         :default="editForm"
@@ -190,8 +190,8 @@ export default {
     },
   },
   components: {
-    BaseCURDForm: (resolve) => require(["./BaseCURDForm"], resolve),
-    BaseCURDColumn: (resolve) => require(["./BaseCURDColumn"], resolve),
+    CURDForm: (resolve) => require(["./CURDForm"], resolve),
+    CURDColumn: (resolve) => require(["./CURDColumn"], resolve),
   },
   data() {
     return {

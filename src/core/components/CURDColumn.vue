@@ -29,7 +29,7 @@
     </template>
     <!-- 多级表头 -->
     <template v-if="column.children && column.children.length > 0">
-      <BaseCURDColumn
+      <CURDColumn
         v-for="(column, columnIndex) in column.children"
         :key="columnIndex"
         :column="column"
@@ -46,14 +46,14 @@
             :prop="scope.prop"
           ></slot>
         </template>
-      </BaseCURDColumn>
+      </CURDColumn>
     </template>
   </el-table-column>
 </template>
 
 <script>
 export default {
-  name: "BaseCURDColumn",
+  name: "CURDColumn",
   props: {
     column: {
       type: Object,
