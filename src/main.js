@@ -10,10 +10,17 @@ import 'element-ui/lib/theme-chalk/index.css';
 //import '@/core/element-theme/index.css';
 Vue.use(ElementUI);
 
+// 上传组件
+import ElUploadPlugin from '@tower1229/el-upload';
+import { upload as uploadRequest } from "@/main/api/common";
+Vue.use(ElUploadPlugin, {
+    uploadRequest
+});
+
 // 全局样式
 import '@/core/assets/global.css';
 
-// Store
+// 状态管理插件
 import store from '@tower1229/vue-store';
 import storeConfig from "@/store.config";
 Vue.use(store, storeConfig);

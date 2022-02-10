@@ -3,7 +3,10 @@
     <div class="flex-row" style="margin-top: 20px">
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
-        <BaseUploader />
+        <el-upload-plugin
+        :data="{test:123}"
+        :limit="2"
+        />
       </div>
       <div class="flex-1 box blockLayout">
         <h2>测试全局功能</h2>

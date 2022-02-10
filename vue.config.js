@@ -3,7 +3,7 @@
  * vue-cli配置
  * */ 
 module.exports = {
-    transpileDependencies: [],                                  // 需要babel编译的依赖包名
+    transpileDependencies: ['@tower1229/axios', '@tower1229/el-upload', '@tower1229/vue-store'],                                  // 需要babel编译的依赖包名
     css: {
         sourceMap: true                                         // 开启css map，方便调试
     },
