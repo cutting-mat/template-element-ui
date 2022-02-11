@@ -12,10 +12,8 @@ Vue.use(ElementUI);
 
 // 上传组件
 import ElUploadPlugin from '@cutting-mat/el-upload';
-import { upload as uploadRequest } from "@/main/api/common";
-Vue.use(ElUploadPlugin, {
-    uploadRequest
-});
+import uploadConfig from "@/upload.config";
+Vue.use(ElUploadPlugin, uploadConfig);
 
 // 全局样式
 import '@/core/assets/global.css';
