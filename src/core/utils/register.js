@@ -1,5 +1,5 @@
 // 全局组件
-import * as resources from "@/vue-global-function"
+import * as resources from "@/vue-global-resource"
 
 export default {
     install: function (Vue) {
