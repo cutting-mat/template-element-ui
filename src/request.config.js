@@ -14,10 +14,8 @@ const HASH = {
     "master.com": ENVIRONMENT.master
 }
 
-const baseURL = HASH[window.location.host] || ENVIRONMENT.dev;
-
 export default {
-    baseURL,
+    baseURL: HASH[window.location.host] || ENVIRONMENT.dev,
     timeout: 10000,
     headers: {
         'Content-Type': 'application/json'
