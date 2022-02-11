@@ -28,12 +28,12 @@
         <div > $store.state.testValue = {{ state.testValue }} </div>
 
         <el-button @click="testStoreFun3">
-          获取异步数据，观察控制台输出
+          获取异步数据, 观察控制台输出
         </el-button>
         <div style="width: 100%;white-space: nowrap; overflow-x: auto;">$store.state.user = {{ state.user }}</div>
 
         <el-button @click="testStoreFun2">
-          设置不存在的Store值，观察控制台输出
+          设置不存在的Store值, 观察控制台输出
         </el-button>
       </div>
     </div>

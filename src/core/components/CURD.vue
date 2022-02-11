@@ -97,7 +97,7 @@ export default {
         /**
          * 默认数据模型示例
          * type 用于推导默认控件和数据校验: array,object,number,string,boolean
-         * scope 用于确认当前模型字段的提交时机，默认更新和创建均提交
+         * scope 用于确认当前模型字段的提交时机, 默认更新和创建均提交
          * */
         return {
           accountName: {

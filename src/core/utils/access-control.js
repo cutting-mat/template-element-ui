@@ -77,7 +77,7 @@ const checkRouteRedirect = function (array, base) {
             });
             if (targetIndex === -1) {
                 console.warn(
-                    `${route.redirect}不在路由权限内，自动重置为${route.children[0].fullPath}`
+                    `${route.redirect}不在路由权限内, 自动重置为${route.children[0].fullPath}`
                 );
                 route.redirect = route.children[0].fullPath;
             }
@@ -118,7 +118,7 @@ export default {
                  */
                 this.$store.action("permission").then((userPermissions) => {
                     /*
-                     * 请求用户权限数据，格式如下:
+                     * 请求用户权限数据, 格式如下:
                       {
                         menus: [{
                           id: (...)
@@ -184,11 +184,11 @@ export default {
 
                     checkRoutePermission(subModules);
 
-                    // 如果没有任何路由权限，判断为非法用户，登出并终止应用执行
+                    // 如果没有任何路由权限, 判断为非法用户, 登出并终止应用执行
                     if (!actualRouter || !actualRouter.length) {
                         util.storage("auth", "");
                         return (document.body.innerHTML =
-                            "<h1>账号访问受限，请联系系统管理员！</h1>");
+                            "<h1>账号访问受限, 请联系系统管理员！</h1>");
                     }
 
                     checkRouteRedirectResult = [];

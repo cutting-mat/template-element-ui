@@ -97,7 +97,7 @@ export default {
                         "/" + this.$router.currentRoute.path.split("/")[1]
                     ) === -1
                 ) {
-                    // 非白名单路由刷新，触发路由守卫的未登录逻辑
+                    // 非白名单路由刷新, 触发路由守卫的未登录逻辑
                     window.location.reload();
                 }
             });

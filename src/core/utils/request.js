@@ -26,8 +26,8 @@ instance.interceptors.request.use(function (config) {
 
 /**
  * 请求错误处理
- * @param error[axios正常或异常返回数据] 所有服务器捕获的错误，约定返回数据中用msg字段携带错误信息；
- * @return 401状态码会触发登出操作，其他异常状态码只做提醒
+ * @param error[axios正常或异常返回数据] 所有服务器捕获的错误, 约定返回数据中用msg字段携带错误信息; 
+ * @return 401状态码会触发登出操作, 其他异常状态码只做提醒
 */
 const catchError = function (error) {
 
@@ -53,13 +53,13 @@ const catchError = function (error) {
                 break;
             case 403:
                 Vue.prototype.$message({
-                    message: error.response.data.msg || '无访问权限，请联系企业管理员',
+                    message: error.response.data.msg || '无访问权限, 请联系企业管理员',
                     type: 'warning'
                 });
                 break;
             default:
                 Vue.prototype.$message({
-                    message: error.response.data.msg || '服务端异常，请联系技术支持',
+                    message: error.response.data.msg || '服务端异常, 请联系技术支持',
                     type: 'error'
                 });
         }
@@ -67,7 +67,7 @@ const catchError = function (error) {
         // Something happened in setting up the request that triggered an Error
         let message = error.message;
         if (message.indexOf('timeout') > -1) {
-            message = '请求超时，请重试'
+            message = '请求超时, 请重试'
         }
         if (message.indexOf('Network') > -1) {
             message = '网络异常'
@@ -91,7 +91,7 @@ instance.interceptors.response.use(function (response) {
     if (response.data.code === 500 && response.data.msg) {
         return catchError({ response })
     }
-    // token临近过期，重新签发token
+    // token临近过期, 重新签发token
     if (response.headers['jwt-update-token']) {
         util.emit('login', {
             silent: true,

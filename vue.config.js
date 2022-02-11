@@ -4,13 +4,13 @@
 module.exports = {
     transpileDependencies: ['@cutting-mat/axios', '@cutting-mat/el-upload', '@cutting-mat/vue-store'],                                  // 需要babel编译的依赖包名
     css: {
-        sourceMap: true                                         // 开启css map，方便调试
+        sourceMap: true                                         // 开启css map, 方便调试
     },
     productionSourceMap: false,                                 // 生产环境关闭map
     integrity: process.env.NODE_ENV === 'production',           // 子资源完整性校验（SRI）
-    outputDir: 'dist',                                          // 构建目录，默认'dist'
+    outputDir: 'dist',                                          // 构建目录, 默认'dist'
     publicPath: process.env.NODE_ENV === 'production'
-        ? '/'                                                   // 生产环境构建路径，默认'/'
+        ? '/'                                                   // 生产环境构建路径, 默认'/'
         : '/',
     chainWebpack(config) {
         // 打包分析插件 npm run build --report

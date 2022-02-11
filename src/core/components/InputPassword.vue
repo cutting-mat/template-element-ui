@@ -277,7 +277,7 @@ const checkPassword = function (pwd, nMinPwdLen) {
       nScore = 0;
     }
   }
-  // 只存在一种字符时，强制将为弱
+  // 只存在一种字符时, 强制将为弱
   if (category < 2) {
     nScore = 0;
   }

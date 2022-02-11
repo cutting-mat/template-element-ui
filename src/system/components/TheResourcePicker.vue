@@ -136,7 +136,7 @@ export default {
       if (theNode) {
         // 选中目标节点
         this.$refs.tree.setChecked(theNode, checked);
-        // 如果是批量模式，选中下级节点
+        // 如果是批量模式, 选中下级节点
         if (
           checkChild &&
           Array.isArray(data.children) &&
@@ -172,7 +172,7 @@ export default {
     }
   },
   mounted() {
-    // 数据变更监听器，批量模式支持函数节流
+    // 数据变更监听器, 批量模式支持函数节流
     this.trigger = util.throttle(() => {
       const checked = this.$refs.tree.getCheckedNodes();
       this.$emit(

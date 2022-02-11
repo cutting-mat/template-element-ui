@@ -3,10 +3,10 @@ import Vue from 'vue'
 /**
  * 本地存储
  * @param key[String] 要存/取的键
- * @param value[any] 要存的值，若缺省则返回key的值
+ * @param value[any] 要存的值, 若缺省则返回key的值
  * @return 只传key会返回该key的值
  * */
-const STORAGE_SPACE = '';           // 指定命名空间，防止同域名子项目间存储混淆
+const STORAGE_SPACE = '';           // 指定命名空间, 防止同域名子项目间存储混淆
 export const storage = function (key, value) {
     const storageFun = localStorage;
     key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;           
@@ -43,9 +43,9 @@ export const deepcopy = function (source) {
 
 /**
  * 一维对象数组转树形结构
- * @param array[对象数组] 对象数组中的对象必须包含id和[parentKey]键，如{id: 1, pid: 0}。pid值为假或等于自身id，则判定为一级节点
- * @param parentKey[String] 指向上级id的key，默认"pid"
- * @param sortFunction[Function] 用于arrayObject.sort(sortFunction)的排序方法，默认不排序
+ * @param array[对象数组] 对象数组中的对象必须包含id和[parentKey]键, 如{id: 1, pid: 0}。pid值为假或等于自身id, 则判定为一级节点
+ * @param parentKey[String] 指向上级id的key, 默认"pid"
+ * @param sortFunction[Function] 用于arrayObject.sort(sortFunction)的排序方法, 默认不排序
  * @return 由children键建立层级的对象数组
  * */
 export const buildTree = function (flatArray, parentKey, sortFunction) {
@@ -112,7 +112,7 @@ export const buildTree = function (flatArray, parentKey, sortFunction) {
 /**
  * 日期格式化
  * @param value[milliseconds/dateString] 可以通过new Date()方法创建日期对象的毫秒数或日期字符串
- * @param fmt[String/undefined] 日期格式化模板字符串，内置四种快捷方式："year","month","day","day-time" 
+ * @param fmt[String/undefined] 日期格式化模板字符串, 内置四种快捷方式："year","month","day","day-time" 
  * @return 格式化后的日期字符串
  * */
 export const formatDate = (value, fmt) => {
@@ -164,15 +164,15 @@ export const formatDate = (value, fmt) => {
 /**
  * 全局事件
  * 特性：
- * 1. 重复注册同一个事件，只保留最后一次。使单页面应用反复进入页面不会重复注册事件
+ * 1. 重复注册同一个事件, 只保留最后一次。使单页面应用反复进入页面不会重复注册事件
  * 2. 可以通过别名方式将一个事件多次注册。在1的前提下允许同一个事件多次注册
 */
 const bus = new Vue();
 let busQueue = {};
 /**
  * 全局事件监听
- * @param eventName[String] 自定义事件名称，支持用双下划线添加别名，如 eventName__ANYSTRING
- * @param eventHandle[Function] 事件回调方法，参数接收触发事件方法发送的参数；如果不传将关闭该事件监听
+ * @param eventName[String] 自定义事件名称, 支持用双下划线添加别名, 如 eventName__ANYSTRING
+ * @param eventHandle[Function] 事件回调方法, 参数接收触发事件方法发送的参数; 如果不传将关闭该事件监听
 */
 export const on = function (eventName, eventHandle) {
     if (eventName && eventName.split) {
@@ -189,7 +189,7 @@ export const on = function (eventName, eventHandle) {
 };
 /**
  * 全局事件触发
- * @param eventName[String] 要触发的事件名称，不需要包含别名部分，如 myEvent__alias1，只需要传入 myEvent
+ * @param eventName[String] 要触发的事件名称, 不需要包含别名部分, 如 myEvent__alias1, 只需要传入 myEvent
  * @param msg[any] 触发事件时携带的参数
 */
 export const emit = function (eventName, msg) {
@@ -218,8 +218,8 @@ export const getSuffix = (filename) => {
 /**
  * 函数节流
  * @param method[Function] 要节流的函数方法
- * @param delay[Number] 过滤执行的间隔毫秒数，默认128
- * @param duration 至少执行一次的间隔毫秒数，默认1000
+ * @param delay[Number] 过滤执行的间隔毫秒数, 默认128
+ * @param duration 至少执行一次的间隔毫秒数, 默认1000
  * @return 具有节流特性的新函数
 */
 
@@ -247,7 +247,7 @@ export const throttle = function throttle(method, delay, duration) {
 /**
  * 获取url中的query值
  * @param keyName[String] 要获取的参数名
- * @param url[String] 目标url，默认当前窗口url
+ * @param url[String] 目标url, 默认当前窗口url
  * @return keyName参数的值
 */
 export const getUrlParam = function (keyName, url) {
@@ -266,7 +266,7 @@ export const getUrlParam = function (keyName, url) {
 /**
  * 从axios请求函数中提取请求信息
  * @param axiosRequest[Function] axios请求方法
- * @return 请求信息字符串，例如 'get,/url1'
+ * @return 请求信息字符串, 例如 'get,/url1'
  * */
 export const matchRequest = function (axiosRequest) {
     let result = null;

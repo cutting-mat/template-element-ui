@@ -143,7 +143,7 @@ export default {
       this.myValue = newVal
         .toString()
         .trim()
-        .replace(/[^\d.-]/g, "") // 过滤非数字，非"."，非"-"
+        .replace(/[^\d.-]/g, "") // 过滤非数字, 非".", 非"-"
         .replace(/\./, "$#$") // 只保留第一个.
         .replace(/\./g, "")
         .replace("$#$", ".")

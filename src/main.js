@@ -1,4 +1,4 @@
-// 根据.browserslistrc 配置加载polyfill，需同时替换babel.config.js中注释的presets配置
+// 根据.browserslistrc 配置加载polyfill, 需同时替换babel.config.js中注释的presets配置
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 
