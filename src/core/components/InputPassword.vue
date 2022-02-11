@@ -52,22 +52,16 @@ const checkPassword = function (pwd, nMinPwdLen) {
     nSymbol = 0,
     nMidChar = 0,
     nRequirements = 0,
-    nAlphasOnly = 0,
-    nNumbersOnly = 0,
     nUnqChar = 0,
     nRepChar = 0,
     nRepInc = 0,
     nConsecAlphaUC = 0,
     nConsecAlphaLC = 0,
     nConsecNumber = 0,
-    nConsecSymbol = 0,
-    nConsecCharType = 0,
     nSeqAlpha = 0,
     nSeqNumber = 0,
     nSeqSymbol = 0,
-    nSeqChar = 0,
     nReqChar = 0,
-    nMultConsecCharType = 0,
     category = 0; // Types of Statistical Characters
   let nMultMidChar = 2,
     nMultConsecAlphaUC = 2,
@@ -81,8 +75,7 @@ const checkPassword = function (pwd, nMinPwdLen) {
   let nMultSymbol = 6;
   let nTmpAlphaUC = "",
     nTmpAlphaLC = "",
-    nTmpNumber = "",
-    nTmpSymbol = "";
+    nTmpNumber = "";
   let sAlphas = "abcdefghijklmnopqrstuvwxyz";
   let sNumerics = "01234567890";
   let sSymbols = "~!@#$%^&*()_+,./";
@@ -101,7 +94,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         if (nTmpAlphaUC !== "") {
           if (nTmpAlphaUC + 1 == a) {
             nConsecAlphaUC++;
-            nConsecCharType++;
           }
         }
         nTmpAlphaUC = a;
@@ -111,7 +103,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         if (nTmpAlphaLC !== "") {
           if (nTmpAlphaLC + 1 == a) {
             nConsecAlphaLC++;
-            nConsecCharType++;
           }
         }
         nTmpAlphaLC = a;
@@ -124,7 +115,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         if (nTmpNumber !== "") {
           if (nTmpNumber + 1 == a) {
             nConsecNumber++;
-            nConsecCharType++;
           }
         }
         nTmpNumber = a;
@@ -133,13 +123,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         if (a > 0 && a < arrPwdLen - 1) {
           nMidChar++;
         }
-        if (nTmpSymbol !== "") {
-          if (nTmpSymbol + 1 == a) {
-            nConsecSymbol++;
-            nConsecCharType++;
-          }
-        }
-        nTmpSymbol = a;
         nSymbol++;
       }
       /* Internal loop through password to check for repeat characters */
@@ -173,7 +156,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         pwd.toLowerCase().indexOf(sRev) != -1
       ) {
         nSeqAlpha++;
-        nSeqChar++;
       }
     }
 
@@ -186,7 +168,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         pwd.toLowerCase().indexOf(sRev) != -1
       ) {
         nSeqNumber++;
-        nSeqChar++;
       }
     }
 
@@ -199,7 +180,6 @@ const checkPassword = function (pwd, nMinPwdLen) {
         pwd.toLowerCase().indexOf(sRev) != -1
       ) {
         nSeqSymbol++;
-        nSeqChar++;
       }
     }
 
@@ -224,12 +204,10 @@ const checkPassword = function (pwd, nMinPwdLen) {
     if ((nAlphaLC > 0 || nAlphaUC > 0) && nSymbol === 0 && nNumber === 0) {
       // Only Letters
       nScore = parseInt(nScore - nLength);
-      nAlphasOnly = nLength;
     }
     if (nAlphaLC === 0 && nAlphaUC === 0 && nSymbol === 0 && nNumber > 0) {
       // Only Numbers
       nScore = parseInt(nScore - nLength);
-      nNumbersOnly = nLength;
     }
     /* Types of Statistical Characters */
     if(nAlphaLC > 0) category++;
@@ -298,6 +276,10 @@ const checkPassword = function (pwd, nMinPwdLen) {
     } else if (nScore < 0) {
       nScore = 0;
     }
+  }
+  // 只存在一种字符时，强制将为弱
+  if (category < 2) {
+    nScore = 0;
   }
   return {nScore, category};
 };
