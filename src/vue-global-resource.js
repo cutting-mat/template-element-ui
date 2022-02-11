@@ -3,13 +3,13 @@ import Header from '@/main/components/Header.vue'
 
 export const components = {
     // 内置组件
-    CURD:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/CURD.vue"),
-    InputNumber:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/InputNumber.vue"),
-    InputPassword:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/InputPassword.vue"),
-    DictRadio:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictRadio.vue"),
-    DictCheckbox:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictCheckbox.vue"),
-    DictSelect:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictSelect.vue"),
-    DictCascader:  () => import(/* webpackChunkName: "common-components" */ "@/core/components/DictCascader.vue"),
+    CURD:  () => import("@/core/components/CURD.vue"),
+    InputNumber:  () => import("@/core/components/InputNumber.vue"),
+    InputPassword:  () => import("@/core/components/InputPassword.vue"),
+    DictRadio:  () => import("@/core/components/DictRadio.vue"),
+    DictCheckbox:  () => import("@/core/components/DictCheckbox.vue"),
+    DictSelect:  () => import("@/core/components/DictSelect.vue"),
+    DictCascader:  () => import("@/core/components/DictCascader.vue"),
     // 业务组件
     Header,
     Breadcrumb: () => import("@/main/components/Breadcrumb.vue"),
