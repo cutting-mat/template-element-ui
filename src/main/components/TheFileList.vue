@@ -11,7 +11,7 @@
         <i
           class="_btn el-icon-close"
           v-if="!readonly"
-          @click="$emit('remove', index)"
+          @click="list.splice(index,1);$emit('change', list)"
         />
       </div>
     </li>
@@ -23,8 +23,12 @@
 import { dynamicAlbum } from "../assets/util";
 
 export default {
+  model: {
+    prop: 'value',
+    event: 'change'
+  },
   props: {
-    list: {
+    value: {
       type: Array,
       required: false,
       default: () => [],
@@ -38,6 +42,20 @@ export default {
   filters: {
     dynamicAlbum,
   },
+  data(){
+    return {
+      list: []
+    }
+  },
+  watch: {
+    value: {
+      deep: true,
+      immediate: true,
+      handler(){
+        this.list = this.value
+      }
+    }
+  }
 };
 </script>
 
@@ -50,8 +68,8 @@ export default {
   border-bottom: 1px solid #f5f5f5;
 }
 .fileList ._avatar {
-  width: 3em;
-  height: 3em;
+  width: 36px;
+  height: 36px;
 }
 .fileList ._avatar img {
   width: 100%;

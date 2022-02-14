@@ -1,11 +1,5 @@
 import { util } from "@/core";
 
-/**
- * 根据文件url获得封面图
- * @param url[String] 文件url
- * @param previewImg[Boolean] 图片文件是否直接预览
- * @return fileAlbum[src] 封面图地址
-*/
 const fileTypes = {
     img: {
         type: ["png", "jpg", "jpeg"],
@@ -45,6 +39,12 @@ const fileTypes = {
     }
 };
 
+/**
+ * 根据文件url获得封面图
+ * @param url[String] 文件url
+ * @param previewImg[Boolean] 图片文件是否直接预览
+ * @return fileAlbum[src] 封面图地址
+*/
 export const dynamicAlbum = (url, previewImg) => {
     let fileAlbum = fileTypes.default.album;
 

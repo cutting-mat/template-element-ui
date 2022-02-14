@@ -4,9 +4,10 @@
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
         <el-upload-plugin
-        :data="{test:123}"
-        :limit="2"
+          :limit="2"
+          @success="uploadList.push($event)"
         />
+        <TheFileList v-model="uploadList" />
       </div>
       <div class="flex-1 box blockLayout">
         <h2>测试全局功能</h2>
@@ -49,9 +50,13 @@ import Vue from "vue";
 //import { util } from "@/core";
 
 export default {
+  components: {
+    TheFileList: () => import('./TheFileList.vue')
+  },
   data() {
     return {
       loading: false,
+      uploadList: [],
       log: [],
       globalMethodOutput: "",
       instanceMethodOutput: "",
