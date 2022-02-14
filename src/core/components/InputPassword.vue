@@ -284,7 +284,7 @@ const checkPassword = function (pwd, nMinPwdLen) {
   return {nScore, category};
 };
 export default {
-  name: "el-password",
+  name: "input-password",
   model: {
     prop: "value",
     event: "change",

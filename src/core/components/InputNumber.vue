@@ -12,7 +12,7 @@
 
 <script>
 export default {
-  name: "el-input-number",
+  name: "input-number",
   model: {
     prop: 'value',
     event: 'change'
