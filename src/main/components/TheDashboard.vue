@@ -10,7 +10,7 @@
         <TheFileList v-model="uploadList" />
       </div>
       <div class="flex-1 box blockLayout">
-        <h2>测试全局功能</h2>
+        <h2>Vue全局资源测试</h2>
 
         <div>
           时间戳格式化过滤器：{{ new Date().getTime() }} =>
@@ -39,7 +39,19 @@
       </div>
     </div>
     <div class="flex-row">
-      <div class="flex-1 box blockLayout"></div>
+      <div class="flex-1 box blockLayout">
+        <h2> axios缓存测试 </h2>
+        <el-button @click="testRequest(true)"> 请求(缓存开) </el-button>
+    <el-button @click="testRequest(false)"> 请求(缓存关) </el-button>
+    <el-button @click="multiRequest(true)"> 并发3次请求(缓存开) </el-button>
+    <el-button @click="multiRequest(false)"> 并发3次请求(缓存关) </el-button>
+    <div class="log">
+      <el-button size="mini" @click="clear()"> 清空日志 </el-button>
+      <div v-for="(item, index) in log" :key="index">
+        {{ item }}
+      </div>
+    </div>
+      </div>
       <div class="flex-1 box blockLayout"></div>
     </div>
   </div>
@@ -48,6 +60,13 @@
 <script>
 import Vue from "vue";
 //import { util } from "@/core";
+import axios from '@cutting-mat/axios';
+// 创建请求实例
+const instance = axios.create({
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default {
   components: {
@@ -89,6 +108,26 @@ export default {
         this.loading = false;
       });
     },
+    clear() {
+      this.log = [];
+    },
+    testRequest(cacheOption) {
+      return instance
+        .get("http://rap2api.taobao.org/app/mock/3567/return/test", null, {
+          cache: cacheOption,
+        })
+        .then((res) => {
+          this.log.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`);
+        })
+        .catch((err) => {
+          this.log.push(`${new Date().getTime()}: ${err.message || err}`);
+        });
+    },
+    multiRequest(cacheOption) {
+      for (let i = 0; i < 3; i++) {
+        this.testRequest(cacheOption);
+      }
+    },
   },
   created() {
     this.testGlobalFunc();
@@ -98,6 +137,16 @@ export default {
 
 <style scoped>
 .box {
-  height: 250px;
+  height: 350px;
+}
+
+.log {
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 20px 0;
+  min-height: 10em;
+  background:#dedede;
+  border-radius: 8px;
+  padding: 20px;
 }
 </style>
