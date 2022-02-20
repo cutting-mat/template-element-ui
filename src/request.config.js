@@ -1,5 +1,5 @@
 
-// 环境配置
+// 各环境baseURL配置
 const ENVIRONMENT = {
     mock: 'http://rap2api.taobao.org/app/mock/223572',
     dev: 'http://retire.kaifa/japi',
@@ -7,7 +7,7 @@ const ENVIRONMENT = {
     master: '//master.com/api'
 };
 
-// 域名与环境映射配置
+// 域名与环境映射关系
 const HASH = {
     "dev.com": ENVIRONMENT.dev,
     "test.com": ENVIRONMENT.test,
