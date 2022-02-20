@@ -10,7 +10,7 @@
   "dependencies": {
     "@cutting-mat/axios": "^1.1.3",
     "@cutting-mat/el-upload": "^1.0.5",
-    "@cutting-mat/vue-store": "^1.0.4",
+    "@cutting-mat/vue-store": "^1.0.8",
     "element-ui": "^2.15.6",
     "vue": "^2.6.14",
     "vue-router": "^3.5.2"
