@@ -1,4 +1,6 @@
-// 全局组件
+/**
+ * 全局组件
+ * */ 
 import Header from '@/main/components/Header.vue'
 
 export const components = {
@@ -17,26 +19,33 @@ export const components = {
     Pagination: () => import("@/main/components/Pagination.vue"),
 }
 
-// 全局过滤器
+/**
+ * 全局过滤器
+ * */ 
 import { util } from '@/core'
 
 export const filters = {
     date: util.formatDate
 }
 
-// 全局方法
+/**
+ * 全局方法
+ * */ 
 export const methods = {
     globalMethod: function(){
         return ('test globalMethod output!')
     }
 }
 
-// 指令
+/**
+ * 全局指令
+ * */ 
 export const directives = {
     'auth': {
         // 不开启权限控制时避免v-auth指令报错
     },
     'test': {
+        // 用于测试可删除
         inserted (el) {
             setTimeout(() => {
                 el.innerText += ' test directive inject!'
@@ -45,9 +54,12 @@ export const directives = {
     }
 }
 
-// 实例方法
+/**
+ * 实例方法
+ * */ 
 export const $methods = {
     $myMethod: function(){
+        // 用于测试可删除
         return ('test instance method output!')
     }
 }

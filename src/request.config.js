@@ -14,6 +14,7 @@ const HASH = {
     "master.com": ENVIRONMENT.master
 }
 
+// axios 请求实例配置
 export default {
     baseURL: HASH[window.location.host] || ENVIRONMENT.dev,
     timeout: 10000,
