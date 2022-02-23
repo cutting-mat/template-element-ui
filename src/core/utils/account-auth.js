@@ -10,7 +10,7 @@ export default {
             // 路由访问免登录白名单
             routeAuthWhiteList = [...mainModule.filter(e => e.path !== '/' && (e.path !== '')).map((e) => e.path)];
             console.log("AccountAuth 免登录路由白名单:", routeAuthWhiteList);
-            
+
             // 获取用户登录状态
             // console.log('获取用户登录状态')
             if (!Vue.$store.get("accessToken")) {
@@ -24,7 +24,7 @@ export default {
                 // console.log('路由守卫', to)
                 if (!Vue.$store.get("accessToken")) {
                     if (routeAuthWhiteList.indexOf('/' + to.path.split('/')[1]) !== -1) {
-                        // 未登录访问白名单
+                        // console.log('未登录访问白名单')
                         return next();
                     } else if (to.path !== "/login") {
                         // 未登录跳转登录页

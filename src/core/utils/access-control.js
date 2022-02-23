@@ -1,6 +1,6 @@
 import { util, instance } from "@/core";
 
-import {subModules} from "@/module.config";
+import { subModules } from "@/module.config";
 
 let checkRouteRedirectResult = []; // 临时变量
 
@@ -100,7 +100,7 @@ const checkRouteRedirect = function (array, base) {
 export default {
     install: function (Vue) {
         console.log("AccessControl 开启")
-        
+
         // v-auth 指令（用于权限控制）
         Vue.directive('auth', {
             inserted: function (el, binding) {
