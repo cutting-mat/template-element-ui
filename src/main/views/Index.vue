@@ -1,26 +1,21 @@
 <template>
   <div>
-    <!-- 可视化模板 -->
+    <!-- 不用全局模板 -->
     <LayoutBlank v-if="$route.path.indexOf('/data-v') === 0" />
-    <!-- 常规模板 -->
-    <Layout v-else />
+    <!-- 全局模板 -->
+    <LayoutMain v-else />
   </div>
 </template>
 
 <script>
-import Layout from "../components/Layout";
-import LayoutBlank from "../components/LayoutBlank";
+import LayoutMain from "./LayoutMain";
+import LayoutBlank from "./LayoutBlank";
 
 export default {
   components: {
-    Layout,
+    LayoutMain,
     LayoutBlank,
-  },
-  data() {
-    return {};
   },
 };
 </script>
 
-<style scoped>
-</style>
