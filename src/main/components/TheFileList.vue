@@ -3,15 +3,15 @@
     <li v-for="(item, index) in list" :key="index" class="_item">
       <div class="flex-row align-center">
         <div class="_avatar" @click="$emit('click', item)">
-          <img :src="item.url | dynamicAlbum" />
+          <img :src="item.url | dynamicAlbum(previewImgOnThumb)" />
         </div>
-        <div class="flex-1 _title" @click="$emit('click', item)">
+        <el-link :underline="false" class="flex-1 _title el" @click="$emit('click', item)">
           {{ item.name }}
-        </div>
+        </el-link>
         <i
           class="_btn el-icon-close"
           v-if="!readonly"
-          @click="list.splice(index,1);$emit('change', list)"
+          @click="list.splice(index,1);$emit('remove', item);$emit('change', list)"
         />
       </div>
     </li>
@@ -38,6 +38,11 @@ export default {
       required: false,
       default: false,
     },
+    previewImgOnThumb: {
+      type: Boolean,
+      required: false,
+      default: false,
+    }
   },
   filters: {
     dynamicAlbum,
@@ -61,15 +66,15 @@ export default {
 
 <style scoped>
 .fileList {
-  padding: 0 16px;
+  padding: 0 10px;
 }
 .fileList ._item {
   padding: 10px 0;
   border-bottom: 1px solid #f5f5f5;
 }
 .fileList ._avatar {
-  width: 36px;
-  height: 36px;
+  width: 18px;
+  height: 18px;
 }
 .fileList ._avatar img {
   width: 100%;
@@ -77,16 +82,15 @@ export default {
   object-fit: contain;
 }
 .fileList ._title {
-  line-height: 1.5em;
-  height: 3em;
-  overflow: hidden;
-  color: #999;
-  padding: 0 10px;
-  cursor: pointer;
+  justify-content: normal;
+  margin: 0 10px;
 }
 .fileList ._btn {
   cursor: pointer;
   color: #fd444c;
-  font-size: 1.5em;
+  font-size: 1.2em;
+}
+.fileList ._btn:hover{
+  opacity: .8;
 }
 </style>
