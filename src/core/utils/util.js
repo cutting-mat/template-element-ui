@@ -6,7 +6,7 @@ import Vue from 'vue'
  * @param value[any] 要存的值, 若缺省则返回key的值
  * @return 只传key会返回该key的值
  * */
-const STORAGE_SPACE = '';           // 指定命名空间, 防止同域名子项目间存储混淆
+const STORAGE_SPACE = '';           // 指定命名空间, 防止同域子项目间存储混淆
 export const storage = function (key, value) {
     const storageFun = localStorage;
     key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;           
