@@ -59,7 +59,7 @@ const catchError = function (error) {
                 break;
             default:
                 Vue.prototype.$message({
-                    message: error.response.data.msg || '服务端异常, 请联系技术支持',
+                    message: error.response.data.msg || error.response.data || '服务端异常, 请联系技术支持',
                     type: 'error'
                 });
         }

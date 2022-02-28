@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import {subModules} from '@/module.config';
+import { subModules } from "@/module.config";
 
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     menu: function () {
-      return this.$AccessControl ? this.state.menu : subModules
+      return this.$AccessControl ? this.state.menu : subModules;
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {
@@ -186,7 +186,7 @@ export default {
 .custom-menu >>> .el-menu-item {
   margin-bottom: 9px;
 }
-.custom-menu >>> .second{
+.custom-menu >>> .second {
   padding-left: 40px;
   padding-right: 0;
   box-sizing: border-box;
@@ -194,7 +194,8 @@ export default {
   border-radius: 6px;
 }
 
-.custom-menu >>> .second.is-active, .custom-menu >>> .third.is-active{
+.custom-menu >>> .second.is-active,
+.custom-menu >>> .third.is-active {
   color: #fff;
   background: #0265ed;
   box-shadow: 0px 2px 2px 0px rgba(109, 156, 220, 0.49);
@@ -207,7 +208,7 @@ export default {
   display: inline-block;
   margin-right: 5px;
 }
-.custom-menu >>> .is-active .point{
+.custom-menu >>> .is-active .point {
   background: #fff;
 }
 .custom-menu >>> .el-menu-item-group__title {
