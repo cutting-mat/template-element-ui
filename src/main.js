@@ -10,13 +10,13 @@ import 'element-ui/lib/theme-chalk/index.css';
 //import '@/core/element-theme/index.css';
 Vue.use(ElementUI);
 
+// 全局样式
+import '@/core/assets/global.css';
+
 // 上传组件
 import ElUploadPlugin from '@cutting-mat/el-upload';
 import uploadConfig from "@/upload.config";
 Vue.use(ElUploadPlugin, uploadConfig);
-
-// 全局样式
-import '@/core/assets/global.css';
 
 // 状态管理插件
 import store from '@cutting-mat/vue-store';
@@ -27,7 +27,7 @@ Vue.use(store, storeConfig);
 import { register } from '@/core';
 Vue.use(register);
 
-// 账号鉴权
+// 用户鉴权
 import { AccountAuth } from "@/core";
 Vue.use(AccountAuth);
 
