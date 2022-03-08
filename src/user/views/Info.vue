@@ -6,62 +6,59 @@
       </div>
     </div>
     <!-- 内容 -->
-    <div>
-      <el-form class="infoBox" label-width="100px">
-        <div class="_user">
-          <div class="_accountName">
-            {{ state.user.accountName }}
-          </div>
-          <div class="_accountNumber">
-            {{ state.user.accountNumber }}
-          </div>
-          <div class="_accountNumber">
-            创建时间：{{ state.user.createTime | date }}
-          </div>
-          
-        </div>
+    <div class="infoBox">
+      <div class="_avatar">
+        <img :src="userInfo.avatar" alt="" />
+      </div>
+      <el-descriptions border>
+        <el-descriptions-item label="用户名">
+          {{ userInfo.accountName }}
+        </el-descriptions-item>
+        <el-descriptions-item label="手机号">
+          {{ userInfo.accountNumber }}
+        </el-descriptions-item>
+        <el-descriptions-item label="所属组织">
+          {{ userInfo.orgName }}
+        </el-descriptions-item>
 
-        
-      </el-form>
+        <el-descriptions-item label="联系地址">
+          江苏省苏州市吴中区吴中大道 1188 号
+        </el-descriptions-item>
+      </el-descriptions>
     </div>
   </div>
 </template>
 
 <script>
-
 export default {
   data() {
     return {
-      state: this.$store.state,
       loading: false,
     };
   },
-  methods: {},
-  created() {},
+  computed: {
+    userInfo() {
+      return this.$store.state.user;
+    },
+  },
 };
 </script>
 
 <style scoped>
-
 .infoBox {
-  width: 300px;
+  width: 700px;
   margin: auto;
   padding: 2em 0;
 }
-.infoBox ._avat {
-  text-align: center;
+.infoBox ._avatar {
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 20px;
+  background:#dedede;
 }
-.infoBox ._user {
-  text-align: center;
-}
-.infoBox ._accountName {
-  color: #333;
-  font-size: 1.5em;
-}
-.infoBox ._accountNumber {
-  color: #999;
-}
-.infoBox >>> .el-form-item {
-  margin-bottom: 0;
+.infoBox ._avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 </style>

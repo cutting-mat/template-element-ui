@@ -1,5 +1,6 @@
 <template>
-  <el-select v-model="bindValue"
+  <el-select
+    v-model="bindValue"
     v-bind="attribute"
     @change="$emit('change', $event)"
   >
@@ -20,8 +21,8 @@ import { itemList } from "@/system/api/dict";
 
 export default {
   model: {
-    prop: 'value',
-    event: 'change'
+    prop: "value",
+    event: "change",
   },
   props: {
     load: {
@@ -30,7 +31,7 @@ export default {
     },
     value: {
       type: [String, Number],
-      required: false
+      required: false,
     },
     valueKey: {
       type: String,
@@ -45,7 +46,7 @@ export default {
     nullAble: {
       type: Boolean,
       required: false,
-      default: true
+      default: true,
     },
     placeholder: {
       type: String,
@@ -55,9 +56,16 @@ export default {
     attribute: {
       type: Object,
       required: false,
-      default(){
-        return {}
-      }
+      default() {
+        return {};
+      },
+    },
+    loadTransfer: {
+      type: Function,
+      required: false,
+      default: (res) => {
+        return res.data;
+      },
     },
   },
   data() {
@@ -69,12 +77,12 @@ export default {
   watch: {
     value: {
       handler() {
-        if(this.value){
+        if (this.value) {
           this.bindValue = this.value;
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   methods: {
     fetchDict() {
@@ -86,18 +94,18 @@ export default {
           cache: true,
         }
       ).then((res) => {
-        this.list = util.buildTree(res.data.data);
+        this.list = util.buildTree(res.data);
       });
     },
-    fetchRemoteData: async function() {
-      this.list = await this.load()
-    }
+    fetchRemoteData: async function () {
+      this.list = this.loadTransfer(await this.load());
+    },
   },
   created() {
     if (this.load && this.load.split) {
       this.fetchDict();
-    } else if(typeof this.load === 'function'){
-      this.fetchRemoteData()
+    } else if (typeof this.load === "function") {
+      this.fetchRemoteData();
     }
   },
 };

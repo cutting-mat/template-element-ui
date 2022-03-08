@@ -36,8 +36,8 @@ export default {
                 cache: true
             }, payload || {})).then(res => {
                 return {
-                    menus: res.data.data.filter((e) => e.type === 0),
-                    resources: res.data.data.filter((e) => e.type === 1),
+                    menus: res.data.filter((e) => e.type === 0),
+                    resources: res.data.filter((e) => e.type === 1),
                 };
             })
         },
@@ -45,7 +45,7 @@ export default {
             return userApi.info(null, Object.assign({
                 cache: true
             }, payload || {})).then(res => {
-                return res.data.data
+                return res.data
             })
         }
     }

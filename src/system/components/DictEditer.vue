@@ -30,7 +30,7 @@
           default-expand-all
         >
           <el-table-column prop="value" label="值"></el-table-column>
-          <el-table-column prop="code" label="CODE" align="center"></el-table-column>
+          <el-table-column prop="dictCode" label="CODE" align="center"></el-table-column>
           <el-table-column label="操作" width="300" align="center">
             <template slot-scope="scope">
               <el-button v-auth="dict.itemEdit" size="mini" @click="edit(scope.row)">编辑</el-button>
@@ -52,8 +52,8 @@
           <el-form-item label="值" prop="value">
             <el-input v-model="editForm.value"></el-input>
           </el-form-item>
-          <el-form-item label="CODE" prop="code">
-            <el-input v-model="editForm.code"></el-input>
+          <el-form-item label="CODE" prop="dictCode">
+            <el-input v-model="editForm.dictCode"></el-input>
           </el-form-item>
           
         </el-form>
@@ -94,14 +94,14 @@ export default {
       editForm: {
         pid: '',
         value: '',
-        code: ''
+        dictCode: ''
       },
       rules: {
         value: [
           { required: true, message: "请输入数据值", trigger: "blur" },
           { min: 1, max: 100, message: '长度 1 到 100 个字符', trigger: 'blur' }
         ],
-        code: [
+        dictCode: [
           { min: 1, max: 100, message: '长度 1 到 100 个字符', trigger: 'blur' }
         ]
       }
@@ -175,7 +175,7 @@ export default {
       this.editForm = {
         pid: '',
         value: '',
-        code: ''
+        dictCode: ''
       };
       this.dialogVisible = false;
     },
@@ -187,7 +187,7 @@ export default {
       this.loading = true;
       dict.itemList(this.queryParam).then(res => {
         this.loading = false;
-        this.list = util.buildTree(res.data.data);
+        this.list = util.buildTree(res.data);
       });
     },
     handleInit() {

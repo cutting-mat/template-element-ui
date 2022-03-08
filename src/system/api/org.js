@@ -1,5 +1,9 @@
 import { instance } from '@/core';
 
+// list
+export const list = params => {
+  return instance.get(`/orgs`, { params })
+}
 // get
 export const get = params => {
   return instance.get(`/org`, { params })
@@ -15,12 +19,4 @@ export const edit = params => {
 // delete
 export const remove = params => {
   return instance.delete(`/org`, { params })
-}
-// 联盟列表
-export const unions = params => {
-  return instance.get(`/org/leagues`, { params })
-}
-// 学校列表
-export const schools = params => {
-  return instance.get(`/org/school/s`, { params })
 }

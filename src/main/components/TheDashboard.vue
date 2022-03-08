@@ -61,6 +61,7 @@
 <script>
 import Vue from "vue";
 //import { util } from "@/core";
+import {getError} from "../api/common"
 import axios from "@cutting-mat/axios";
 // 创建请求实例
 const instance = axios.create({
@@ -132,6 +133,12 @@ export default {
   },
   created() {
     this.testGlobalFunc();
+
+    // getError().then(res => {
+    //   console.log('then', res)
+    // }).catch(err => {
+    //   console.log('catch', err)
+    // })
   },
 };
 </script>

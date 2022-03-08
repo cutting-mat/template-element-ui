@@ -281,7 +281,7 @@ export default {
       this.loading = true;
       dict.list(this.queryParam).then((res) => {
         this.loading = false;
-        const data = res.data.data;
+        const data = res.data;
         if (data) {
           this.list = data.list;
           this.totalCount = data.totalCount;

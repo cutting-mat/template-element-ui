@@ -99,7 +99,7 @@ export default {
                 // 登录后全局发布 login 事件, 将在app.vue里接收
                 util.emit("login", {
                   redirect: this.$router.currentRoute.query.redirect || '/',
-                  data: res.data.data,
+                  data: res.data,
                 }); 
               }else{
                 this.$message({

@@ -88,7 +88,7 @@ export default {
           cache: true,
         }
       ).then((res) => {
-        this.list = util.buildTree(res.data.data);
+        this.list = util.buildTree(res.data);
       });
     },
     fetchRemoteData: async function() {

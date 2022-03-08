@@ -61,7 +61,8 @@ import * as resource from "../api/resource";
 
 export default {
   components: {
-    TheResourcePicker: (resolve) => require(["@/system/components/TheResourcePicker.vue"], resolve)
+    TheResourcePicker: (resolve) =>
+      require(["@/system/components/TheResourcePicker.vue"], resolve),
   },
   data() {
     const checkMethod = (rule, value, callback) => {
@@ -116,6 +117,7 @@ export default {
   methods: {
     edit: function (data) {
       this.editForm = util.deepcopy(data);
+      this.editForm.method = this.editForm.method.toLowerCase()
     },
     append(item) {
       // 初始化子路由数据
@@ -205,9 +207,10 @@ export default {
     },
     fetchData: function () {
       this.loading = true;
-      this.$store.action("permission", {
-        cache: false
-      })
+      this.$store
+        .action("permission", {
+          cache: "update",
+        })
         .then((userPermissions) => {
           this.loading = false;
           this.list = util.buildTree(

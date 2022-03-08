@@ -9,98 +9,43 @@
     ></el-input>
     <!-- 弹窗 -->
     <el-dialog
+      class="custom-dialog"
       append-to-body
       :close-on-click-modal="false"
-      title="选择机构"
+      title="选择组织"
       :visible="dialogVisible"
       width="1000px"
-      @close="dialogVisible = false"
-      class="custom-dialog"
+      @open="dialogOpen"
+      @close="dialogClose"
     >
-      <div class="dialog-hd" slot="title">
-        <i class="title-ico ion" v-html="'&#xe680;'"></i>选择学校
-      </div>
-      <div class="flex-row orgPicker">
-        <div class="_side">
-          <!-- 名称搜索 -->
-          <div class="_keyword">
-            <el-input
-              v-model.trim="queryParam.name"
-              placeholder="学校名称搜索"
-              :maxlength="100"
-              size="medium"
-            >
-              <el-button
-                slot="append"
-                icon="el-icon-search"
-                @click="fetchSchool(true)"
-              ></el-button>
-            </el-input>
-          </div>
-          <!-- 联盟树 -->
-          <el-tree
-            ref="tree"
-            :data="list"
-            node-key="id"
-            :props="defaultProps"
-            default-expand-all
-            :expand-on-click-node="false"
-            visible-arrow
-            @node-click="handleNodeClick"
-          ></el-tree>
-        </div>
-        <div class="_list flex-col flex-1 scrollbar">
-          <!-- 学校列表 -->
-          <el-table
-            class="flex-1"
-            height="100%"
-            :data="schoolList"
-            highlight-current-row
-            @current-change="handleCheckSchool"
-          >
-            <el-table-column prop="name" label="名称" show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column label="所属联盟" show-overflow-tooltip>
-              <template slot-scope="scope">
-                {{
-                  scope.row.fullName &&
-                  scope.row.fullName.split("/")[
-                    scope.row.fullName.split("/").length - 2
-                  ]
-                }}
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="contacts"
-              label="负责人"
-              show-overflow-tooltip
-            ></el-table-column>
-            <el-table-column
-              prop="contactsTel"
-              label="联系电话"
-              show-overflow-tooltip
-            ></el-table-column>
-          </el-table>
-          <!-- 翻页 -->
-          <Pagination
-            class="page-box"
-            :page-size="queryParam.pageSize"
-            :current-page="queryParam.p"
-            :total-count="totalCount"
-            :total-page="totalPage"
-            @current-change="handleCurrentChange"
-          />
-        </div>
+      <div class="orgPicker flex-col">
+        <el-table
+          class="flex-1"
+          :data="list"
+          highlight-current-row
+          @current-change="checkedNode=$event"
+        >
+          <el-table-column prop="name" label="名称" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column prop="fullName" label="全称" show-overflow-tooltip>
+          </el-table-column>
+          <el-table-column label="创建时间" show-overflow-tooltip>
+            <template slot-scope="scope">
+              {{ scope.row.createTime | date }}
+            </template>
+          </el-table-column>
+        </el-table>
+
       </div>
 
-      <span slot="footer" class="dialog-footer">
+      <div slot="footer" class="dialog-footer">
         <el-button size="medium" type="primary" @click="submit"
           >确 定</el-button
         >
         <el-button size="medium" @click="dialogVisible = false"
           >取 消</el-button
         >
-      </span>
+      </div>
     </el-dialog>
   </div>
 </template>
@@ -121,18 +66,12 @@ export default {
       required: false,
     },
     adapter: {
-      // 显示适配器
+      // 输入框显示适配
       type: Function,
       required: false,
-      default() {
-        return (value) => value;
-      },
-    },
-    targetType: {
-      // 选择机构类型
-      type: Number,
-      required: false,
-      default: 0, // 0 不限 1 联盟 2 学校
+      default(value, obj) {
+        return obj.name || value
+      }
     },
     size: {
       type: String,
@@ -145,106 +84,48 @@ export default {
       loading: false,
       dialogVisible: false,
       list: [],
-      defaultProps: {
-        children: "children",
-        label: "name",
-      },
       checkedNode: {},
-      queryParam: {
-        pageSize: 10,
-        p: 1,
-        name: null,
-        pid: null,
-      },
-      schoolList: [],
-      totalCount: 0,
-      totalPage: 0,
+      submitNode: {},
     };
   },
   computed: {
     showTitle() {
-      return this.adapter(this.value, this.checkedNode);
+      return this.adapter(this.value, this.submitNode);
     },
   },
   methods: {
-    handleCheckSchool(currentSchool) {
-      // 选择学校
-      if (currentSchool) {
-        this.checkedNode = currentSchool;
-      }
+    dialogOpen(){
+      this.checkedNode = {}
+      this.submitNode = {}
     },
-    handleCurrentChange(currentPage) {
-      // 翻页
-      this.queryParam.p = currentPage;
-      this.fetchSchool();
+    dialogClose(){
+      this.dialogVisible = false;
     },
     fetchData: function () {
-      // 请求联盟树
       this.loading = true;
       api
-        .unions()
+        .list()
         .then((res) => {
           this.loading = false;
-          const data = res.data.data;
+          const data = res.data;
           if (data) {
             this.list = util.buildTree(data);
-            this.queryParam.pid = data[0].id;
-            this.fetchSchool(true);
           }
         })
         .catch(() => {
           this.loading = false;
         });
-    },
-    fetchSchool(reload) {
-      // 请求学校
-      if (reload) {
-        this.queryParam.p = 1;
-      }
-      this.loading = true;
-      api
-        .schools(
-          Object.assign(
-            {
-              pid: (this.checkedNode && this.checkedNode.id) || null,
-            },
-            this.queryParam
-          )
-        )
-        .then((res) => {
-          this.loading = false;
-          const data = res.data.data;
-          if (data) {
-            this.schoolList = data.list;
-            this.totalCount = data.totalCount;
-            this.totalPage = data.totalPage;
-          }
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
-    handleNodeClick(data) {
-      this.checkedNode = data;
-      this.queryParam.pid = data.id;
-      this.fetchSchool(true);
     },
     submit() {
-      if (this.targetType === 1 || this.targetType === 2) {
-        if (this.targetType !== this.checkedNode.type) {
-          let targetType = {
-            1: "联盟",
-            2: "学校",
-          }[this.targetType];
-          return this.$message.warning(`请选择${targetType}！`);
-        }
-      }
+      
       if (this.checkedNode && this.checkedNode.id) {
+        this.submitNode = util.deepcopy(this.checkedNode)
         this.$emit("change", this.checkedNode.id);
       }
 
       this.dialogVisible = false;
     },
+    
   },
   created() {
     this.fetchData();

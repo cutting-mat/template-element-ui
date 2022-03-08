@@ -18,21 +18,17 @@
       <el-table-column
         prop="accountNumber"
         label="账号"
-        width="150"
         align="center"
       ></el-table-column>
       <el-table-column
         prop="accountName"
         label="用户名"
-        width="150"
         align="center"
       ></el-table-column>
-      <el-table-column label="角色" align="center">
-        <template slot-scope="scope">
-          <div v-for="(role, index) in scope.row.roles" :key="index">
-            {{ `${role.orgName} - ${role.roleName}` }}
-          </div>
-        </template>
+      <el-table-column 
+        prop="roleName" 
+        label="角色" 
+        align="center">
       </el-table-column>
       <el-table-column label="状态" width="80" align="center">
         <template slot-scope="scope">
@@ -118,17 +114,19 @@
           </el-form-item>
         </template>
         <el-form-item label="所属组织" prop="orgId">
-          <OrgPicker v-model="editForm.orgId" :adapter="orgAdapter" @change="$refs.editForm.validateField('orgId')"></OrgPicker>
+          <OrgPicker
+            v-model="editForm.orgId"
+            :adapter="orgAdapter"
+            @change="$refs.editForm.validateField('orgId')"
+          ></OrgPicker>
         </el-form-item>
         <el-form-item label="角色">
-          <el-checkbox-group v-model="editForm.roles">
-            <el-checkbox
-              v-for="role in rolesList"
-              :key="'role' + role.id"
-              :label="role.id"
-              >{{ role.name }}</el-checkbox
-            >
-          </el-checkbox-group>
+          <DictSelect 
+            v-model="editForm.roleId"
+            :load="requestRoles"
+            labelKey="name"
+          />
+            
         </el-form-item>
         <el-form-item label="状态">
           <el-switch
@@ -155,7 +153,8 @@ import { list as requestRoles } from "../api/role";
 
 export default {
   components: {
-    OrgPicker: (resolve) => require(["@/system/components/OrgPicker.vue"], resolve)
+    OrgPicker: (resolve) =>
+      require(["@/system/components/OrgPicker.vue"], resolve)
   },
   data() {
     const validatePass = (rule, value, callback) => {
@@ -206,23 +205,14 @@ export default {
         ],
         password: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        orgId: [
-          { required: true, message: "请选择所属组织" },
-        ]
+        orgId: [{ required: true, message: "请选择所属组织" }],
       },
-      rolesList: [],
+      requestRoles
     };
   },
   methods: {
     orgAdapter(value, obj) {
-      // console.log(value, obj);
-      if (obj && obj.id) {
-        return obj.fullName;
-      }
-      if (this.editForm.belongOrgFullName) {
-        return this.editForm.belongOrgFullName;
-      }
-      return value;
+      return obj.name || this.editForm.belongOrgName || value;
     },
     handleCurrentChange: function (currentPage) {
       this.queryParam.p = currentPage;
@@ -242,10 +232,11 @@ export default {
           .resetPassword({
             id: data.id,
           })
-          .then(() => {
+          .then((res) => {
             this.fetchData();
-            this.$alert(`密码已重置！`, {
+            this.$alert(`密码已重置，请牢记新密码：<code>${res.data.password}</code>`, {
               confirmButtonText: "我知道了",
+              dangerouslyUseHTMLString: true
             });
           })
           .catch(() => {
@@ -330,7 +321,7 @@ export default {
         .list(this.queryParam)
         .then((res) => {
           this.loading = false;
-          const data = res.data.data;
+          const data = res.data;
           if (data) {
             this.list = data.list;
             this.totalCount = data.totalCount;
@@ -341,15 +332,11 @@ export default {
           this.loading = false;
         });
     },
-    fetchRoles: function () {
-      requestRoles().then((res) => {
-        this.rolesList = res.data.data;
-      });
-    },
+    
   },
   created: function () {
     this.fetchData();
-    this.fetchRoles();
+
   },
 };
 </script>

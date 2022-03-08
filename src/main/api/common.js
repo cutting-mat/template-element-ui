@@ -12,5 +12,10 @@ export const saveText = params => {
 }
 // 获取富文本详情
 export const getText = params => {
-    return instance.get(`/oss/${params}`)
+    return instance.get(`/oss/${params.id}`)
+}
+
+// 模拟异常
+export const getError = params => {
+    return instance.get(`/return/error`)
 }

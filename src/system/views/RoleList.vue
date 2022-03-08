@@ -20,7 +20,7 @@
         label="角色名称"
         align="center"
       ></el-table-column>
-      <el-table-column prop="description" label="备注"></el-table-column>
+      <el-table-column prop="remark" label="备注"></el-table-column>
 
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
@@ -61,8 +61,8 @@
         <el-form-item label="角色名称" prop="name">
           <el-input v-model.trim="editForm.name" :maxlength="100"></el-input>
         </el-form-item>
-        <el-form-item label="备注" prop="description">
-          <el-input v-model.trim="editForm.description" type="textarea" :maxlength="1000"></el-input>
+        <el-form-item label="备注" prop="remark">
+          <el-input v-model.trim="editForm.remark" type="textarea" :maxlength="1000"></el-input>
         </el-form-item>
 
         <el-form-item label="权限">
@@ -97,7 +97,7 @@ export default {
       list: [],
       editForm: {
         name: "",
-        description: "",
+        remark: "",
         resources: [],
       },
       rules: {
@@ -110,7 +110,7 @@ export default {
             trigger: "blur",
           },
         ],
-        description: [
+        remark: [
           {
             min: 0,
             max: 255,
@@ -155,7 +155,7 @@ export default {
       this.dialogVisible = false;
       this.editForm = {
         name: "",
-        description: "",
+        remark: "",
         resources: [],
       };
       this.$refs.editForm && this.$refs.editForm.resetFields();
@@ -192,7 +192,7 @@ export default {
         .list()
         .then((res) => {
           this.loading = false;
-          this.list = res.data.data;
+          this.list = res.data;
         })
         .catch(() => {
           this.loading = false;

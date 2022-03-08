@@ -413,7 +413,7 @@ export default {
          })
         .then((res) => {
           this.loading = false;
-          return res.data.data;
+          return res.data;
         })
         .catch(() => {
           this.loading = false;
@@ -428,7 +428,7 @@ export default {
         .list(this.queryParamFinnal)
         .then((res) => {
           this.loading = false;
-          const data = res.data.data;
+          const data = res.data;
           if (Array.isArray(data)) {
             this.list = util.buildTree(data);
           } else if (Array.isArray(data.list)) {

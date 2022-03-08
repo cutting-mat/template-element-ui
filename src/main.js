@@ -4,6 +4,10 @@ import 'regenerator-runtime/runtime';
 
 import Vue from 'vue';
 
+// 开启 mock
+import mocker from '../mock';
+mocker()
+
 // UI库
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';

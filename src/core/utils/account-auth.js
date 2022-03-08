@@ -28,8 +28,9 @@ export default {
                         return next();
                     } else if (to.path !== "/login") {
                         // 未登录跳转登录页
-                        let query = {};
-                        query["redirect"] = to.fullPath;
+                        let query = {
+                            redirect: to.fullPath
+                        };
                         return next({
                             path: "/login",
                             query

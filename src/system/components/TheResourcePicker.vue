@@ -12,60 +12,70 @@
   >
     <div slot-scope="{ node, data }" class="custom-tree-item">
       <div class="flex-1 extendLable">
-        <span v-if="!!data.url" style="color: #67c23a">
-          <i class="el-icon-medal"></i
-        ></span>
-        <span style="margin-right: 20px" :class="{ source: !!data.url }">{{
-          data.name
-        }}</span>
-        <el-tag v-if="!!data.url" size="mini" :type="typeColor[data.method]"
-          ><i class="el-icon-position"></i>
-          {{ data.method.toUpperCase() }}</el-tag
+        <span v-if="data.type === 1" style="color: #67c23a">
+          <i class="el-icon-medal"></i>
+        </span>
+        <span style="margin-right: 20px" :class="{ source: data.type === 1 }">
+          {{ data.name }}
+        </span>
+        <el-tag
+          v-if="data.type === 1"
+          size="mini"
+          :type="typeColor[data.method]"
         >
-        <el-tag size="mini" type="info"
-          ><i class="el-icon-link"></i> {{ data.route || data.url }}</el-tag
-        >
+          <i class="el-icon-position"></i>
+          {{ data.method.toUpperCase() }}
+        </el-tag>
+        <el-tag size="mini" type="info">
+          <i v-if="data.type === 0" class="el-icon-link"></i>
+          {{ data.type === 0 ? data.route : data.url }}
+        </el-tag>
       </div>
       <span class="extendGroup" v-if="!picker">
-        <!-- 根据!!data.route判断是路由还是请求 -->
+        <!-- 根据 data.type===0 / 1 判断是路由还是请求 -->
         <el-button
           v-auth="resource.edit"
           size="small"
           type="text"
           @click.stop="$emit('edit', data)"
-          >编辑</el-button
         >
+          编辑
+        </el-button>
         <el-button
           v-auth="resource.add"
-          v-if="!!data.route"
+          v-if="data.type === 0"
           size="small"
           type="text"
           @click.stop="$emit('append', data)"
-          >添加子菜单</el-button
         >
+          添加子菜单
+        </el-button>
         <el-button
           v-auth="resource.add"
-          v-if="!!data.route"
+          v-if="data.type === 0"
           size="small"
           type="text"
           @click.stop="$emit('add-resource', data)"
-          >添加资源</el-button
         >
+          添加资源
+        </el-button>
         <el-button
           v-auth="resource.remove"
           size="small"
           type="text"
           @click.stop="$emit('remove', data)"
-          >删除</el-button
         >
+          删除
+        </el-button>
       </span>
       <span class="extendGroup" v-else>
         <el-button
           size="small"
           type="text"
           @click.stop="handleCheckChange(data, !node.checked, true)"
-          >批量选择</el-button
         >
+          批量选择
+        </el-button>
       </span>
     </div>
   </el-tree>
