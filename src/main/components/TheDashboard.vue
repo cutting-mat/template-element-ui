@@ -1,10 +1,10 @@
 <template>
-  <div class="scrollbar">
+  <div class="scrollbar" v-loading.fullscreen="fullLoading">
     <div class="flex-row" style="margin-top: 20px">
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
-        <el-upload-plugin v-model="uploadList" :limit="2" />
-        <TheFileList v-model="uploadList" />
+        <el-upload-plugin v-model="uploadList" :limit="2" :show-file-list="false" @change="handleUpload" />
+        <TheFileList v-model="uploadList" :beforeDelete="beforeDelete" />
       </div>
       <div class="flex-1 box blockLayout">
         <h2>Vue全局资源测试</h2>
@@ -61,7 +61,6 @@
 <script>
 import Vue from "vue";
 //import { util } from "@/core";
-import {getError} from "../api/common"
 import axios from "@cutting-mat/axios";
 // 创建请求实例
 const instance = axios.create({
@@ -76,6 +75,7 @@ export default {
   },
   data() {
     return {
+      fullLoading: false,
       loading: false,
       uploadList: [],
       log: [],
@@ -89,6 +89,18 @@ export default {
     },
   },
   methods: {
+    handleUpload(file){
+      console.log(file)
+    },
+    beforeDelete(){
+      this.fullLoading = true;
+      return new Promise(resolve => {
+        setTimeout(() => {
+          this.fullLoading = false;
+          resolve(true)
+        },1000)
+      })
+    },  
     testGlobalFunc() {
       this.globalMethodOutput = Vue.globalMethod();
       this.instanceMethodOutput = this.$myMethod();
