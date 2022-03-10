@@ -3,7 +3,7 @@
     <div class="flex-row" style="margin-top: 20px">
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
-        <el-upload-plugin v-model="uploadList" :limit="2" :show-file-list="false" @change="handleUpload" />
+        <el-upload-plugin v-model="uploadList" :limit="2" :show-file-list="false" />
         <TheFileList v-model="uploadList" :beforeDelete="beforeDelete" />
       </div>
       <div class="flex-1 box blockLayout">
@@ -89,9 +89,6 @@ export default {
     },
   },
   methods: {
-    handleUpload(file){
-      console.log(file)
-    },
     beforeDelete(){
       this.fullLoading = true;
       return new Promise(resolve => {
