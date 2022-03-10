@@ -35,7 +35,7 @@ Vue.use(register);
 import { AccountAuth } from "@/core";
 Vue.use(AccountAuth);
 
-// 权限控制
+// 权限控制(依赖用户鉴权)
 // import { AccessControl } from "@/core";
 // Vue.use(AccessControl);
 

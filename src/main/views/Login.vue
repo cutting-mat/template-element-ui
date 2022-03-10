@@ -95,18 +95,11 @@ export default {
             .login(this.queryParam)
             .then((res) => {
               this.loading = false;
-              if(res.data.code===200){
-                // 登录后全局发布 login 事件, 将在app.vue里接收
-                util.emit("login", {
-                  redirect: this.$router.currentRoute.query.redirect || '/',
-                  data: res.data,
-                }); 
-              }else{
-                this.$message({
-                  type: 'warning',
-                  message: res.data.msg || "登录失败"
-                })
-              }
+              // 登录后全局发布 login 事件, 将在app.vue里接收
+              util.emit("login", {
+                redirect: this.$router.currentRoute.query.redirect || "/",
+                data: res.data,
+              });
             })
             .catch(() => {
               this.loading = false;

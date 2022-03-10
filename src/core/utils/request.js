@@ -26,7 +26,7 @@ instance.interceptors.request.use(function (config) {
 
 // 响应后处理
 instance.interceptors.response.use(function (response) {
-    // 业务失败处理(http status: 201~299)
+    // 业务失败处理(兼容原response.data.code格式)
     if (response.status !== 200 || response.data.code === 500) {
         return catchError({ response })
     }
@@ -91,6 +91,7 @@ const catchError = async function (error) {
                 break;
             default:
                 if(error.response.status > 200 && error.response.status < 300){
+                    // 201 ~ 299 的情况
                     Vue.prototype.$message({
                         message: getStringFromData(error.response.data, '操作失败'),
                         type: 'warning'

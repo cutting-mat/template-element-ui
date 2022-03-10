@@ -101,15 +101,6 @@ export default {
     install: function (Vue) {
         console.log("AccessControl 开启")
 
-        // v-auth 指令（用于权限控制）
-        Vue.directive('auth', {
-            inserted: function (el, binding) {
-                if (Vue.prototype.$_auth && !Vue.prototype.$_auth(binding.value)) {
-                    el.parentNode.removeChild(el);
-                }
-            }
-        });
-
         Vue.prototype.$AccessControl = function () {
 
             return new Promise((resolve, reject) => {
@@ -187,7 +178,7 @@ export default {
                     // 如果没有任何路由权限, 判断为非法用户, 登出并终止应用执行
                     if (!actualRouter || !actualRouter.length) {
                         util.storage("auth", "");
-                        return (document.body.innerHTML =
+                        return reject(document.body.innerHTML =
                             "<h1>账号访问受限, 请联系系统管理员！</h1>");
                     }
 
@@ -204,7 +195,7 @@ export default {
                     });
 
                     /*
-                     * 注册 this.$_auth 方法和 v-auth 指令 (指令在@/register.js里注册)
+                     * 注册 this.$_auth 方法
                      */
 
                     Vue.prototype.$_auth = function (axiosRequest) {
@@ -233,12 +224,20 @@ export default {
                         return permission;
                     };
 
+                    // v-auth 指令
+                    Vue.directive('auth', {
+                        inserted: function (el, binding) {
+                            if (Vue.prototype.$_auth && !Vue.prototype.$_auth(binding.value)) {
+                                el.parentNode.removeChild(el);
+                            }
+                        }
+                    });
+
+
                     this.$store.set("menu", actualRouter);
 
                     resolve({ resourcePermission, routePermission, actualRouter });
-                }).catch(err => {
-                    reject(err)
-                })
+                }).catch(reject)
 
             })
 
