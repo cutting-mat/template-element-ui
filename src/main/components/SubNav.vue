@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { MainRoute } from "@/module.config";
+import { MainRoute } from "@/route.config";
 
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);

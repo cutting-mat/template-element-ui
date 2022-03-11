@@ -33,7 +33,7 @@
 
 <script>
 import { util } from "@/core";
-import { MainRoute } from "@/module.config";
+import { MainRoute } from "@/route.config";
 
 export default {
   data() {

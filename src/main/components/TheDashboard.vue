@@ -3,7 +3,7 @@
     <div class="flex-row" style="margin-top: 20px">
       <div class="flex-1 box blockLayout scrollbar">
         <!--  -->
-        <el-upload-plugin v-model="uploadList" :limit="2" :show-file-list="false" />
+        <uploader v-model="uploadList" :limit="2" :show-file-list="false" />
         <TheFileList v-model="uploadList" :beforeDelete="beforeDelete" />
       </div>
       <div class="flex-1 box blockLayout">
@@ -53,7 +53,13 @@
           </div>
         </div>
       </div>
-      <div class="flex-1 box blockLayout"></div>
+      <div class="flex-1 box blockLayout">
+        <h2>存取JSON</h2>
+        <el-button @click="saveJSON()"> 保存JSON </el-button>
+        <el-button @click="Unauthorized()">
+          未授权请求
+        </el-button>
+      </div>
     </div>
   </div>
 </template>
@@ -61,13 +67,8 @@
 <script>
 import Vue from "vue";
 //import { util } from "@/core";
-import axios from "@cutting-mat/axios";
-// 创建请求实例
-const instance = axios.create({
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+import { saveJSON, Unauthorized } from "@/main/api/common";
+import { info } from "@/user/api/user";
 
 export default {
   components: {
@@ -89,15 +90,23 @@ export default {
     },
   },
   methods: {
-    beforeDelete(){
+    Unauthorized(){
+      Unauthorized()
+    },
+    saveJSON() {
+      saveJSON({
+        content: `test: ${parseInt(Math.random() * 1e3)}`,
+      });
+    },
+    beforeDelete() {
       this.fullLoading = true;
-      return new Promise(resolve => {
+      return new Promise((resolve) => {
         setTimeout(() => {
           this.fullLoading = false;
-          resolve(true)
-        },1000)
-      })
-    },  
+          resolve(true);
+        }, 1000);
+      });
+    },
     testGlobalFunc() {
       this.globalMethodOutput = Vue.globalMethod();
       this.instanceMethodOutput = this.$myMethod();
@@ -123,15 +132,14 @@ export default {
       this.log = [];
     },
     testRequest(cacheOption) {
-      return instance
-        .get("http://rap2api.taobao.org/app/mock/3567/return/test", null, {
-          cache: cacheOption,
-        })
+      return info(null, {
+        cache: cacheOption,
+      })
         .then((res) => {
-          this.log.push(`${new Date().getTime()}: ${JSON.stringify(res.data)}`);
+          this.log.push(`success: ${res.data.createTime}`);
         })
         .catch((err) => {
-          this.log.push(`${new Date().getTime()}: ${err.message || err}`);
+          this.log.push(`error: ${err.message || err}`);
         });
     },
     multiRequest(cacheOption) {

@@ -6,16 +6,23 @@ export const upload = params => {
         headers: { "Content-Type": "multipart/form-data" }
     })
 }
-// 上传富文本
-export const saveText = params => {
-    return instance.post(`/oss/${params.id || 'text'}`, params)
+// 保存JSON
+export const saveJSON = params => {
+    return instance.post(`/oss/${params.id || 'text'}`, params, {
+        headers: {
+            "X-Request-Permission": "post,/oss/**"
+        }
+    })
 }
-// 获取富文本详情
-export const getText = params => {
-    return instance.get(`/oss/${params.id}`)
+// 获取JSON
+export const getJSON = (params, opt) => {
+    return instance.get(`/oss/${params.id}`, {
+        headers: {
+            "X-Request-Permission": "get,/oss/*"
+        }
+    }, opt)
 }
-
-// 模拟异常
-export const getError = params => {
-    return instance.get(`/return/error`)
+// 未授权请求
+export const Unauthorized = (params, opt) => {
+    return instance.get(`/Unauthorized`, opt)
 }

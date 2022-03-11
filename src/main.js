@@ -18,9 +18,9 @@ Vue.use(ElementUI);
 import '@/core/assets/global.css';
 
 // 上传组件
-import ElUploadPlugin from '@cutting-mat/el-upload';
+import uploader from '@cutting-mat/uploader';
 import uploadConfig from "@/upload.config";
-Vue.use(ElUploadPlugin, uploadConfig);
+Vue.use(uploader, uploadConfig);
 
 // 状态管理插件
 import store from '@cutting-mat/vue-store';

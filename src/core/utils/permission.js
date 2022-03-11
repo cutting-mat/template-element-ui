@@ -1,6 +1,6 @@
 import AccessControl from "./access-control";
 import { util } from "@/core";
-import { MainRoute, BypassRoute } from "@/module.config";
+import { MainRoute, BypassRoute } from "@/route.config";
 import { GetAccountToken, SetAccountToken } from "@/permission.config";
 
 let routeAuthWhiteList;

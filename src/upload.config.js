@@ -1,5 +1,5 @@
 /**
- * ElUploadPlugin 配置文件 
+ * uploader 配置文件 
  * 支持原el-upload的所有Props（除 http-request 以外），额外支持以下配置
  * (el-upload文档: https://element.eleme.cn/#/zh-CN/component/upload)
  * 

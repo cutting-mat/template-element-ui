@@ -1,6 +1,6 @@
-import { util } from "@/core";
+import { util, instance } from "@/core";
 
-import { MainRoute } from "@/module.config";
+import { MainRoute } from "@/route.config";
 import { SetAccountToken, setInterceptor, GetPermission, AfterGetActualRouter } from "@/permission.config";
 
 /**
@@ -81,7 +81,20 @@ export default function (Vue, routeInstance) {
             /*
              * 设置Axios请求拦截
              */
-            setInterceptor(resourcePermission);
+            instance.interceptors.request.use((config) => {
+                // 支持 header 携带自定义请求权限
+                let requestPermission = config.headers["X-Request-Permission"] || [config.method, config.url.replace(config.baseURL, "").split("?")[0]].join(",");
+        
+                if (!resourcePermission[requestPermission]) {
+                    return Promise.reject({
+                        response: {
+                            status: 403,
+                            data: `${requestPermission} 请求未授权`,
+                        }
+                    });
+                }
+                return config;
+            });
 
             /*
              * 根据路由权限动态添加路由

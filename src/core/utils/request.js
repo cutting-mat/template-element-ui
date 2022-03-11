@@ -1,7 +1,7 @@
 import Vue from 'vue'
 //import axios from 'axios';
 import axios from '@cutting-mat/axios';
-import { util } from '@/core'
+import { util, routeGenerator } from '@/core'
 import requestConfig from '@/request.config';
 console.log('[Core] Request Start.')
 
@@ -40,12 +40,12 @@ instance.interceptors.response.use(function (response) {
         })
     }
     // 接口调试信息
-    if(Vue.UseMockData){
-        console.log(response.request.custom.options.type, response.request.custom.options.url,' => ', response.data)
+    if (Vue.UseMockData) {
+        console.log(response.request.custom.options.type, response.request.custom.options.url, ' => ', response.data)
     }
-    
+
     // 手动剥离一层data
-    if(response.data.data){
+    if (response.data.data) {
         response.data = response.data.data
     }
     return response;
@@ -53,17 +53,14 @@ instance.interceptors.response.use(function (response) {
     return catchError(error)
 });
 
-
 /**
  * 请求错误处理
  * @param error[axios正常或异常返回数据] 所有服务器捕获的错误, 约定返回数据中用msg字段携带错误信息; 
  * @return 401状态码会触发登出操作, 其他异常状态码只做提醒
 */
-const catchError = async function (error) {
+const catchError = function (error) {
     // 路由实例
-    const { routeGenerator } = await import('@/core');
     let Router = routeGenerator();
-    console.warn(error.response, error.message)
     //原生错误对象
     if (error.response) {
         // that falls out of the range of 2xx
@@ -90,13 +87,13 @@ const catchError = async function (error) {
                 });
                 break;
             default:
-                if(error.response.status > 200 && error.response.status < 300){
+                if (error.response.status > 200 && error.response.status < 300) {
                     // 201 ~ 299 的情况
                     Vue.prototype.$message({
                         message: getStringFromData(error.response.data, '操作失败'),
                         type: 'warning'
                     });
-                }else{
+                } else {
                     Router.push({
                         name: '服务异常',
                         query: {
@@ -104,7 +101,6 @@ const catchError = async function (error) {
                         }
                     });
                 }
-                
         }
     } else if (error.message) {
         // Something happened in setting up the request that triggered an Error
@@ -129,7 +125,6 @@ const catchError = async function (error) {
                 }
             });
         }
-
     }
 
     return Promise.reject(error)
@@ -139,7 +134,7 @@ const getStringFromData = function (data, placeholder) {
     if (typeof data === 'object' && data.msg) {
         return data.msg
     }
-    return placeholder || data
+    return data && data.split ? data : placeholder
 }
 
 export default instance;

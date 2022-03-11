@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 Vue.use(Router)
 
-import { BypassRoute } from '@/module.config'
+import { BypassRoute } from '@/route.config'
 
 // 路由实例
 let routeInstance;
