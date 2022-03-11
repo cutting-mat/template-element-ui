@@ -1,7 +1,7 @@
 import { util, instance } from "@/core";
 
 import { MainRoute } from "@/route.config";
-import { SetAccountToken, setInterceptor, GetPermission, AfterGetActualRouter } from "@/permission.config";
+import { SetAccountToken, GetPermission, AfterGetActualRouter } from "@/permission.config";
 
 /**
  * 从axios请求函数中提取请求信息
@@ -36,15 +36,12 @@ const getResourcePermission = function (userPermissions) {
 const getRoutePermission = function (userPermissions) {
     let routePermission = {};
     let setMenu2Hash = function (array, base) {
-        array.map((key) => {
-            if (key.route) {
-                let hashKey = ((base ? base + "/" : "") + key.route).replace(
-                    /^\//,
-                    ""
-                );
-                routePermission["/" + hashKey] = true;
-                if (Array.isArray(key.children)) {
-                    setMenu2Hash(key.children, (base ? base + "/" : "") + key.route);
+        array.forEach((router) => {
+            if (router.route) {
+                let hashKey = router.route.indexOf('/') === 0 ? router.route : [base, router.route].join(base === '/' ? '' : '/');
+                routePermission[hashKey] = true;
+                if (Array.isArray(router.children)) {
+                    setMenu2Hash(router.children, hashKey);
                 }
             }
         });
@@ -84,7 +81,7 @@ export default function (Vue, routeInstance) {
             instance.interceptors.request.use((config) => {
                 // 支持 header 携带自定义请求权限
                 let requestPermission = config.headers["X-Request-Permission"] || [config.method, config.url.replace(config.baseURL, "").split("?")[0]].join(",");
-        
+
                 if (!resourcePermission[requestPermission]) {
                     return Promise.reject({
                         response: {
@@ -105,7 +102,7 @@ export default function (Vue, routeInstance) {
             let checkRoutePermission = function (array, base) {
                 let replyResult = [];
                 array.forEach((route) => {
-                    let pathKey = route.path.indexOf('/') === -1 ? [base, route.path].join('/') : route.path;
+                    let pathKey = route.path.indexOf('/') === 0 ? route.path : [base, route.path].join(base === '/' ? '' : '/');
                     // 扩展fullPath
                     route.fullPath = pathKey;
                     // 扩展meta

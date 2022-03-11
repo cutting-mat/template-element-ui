@@ -1,7 +1,7 @@
 import AccessControl from "./access-control";
-import { util } from "@/core";
+import { util, instance } from "@/core";
 import { MainRoute, BypassRoute } from "@/route.config";
-import { GetAccountToken, SetAccountToken } from "@/permission.config";
+import { GetAccountToken, SetAccountToken, getTokenFromLogin } from "@/permission.config";
 
 let routeAuthWhiteList;
 
@@ -44,6 +44,9 @@ export default {
                 const userToken = GetAccountToken();
 
                 if (userToken) {
+                    // 设置请求头
+                    instance.defaults.headers.common['Authorization'] = userToken;
+
                     new Promise(resolve => {
                         if (loginPayload && loginPayload.updateToken) {
                             // 与 request.js 约定自动续期标记：updateToken
@@ -52,9 +55,9 @@ export default {
                         if (config.AccessControl) {
                             resolve(AccessControl(Vue, config.routeInstance))
                         } else {
-                            resolve(loginPayload)
+                            resolve()
                         }
-                    }).then((loginPayload) => {
+                    }).then(() => {
                         if (loginPayload && loginPayload.redirect) {
                             this.$router.replace({ path: loginPayload.redirect });
                         }
@@ -67,7 +70,7 @@ export default {
                 /*
                  * 监听 "login" 事件
                  */
-                SetAccountToken(res.data.accessToken)
+                SetAccountToken(getTokenFromLogin(res))
 
                 checkAccount(res)
 

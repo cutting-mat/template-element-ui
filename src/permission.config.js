@@ -5,6 +5,8 @@ import { util } from "@/core";
 export const GetAccountToken = () => util.storage("auth")
 // 设置用户登录凭据方法(用于清空凭据)
 export const SetAccountToken = token => util.storage("auth", token)
+// 登录返回数据获取凭据方法
+export const getTokenFromLogin = res => res.data.token
 
 // 获取用户权限数据方法
 export const GetPermission = () => Vue.$store.action("permission");
