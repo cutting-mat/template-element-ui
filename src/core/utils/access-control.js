@@ -20,7 +20,7 @@ export const matchRequest = function (axiosRequest) {
     return result
 }
 
-// 从用户权限数据中提取请求权限
+// 提取请求权限
 const getResourcePermission = function (userPermissions) {
     let resourcePermission = {};
     if (Array.isArray(userPermissions.resources)) {
@@ -32,7 +32,7 @@ const getResourcePermission = function (userPermissions) {
     return resourcePermission;
 }
 
-// 从用户权限数据中提取路由权限
+// 提取路由权限
 const getRoutePermission = function (userPermissions) {
     let routePermission = {};
     let setMenu2Hash = function (array, base) {

@@ -45,7 +45,7 @@ const routeInstance = routeGenerator({
 // 登录鉴权
 import { Permission } from "@/core";
 Vue.use(Permission, {
-    AccessControl: true,    // 权限控制
+    AccessControl: false,    // 权限控制
     routeInstance
 });
 

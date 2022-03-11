@@ -11,9 +11,9 @@ export default {
         routeAuthWhiteList = BypassRoute.map((e) => e.path);
 
         console.log("[Core] Permission Open. Whitelist:", routeAuthWhiteList);
-        
+
         // 权限关闭 注册主路由
-        if(!config.AccessControl){
+        if (!config.AccessControl) {
             MainRoute.forEach(route => {
                 config.routeInstance.addRoute(route)
             })
@@ -70,9 +70,14 @@ export default {
                 /*
                  * 监听 "login" 事件
                  */
-                SetAccountToken(getTokenFromLogin(res))
+                const userToken = getTokenFromLogin(res);
 
-                checkAccount(res)
+                if (userToken) {
+                    SetAccountToken(userToken)
+                    checkAccount(res)
+                } else {
+                    console.warn(`[Core] Cannot get token by login response, please check the permission.config.js => getTokenFromLogin() set`)
+                }
 
             });
 

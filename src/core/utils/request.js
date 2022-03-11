@@ -39,8 +39,8 @@ instance.interceptors.response.use(function (response) {
             }
         })
     }
-    // 接口调试信息
-    if (Vue.UseMockData) {
+    // 控制台输出接口返回
+    if (Vue.DebugRequest) {
         console.log(response.request.custom.options.type, response.request.custom.options.url, ' => ', response.data)
     }
 

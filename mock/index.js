@@ -1,7 +1,11 @@
-const Mock = require('mockjs')
 import Vue from 'vue'
-Vue.UseMockData = true;
-console.log('开启Mock数据')
+Vue.DebugRequest = true;
+console.log(`[Mock] Start. Please make sure that main.js => AccessControl is closed, otherwise it will not work properly`)
+
+const Mock = require('mockjs')
+Mock.setup({
+    timeout: '100-600'
+})
 
 // schema 转 template
 const getValue = function (schemaObject) {
@@ -67,7 +71,7 @@ export const runJsMock = function () {
             }
         });
         jsmocks = jsmocks.flat()
-        console.log('JsMocks:', jsmocks)
+        console.log('[Mock] Requests from ./*.js:', jsmocks)
         for (const mock of jsmocks) {
             Mock.mock(new RegExp(mock.url), mock.type || 'get', mock.response)
         }
@@ -95,7 +99,7 @@ export const runJsonMock = function () {
                 template: getValue(e.res_body)
             }
         })
-        console.log('JsonMocks:', jsonmocks)
+        console.log('[Mock] Requests from ./*.json:', jsonmocks)
         for (const mock of jsonmocks) {
             Mock.mock(new RegExp(mock.url), mock.type, mock.template)
         }
