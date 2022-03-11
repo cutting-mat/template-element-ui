@@ -3,16 +3,19 @@
 </template>
 
 <script>
+import { instance } from "@/core";
+
 export default {
-  name: 'CuttingMatApp',
+  name: "CuttingMatApp",
   created: function () {
-    this.$AccountAuth({
-      loginCallback: () => {
-        // 初始化用户信息
-        this.$store.action("user", {
-          cache: false
-        })
-      },
+    this.$Permission((userToken) => {
+      // 设置请求头 Authorization
+      instance.defaults.headers.common["Authorization"] = userToken;
+
+      // 初始化用户信息
+      this.$store.action("user", {
+        cache: false,
+      });
     });
   },
 };

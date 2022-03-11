@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import { subModules } from "@/module.config";
+import { MainRoute } from "@/module.config";
 
 const filterHide = (arr) => {
   let res = arr.filter((e) => !e.meta || !e.meta.hide);
@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     menu: function () {
-      return this.$AccessControl ? this.state.menu : subModules;
+      return this.$AccessControl ? this.state.menu : MainRoute[0].children;
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {

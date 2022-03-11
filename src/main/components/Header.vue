@@ -33,7 +33,7 @@
 
 <script>
 import { util } from "@/core";
-import {subModules} from '@/module.config';
+import { MainRoute } from "@/module.config";
 
 export default {
   data() {
@@ -43,7 +43,9 @@ export default {
   },
   computed: {
     list: function () {
-      return (this.$AccessControl ? this.state.menu : subModules).filter((e) => !e.meta || !e.meta.hide)
+      return (
+        this.$AccessControl ? this.state.menu : MainRoute[0].children
+      ).filter((e) => !e.meta || !e.meta.hide);
     },
   },
   methods: {

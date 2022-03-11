@@ -31,21 +31,28 @@ Vue.use(store, storeConfig);
 import { register } from '@/core';
 Vue.use(register);
 
-// 用户鉴权
-import { AccountAuth } from "@/core";
-Vue.use(AccountAuth);
-
-// 权限控制(依赖用户鉴权)
-// import { AccessControl } from "@/core";
-// Vue.use(AccessControl);
-
 // 路由
 import { routeGenerator } from '@/core';
+const routeInstance = routeGenerator({
+    beforeEach: ((to, from, next) => {
+        if (to.name) {
+            document.title = to.meta.title || to.name;
+        }
+        next()
+    })
+})
+
+// 登录鉴权
+import { Permission } from "@/core";
+Vue.use(Permission, {
+    AccessControl: true,    // 权限控制
+    routeInstance
+});
 
 // 应用启动
 import App from './App.vue';
 
 new Vue({
-    router: routeGenerator(),
+    router: routeInstance,
     render: h => h(App)
 }).$mount('#app');

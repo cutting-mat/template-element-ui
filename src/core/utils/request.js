@@ -3,7 +3,7 @@ import Vue from 'vue'
 import axios from '@cutting-mat/axios';
 import { util } from '@/core'
 import requestConfig from '@/request.config';
-console.log('Request Start')
+console.log('[Core] Request Start.')
 
 // 创建请求实例
 const instance = axios.create(requestConfig);
@@ -33,7 +33,7 @@ instance.interceptors.response.use(function (response) {
     // token临近过期, 重新签发token
     if (response.headers['jwt-update-token']) {
         util.emit('login', {
-            silent: true,
+            updateToken: true,
             data: {
                 accessToken: response.headers['jwt-update-token']
             }

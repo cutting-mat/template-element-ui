@@ -1,87 +1,73 @@
-import { util, instance } from "@/core";
+import AccessControl from "./access-control";
+import { util } from "@/core";
+import { MainRoute, BypassRoute } from "@/module.config";
+import { GetAccountToken, SetAccountToken } from "@/permission.config";
 
 let routeAuthWhiteList;
 
 export default {
-    install: function (Vue) {
-        console.log("AccountAuth 开启");
+    install: function (Vue, config) {
+        // 路由访问免登录白名单
+        routeAuthWhiteList = BypassRoute.map((e) => e.path);
 
-        Vue.setRouterGuards = (routeInstance, mainModule) => {
-            // 路由访问免登录白名单
-            routeAuthWhiteList = [...mainModule.filter(e => e.path !== '/' && (e.path !== '')).map((e) => e.path)];
-            console.log("AccountAuth 免登录路由白名单:", routeAuthWhiteList);
-
-            // 获取用户登录状态
-            // console.log('获取用户登录状态')
-            if (!Vue.$store.get("accessToken")) {
-                let localUser = util.storage("auth") || {};
-                if (localUser.accessToken) {
-                    Vue.$store.set("accessToken", localUser.accessToken);
-                }
-            }
-
-            routeInstance.beforeEach((to, from, next) => {
-                // console.log('路由守卫', to)
-                if (!Vue.$store.get("accessToken")) {
-                    if (routeAuthWhiteList.indexOf('/' + to.path.split('/')[1]) !== -1) {
-                        // console.log('未登录访问白名单')
-                        return next();
-                    } else if (to.path !== "/login") {
-                        // 未登录跳转登录页
-                        let query = {
-                            redirect: to.fullPath
-                        };
-                        return next({
-                            path: "/login",
-                            query
-                        });
-                    }
-                }
-
-                next()
+        console.log("[Core] Permission Open. Whitelist:", routeAuthWhiteList);
+        
+        // 权限关闭 注册主路由
+        if(!config.AccessControl){
+            MainRoute.forEach(route => {
+                config.routeInstance.addRoute(route)
             })
         }
 
-        Vue.prototype.$AccountAuth = function (config) {
-            const conf = Object.assign({
-                loginCallback: null
-            }, config || {})
-
-            const checkAccount = (loginRes) => {
-                if (Vue.$store.get("accessToken")) {
-                    // 设置请求头 Authorization
-                    instance.defaults.headers.common["Authorization"] = Vue.$store.get("accessToken");
-
-                    // 登录后路由重定向
-                    const routeRedirect = () => {
-                        if (loginRes && loginRes.redirect) {
-                            this.$router.replace({ path: loginRes.redirect });
-                        }
-                    }
-
-                    if (loginRes && loginRes.silent) {
-                        console.log("token已自动续期");
-                    } else {
-                        if (this.$AccessControl) {
-                            this.$AccessControl().then(() => {
-                                routeRedirect()
-                                typeof conf.loginCallback === 'function' && conf.loginCallback(loginRes)
-                            });
-                        } else {
-                            routeRedirect()
-                            typeof conf.loginCallback === 'function' && conf.loginCallback(loginRes)
-                        }
-                    }
-
+        config.routeInstance.beforeEach((to, from, next) => {
+            // console.log('路由守卫', to)
+            if (!GetAccountToken()) {
+                if (routeAuthWhiteList.indexOf('/' + to.path.split('/')[1]) !== -1) {
+                    // console.log('未登录访问白名单')
+                    return next();
+                } else if (to.path !== "/login") {
+                    // 未登录跳转登录页
+                    let query = {
+                        redirect: to.fullPath
+                    };
+                    return next({
+                        path: "/login",
+                        query
+                    });
                 }
             }
-            // global event
+            next()
+        })
+
+        Vue.prototype.$Permission = function (loginCallback) {
+            const checkAccount = (loginPayload) => {
+                const userToken = GetAccountToken();
+
+                if (userToken) {
+                    new Promise(resolve => {
+                        if (loginPayload && loginPayload.updateToken) {
+                            // 与 request.js 约定自动续期标记：updateToken
+                            console.log("Token 已自动续期");
+                        }
+                        if (config.AccessControl) {
+                            resolve(AccessControl(Vue, config.routeInstance))
+                        } else {
+                            resolve(loginPayload)
+                        }
+                    }).then((loginPayload) => {
+                        if (loginPayload && loginPayload.redirect) {
+                            this.$router.replace({ path: loginPayload.redirect });
+                        }
+                        typeof loginCallback === 'function' && loginCallback(userToken)
+                    })
+                }
+            }
+
             util.on("login", (res) => {
                 /*
                  * 监听 "login" 事件
                  */
-                util.storage("auth", res.data);
-                Vue.$store.set("accessToken", res.data.accessToken);
+                SetAccountToken(res.data.accessToken)
 
                 checkAccount(res)
 
@@ -91,7 +77,7 @@ export default {
                 /*
                  * 监听 "logout" 事件
                  */
-                util.storage("auth", "");
+                SetAccountToken("")
 
                 if (
                     routeAuthWhiteList.indexOf(

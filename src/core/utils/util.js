@@ -263,19 +263,3 @@ export const getUrlParam = function (keyName, url) {
     return null;
 };
 
-/**
- * 从axios请求函数中提取请求信息
- * @param axiosRequest[Function] axios请求方法
- * @return 请求信息字符串, 例如 'get,/url1'
- * */
-export const matchRequest = function (axiosRequest) {
-    let result = null;
-    if (typeof axiosRequest === 'function') {
-        let regex = new RegExp(/\.([^(]+)\("([^"]+)"/); // 匹配请求函数：instance.post("/org", params)
-        result = axiosRequest.toString().match(regex);
-        if (result && result.length > 2) {
-            result = [result[1], result[2]].join(",")
-        }
-    }
-    return result
-}
