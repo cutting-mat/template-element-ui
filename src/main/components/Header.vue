@@ -44,7 +44,7 @@ export default {
   computed: {
     list: function () {
       return (
-        this.$AccessControl ? this.state.menu : MainRoute[0].children
+        this.$AccessControl ? this.state.DynamicRoute[0].children : MainRoute[0].children
       ).filter((e) => !e.meta || !e.meta.hide);
     },
   },

@@ -105,7 +105,7 @@ export default {
   },
   computed: {
     menu: function () {
-      return this.$AccessControl ? this.state.menu : MainRoute[0].children;
+      return this.$AccessControl ? this.state.DynamicRoute[0].children : MainRoute[0].children;
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {

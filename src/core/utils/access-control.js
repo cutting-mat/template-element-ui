@@ -1,7 +1,7 @@
 import { util, instance } from "@/core";
 
 import { MainRoute } from "@/route.config";
-import { SetAccountToken, GetPermission, AfterGetActualRouter } from "@/permission.config";
+import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/permission.config";
 
 /**
  * 从axios请求函数中提取请求信息
@@ -97,7 +97,7 @@ export default function (Vue, routeInstance) {
              * 根据路由权限动态添加路由
              */
 
-            let actualRouter = [];
+            let dynamicRoute = [];
             // 递归校验路由权限
             let checkRoutePermission = function (array, base) {
                 let replyResult = [];
@@ -140,19 +140,19 @@ export default function (Vue, routeInstance) {
                 if (base) {
                     return replyResult;
                 } else {
-                    actualRouter = actualRouter.concat(replyResult);
+                    dynamicRoute = dynamicRoute.concat(replyResult);
                 }
             };
             checkRoutePermission(MainRoute);
-            //console.log('actualRouter', actualRouter)
+            //console.log('dynamicRoute', dynamicRoute)
             // 如果没有任何路由权限, 判断为非法用户, 登出并终止应用执行
-            if (!actualRouter || !actualRouter.length) {
+            if (!dynamicRoute || !dynamicRoute.length) {
                 SetAccountToken("");
                 return reject(document.body.innerHTML =
                     "<h1>账号访问受限, 请联系系统管理员！</h1>");
             }
 
-            actualRouter.forEach((route) => {
+            dynamicRoute.forEach((route) => {
                 routeInstance.addRoute(route);
             });
 
@@ -201,9 +201,9 @@ export default function (Vue, routeInstance) {
             });
 
             // 获取路由权限回调
-            AfterGetActualRouter(actualRouter);
+            AfterGetDynamicRoute(dynamicRoute);
 
-            resolve({ resourcePermission, routePermission, actualRouter });
+            resolve({ resourcePermission, routePermission, dynamicRoute });
         }).catch(reject)
 
     })

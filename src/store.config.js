@@ -18,9 +18,9 @@ export default {
     state: {
         testValue: null,            // 仅用于测试
         accessToken: null,          // token
-        menu: [],                   // 导航菜单
+        permission: [],             // 用户权限
+        DynamicRoute: [],           // 动态路由
         user: {},                   // 用户信息
-        permission: []              // 用户权限
     },
     actions: {
         testAction: function(context){

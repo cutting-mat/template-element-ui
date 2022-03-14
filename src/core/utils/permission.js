@@ -1,7 +1,7 @@
 import AccessControl from "./access-control";
 import { util, instance } from "@/core";
 import { MainRoute, BypassRoute } from "@/route.config";
-import { GetAccountToken, SetAccountToken, getTokenFromLogin } from "@/permission.config";
+import { GetAccountToken, SetAccountToken, GetTokenFromLogin } from "@/permission.config";
 
 let routeAuthWhiteList;
 
@@ -70,13 +70,13 @@ export default {
                 /*
                  * 监听 "login" 事件
                  */
-                const userToken = getTokenFromLogin(res);
+                const userToken = GetTokenFromLogin(res);
 
                 if (userToken) {
                     SetAccountToken(userToken)
                     checkAccount(res)
                 } else {
-                    console.warn(`[Core] Cannot get token by login response, please check the permission.config.js => getTokenFromLogin() set`)
+                    console.warn(`[Core] Cannot get token by login response, please check the permission.config.js => GetTokenFromLogin() set`)
                 }
 
             });
