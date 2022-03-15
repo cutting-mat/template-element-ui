@@ -7,7 +7,7 @@
 // 主模块
 import main from '@/main/index'
 
-// 子模块
+// 业务模块
 import system from '@/system'
 import user from '@/user'
 
