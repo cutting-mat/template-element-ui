@@ -1,18 +1,17 @@
 <template>
-  <div class="scrollbar blockLayout" v-loading="loading">
-    <div class="flex-row toolBar">
-      <div class="flex-1">
-        <!-- title -->
-      </div>
+  <div v-loading="loading">
+    <ToolBar>
       <el-button
         v-auth="role.add"
         type="primary"
         size="small"
         icon="el-icon-plus"
         @click="dialogVisible = true"
-        >添加</el-button
-      >
-    </div>
+        >
+        添加
+      </el-button>
+    </ToolBar>
+
     <!-- list -->
     <el-table :data="list" style="width: 100%">
       <el-table-column
@@ -28,6 +27,7 @@
             v-auth="role.edit"
             size="mini"
             type="info"
+            plain
             @click="edit(scope.row)"
             >编辑</el-button
           >
@@ -35,6 +35,7 @@
             v-auth="role.remove"
             size="mini"
             type="danger"
+            plain
             @click="remove(scope.row)"
             >删除</el-button
           >

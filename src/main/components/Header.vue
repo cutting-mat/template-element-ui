@@ -111,6 +111,7 @@ export default {
 .navlist {
   height: 100%;
   text-align: right;
+  padding: 0 20px;
 }
 .navlist ._item {
   display: inline-block;
@@ -120,6 +121,7 @@ export default {
   cursor: pointer;
   width: 8em;
   text-align: center;
+  font-size: 16px;
 }
 .navlist .cur {
   color: #fff;

@@ -1,57 +1,60 @@
 <template>
-  <div class="flex-row blockLayout" v-loading="loading">
-    <div class="resourceWrap flex-1 scrollbar">
-      <TheResourcePicker
-        :listdata="list"
-        @edit="edit"
-        @append="append"
-        @add-resource="addResource"
-        @remove="remove"
-      />
+  <div class="flex-col" v-loading="loading">
+    <ToolBar></ToolBar>
+    <div class="flex-1 flex-row">
+      <div class="resourceWrap flex-1 scrollbar">
+        <TheResourcePicker
+          :listdata="list"
+          @edit="edit"
+          @append="append"
+          @add-resource="addResource"
+          @remove="remove"
+        />
+      </div>
+      <!-- 表单 -->
+      <el-form
+        class="resourceEditFrom"
+        size="small"
+        ref="editForm"
+        :rules="rules"
+        :model="editForm"
+        label-width="80px"
+      >
+        <el-form-item label="名称" prop="name">
+          <el-input v-model.trim="editForm.name" :maxlength="100"></el-input>
+        </el-form-item>
+        <el-form-item label="方法" v-if="editForm.type === 1" prop="method">
+          <el-radio-group v-model="editForm.method">
+            <el-radio
+              v-for="(item, i) in requestMethods"
+              :key="'m' + i"
+              :label="item.label.toLowerCase()"
+              >{{ item.label }}</el-radio
+            >
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item v-if="editForm.type === 1" label="URL" prop="url">
+          <el-input v-model.trim="editForm.url"></el-input>
+        </el-form-item>
+        <el-form-item v-else label="路由" prop="route">
+          <el-input v-model.trim="editForm.route" :maxlength="100"></el-input>
+        </el-form-item>
+        <el-form-item label="父级">
+          <el-cascader
+            v-model="editForm.pid"
+            :options="list"
+            :props="{ checkStrictly: true, label: 'name', value: 'id' }"
+          ></el-cascader>
+        </el-form-item>
+        <el-form-item label="序号">
+          <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="save">保 存</el-button>
+          <el-button @click="resetFrom">重 置</el-button>
+        </el-form-item>
+      </el-form>
     </div>
-    <!-- 表单 -->
-    <el-form
-      class="resourceEditFrom"
-      size="small"
-      ref="editForm"
-      :rules="rules"
-      :model="editForm"
-      label-width="80px"
-    >
-      <el-form-item label="名称" prop="name">
-        <el-input v-model.trim="editForm.name" :maxlength="100"></el-input>
-      </el-form-item>
-      <el-form-item label="方法" v-if="editForm.type === 1" prop="method">
-        <el-radio-group v-model="editForm.method">
-          <el-radio
-            v-for="(item, i) in requestMethods"
-            :key="'m' + i"
-            :label="item.label.toLowerCase()"
-            >{{ item.label }}</el-radio
-          >
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item v-if="editForm.type === 1" label="URL" prop="url">
-        <el-input v-model.trim="editForm.url"></el-input>
-      </el-form-item>
-      <el-form-item v-else label="路由" prop="route">
-        <el-input v-model.trim="editForm.route" :maxlength="100"></el-input>
-      </el-form-item>
-      <el-form-item label="父级">
-        <el-cascader
-          v-model="editForm.pid"
-          :options="list"
-          :props="{ checkStrictly: true, label: 'name', value: 'id' }"
-        ></el-cascader>
-      </el-form-item>
-      <el-form-item label="序号">
-        <el-input v-model.trim="editForm.orderNum" type="number"></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="save">保 存</el-button>
-        <el-button @click="resetFrom">重 置</el-button>
-      </el-form-item>
-    </el-form>
   </div>
 </template>
 
@@ -117,7 +120,7 @@ export default {
   methods: {
     edit: function (data) {
       this.editForm = util.deepcopy(data);
-      this.editForm.method = this.editForm.method.toLowerCase()
+      this.editForm.method = this.editForm.method.toLowerCase();
     },
     append(item) {
       // 初始化子路由数据

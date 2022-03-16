@@ -25,11 +25,6 @@
           v-model="queryParam.password"
         ></el-input>
       </el-form-item>
-      <div class="flex-row align-center">
-        <div class="flex-1">
-          <el-checkbox v-model="rememberLogin" @change="$store.set('rememberLogin', $event)">记住我</el-checkbox>
-        </div>
-      </div>
       <el-form-item class="submit-item">
         <el-button
           native-type="submit"
@@ -89,7 +84,6 @@ export default {
           },
         ],
       },
-      rememberLogin: this.$store.state.rememberLogin
     };
   },
   methods: {

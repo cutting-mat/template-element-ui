@@ -1,12 +1,12 @@
 <template>
   <div class="scrollbar" v-loading.fullscreen="fullLoading">
     <div class="flex-row" style="margin-top: 20px">
-      <div class="flex-1 box blockLayout scrollbar">
+      <div class="flex-1 box scrollbar">
         <!--  -->
         <uploader v-model="uploadList" :limit="2" :show-file-list="false" />
         <TheFileList v-model="uploadList" :beforeDelete="beforeDelete" />
       </div>
-      <div class="flex-1 box blockLayout">
+      <div class="flex-1 box">
         <h2>Vue全局资源测试</h2>
 
         <div>
@@ -17,7 +17,7 @@
         <div>{{ globalMethodOutput }}</div>
         <div>{{ instanceMethodOutput }}</div>
       </div>
-      <div class="flex-1 box blockLayout">
+      <div class="flex-1 box">
         <h2>Store 功能测试</h2>
         <el-button @click="testStoreFun1"> 同步操作 </el-button>
         <el-button :loading="loading" @click="testStoreFun4">
@@ -38,7 +38,7 @@
       </div>
     </div>
     <div class="flex-row">
-      <div class="flex-1 box blockLayout">
+      <div class="flex-1 box">
         <h2>axios缓存测试</h2>
         <el-button @click="testRequest(true)"> 请求(缓存开) </el-button>
         <el-button @click="testRequest(false)"> 请求(缓存关) </el-button>
@@ -53,7 +53,7 @@
           </div>
         </div>
       </div>
-      <div class="flex-1 box blockLayout">
+      <div class="flex-1 box">
         <h2>存取JSON</h2>
         <el-button @click="saveJSON()"> 保存JSON </el-button>
         <el-button @click="Unauthorized()">
@@ -163,6 +163,11 @@ export default {
 <style scoped>
 .box {
   height: 350px;
+  border-radius: 6px;
+  box-sizing: border-box;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: 0 0 6px rgba(0,0,0,.1);
 }
 
 .log {

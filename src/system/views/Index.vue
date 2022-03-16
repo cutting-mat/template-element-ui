@@ -1,5 +1,7 @@
 <template>
-  <router-view />
+  <div class="scrollbar">
+    <router-view />
+  </div>
 </template>
 
 <script>

@@ -1,9 +1,6 @@
 <template>
-  <div class="scrollbar blockLayout" v-loading.fullscreen="loading">
-    <div class="flex-row align-center toolBar">
-      <div class="flex-1">
-        <!-- title -->
-      </div>
+  <div v-loading="loading">
+    <ToolBar>
       <el-button
         v-if="!picker"
         v-auth="dict.add"
@@ -11,9 +8,10 @@
         size="small"
         icon="el-icon-plus"
         @click="dialogVisible = true"
-        >添加</el-button
       >
-    </div>
+      添加
+      </el-button>
+    </ToolBar>
 
     <!-- list -->
     <el-table :data="list" style="width: 100%" @row-click="handleRowClick">
@@ -53,6 +51,7 @@
             v-auth="dict.itemEdit"
             size="mini"
             type="warning"
+            plain
             @click="editItem(scope.row)"
             >数据维护</el-button
           >
@@ -60,6 +59,7 @@
             v-auth="dict.remove"
             size="mini"
             type="danger"
+            plain
             @click="remove(scope.row)"
             >删除</el-button
           >

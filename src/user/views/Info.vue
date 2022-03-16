@@ -1,30 +1,28 @@
 <template>
-  <div class="scrollbar blockLayout flex-col" v-loading.fullscreen="loading">
-    <div class="flex-row align-center toolBar">
-      <div class="flex-1">
-        <!-- title -->
-      </div>
-    </div>
+  <div class="flex-col" v-loading.fullscreen="loading">
+    <ToolBar></ToolBar>
     <!-- 内容 -->
-    <div class="infoBox">
-      <div class="_avatar">
-        <img :src="userInfo.avatar" alt="" />
-      </div>
-      <el-descriptions border>
-        <el-descriptions-item label="用户名">
-          {{ userInfo.accountName }}
-        </el-descriptions-item>
-        <el-descriptions-item label="手机号">
-          {{ userInfo.accountNumber }}
-        </el-descriptions-item>
-        <el-descriptions-item label="所属组织">
-          {{ userInfo.orgName }}
-        </el-descriptions-item>
+    <div class="flex-1 scrollbar">
+      <div class="infoBox wrap">
+        <div class="_avatar">
+          <img :src="userInfo.avatar" alt="" />
+        </div>
+        <el-descriptions border>
+          <el-descriptions-item label="用户名">
+            {{ userInfo.accountName }}
+          </el-descriptions-item>
+          <el-descriptions-item label="手机号">
+            {{ userInfo.accountNumber }}
+          </el-descriptions-item>
+          <el-descriptions-item label="所属组织">
+            {{ userInfo.orgName }}
+          </el-descriptions-item>
 
-        <el-descriptions-item label="联系地址">
-          江苏省苏州市吴中区吴中大道 1188 号
-        </el-descriptions-item>
-      </el-descriptions>
+          <el-descriptions-item label="联系地址">
+            江苏省苏州市吴中区吴中大道 1188 号
+          </el-descriptions-item>
+        </el-descriptions>
+      </div>
     </div>
   </div>
 </template>
@@ -45,16 +43,11 @@ export default {
 </script>
 
 <style scoped>
-.infoBox {
-  width: 700px;
-  margin: auto;
-  padding: 2em 0;
-}
 .infoBox ._avatar {
   width: 200px;
   height: 200px;
   margin: 0 auto 20px;
-  background:#dedede;
+  background: #dedede;
 }
 .infoBox ._avatar img {
   width: 100%;

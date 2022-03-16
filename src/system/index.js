@@ -2,7 +2,7 @@ export default [{
     path: '/system',
     name: '系统设置',
     meta: {
-        icon: "&#xe606;"
+        icon: ''
     },
     component: (resolve) => require(['./views/Index.vue'], resolve),
     redirect: '/system/account',
@@ -22,7 +22,7 @@ export default [{
         path: 'dict',
         name: '字典管理',
         meta: {
-            icon: '&#xe601;'
+            icon: ''
         },
         component: (resolve) => require(['./views/Dict.vue'], resolve)
     }]

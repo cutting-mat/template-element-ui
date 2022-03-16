@@ -17,6 +17,7 @@ export const components = {
     Breadcrumb: () => import("@/main/components/Breadcrumb.vue"),
     SubNav: () => import("@/main/components/SubNav.vue"),
     Pagination: () => import("@/main/components/Pagination.vue"),
+    ToolBar: () => import("@/main/components/ToolBar.vue"),
 }
 
 /**

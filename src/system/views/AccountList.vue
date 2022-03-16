@@ -1,9 +1,6 @@
 <template>
-  <div class="scrollbar blockLayout" v-loading.fullscreen="loading">
-    <div class="flex-row align-center toolBar">
-      <div class="flex-1">
-        <!-- title -->
-      </div>
+  <div v-loading="loading">
+    <ToolBar>
       <el-button
         v-auth="account.add"
         type="primary"
@@ -12,9 +9,10 @@
         @click="dialogVisible = true"
         >添加</el-button
       >
-    </div>
+    </ToolBar>
+    
     <!-- list -->
-    <el-table :data="list" style="width: 100%">
+    <el-table :data="list">
       <el-table-column
         prop="accountNumber"
         label="账号"
@@ -49,6 +47,7 @@
             v-auth="account.resetPassword"
             size="mini"
             type="warning"
+            plain
             @click="resetPassword(scope.row)"
             >重置密码</el-button
           >
@@ -56,6 +55,7 @@
             v-auth="account.remove"
             size="mini"
             type="danger"
+            plain
             @click="remove(scope.row)"
             >删除</el-button
           >

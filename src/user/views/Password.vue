@@ -1,13 +1,9 @@
 <template>
-  <div class="scrollbar blockLayout flex-col" v-loading.fullscreen="loading">
-    <div class="flex-row align-center toolBar">
-      <div class="flex-1">
-        <!-- title -->
-      </div>
-    </div>
-    <div class="flex-1 scrollbar content-bd">
+  <div class=" flex-col" v-loading.fullscreen="loading">
+    <ToolBar></ToolBar>
+    <div class="flex-1 scrollbar">
       <el-form
-        style="width: 50%"
+        class="wrap"
         :model="ruleForm"
         status-icon
         :rules="rules"
@@ -126,7 +122,5 @@ export default {
 </script>
 
 <style scoped>
-.content-bd {
-  padding: 20px;
-}
+
 </style>
