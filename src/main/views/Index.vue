@@ -1,7 +1,7 @@
 <template>
-  <!-- 为模块单独分配模板 -->
+  <!-- data-v 模板 -->
   <LayoutBlank v-if="$route.path.indexOf('/data-v') === 0" />
-  <!-- 统一模板 -->
+  <!-- 默认模板 -->
   <LayoutMain v-else />
 </template>
 
