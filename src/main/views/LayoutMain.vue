@@ -4,7 +4,7 @@
     <Header />
     <div class="flex-1 flex-row">
       <!-- 菜单 -->
-      <SubNav v-if="$route.path !== '/'" />
+      <SubNav />
       <!-- 首页 -->
       <dashboard v-if="$route.path == '/'" class="flex-1" />
       <!-- 内页 -->

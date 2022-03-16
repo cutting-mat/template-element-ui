@@ -10,7 +10,10 @@
         >
           <div slot="title" class="first flex-row align-center">
             <i
-              :class="['ico', (route.meta && route.meta.icon) || 'el-icon-s-order']"
+              :class="[
+                'ico',
+                (route.meta && route.meta.icon) || 'el-icon-s-order',
+              ]"
             >
             </i>
             <span slot="title">
@@ -65,9 +68,12 @@
           class="flex-row align-center one"
         >
           <i
-              :class="['ico', (route.meta && route.meta.icon) || 'el-icon-s-order']"
-            >
-            </i>
+            :class="[
+              'ico',
+              (route.meta && route.meta.icon) || 'el-icon-s-order',
+            ]"
+          >
+          </i>
           <span slot="title">
             {{ (route.meta && route.meta.title) || route.name }}
           </span>
@@ -79,20 +85,37 @@
 
 <script>
 import { MainRoute } from "@/route.config";
-
-const filterHide = (arr) => {
-  let res = arr.filter((e) => !e.meta || !e.meta.hide);
-  res = res.map((e) => {
-    let _route = Object.assign({}, e);
-    if (_route.children) {
-      _route.children = filterHide(_route.children);
+import { util } from "@/core";
+// 过滤隐藏路由，扩展fullPath
+let filterRoutes = function (routeArray, base) {
+  const array = routeArray.filter((e) => !e.meta || !e.meta.hide);
+  return array.map(item => {
+    const route = util.deepcopy(item);
+    let pathKey =
+      route.path.indexOf("/") === 0
+        ? route.path
+        : [base, route.path].join(base === "/" ? "" : "/");
+    // 扩展fullPath
+    route.fullPath = pathKey;
+    // 扩展meta
+    if (!route.meta) {
+      route.meta = {};
     }
-    return _route;
+    if (Array.isArray(route.children)) {
+      route.children = filterRoutes(route.children, pathKey);
+    }
+    return route;
   });
-  return res;
 };
 
 export default {
+  props: {
+    subMenu: {
+      type: Boolean,
+      required: false,
+      default: false
+    }
+  },
   data() {
     return {
       state: this.$store.state,
@@ -102,7 +125,9 @@ export default {
   },
   computed: {
     menu: function () {
-      return this.$AccessControl ? this.state.DynamicRoute[0].children : MainRoute[0].children;
+      return this.$AccessControl
+        ? this.state.DynamicRoute[0].children
+        : filterRoutes(MainRoute[0].children);
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {
@@ -114,15 +139,18 @@ export default {
   watch: {
     $route: {
       handler(newRoute) {
+        if(!this.subMenu){
+          return null
+        }
         let targetIndex = -1;
         if (Array.isArray(this.list)) {
           targetIndex = this.list.findIndex((item) => {
-            return item.name === newRoute.name;
+            return newRoute.path.indexOf(item.fullPath) === 0;
           });
         }
 
         if (targetIndex === -1) {
-          // console.log('切换主栏目')
+          //console.log("切换主栏目");
           let arr = this.menu.slice();
           let result;
           for (let i = 0; i < arr.length; i++) {
@@ -130,7 +158,7 @@ export default {
               this.$route.path.indexOf(arr[i].path) === 0 &&
               arr[i].children
             ) {
-              result = filterHide(arr[i].children);
+              result = arr[i].children;
               break;
             }
           }
@@ -144,6 +172,11 @@ export default {
       immediate: true,
     },
   },
+  created(){
+    if(!this.subMenu){
+      this.list=this.menu
+    }
+  }
 };
 </script>
 
@@ -153,9 +186,9 @@ export default {
   margin-right: 20px;
   padding: 10px;
   box-sizing: border-box;
-  background:#f5f6f7;
+  background: #f5f6f7;
 }
-.custom-menu >>> .el-menu{
+.custom-menu >>> .el-menu {
   border-right: 0;
   background: transparent;
 }
@@ -188,7 +221,7 @@ export default {
   color: #0265ed;
   background: #e6ecf8;
 }
-.custom-menu >>> .el-menu-item:hover{
+.custom-menu >>> .el-menu-item:hover {
   background: #e6ecf8;
 }
 .custom-menu >>> .el-menu-item-group__title {
@@ -201,8 +234,7 @@ export default {
 .custom-menu >>> .el-submenu .el-menu {
   padding: 0 20px;
 }
-.custom-menu >>> .el-submenu.is-active.is-opened{
+.custom-menu >>> .el-submenu.is-active.is-opened {
   background: transparent;
 }
-
 </style>
