@@ -7,10 +7,10 @@ import Vue from 'vue'
  * @return 只传key会返回该key的值
  * */
 const STORAGE_SPACE = '';           // 指定命名空间, 防止同域子项目间存储混淆
-export const storage = function (key, value) {
-    const storageFun = localStorage;
+export const storage = function (key, value, storageFun = localStorage) {
     key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;           
     if (value === void (0)) {
+        // get
         let lsVal = storageFun.getItem(key);
         if (lsVal && lsVal.indexOf('autostringify-') === 0) {
             return JSON.parse(lsVal.split('autostringify-')[1]);
@@ -18,6 +18,7 @@ export const storage = function (key, value) {
             return lsVal;
         }
     } else {
+        // set
         if ((Object.prototype.toString.call(value) === '[object Object]') || Array.isArray(value)) {
             value = 'autostringify-' + JSON.stringify(value);
         }

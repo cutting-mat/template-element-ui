@@ -2,10 +2,16 @@ import Vue from 'vue';
 import { util } from "@/core";
 
 // 获取用户登录凭据方法
-export const GetAccountToken = () => util.storage("auth")
+export const GetAccountToken = () => {
+    const storageFun = Vue.$store.state.rememberLogin ? localStorage : sessionStorage;
+    return util.storage("auth", undefined, storageFun)
+}
 
 // 设置用户登录凭据方法
-export const SetAccountToken = token => util.storage("auth", token)
+export const SetAccountToken = token => {
+    const storageFun = Vue.$store.state.rememberLogin ? localStorage : sessionStorage;
+    return util.storage("auth", token, storageFun)
+}
 
 // 登录接口数据转用户凭据方法
 export const GetTokenFromLogin = res => res.data.accessToken
