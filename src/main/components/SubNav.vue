@@ -183,7 +183,6 @@ export default {
 <style scoped>
 .custom-menu {
   width: 260px;
-  margin-right: 20px;
   padding: 10px;
   box-sizing: border-box;
   background: #f5f6f7;

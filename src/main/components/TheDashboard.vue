@@ -1,6 +1,6 @@
 <template>
-  <div class="scrollbar" v-loading.fullscreen="fullLoading">
-    <div class="flex-row" style="margin-top: 20px">
+  <div class="scrollbar" v-loading="fullLoading">
+    <div class="flex-row main">
       <div class="flex-1 box scrollbar">
         <!--  -->
         <uploader v-model="uploadList" :limit="2" :show-file-list="false" />
@@ -161,6 +161,9 @@ export default {
 </script>
 
 <style scoped>
+.main{
+  padding: 10px;
+}
 .box {
   height: 350px;
   border-radius: 6px;

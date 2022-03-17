@@ -3,9 +3,7 @@
     <span class="_back" title="返回" @click="back()">
       <i class="el-icon-back"></i>
     </span>
-    <div class="flex-1 _title">
-      {{ title }}
-    </div>
+    <div class="flex-1 _title">{{ title }}</div>
     <slot />
   </div>
 </template>
@@ -33,16 +31,20 @@ export default {
 
 <style scoped>
 .toolBar {
+  position: sticky;
+  top: 0;
+  z-index: 9;
   padding: 10px 0;
+  background: #fff;
 }
-.toolBar ._back{
+.toolBar ._back {
   font-size: 20px;
   cursor: pointer;
   color: #333;
   padding: 0 10px;
 }
-.toolBar ._back:hover{
-  opacity: .8;
+.toolBar ._back:hover {
+  opacity: 0.8;
 }
 .toolBar ._title {
   font-weight: 700;

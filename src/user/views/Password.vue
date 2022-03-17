@@ -1,40 +1,30 @@
 <template>
-  <div class=" flex-col" v-loading.fullscreen="loading">
+  <div v-loading.fullscreen="loading">
     <ToolBar></ToolBar>
-    <div class="flex-1 scrollbar">
-      <el-form
-        class="wrap"
-        :model="ruleForm"
-        status-icon
-        :rules="rules"
-        ref="ruleForm"
-        label-width="100px"
-        @submit.native.prevent="submitForm"
-      >
-        <el-form-item label="原密码" prop="password">
-          <el-input v-model="ruleForm.password"></el-input>
-        </el-form-item>
-        <el-form-item label="新密码" prop="newPassword">
-          <el-input
-            type="password"
-            v-model="ruleForm.newPassword"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
-        <el-form-item label="确认密码" prop="checkPass">
-          <el-input
-            type="password"
-            v-model="ruleForm.checkPass"
-            autocomplete="off"
-          ></el-input>
-        </el-form-item>
+    <el-form
+      class="wrap"
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      ref="ruleForm"
+      label-width="100px"
+      @submit.native.prevent="submitForm"
+    >
+      <el-form-item label="原密码" prop="password">
+        <el-input v-model="ruleForm.password"></el-input>
+      </el-form-item>
+      <el-form-item label="新密码" prop="newPassword">
+        <el-input type="password" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+      </el-form-item>
 
-        <el-form-item>
-          <el-button type="primary" native-type="submit">提交</el-button>
-          <el-button @click="resetForm">重置</el-button>
-        </el-form-item>
-      </el-form>
-    </div>
+      <el-form-item>
+        <el-button type="primary" native-type="submit">提交</el-button>
+        <el-button @click="resetForm">重置</el-button>
+      </el-form-item>
+    </el-form>
   </div>
 </template>
 
@@ -117,10 +107,9 @@ export default {
       this.$refs.ruleForm.resetFields();
     },
   },
-  created: function () {},
+  created: function () { },
 };
 </script>
 
 <style scoped>
-
 </style>

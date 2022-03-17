@@ -8,7 +8,7 @@
       <!-- 首页 -->
       <dashboard v-if="$route.path == '/'" class="flex-1" />
       <!-- 内页 -->
-      <router-view v-else class="flex-1 flex-col _main" />
+      <router-view v-else class="flex-1 main" />
         
     </div>
   </div>
@@ -31,7 +31,7 @@ export default {
 @import url(../assets/style.css);
 
 /* 内容快 */
-.mainLayout ._main {
-  padding-right: 20px;
+.mainLayout .main {
+  padding: 0 20px;
 }
 </style>

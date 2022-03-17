@@ -1,28 +1,18 @@
 <template>
-  <div class="flex-col" v-loading.fullscreen="loading">
+  <div v-loading.fullscreen="loading">
     <ToolBar></ToolBar>
     <!-- 内容 -->
-    <div class="flex-1 scrollbar">
-      <div class="infoBox wrap">
-        <div class="_avatar">
-          <img :src="userInfo.avatar" alt="" />
-        </div>
-        <el-descriptions border>
-          <el-descriptions-item label="用户名">
-            {{ userInfo.accountName }}
-          </el-descriptions-item>
-          <el-descriptions-item label="手机号">
-            {{ userInfo.accountNumber }}
-          </el-descriptions-item>
-          <el-descriptions-item label="所属组织">
-            {{ userInfo.orgName }}
-          </el-descriptions-item>
-
-          <el-descriptions-item label="联系地址">
-            江苏省苏州市吴中区吴中大道 1188 号
-          </el-descriptions-item>
-        </el-descriptions>
+    <div class="infoBox wrap">
+      <div class="_avatar">
+        <img :src="userInfo.avatar" alt />
       </div>
+      <el-descriptions border>
+        <el-descriptions-item label="用户名">{{ userInfo.accountName }}</el-descriptions-item>
+        <el-descriptions-item label="手机号">{{ userInfo.accountNumber }}</el-descriptions-item>
+        <el-descriptions-item label="所属组织">{{ userInfo.orgName }}</el-descriptions-item>
+
+        <el-descriptions-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-descriptions-item>
+      </el-descriptions>
     </div>
   </div>
 </template>
