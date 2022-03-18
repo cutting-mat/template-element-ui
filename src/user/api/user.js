@@ -1,4 +1,4 @@
-import { instance } from "@/core";
+import { axiosInstance as instance } from "@/core";
 
 //登录
 export const login = params => {

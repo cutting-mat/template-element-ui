@@ -123,7 +123,7 @@
         <el-form-item label="角色">
           <DictSelect 
             v-model="editForm.roleId"
-            :load="requestRoles"
+            :request="requestRoles"
             labelKey="name"
           />
             

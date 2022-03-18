@@ -1,4 +1,4 @@
-import { instance } from '@/core';
+import { axiosInstance as instance } from "@/core";
 
 // 上传文件
 export const upload = params => {

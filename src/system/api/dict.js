@@ -1,4 +1,4 @@
-import { instance } from "@/core";
+import { axiosInstance as instance } from "@/core";
 
 //
 export const list = params => {

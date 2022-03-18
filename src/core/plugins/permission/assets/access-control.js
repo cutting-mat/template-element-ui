@@ -1,4 +1,4 @@
-import { util, instance } from "@/core";
+import { util, axiosInstance } from "@/core";
 
 import { MainRoute } from "@/route.config";
 import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/permission.config";
@@ -11,7 +11,7 @@ import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/permissi
 export const matchRequest = function (axiosRequest) {
     let result = null;
     if (typeof axiosRequest === 'function') {
-        let regex = new RegExp(/\.([^(]+)\("([^"]+)"/); // 匹配请求函数：instance.post("/org", params)
+        let regex = new RegExp(/\.([^(]+)\("([^"]+)"/); // 匹配请求函数：axiosInstance.post("/org", params)
         result = axiosRequest.toString().match(regex);
         if (result && result.length > 2) {
             result = [result[1], result[2]].join(",")
@@ -78,7 +78,7 @@ export default function (Vue, routeInstance) {
             /*
              * 设置Axios请求拦截
              */
-            instance.interceptors.request.use((config) => {
+            axiosInstance.interceptors.request.use((config) => {
                 // 支持 header 携带自定义请求权限
                 let requestPermission = config.headers["X-Request-Permission"] || [config.method, config.url.replace(config.baseURL, "").split("?")[0]].join(",");
 
