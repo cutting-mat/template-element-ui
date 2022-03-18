@@ -3,8 +3,7 @@
     <div class="flex-row main">
       <div class="flex-1 box scrollbar">
         <!--  -->
-        <uploader v-model="uploadList" :limit="2" :show-file-list="false" />
-        <TheFileList v-model="uploadList" :beforeDelete="beforeDelete" />
+        <uploader v-model="uploadList" :limit="2" />
       </div>
       <div class="flex-1 box">
         <h2>Vue全局资源测试</h2>
@@ -71,9 +70,6 @@ import { saveJSON, Unauthorized } from "@/main/api/common";
 import { info } from "@/user/api/user";
 
 export default {
-  components: {
-    TheFileList: () => import("./TheFileList.vue"),
-  },
   data() {
     return {
       fullLoading: false,
