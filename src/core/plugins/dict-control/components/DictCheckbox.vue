@@ -15,7 +15,7 @@ export default {
   },
   props: {
     value: {
-      type: [String, Number],
+      type: Array,
       required: false,
     },
     valueKey: {

@@ -1,8 +1,6 @@
-// 全局组件
-import * as resources from "@/vue-global-resource"
 
 export default {
-    install: function (Vue) {
+    install: function (Vue, resources) {
         // 注册过滤器
         Object.keys(resources.filters).forEach(key => {
             Vue.filter(key, resources.filters[key])

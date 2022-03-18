@@ -1,6 +1,6 @@
 <template>
   <el-select v-bind="$attrs" v-model="bindValue" @change="$emit('change', $event)">
-    <el-option :label="placeholder || '全部'" :value="null" v-if="nullAble"></el-option>
+    <el-option :label="$attrs.placeholder || '全部'" :value="null" v-if="nullAble"></el-option>
     <el-option
       v-for="item in list"
       :key="item.value"

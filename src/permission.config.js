@@ -1,5 +1,12 @@
 import Vue from 'vue';
-import { util } from "@/core";
+import { util, routeGenerator } from "@/core";
+
+const routeInstance = routeGenerator()
+// 权限插件配置
+export default {
+    AccessControl: false,    // 权限控制
+    routeInstance
+}
 
 // 获取用户登录凭据方法
 export const GetAccountToken = () => {

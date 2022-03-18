@@ -1,6 +1,6 @@
 <template>
   <el-radio-group v-bind="$attrs" v-model="bindValue" @change="$emit('change', $event)">
-    <el-radio :label="null" v-if="nullAble">{{ placeholder || '全部' }}</el-radio>
+    <el-radio :label="null" v-if="nullAble">{{ $attrs.placeholder || '全部' }}</el-radio>
     <el-radio v-for="item in list" :key="item.value" :label="item[valueKey]">{{ item[labelKey] }}</el-radio>
   </el-radio-group>
 </template>

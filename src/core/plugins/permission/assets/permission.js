@@ -42,7 +42,6 @@ export default {
         Vue.prototype.$Permission = function (loginCallback) {
             const checkAccount = (loginPayload) => {
                 const userToken = GetAccountToken();
-
                 if (userToken) {
                     // 设置请求头
                     instance.defaults.headers.common['Authorization'] = userToken;

@@ -12,4 +12,4 @@ export const install = function (Vue, option) {
     }
 }
 
-export { default as config } from "./config";
+export { default as config } from "@/plugin.dict-control.config";

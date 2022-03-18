@@ -4,7 +4,7 @@
 import coreComponents from "@/core/components";
 import Header from '@/main/components/Header.vue'
 
-export const components = {
+const components = {
     // 框架内置组件
     ...coreComponents,
     // 业务组件
@@ -20,14 +20,14 @@ export const components = {
  * */ 
 import { util } from '@/core'
 
-export const filters = {
+const filters = {
     date: util.formatDate
 }
 
 /**
  * 全局方法
  * */ 
-export const methods = {
+const methods = {
     globalMethod: function(){
         return ('test globalMethod output!')
     }
@@ -36,7 +36,7 @@ export const methods = {
 /**
  * 全局指令
  * */ 
-export const directives = {
+const directives = {
     'auth': {
         // 不开启权限控制时避免v-auth指令报错
     },
@@ -53,9 +53,17 @@ export const directives = {
 /**
  * 实例方法
  * */ 
-export const $methods = {
+const $methods = {
     $myMethod: function(){
         // 用于测试可删除
         return ('test instance method output!')
     }
+}
+
+export default {
+    components,
+    filters,
+    methods,
+    directives,
+    $methods
 }
