@@ -1,17 +1,12 @@
 /**
  * 全局组件
  * */ 
+import coreComponents from "@/core/components";
 import Header from '@/main/components/Header.vue'
 
 export const components = {
-    // 内置组件
-    CURD:  () => import("@/core/components/CURD.vue"),
-    DictCascader:  () => import("@/core/components/DictCascader.vue"),
-    DictCheckbox:  () => import("@/core/components/DictCheckbox.vue"),
-    DictRadio:  () => import("@/core/components/DictRadio.vue"),
-    DictSelect:  () => import("@/core/components/DictSelect.vue"),
-    InputNumber:  () => import("@/core/components/InputNumber.vue"),
-    InputPassword:  () => import("@/core/components/InputPassword.vue"),
+    // 框架内置组件
+    ...coreComponents,
     // 业务组件
     Header,
     Breadcrumb: () => import("@/main/components/Breadcrumb.vue"),

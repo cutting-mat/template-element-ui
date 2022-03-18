@@ -17,10 +17,9 @@ Vue.use(ElementUI);
 // 全局样式
 import '@/core/assets/global.css';
 
-// 上传组件
-import uploader from '@cutting-mat/uploader';
-import uploadConfig from "@/upload.config";
-Vue.use(uploader, uploadConfig);
+// 核心插件
+import plugins from '@/core/plugins';
+Vue.use(plugins);
 
 // 状态管理插件
 import store from '@cutting-mat/vue-store';

@@ -59,6 +59,13 @@
           未授权请求
         </el-button>
       </div>
+      <div class="flex-1 box">
+        <h2>字典控件</h2>
+        <dict-select v-model="dictSelectValue" param="select123"></dict-select>
+        <dict-radio v-model="dictRadioValue" param="radio123"></dict-radio>
+        <dict-checkbox v-model="dictCheckbox" param="check123"></dict-checkbox>
+        <dict-cascader v-model="dictCasader" param="cascader123"></dict-cascader>
+      </div>
     </div>
   </div>
 </template>
@@ -78,6 +85,10 @@ export default {
       log: [],
       globalMethodOutput: "",
       instanceMethodOutput: "",
+      dictSelectValue: null,
+      dictRadioValue: null,
+      dictCheckbox: [],
+      dictCasader: []
     };
   },
   computed: {
