@@ -16,9 +16,10 @@ export default function (config) {
       routes: BypassRoute
     });
 
-    if(config && config.beforeEach){
-      routeInstance.beforeEach(config.beforeEach)
-    }
+  }
+
+  if (config && config.beforeEach) {
+    routeInstance.beforeEach(config.beforeEach)
   }
 
   return routeInstance
