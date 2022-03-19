@@ -14,7 +14,7 @@
         <el-input v-model="ruleForm.password"></el-input>
       </el-form-item>
       <el-form-item label="新密码" prop="newPassword">
-        <el-input type="password" v-model="ruleForm.newPassword" autocomplete="off"></el-input>
+        <input-password v-model="ruleForm.newPassword" autocomplete="off"></input-password>
       </el-form-item>
       <el-form-item label="确认密码" prop="checkPass">
         <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>

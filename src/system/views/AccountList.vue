@@ -7,27 +7,14 @@
         size="small"
         icon="el-icon-plus"
         @click="dialogVisible = true"
-        >添加</el-button
-      >
+      >添加</el-button>
     </ToolBar>
-    
+
     <!-- list -->
     <el-table :data="list">
-      <el-table-column
-        prop="accountNumber"
-        label="账号"
-        align="center"
-      ></el-table-column>
-      <el-table-column
-        prop="accountName"
-        label="用户名"
-        align="center"
-      ></el-table-column>
-      <el-table-column 
-        prop="roleName" 
-        label="角色" 
-        align="center">
-      </el-table-column>
+      <el-table-column prop="accountNumber" label="账号" align="center"></el-table-column>
+      <el-table-column prop="accountName" label="用户名" align="center"></el-table-column>
+      <el-table-column prop="roleName" label="角色" align="center"></el-table-column>
       <el-table-column label="状态" width="80" align="center">
         <template slot-scope="scope">
           <template v-if="!scope.row.state">
@@ -40,25 +27,21 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
-          <el-button v-auth="account.edit" size="mini" @click="edit(scope.row)"
-            >编辑</el-button
-          >
+          <el-button v-auth="account.edit" size="mini" @click="edit(scope.row)">编辑</el-button>
           <el-button
             v-auth="account.resetPassword"
             size="mini"
             type="warning"
             plain
             @click="resetPassword(scope.row)"
-            >重置密码</el-button
-          >
+          >重置密码</el-button>
           <el-button
             v-auth="account.remove"
             size="mini"
             type="danger"
             plain
             @click="remove(scope.row)"
-            >删除</el-button
-          >
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -79,51 +62,32 @@
       width="600px"
       @close="handleCloseDialog"
     >
-      <el-form
-        size="small"
-        ref="editForm"
-        :rules="rules"
-        :model="editForm"
-        label-width="80px"
-      >
+      <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
         <el-form-item label="头像" prop="avatar">
           <uploader
             class="upload_avatar"
             accept="t-image"
-            :value="editForm.avatar ? [{url: editForm.avatar}] : []"
+            :value="editForm.avatar ? [{ url: editForm.avatar }] : []"
             imgCrop
             :show-file-list="false"
-            :on-success="(res) => {editForm.avatar = res.url}"
+            :on-success="(res) => { $set(editForm, 'avatar', res.url) }"
           >
             <img v-if="editForm.avatar" :src="editForm.avatar" alt />
+            <span v-else>上传头像</span>
           </uploader>
         </el-form-item>
         <el-form-item label="账号" prop="accountNumber">
-          <el-input
-            v-model.trim="editForm.accountNumber"
-            :maxlength="100"
-          ></el-input>
+          <el-input v-model.trim="editForm.accountNumber" :maxlength="100"></el-input>
         </el-form-item>
         <el-form-item label="用户名" prop="accountName">
-          <el-input
-            v-model.trim="editForm.accountName"
-            :maxlength="100"
-          ></el-input>
+          <el-input v-model.trim="editForm.accountName" :maxlength="100"></el-input>
         </el-form-item>
         <template v-if="!editForm.id">
           <el-form-item label="密码" prop="password">
-            <el-input
-              type="password"
-              v-model="editForm.password"
-              autocomplete="off"
-            ></el-input>
+            <input-password v-model="editForm.password" autocomplete="off"></input-password>
           </el-form-item>
           <el-form-item label="确认密码" prop="checkPass">
-            <el-input
-              type="password"
-              v-model="editForm.checkPass"
-              autocomplete="off"
-            ></el-input>
+            <el-input type="password" v-model="editForm.checkPass" autocomplete="off"></el-input>
           </el-form-item>
         </template>
         <el-form-item label="所属组织" prop="orgId">
@@ -134,12 +98,7 @@
           ></OrgPicker>
         </el-form-item>
         <el-form-item label="角色">
-          <DictSelect 
-            v-model="editForm.roleId"
-            :request="requestRoles"
-            labelKey="name"
-          />
-            
+          <DictSelect v-model="editForm.roleId" :request="requestRoles" labelKey="name" />
         </el-form-item>
         <el-form-item label="状态">
           <el-switch
@@ -345,7 +304,7 @@ export default {
           this.loading = false;
         });
     },
-    
+
   },
   created: function () {
     this.fetchData();
@@ -355,13 +314,15 @@ export default {
 </script>
 
 <style scoped>
-.userEditDialog >>> .upload_avatar{
+.userEditDialog >>> .upload_avatar {
   display: block;
   width: 120px;
-  height:120px;
+  height: 120px;
+  line-height: 120px;
   background: #dedede;
+  text-align: center;
 }
-.userEditDialog >>> .upload_avatar img{
+.userEditDialog >>> .upload_avatar img {
   width: 100%;
   height: 100%;
   object-fit: cover;
