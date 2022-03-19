@@ -72,6 +72,7 @@
     />
     <!-- 弹窗 -->
     <el-dialog
+      class="userEditDialog"
       :close-on-click-modal="false"
       title="账号信息"
       :visible="dialogVisible"
@@ -87,7 +88,7 @@
       >
         <el-form-item label="头像" prop="avatar">
           <uploader
-            class="_avatar"
+            class="upload_avatar"
             accept="t-image"
             :value="editForm.avatar ? [{url: editForm.avatar}] : []"
             imgCrop
@@ -354,4 +355,15 @@ export default {
 </script>
 
 <style scoped>
+.userEditDialog >>> .upload_avatar{
+  display: block;
+  width: 120px;
+  height:120px;
+  background: #dedede;
+}
+.userEditDialog >>> .upload_avatar img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 </style>
