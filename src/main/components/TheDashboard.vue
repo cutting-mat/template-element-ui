@@ -88,7 +88,8 @@ export default {
       dictSelectValue: null,
       dictRadioValue: null,
       dictCheckbox: [],
-      dictCasader: []
+      dictCasader: [],
+      num: null
     };
   },
   computed: {

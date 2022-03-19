@@ -24,15 +24,17 @@ export default {
       required: false,
       default: "",
     },
-    range: {
-      /*控制输入区间*/
-      type: Array,
+    min: {
+      type: Number,
       required: false,
-      default: () => {
-        return [];
-      },
+      default: -Infinity
     },
-    decimals: {
+    max: {
+      type: Number,
+      required: false,
+      default: Infinity
+    },
+    precision: {
       /*保留小数位*/
       type: Number,
       required: false,
@@ -97,7 +99,7 @@ export default {
         return null;
       }
 
-      const dec = this.decimals;
+      const dec = this.precision;
 
       if (result.split && this.zeroFill && dec > 0) {
         const pointIndex = result.indexOf(".");
@@ -118,19 +120,17 @@ export default {
     handleChange() {
       let inputValue = this.myValue;
       // 输入区间校验
-      if (Array.isArray(this.range) && this.range.length === 2) {
-        const rangeNumber = this.range.map((e) => parseFloat(e));
-        if (!isNaN(rangeNumber[0]) && inputValue < rangeNumber[0]) {
-          inputValue = rangeNumber[0];
-        }
-        if (!isNaN(rangeNumber[1]) && inputValue > rangeNumber[1]) {
-          inputValue = rangeNumber[1];
-        }
+      if (inputValue < this.min) {
+        inputValue = this.min;
       }
+      if (inputValue > this.max) {
+        inputValue = this.max;
+      }
+      
       // 小数位数处理
-      this.myValue = this.retainDecimal(inputValue, this.decimals);
+      this.myValue = this.retainDecimal(inputValue, this.precision);
       // 补零
-      if (this.zeroFill && this.decimals > 0) {
+      if (this.zeroFill && this.precision > 0) {
         this.$nextTick(() => {
           this.myValue = this.fillZero(this.myValue);
         });

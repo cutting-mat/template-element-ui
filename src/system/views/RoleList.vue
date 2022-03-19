@@ -49,7 +49,7 @@
       class="comDialog"
       title="权限信息"
       :visible="dialogVisible"
-      width="800px"
+      width="600px"
       @close="handleCloseDialog"
     >
       <el-form

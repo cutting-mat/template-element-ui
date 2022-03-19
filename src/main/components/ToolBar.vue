@@ -47,8 +47,7 @@ export default {
   opacity: 0.8;
 }
 .toolBar ._title {
-  font-weight: 700;
-  font-size: 20px;
+  font-size: 18px;
   color: #333;
 }
 </style>

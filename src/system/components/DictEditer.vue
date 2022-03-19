@@ -65,7 +65,7 @@
         :close-on-click-modal="false"
         title="字典数据"
         :visible="dialogVisible"
-        width="800px"
+        width="600px"
         append-to-body
         @close="handleCloseDialog"
       >

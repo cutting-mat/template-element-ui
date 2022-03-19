@@ -75,7 +75,7 @@
       :close-on-click-modal="false"
       title="账号信息"
       :visible="dialogVisible"
-      width="800px"
+      width="600px"
       @close="handleCloseDialog"
     >
       <el-form
@@ -85,6 +85,18 @@
         :model="editForm"
         label-width="80px"
       >
+        <el-form-item label="头像" prop="avatar">
+          <uploader
+            class="_avatar"
+            accept="t-image"
+            :value="editForm.avatar ? [{url: editForm.avatar}] : []"
+            imgCrop
+            :show-file-list="false"
+            :on-success="(res) => {editForm.avatar = res.url}"
+          >
+            <img v-if="editForm.avatar" :src="editForm.avatar" alt />
+          </uploader>
+        </el-form-item>
         <el-form-item label="账号" prop="accountNumber">
           <el-input
             v-model.trim="editForm.accountNumber"
