@@ -24,3 +24,8 @@ export const editPassword = params => {
 export const switchRole = params => {
     return instance.get(`/switchIdentity`, { params })
 }
+
+// 验证身份
+export const authCode = params => {
+    return instance.get(`/authCode`, { params })
+}
