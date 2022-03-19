@@ -25,6 +25,9 @@
           v-model="queryParam.password"
         ></el-input>
       </el-form-item>
+      <div>
+        <el-checkbox :value="$store.state.rememberLogin" @change="$store.set('rememberLogin', $event)">记住我</el-checkbox>
+      </div>
       <el-form-item class="submit-item">
         <el-button
           native-type="submit"
