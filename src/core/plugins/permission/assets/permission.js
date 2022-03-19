@@ -17,6 +17,10 @@ export default {
             MainRoute.forEach(route => {
                 config.routeInstance.addRoute(route)
             })
+            config.routeInstance.addRoute({
+                path: "*",
+                redirect: "/404",
+            });
         }
 
         config.routeInstance.beforeEach((to, from, next) => {
