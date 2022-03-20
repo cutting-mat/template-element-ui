@@ -3,21 +3,18 @@
     <ToolBar></ToolBar>
     <el-form
       class="wrap"
-      :model="ruleForm"
+      :model="formData"
       status-icon
       :rules="rules"
-      ref="ruleForm"
+      ref="form"
       label-width="100px"
       @submit.native.prevent="submitForm"
     >
-      <el-form-item label="原密码" prop="password">
-        <el-input v-model="ruleForm.password"></el-input>
-      </el-form-item>
       <el-form-item label="新密码" prop="newPassword">
-        <input-password v-model="ruleForm.newPassword" autocomplete="off"></input-password>
+        <input-password v-model="formData.newPassword" autocomplete="off"></input-password>
       </el-form-item>
       <el-form-item label="确认密码" prop="checkPass">
-        <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+        <el-input type="password" v-model="formData.checkPass" autocomplete="off"></el-input>
       </el-form-item>
 
       <el-form-item>
@@ -25,6 +22,8 @@
         <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
+    <!-- 验证身份 -->
+    <auth v-model="openAuth" @success="formData.authCode = $event" />
   </div>
 </template>
 
@@ -37,8 +36,8 @@ export default {
       if (value === "") {
         callback(new Error("请输入密码"));
       } else {
-        if (this.ruleForm.checkPass !== "") {
-          this.$refs.ruleForm.validateField("checkPass");
+        if (this.formData.checkPass !== "") {
+          this.$refs.form.validateField("checkPass");
         }
         callback();
       }
@@ -46,7 +45,7 @@ export default {
     const validatePass2 = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请再次输入密码"));
-      } else if (value !== this.ruleForm.newPassword) {
+      } else if (value !== this.formData.newPassword) {
         callback(new Error("两次输入密码不一致!"));
       } else {
         callback();
@@ -55,8 +54,8 @@ export default {
 
     return {
       loading: false,
-      ruleForm: {
-        password: "",
+      formData: {
+        authCode: "",
         checkPass: "",
         newPassword: "",
       },
@@ -71,43 +70,40 @@ export default {
           },
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
-        password: [
-          { required: true, message: "请输入原密码", trigger: "blur" },
-        ],
       },
+      openAuth: false
     };
   },
   methods: {
     submitForm() {
-      this.$refs.ruleForm.validate((valid) => {
+      this.$refs.form.validate((valid) => {
         if (valid) {
-          this.submit();
+          this.loading = true;
+          let queryParam = Object.assign({}, this.formData);
+          delete queryParam.checkPass;
+          user
+            .editPassword(queryParam)
+            .then(() => {
+              this.loading = false;
+              this.resetForm();
+              this.$message({
+                message: "操作成功",
+                type: "success",
+              });
+            })
+            .catch(() => {
+              this.loading = false;
+            });
         }
       });
     },
-    submit: function () {
-      this.loading = true;
-      let queryParam = Object.assign({}, this.ruleForm);
-      delete queryParam.checkPass;
-      user
-        .editPassword(queryParam)
-        .then(() => {
-          this.loading = false;
-          this.resetForm();
-          this.$message({
-            message: "操作成功",
-            type: "success",
-          });
-        })
-        .catch(() => {
-          this.loading = false;
-        });
-    },
     resetForm() {
-      this.$refs.ruleForm.resetFields();
+      this.$refs.form.resetFields();
     },
   },
-  created: function () { },
+  created: function () {
+    this.openAuth = true;
+  },
 };
 </script>
 

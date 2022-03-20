@@ -73,6 +73,10 @@
   border-bottom: 1px solid #ebedf4;
 }
 
+.el-dialog__body{
+  padding: 20px;
+}
+
 .el-dialog__footer {
   text-align: center;
 }
