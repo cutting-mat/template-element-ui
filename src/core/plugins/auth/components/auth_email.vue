@@ -3,35 +3,40 @@
         ref="form"
         :model="formData"
         :rules="rules"
-        label-width="80px"
         label-position="left"
         class="auth_email"
         :v-loading="loading"
     >
-        <el-form-item label="验证方式">邮箱验证</el-form-item>
-        <el-form-item label="安全邮箱">{{ anonymousEmail }}</el-form-item>
-        <el-form-item label="输入邮箱" prop="inputEmail">
-            <el-input v-model="formData.inputEmail" placeholder="请输入安全邮箱"></el-input>
+        <el-form-item>安全邮箱：{{ anonymousEmail }}</el-form-item>
+        <el-form-item prop="inputEmail">
+            <el-input
+                v-model="formData.inputEmail"
+                placeholder="请输入安全邮箱"
+                prefix-icon="el-icon-message"
+            ></el-input>
         </el-form-item>
-        <el-form-item label="验证码" prop="validCode">
+        <el-form-item prop="validCode">
             <el-input v-model="formData.validCode" placeholder="请输入验证码">
-                <countdownButton ref="countdownButton" slot="append" type="primary" :number="30" @click="sendValidCode">获取验证码</countdownButton>
+                <countdownButton
+                    ref="countdownButton"
+                    slot="append"
+                    type="primary"
+                    :number="30"
+                    @click="sendValidCode"
+                >获取验证码</countdownButton>
             </el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" @click="handleSubmit">立即验证</el-button>
+            <el-button type="primary" style="width:100%" @click="handleSubmit">立即验证</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
 import { emailValidCode } from "@/main/api/common"
-import {authCode} from "@/user/api/user";
+import { authCode } from "@/user/api/user";
 
 export default {
-    props: {
-        msg: String,
-    },
     data() {
         const validateEmail = (rule, value, callback) => {
             if (!value) {
@@ -104,43 +109,40 @@ export default {
                         emailValidCode: this.formData.validCode
                     }).then(res => {
                         this.loading = false;
-                        if(res.data.authCode){
+                        if (res.data.authCode) {
                             this.$emit('success', res.data.authCode)
-                        }else{
+                        } else {
                             this.$message.warning(`验证失败：${res.data}`)
                         }
-                        
+
                     }).catch(() => {
                         this.loading = false;
                     })
-                    
+
                 }
             })
-            
+
         }
     }
 };
 </script>
 
 <style scoped>
-.auth_email {
-    margin-top: 10px;
-}
 .auth_email >>> .el-input-group__append {
     background-color: #409eff;
     border: 0;
 }
-.auth_email >>> .el-input-group__append .el-button{
+.auth_email >>> .el-input-group__append .el-button {
     border-radius: 0;
     margin: 0 -20px;
 }
 .auth_email >>> .el-input-group__append .el-button--primary {
     color: #fff;
     background-color: #409eff;
-    border:1px solid #409eff;
+    border: 1px solid #409eff;
 }
 
-.auth_email >>> .el-input-group__append .el-button.is-disabled{
+.auth_email >>> .el-input-group__append .el-button.is-disabled {
     background-color: #a0cfff;
     border-color: #a0cfff;
 }
