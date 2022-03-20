@@ -11,8 +11,8 @@
  * imgCompress[Boolean]:        开启图片上传前压缩, default: true
  * imgCompressOption[Object]:   图片压缩尺寸配置, default: 
     {
-        width: 1000,            // 最大宽度
-        height: 1000,           // 最大高度
+        maxWidth: 1000,            // 最大宽度
+        maxHeight: 1000,           // 最大高度
     }
  * imgCrop[Boolean]:            开启图片上传前剪裁, default: false
  * imgCropOption[Object]:       图片剪裁配置, default: 
