@@ -6,34 +6,41 @@
       <uploader
         class="upload_avatar"
         accept="t-image"
-        :value="userInfo.avatar ? [{url: userInfo.avatar}] : []"
+        :value="userInfo.avatar ? [{ url: userInfo.avatar }] : []"
         imgCrop
         :show-file-list="false"
         :on-success="handleUpload"
       >
         <img v-if="userInfo.avatar" :src="userInfo.avatar" alt />
-        <span v-else>
-          上传头像
-        </span>
+        <span v-else>上传头像</span>
       </uploader>
-      <el-descriptions border>
-        <el-descriptions-item label="用户名">{{ userInfo.accountName }}</el-descriptions-item>
-        <el-descriptions-item label="手机号">{{ userInfo.accountNumber }}</el-descriptions-item>
-        <el-descriptions-item label="所属组织">{{ userInfo.orgName }}</el-descriptions-item>
-
-        <el-descriptions-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-descriptions-item>
-      </el-descriptions>
+      <el-form label-width="80px" label-position="left" size="small">
+        <el-form-item label="用户名">{{ userInfo.accountName }}</el-form-item>
+        <el-form-item label="密码">
+          <el-button type="text" @click="handleChangePw">
+            修改密码
+            <i class="el-icon-edit"></i>
+          </el-button>
+        </el-form-item>
+        <el-form-item label="手机号">{{ userInfo.accountNumber }}</el-form-item>
+        <el-form-item label="所属组织">{{ userInfo.orgName }}</el-form-item>
+        <el-form-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-form-item>
+      </el-form>
     </div>
+    <!-- 验证身份 -->
+    <auth ref="auth" />
   </div>
 </template>
 
 <script>
 import { edit } from "@/system/api/account"
+import { authCode } from "../api/user";
 
 export default {
   data() {
     return {
       loading: false,
+      openAuth: false
     };
   },
   computed: {
@@ -60,6 +67,16 @@ export default {
           this.loading = false;
         })
       }
+    },
+    handleChangePw() {
+      this.$refs.auth.auth().then(authCode => {
+        this.$router.push({
+          name: '修改密码',
+          query: {
+            authCode
+          }
+        })
+      })
     }
   }
 };

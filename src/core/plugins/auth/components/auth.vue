@@ -1,13 +1,25 @@
 <template>
-    <el-dialog append-to-body :visible.sync="dialogVisible" width="500px">
-        <div slot="title">
-            验证身份（{{currentAuthType.title}}）
-        </div>
-        <el-alert title="为确保您的账号安全，请先验证身份" type="success" show-icon :closable="false" style="margin-bottom:20px"></el-alert>
+    <el-dialog
+        append-to-body
+        :visible.sync="dialogVisible"
+        width="500px"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+    >
+        <div slot="title">验证身份（{{ currentAuthType.title }}）</div>
+        <el-alert
+            title="为确保您的账号安全，请先验证身份"
+            type="success"
+            show-icon
+            :closable="false"
+            style="margin-bottom:20px"
+        ></el-alert>
         <component :is="currentAuthType.name" @success="handleSuccess" />
         <div class="otherType" v-if="otherTypes.length">
             <ul class="flex-row">
-                <li v-for="(type, index) in otherTypes" :key="index"
+                <li
+                    v-for="(type, index) in otherTypes"
+                    :key="index"
                     class="flex-1 _item"
                     :title="type.title"
                     @click="currentAuthType = type"
@@ -46,7 +58,8 @@ export default {
         return {
             authTypes,
             dialogVisible: false,
-            currentAuthType: authTypes[0]
+            currentAuthType: authTypes[0],
+            result: null
         }
     },
     computed: {
@@ -71,46 +84,56 @@ export default {
     },
     methods: {
         handleSuccess(authCode) {
-            console.log('authCode', authCode)
+            this.result = authCode;
             this.dialogVisible = false;
             this.$emit('success', authCode)
+        },
+        auth() {
+            if (this.dialogVisible !== true) {
+                this.result = null;
+                this.dialogVisible = true;
+                return new Promise(resolve => {
+                    this.$watch("result", resolve);
+                })
+            }
+
         }
     },
-    created(){
+    created() {
         console.log(components)
     }
 };
 </script>
 
 <style scoped>
-.otherType{
+.otherType {
     position: relative;
     margin: 40px 0 20px;
     border-top: 1px solid #dedede;
     padding-top: 20px;
     text-align: center;
 }
-.otherType::before{
+.otherType::before {
     content: "其他验证方式";
     position: absolute;
     left: 50%;
     top: -1.5em;
     margin-left: -4em;
     width: 8em;
-    background:#fff;
+    background: #fff;
     height: 3em;
     line-height: 3em;
 }
-.otherType ._item{
+.otherType ._item {
     font-size: 12px;
     cursor: pointer;
 }
-.otherType ._ico{
+.otherType ._ico {
     width: 40px;
     height: 40px;
     margin: auto;
 }
-.otherType ._ico img{
+.otherType ._ico img {
     width: 100%;
     height: 100%;
     object-fit: contain;

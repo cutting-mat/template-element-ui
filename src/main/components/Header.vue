@@ -24,7 +24,9 @@
         <i class="el-icon-caret-bottom"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
+        <el-dropdown-item command="userInfo">个人信息</el-dropdown-item>
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
+        
       </el-dropdown-menu>
     </el-dropdown>
   </header>
@@ -43,6 +45,9 @@ export default {
   methods: {
     handleCommand: function (command) {
       switch (command) {
+        case "userInfo":
+          this.$router.push({name: "个人信息"})
+          break;
         case "logout":
           this.logout();
           break;

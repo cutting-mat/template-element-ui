@@ -10,6 +10,14 @@
       label-width="100px"
       @submit.native.prevent="submitForm"
     >
+      <el-alert
+        v-if="!formData.authCode"
+        title="未验证用户身份，请返回重试！"
+        type="error"
+        show-icon
+        :closable="false"
+        style="margin-bottom:20px"
+      ></el-alert>
       <el-form-item label="新密码" prop="newPassword">
         <input-password v-model="formData.newPassword" autocomplete="off"></input-password>
       </el-form-item>
@@ -19,11 +27,8 @@
 
       <el-form-item>
         <el-button type="primary" native-type="submit">提交</el-button>
-        <el-button @click="resetForm">重置</el-button>
       </el-form-item>
     </el-form>
-    <!-- 验证身份 -->
-    <auth v-model="openAuth" @success="formData.authCode = $event" />
   </div>
 </template>
 
@@ -71,7 +76,7 @@ export default {
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
       },
-      openAuth: false
+
     };
   },
   methods: {
@@ -85,10 +90,12 @@ export default {
             .editPassword(queryParam)
             .then(() => {
               this.loading = false;
-              this.resetForm();
               this.$message({
                 message: "操作成功",
                 type: "success",
+                onClose: () => {
+                  this.$router.go(-1)
+                }
               });
             })
             .catch(() => {
@@ -97,12 +104,12 @@ export default {
         }
       });
     },
-    resetForm() {
-      this.$refs.form.resetFields();
-    },
+    
   },
   created: function () {
-    this.openAuth = true;
+    if (this.$route.query.authCode) {
+      this.formData.authCode = this.$route.query.authCode
+    }
   },
 };
 </script>
