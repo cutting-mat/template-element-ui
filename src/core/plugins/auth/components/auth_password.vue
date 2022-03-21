@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { authCode } from "@/user/api/user";
+import { authCode } from "@/system/api/personal";
 
 export default {
     data() {

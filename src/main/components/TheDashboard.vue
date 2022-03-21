@@ -76,7 +76,7 @@
 import Vue from "vue";
 //import { util } from "@/core";
 import { saveJSON, Unauthorized } from "@/main/api/common";
-import { info } from "@/user/api/user";
+import { info } from "@/system/api/personal";
 
 export default {
   data() {

@@ -8,15 +8,15 @@
 import main from '@/main/index'
 
 // 业务模块
-import system from '@/system'
 import user from '@/user'
+import system from '@/system'
 
 
 // 主路由
 export const MainRoute = [Object.assign({}, main[0], {
     children: [
-        ...system,
         ...user,
+        ...system,
     ]
 })];
 

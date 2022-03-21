@@ -5,25 +5,20 @@ export default [{
         icon: ''
     },
     component: (resolve) => require(['./views/Index.vue'], resolve),
-    redirect: '/system/account',
+    redirect: '/system/Profile',
     children: [{
-        path: 'Account',
-        name: '账号管理',
-        component: (resolve) => require(['./views/Account.vue'], resolve)
+        path: 'Profile',
+        name: '个人信息',
+        component: (resolve) => require(['./views/Profile.vue'], resolve)
     }, {
-        path: 'Organization',
-        name: '组织管理',
-        component: (resolve) => require(['./views/Organization.vue'], resolve)
+        path: 'Password',
+        name: '修改密码',
+        meta: {
+            hide: true
+        },
+        component: (resolve) => require(['./views/Password.vue'], resolve)
     }, {
-        path: 'Role',
-        name: '角色管理',
-        component: (resolve) => require(['./views/Role.vue'], resolve)
-    }, {
-        path: 'Resource',
-        name: '资源管理',
-        component: (resolve) => require(['./views/Resource.vue'], resolve)
-    }, {
-        path: 'dict',
+        path: 'Dict',
         name: '字典管理',
         meta: {
             icon: ''

@@ -33,8 +33,7 @@
 </template>
 
 <script>
-import { edit } from "@/system/api/account"
-import { authCode } from "../api/user";
+import { edit } from "@/user/api/account"
 
 export default {
   data() {

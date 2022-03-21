@@ -34,7 +34,7 @@
 
 <script>
 import { emailValidCode } from "@/main/api/common"
-import { authCode } from "@/user/api/user";
+import { authCode } from "@/system/api/personal";
 
 export default {
     data() {

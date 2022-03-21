@@ -3,21 +3,14 @@
 </template>
 
 <script>
-//import { util } from "@/core";
-
 export default {
   data() {
     return {};
   },
-  methods: {
-    
-  },
-  created() {
-    
-  }
+  methods: {},
+  created: function () {},
 };
 </script>
 
 <style scoped>
-
 </style>

@@ -12,7 +12,7 @@
  *    @param payload[Any]:      store.action(key, payload) 所传递的参数, 可用于 actions.action 方法的内部逻辑
  * */
 
-import * as userApi from "@/user/api/user";
+import * as userApi from "@/system/api/personal";
 
 export default {
     state: {

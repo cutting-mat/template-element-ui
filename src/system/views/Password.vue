@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import * as user from "@/user/api/user";
+import * as user from "../api/personal";
 
 export default {
   data() {

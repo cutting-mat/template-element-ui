@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import * as user from "@/user/api/user";
+import * as user from "@/system/api/personal";
 import { util } from "@/core";
 
 export default {
