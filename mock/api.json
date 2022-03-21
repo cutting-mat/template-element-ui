@@ -1370,7 +1370,7 @@
         "status": "done",
         "type": "static",
         "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
+        "res_body_is_json_schema": false,
         "api_opened": false,
         "index": 0,
         "tag": [],
@@ -1385,8 +1385,9 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "6226fb1ff1bf0506f3872835",
+            "_id": "6238031ff1bf0506f3872977",
             "name": "pid",
+            "example": "1",
             "desc": ""
           }
         ],
@@ -1394,10 +1395,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(4)组织\"}},\"fullName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(8)组织\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"createTime\":{\"type\":\"number\",\"mock\":{\"mock\":\"@timestamp\"}}},\"required\":[\"id\",\"name\",\"fullName\",\"pid\",\"createTime\"]},\"uniqueItems\":true,\"minItems\":5,\"maxItems\":10}},\"required\":[\"data\"]}",
+        "res_body": " {\n    \"data|2-6\": [\n        {\n\n          \"id\": \"@id\",\n          \"name\": \"@cword(4)组织\",\n          \"fullName\": \"@cword(8)组织\",\n          \"pid\": \"${query.pid}\",\n          \"createTime\":\"@timestamp\",\n          \"hasChildren\": \"@boolean\"\n        },\n    ]\n  }",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647311483,
+        "up_time": 1647837983,
         "__v": 0
       },
       {
@@ -1409,7 +1410,7 @@
         "status": "done",
         "type": "static",
         "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
+        "res_body_is_json_schema": false,
         "api_opened": false,
         "index": 0,
         "tag": [],
@@ -1425,7 +1426,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "6226b557f1bf0506f3872813",
+            "_id": "62386cf0f1bf0506f387297f",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1433,12 +1434,12 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"fullName\":{\"type\":\"string\"},\"pid\":{\"type\":\"number\"}},\"required\":[\"name\"]}",
+        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"name\":{\"type\":\"string\"},\"fullName\":{\"type\":\"string\"},\"pid\":{\"type\":\"string\"}},\"required\":[\"name\"]}",
         "req_body_type": "json",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(4)组织\"}},\"fullName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(8)组织\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"createTime\":{\"type\":\"number\",\"mock\":{\"mock\":\"@timestamp\"}}},\"required\":[\"id\",\"name\",\"fullName\",\"pid\",\"createTime\"]}},\"required\":[\"data\"]}",
+        "res_body": "{\n   \"data\": {\n      \"id\": \"@id\",\n      \"name\": \"@cword(4)组织\",\n      \"fullName\": \"@cword(8)组织\",\n      \"pid\": \"${body.pid}\",\n      \"createTime\": \"@timestamp\"\n   }\n}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647311483,
+        "up_time": 1647865072,
         "__v": 0
       },
       {
@@ -1497,7 +1498,7 @@
         "status": "done",
         "type": "static",
         "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
+        "res_body_is_json_schema": false,
         "api_opened": false,
         "index": 0,
         "tag": [],
@@ -1513,7 +1514,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "6226b561f1bf0506f3872814",
+            "_id": "62386ce4f1bf0506f387297e",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -1521,12 +1522,12 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\"},\"name\":{\"type\":\"string\"},\"fullName\":{\"type\":\"string\"},\"pid\":{\"type\":\"number\"}},\"required\":[\"id\",\"name\"]}",
+        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\"},\"name\":{\"type\":\"string\"},\"fullName\":{\"type\":\"string\"},\"pid\":{\"type\":\"string\"}},\"required\":[\"id\",\"name\"]}",
         "req_body_type": "json",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(4)组织\"}},\"fullName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(8)组织\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"createTime\":{\"type\":\"number\",\"mock\":{\"mock\":\"@timestamp\"}}},\"required\":[\"id\",\"name\",\"fullName\",\"pid\",\"createTime\"]}},\"required\":[\"data\"]}",
+        "res_body": "{\n   \"data\": {\n      \"id\": \"${body.id}\",\n      \"name\": \"${body.name}\",\n      \"fullName\": \"${body.fullName}\",\n      \"pid\": \"${body.pid}\",\n      \"createTime\": \"@timestamp\"\n   }\n}",
         "uid": 38,
         "add_time": 1647311484,
-        "up_time": 1647311484,
+        "up_time": 1647865060,
         "__v": 0
       }
     ]
