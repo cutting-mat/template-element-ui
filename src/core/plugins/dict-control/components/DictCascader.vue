@@ -91,9 +91,9 @@ export default {
   methods: {
     fetchData: async function () {
       if (
-        !Vue.$uploaderOption &&
-        !Vue.$uploaderOption.uploadRequest &&
-        !this.uploadRequest
+        !Vue.$DictControl &&
+        !Vue.$DictControl.request &&
+        !this.request
       ) {
         return console.warn(
           "DictControl: The required configuration [request] is missing!"

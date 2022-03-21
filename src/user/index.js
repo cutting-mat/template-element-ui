@@ -6,11 +6,11 @@ export default [{
         hide: true
     },
     children: [{
-        path: 'info',
+        path: 'Profile',
         name: '个人信息',
-        component: (resolve) => require(['./views/Info.vue'], resolve)
+        component: (resolve) => require(['./views/Profile.vue'], resolve)
     }, {
-        path: 'password',
+        path: 'Password',
         name: '修改密码',
         component: (resolve) => require(['./views/Password.vue'], resolve)
     }
