@@ -5,7 +5,7 @@ export default [{
         icon: ''
     },
     component: (resolve) => require(['./views/Index.vue'], resolve),
-    redirect: '/user/account',
+    redirect: '/user/Account',
     children: [{
         path: 'Account',
         name: '账号管理',
