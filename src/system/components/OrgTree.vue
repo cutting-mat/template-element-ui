@@ -1,10 +1,10 @@
 <template>
   <el-table
     ref="table"
-    :data="tableData"
-    style="width: 100%"
+    height="100%"
     row-key="id"
     lazy
+    :data="tableData"
     :load="load"
     @selection-change="handleSelectionChange"
   >
@@ -14,7 +14,11 @@
     <el-table-column label="创建时间">
       <template slot-scope="scope">{{ scope.row.createTime | date }}</template>
     </el-table-column>
-    <slot name="action" />
+    <el-table-column label="操作" width="260">
+      <template slot-scope="scope">
+        <slot name="action" :row="scope.row" />
+      </template>
+    </el-table-column>
   </el-table>
 </template>
 

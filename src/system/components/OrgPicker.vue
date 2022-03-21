@@ -13,16 +13,16 @@
       append-to-body
       :close-on-click-modal="false"
       title="选择组织"
-      :visible="dialogVisible"
+      :visible.sync="dialogVisible"
       width="1000px"
       @open="dialogOpen"
-      @close="dialogClose"
     >
-      <div class="orgPicker flex-col">
-        <OrgTree :value="list" picker @pick="checkedNode = $event"></OrgTree>
+    
+      <div class="orgPicker">
+        <OrgTree v-if="dialogVisible" :value="list" picker @pick="checkedNode = $event"></OrgTree>
       </div>
 
-      <div slot="footer" class="dialog-footer">
+      <div slot="footer">
         <el-button size="medium" type="primary" @click="submit">确 定</el-button>
         <el-button size="medium" @click="dialogVisible = false">取 消</el-button>
       </div>
@@ -81,9 +81,6 @@ export default {
       this.checkedNode = {}
       this.submitNode = {}
     },
-    dialogClose() {
-      this.dialogVisible = false;
-    },
     fetchData: function () {
       this.loading = true;
       list()
@@ -115,7 +112,8 @@ export default {
 
 <style scoped>
 .orgPicker {
-  height: 400px;
+  height: 50vh;
+  min-height: 350px;
 }
 .orgPicker ._side {
   width: 280px;

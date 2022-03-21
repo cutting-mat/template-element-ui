@@ -11,20 +11,20 @@
         </ToolBar>
 
         <!-- list -->
-        <OrgTree picker @pick="handlePick">
-            <el-table-column label="操作" width="260" slot="action">
-                <el-button size="small">编辑</el-button>
-                <el-button size="small">添加下级</el-button>
-                <el-button size="small" type="danger" plain>删除</el-button>
-            </el-table-column>
+        <OrgTree v-if="refresh">
+            <div slot="action" slot-scope="scope">
+                <el-button size="small" v-auth="org.edit" @click="edit(scope.row)">编辑</el-button>
+                <el-button size="small" v-auth="org.add" @click="add(scope.row)">添加下级</el-button>
+                <el-button size="small" type="danger" plain v-auth="org.remove" @click="remove(scope.row)">删除</el-button>
+            </div>
         </OrgTree>
 
         <!-- 弹窗 -->
         <el-dialog
-            :close-on-click-modal="false"
-            title="机构信息"
             :visible="dialogVisible"
+            title="组织信息"
             width="800px"
+            :close-on-click-modal="false"
             @close="handleCloseDialog"
         >
             <el-form
@@ -34,12 +34,12 @@
                 :model="editForm"
                 label-width="150px"
             >
-                <el-form-item label="部门名称" prop="departName">
-                    <el-input v-model="editForm.departName"></el-input>
+                <el-form-item label="部门名称" prop="name">
+                    <el-input v-model="editForm.name"></el-input>
                 </el-form-item>
 
-                <el-form-item label="描述" prop="description">
-                    <el-input v-model="editForm.description"></el-input>
+                <el-form-item label="全称" prop="fullName">
+                    <el-input v-model="editForm.fullName"></el-input>
                 </el-form-item>
             </el-form>
             <div slot="footer">
@@ -67,15 +67,15 @@ export default {
             list: [],
             queryParam: {},
             editForm: {
-                departName: "",
+                name: "",
                 pid: null
             },
             rules: {
-                departName: [
+                name: [
                     { required: true, message: "请输入名称", trigger: "blur" },
                     { min: 1, max: 100, message: '长度 1 到 100 个字符', trigger: 'blur' }
                 ],
-                description: [
+                fullName: [
                     { min: 0, max: 255, message: '长度 0 到 255 个字符', trigger: 'blur' }
                 ]
             },
@@ -83,40 +83,12 @@ export default {
         };
     },
     methods: {
-        handlePick(sele){
-            console.log(sele)
-        },
-        handleDepartChange(departType) {
-            this.$set(this.editForm, 'departType', departType)
-            this.$refs.editForm && this.$refs.editForm.validateField('departType')
-        },
-        treeItemEdit(treeNode, ztreeObj) {
-            if (!this.$_auth(org.edit)) {
-                return this.$message.warning('无此操作权限')
-            }
-            if (treeNode.rowData) {
-                this.editForm = treeNode.rowData;
-                this.dialogVisible = true;
-            }
-
-        },
-        treeItemRemove(treeNode) {
-            if (treeNode.rowData) {
-                this.remove(treeNode.rowData)
-            }
-
-        },
-        treeItemAppend(treeNode) {
-            if (!this.$_auth(org.add)) {
-                return this.$message.warning('无此操作权限')
-            }
-            if (treeNode.rowData) {
-                this.$set(this.editForm, 'pid', treeNode.rowData.id);
-                this.dialogVisible = true;
-            }
-        },
         edit(data) {
             this.editForm = util.deepcopy(data);
+            this.dialogVisible = true;
+        },
+        add(data){
+            this.editForm = {pid: data.pid};
             this.dialogVisible = true;
         },
         save() {
@@ -149,7 +121,7 @@ export default {
         handleCloseDialog: function () {
             this.dialogVisible = false;
             this.editForm = {
-                departName: "",
+                name: "",
                 pid: null
             };
             // this.$refs.editForm && this.$refs.editForm.resetFields()
@@ -186,9 +158,6 @@ export default {
                 this.refresh = true
             })
         }
-    },
-    created: function () {
-
     }
 };
 </script>
