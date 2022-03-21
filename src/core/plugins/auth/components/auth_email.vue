@@ -20,14 +20,13 @@
                 <countdownButton
                     ref="countdownButton"
                     slot="append"
-                    type="primary"
                     :number="30"
                     @click="sendValidCode"
                 >获取验证码</countdownButton>
             </el-input>
         </el-form-item>
         <el-form-item>
-            <el-button type="primary" style="width:100%" @click="handleSubmit">立即验证</el-button>
+            <el-button native-type="button" type="primary" style="width:100%" @click="handleSubmit">立即验证</el-button>
         </el-form-item>
     </el-form>
 </template>
@@ -136,7 +135,7 @@ export default {
     border-radius: 0;
     margin: 0 -20px;
 }
-.auth_email >>> .el-input-group__append .el-button--primary {
+.auth_email >>> .el-input-group__append .countdownButton {
     color: #fff;
     background-color: #409eff;
     border: 1px solid #409eff;

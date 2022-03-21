@@ -1,5 +1,5 @@
 <template>
-    <el-button v-bind="$attrs" :disabled="disabled" @click="$emit('click')">
+    <el-button v-bind="$attrs" :disabled="disabled" @click="$emit('click')" class="countdownButton">
         <span v-if="renderNumber">({{ renderNumber }}s)</span>
         <slot></slot>
     </el-button>
