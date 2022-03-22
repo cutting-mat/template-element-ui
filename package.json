@@ -1,6 +1,6 @@
 {
-  "name": "cutting-mat",
-  "version": "2.7.4",
+  "name": "template-element-ui",
+  "version": "2.7.5",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
