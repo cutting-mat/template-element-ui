@@ -22,10 +22,7 @@ export const getJSON = (params, opt) => {
         }
     }, opt)
 }
-// (test)未授权请求
-export const Unauthorized = (params, opt) => {
-    return instance.get(`/Unauthorized`, opt)
-}
+
 // 发手机验证码
 export const mobileValidCode = params => {
     return instance.get(`/mobileValidCode`, { params })

@@ -2,10 +2,14 @@
   <div class="scrollbar" v-loading="fullLoading">
     <div class="flex-row main">
       <div class="flex-1 box scrollbar">
-        <!-- 上传 -->
-        <uploader v-model="uploadList" :limit="2" />
-        <!-- 输入密码 -->
-        <input-password placeholder="输入密码" v-model="password" />
+        <el-form label-width="70px">
+          <el-form-item label="上传">
+            <uploader v-model="uploadList" :limit="2" />
+          </el-form-item>
+          <el-form-item label="输入密码">
+            <input-password placeholder="输入密码" v-model="password" />
+          </el-form-item>
+        </el-form>
       </div>
       <div class="flex-1 box">
         <h2>Vue全局资源测试</h2>
@@ -20,53 +24,57 @@
       </div>
       <div class="flex-1 box">
         <h2>Store 功能测试</h2>
-        <el-button @click="testStoreFun1"> 同步操作 </el-button>
-        <el-button :loading="loading" @click="testStoreFun4">
-          异步操作
-        </el-button>
+        <el-button @click="testStoreFun1">同步操作</el-button>
+        <el-button :loading="loading" @click="testStoreFun4">异步操作</el-button>
         <div>$store.state.testValue = {{ state.testValue }}</div>
 
-        <el-button @click="testStoreFun3">
-          获取异步数据, 观察控制台输出
-        </el-button>
-        <div style="width: 100%; white-space: nowrap; overflow-x: auto">
-          $store.state.user = {{ state.user }}
-        </div>
+        <el-button @click="testStoreFun3">获取异步数据, 观察控制台输出</el-button>
+        <div
+          style="width: 100%; white-space: nowrap; overflow-x: auto"
+        >$store.state.user = {{ state.user }}</div>
 
-        <el-button @click="testStoreFun2">
-          设置不存在的Store值, 观察控制台输出
-        </el-button>
+        <el-button @click="testStoreFun2">设置不存在的Store值, 观察控制台输出</el-button>
       </div>
     </div>
     <div class="flex-row">
-      <div class="flex-1 box">
+      <div class="flex-1 box scrollbar">
         <h2>axios缓存测试</h2>
-        <el-button @click="testRequest(true)"> 请求(缓存开) </el-button>
-        <el-button @click="testRequest(false)"> 请求(缓存关) </el-button>
-        <el-button @click="multiRequest(true)"> 并发3次请求(缓存开) </el-button>
-        <el-button @click="multiRequest(false)">
-          并发3次请求(缓存关)
-        </el-button>
+        <el-button @click="testRequest(true)">请求(缓存开)</el-button>
+        <el-button @click="testRequest(false)">请求(缓存关)</el-button>
+        <el-button @click="multiRequest(true)">并发3次请求(缓存开)</el-button>
+        <el-button @click="multiRequest(false)">并发3次请求(缓存关)</el-button>
         <div class="log">
-          <el-button size="mini" @click="clear()"> 清空日志 </el-button>
-          <div v-for="(item, index) in log" :key="index">
-            {{ item }}
-          </div>
+          <el-button size="mini" @click="clear()">清空日志</el-button>
+          <div v-for="(item, index) in log" :key="index">{{ item }}</div>
         </div>
       </div>
       <div class="flex-1 box">
         <h2>存取JSON</h2>
-        <el-button @click="saveJSON()"> 保存JSON </el-button>
-        <el-button @click="Unauthorized()">
-          未授权请求
-        </el-button>
+        <el-button @click="saveJSON()">保存JSON</el-button>
+        <el-button @click="simulateRequest('Unauthorized')">未授权请求</el-button>
+        <el-button @click="simulateRequest('fail')">业务失败</el-button>
+        <el-button @click="simulateRequest('error')">接口异常</el-button>
       </div>
-      <div class="flex-1 box">
+      <div class="flex-1 box scrollbar">
         <h2>字典控件</h2>
-        <dict-select v-model="dictSelectValue" param="select123"></dict-select>
-        <dict-radio v-model="dictRadioValue" param="radio123"></dict-radio>
-        <dict-checkbox v-model="dictCheckbox" param="check123"></dict-checkbox>
-        <dict-cascader v-model="dictCasader" param="cascader123"></dict-cascader>
+        <el-form label-width="70px">
+          <el-form-item label="select">
+            <dict-select v-model="dictSelectValue" param="select123"></dict-select>
+          </el-form-item>
+          <el-form-item label="radio">
+            <dict-radio v-model="dictRadioValue" param="radio123"></dict-radio>
+          </el-form-item>
+          <el-form-item label="checkbox">
+            <dict-checkbox v-model="dictCheckbox" param="check123"></dict-checkbox>
+          </el-form-item>
+          <el-form-item label="cascader">
+            <dict-cascader
+              v-model="dictCasader"
+              param="cascader123"
+              :responseTransfer="CasaderTransfer"
+            ></dict-cascader>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
@@ -74,9 +82,10 @@
 
 <script>
 import Vue from "vue";
-//import { util } from "@/core";
-import { saveJSON, Unauthorized } from "@/main/api/common";
+import { util } from "@/core";
+import { saveJSON } from "@/main/api/common";
 import { info } from "@/system/api/personal";
+import * as test from "@/main/api/test";
 
 export default {
   data() {
@@ -101,12 +110,18 @@ export default {
     },
   },
   methods: {
-    Unauthorized(){
-      Unauthorized()
+    CasaderTransfer(res) {
+      return util.buildTree(res.data)
+    },
+    simulateRequest(type) {
+      // 模拟请求
+      test[type]()
     },
     saveJSON() {
       saveJSON({
         content: `test: ${parseInt(Math.random() * 1e3)}`,
+      }).then(res => {
+        this.$message.success(`${JSON.stringify(res.data)}`)
       });
     },
     beforeDelete() {
@@ -172,7 +187,7 @@ export default {
 </script>
 
 <style scoped>
-.main{
+.main {
   padding: 10px;
 }
 .box {
@@ -181,7 +196,7 @@ export default {
   box-sizing: border-box;
   margin: 10px;
   padding: 10px;
-  box-shadow: 0 0 6px rgba(0,0,0,.1);
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
 }
 
 .log {

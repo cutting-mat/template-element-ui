@@ -105,7 +105,6 @@ export default {
       if (typeof DataRequest !== "function") {
         return console.warn("DictControl: [request] must be a Function!");
       }
-
       this.list = this.responseTransfer(await DataRequest(this.param));
     },
   },

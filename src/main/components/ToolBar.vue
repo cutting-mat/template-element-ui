@@ -34,7 +34,7 @@ export default {
   position: sticky;
   top: 0;
   z-index: 9;
-  padding: 10px 0;
+  padding: 20px 0;
   background: #fff;
 }
 .toolBar ._back {
