@@ -8,7 +8,7 @@ export default {
         ctx.keys().forEach((key) => {
             if (ctx(key).install) {
                 Vue.use(ctx(key).install, ctx(key).config)
-                DEBUG && console.log(`[Core] Plugin Loaded: ${key}`)
+                DEBUG && console.log(`[Core] Plugin Load => ${key.replace('./', '').replace('/index.js','')}`)
             }
         });
     },

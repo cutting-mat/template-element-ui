@@ -1,2 +1,2 @@
 export { default as install } from "./assets/permission";
-export { default as config } from "@/permission.config";
+export { default as config } from "@/plugin.permission.config";

@@ -13,7 +13,7 @@ import clipboard from "@/core/util/clipboard";
 export { default as install } from "./assets/register";
 
 // 配置
-import { components, filters, directives, $methods, methods } from "@/global-function.config";
+import { components, filters, directives, $methods, methods } from "@/plugin.global-function.config";
 export const config = {
     components: Object.assign(coreComponents, components),
     filters: Object.assign({

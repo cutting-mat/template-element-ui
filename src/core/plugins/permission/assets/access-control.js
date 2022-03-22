@@ -1,7 +1,7 @@
 import { util, axiosInstance } from "@/core";
 
 import { MainRoute } from "@/route.config";
-import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/permission.config";
+import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/plugin.permission.config";
 
 /**
  * 从axios请求函数中提取请求信息

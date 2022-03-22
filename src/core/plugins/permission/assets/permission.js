@@ -1,7 +1,7 @@
 import AccessControl from "./access-control";
 import { util, axiosInstance } from "@/core";
 import { MainRoute, BypassRoute } from "@/route.config";
-import { GetAccountToken, SetAccountToken, GetTokenFromLogin } from "@/permission.config";
+import { GetAccountToken, SetAccountToken, GetTokenFromLogin } from "@/plugin.permission.config";
 
 let routeAuthWhiteList;
 
@@ -10,7 +10,7 @@ export default {
         // 路由访问免登录白名单
         routeAuthWhiteList = BypassRoute.map((e) => e.path);
 
-        console.log("[Core] Permission Open. Whitelist:", routeAuthWhiteList);
+        console.log("[Core] Permission Open. BypassRoute:", routeAuthWhiteList);
 
         // 权限关闭 注册主路由
         if (!config.AccessControl) {
@@ -79,7 +79,7 @@ export default {
                     SetAccountToken(userToken)
                     checkAccount(res)
                 } else {
-                    console.warn(`[Core] Cannot get token by login response, please check the permission.config.js => GetTokenFromLogin() set`)
+                    console.warn(`[Core] Cannot get token by login response, please check the plugin.permission.config.js => GetTokenFromLogin() set`)
                 }
 
             });
