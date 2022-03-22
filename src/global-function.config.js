@@ -3,7 +3,7 @@
  * */
 import Header from '@/main/components/Header.vue'
 
-const components = {
+export const components = {
     Header,
     Breadcrumb: () => import("@/main/components/Breadcrumb.vue"),
     SubNav: () => import("@/main/components/SubNav.vue"),
@@ -14,7 +14,7 @@ const components = {
 /**
  * 全局过滤器
  * */
-const filters = {
+ export const filters = {
     "test"() {
         return "test filters"
     }
@@ -23,7 +23,7 @@ const filters = {
 /**
  * 全局指令
  * */
-const directives = {
+ export const directives = {
     'test': {
         inserted(el) {
             setTimeout(() => {
@@ -36,7 +36,7 @@ const directives = {
 /**
  * 实例方法
  * */
-const $methods = {
+ export const $methods = {
     $test() {
         // 用于测试可删除
         return ('test instance method output!')
@@ -46,16 +46,8 @@ const $methods = {
 /**
  * 全局方法
  * */
-const methods = {
+ export const methods = {
     Test() {
         return ('test globalMethod output!')
     }
-}
-
-export default {
-    components,
-    filters,
-    directives,
-    $methods,
-    methods
 }

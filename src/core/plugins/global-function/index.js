@@ -13,19 +13,19 @@ import clipboard from "@/core/util/clipboard";
 export { default as install } from "./assets/register";
 
 // 配置
-import userConfig from "@/global-function.config";
-export const config = Object.assign({
-    components: coreComponents,
-    filters: {
+import { components, filters, directives, $methods, methods } from "@/global-function.config";
+export const config = {
+    components: Object.assign(coreComponents, components),
+    filters: Object.assign({
         date: formatDate
-    },
-    directives: {
+    }, filters),
+    directives: Object.assign({
         'auth': {
             // 空v-auth指令，避免不开启权限控制时报错
         },
-    },
-    $methods: {
+    }, directives),
+    $methods: Object.assign({
         $clipboard: clipboard,
-    },
-    methods: {}
-}, userConfig)
+    }, $methods),
+    methods: Object.assign({}, methods)
+}
