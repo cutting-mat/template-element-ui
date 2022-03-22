@@ -2,6 +2,7 @@
   <div class="scrollbar" v-loading="fullLoading">
     <div class="flex-row main">
       <div class="flex-1 box scrollbar">
+        <h2>组件演示</h2>
         <el-form label-width="70px">
           <el-form-item label="上传">
             <uploader v-model="uploadList" :limit="2" />
