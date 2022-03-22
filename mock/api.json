@@ -737,7 +737,7 @@
         "_id": 3002,
         "method": "GET",
         "catid": 2031,
-        "title": "验证身份（用于修改密码）",
+        "title": "验证身份",
         "path": "/authCode",
         "project_id": 125,
         "req_params": [],
@@ -745,20 +745,20 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "6235bf78f1bf0506f387295f",
+            "_id": "62392acef1bf0506f3872982",
             "name": "password",
             "desc": "密码验证"
           },
           {
             "required": "0",
-            "_id": "6235bf78f1bf0506f387295e",
+            "_id": "62392acef1bf0506f3872981",
             "name": "mobileValidCode",
             "example": "",
             "desc": "手机验证码"
           },
           {
             "required": "0",
-            "_id": "6235bf78f1bf0506f387295d",
+            "_id": "62392acef1bf0506f3872980",
             "name": "emailValidCode",
             "example": "",
             "desc": "邮箱验证码"
@@ -768,7 +768,7 @@
         "req_body_form": [],
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647689592,
+        "up_time": 1647913678,
         "__v": 0,
         "desc": "",
         "markdown": "",
@@ -1030,7 +1030,7 @@
         "req_query": [
           {
             "required": "1",
-            "_id": "6226f1aff1bf0506f3872829",
+            "_id": "62393c23f1bf0506f3872983",
             "name": "dictCode",
             "desc": ""
           }
@@ -1039,10 +1039,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"dictCode\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word\"}},\"value\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(2,6)\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}}},\"required\":[\"id\",\"dictCode\",\"value\",\"pid\"]},\"uniqueItems\":true,\"minItems\":2,\"maxItems\":8}},\"required\":[\"data\"]}",
+        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@integer(1,10)\"}},\"dictCode\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word\"}},\"value\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(2,6)\"}},\"pid\":{\"type\":\"string\",\"mock\":{\"mock\":\"@integer(1,10)\"}}},\"required\":[\"id\",\"dictCode\",\"value\",\"pid\"]},\"uniqueItems\":true,\"minItems\":2,\"maxItems\":8}},\"required\":[\"data\"]}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647311483,
+        "up_time": 1647918115,
         "__v": 0
       },
       {
@@ -1534,47 +1534,6 @@
   },
   {
     "index": 0,
-    "name": "测试",
-    "desc": null,
-    "add_time": 1647311482,
-    "up_time": 1647311482,
-    "list": [
-      {
-        "query_path": {
-          "path": "/return/error",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "done",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3023,
-        "method": "GET",
-        "catid": 2059,
-        "title": "模拟接口异常",
-        "path": "/return/error",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [],
-        "req_headers": [],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "res_body": "",
-        "uid": 38,
-        "add_time": 1647311484,
-        "up_time": 1647311484,
-        "__v": 0
-      }
-    ]
-  },
-  {
-    "index": 0,
     "name": "演示数据",
     "desc": null,
     "add_time": 1647574544,
@@ -1618,6 +1577,102 @@
         "desc": "",
         "markdown": "",
         "res_body": "{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"url\":{\"type\":\"string\",\"mock\":{\"mock\":\"@image(500x500,@hex,fff,@ctitle())\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word\"}}},\"required\":[\"url\",\"name\"]},\"uniqueItems\":true,\"minItems\":5,\"maxItems\":8}"
+      },
+      {
+        "query_path": {
+          "path": "/return/fail",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3027,
+        "method": "GET",
+        "catid": 2066,
+        "title": "模拟业务失败",
+        "path": "/return/fail",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "",
+        "uid": 38,
+        "add_time": 1647917204,
+        "up_time": 1647917222,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/return/error",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3023,
+        "method": "GET",
+        "catid": 2066,
+        "title": "模拟接口异常",
+        "path": "/return/error",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "",
+        "uid": 38,
+        "add_time": 1647311484,
+        "up_time": 1647917192,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/Unauthorized",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3028,
+        "method": "GET",
+        "catid": 2066,
+        "title": "模拟接口未授权",
+        "path": "/Unauthorized",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "",
+        "uid": 38,
+        "add_time": 1647917678,
+        "up_time": 1647917698,
+        "__v": 0
       }
     ]
   }
