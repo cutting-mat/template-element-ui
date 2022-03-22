@@ -30,8 +30,7 @@
         </el-form-item>
       </el-form>
       <div class="footer-info">
-        Author：
-        <el-link type="primary" href="https://refined-x.com" target="blank">refined-x</el-link>
+        @2022 版权所有 占位文字
         <span class="_s">|</span>
         Github：
         <el-link type="primary" href="https://github.com/cutting-mat" target="_blank">cutting-mat</el-link>
