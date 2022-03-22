@@ -1,8 +1,10 @@
 /**
- * uploader 配置文件 
- * 支持原el-upload的所有Props（除 http-request 以外），额外支持以下配置
- * (el-upload文档: https://element.eleme.cn/#/zh-CN/component/upload)
+ * @cutting-mat/uploader 配置文件 
+ * 支持 el-upload 除请求相关（action, headers, data, name, with-credentials, http-request）以外的所有Props
+ * 附 el-upload 文档: https://element.eleme.cn/#/zh-CN/component/upload
  * 
+ * 额外支持以下属性，均支持全局配置：
+
  * accept[String]:              允许上传的文件类型, 同el-upload, 额外支持自定义文件类型（见下方 quickType ）
  * v-model / value[Array]:      已上传文件数据, 同el-upload, default: []
  * beforeUpload[Function]:      上传文件之前的钩子，同el-upload, 将作为默认配置，可以被组件配置覆盖
@@ -15,7 +17,7 @@
         maxHeight: 1000,           // 最大高度
     }
  * imgCrop[Boolean]:            开启图片上传前剪裁, default: false
- * imgCropOption[Object]:       图片剪裁配置, default: 
+ * imgCropOption[Object]:       图片剪裁配置, 选项同 [fengyuanchen/compressorjs], default: 
     {
         ratio: 1,               // 剪裁框宽高比
         minWidth: 0,            // 最小输出宽度
@@ -23,7 +25,7 @@
         maxWidth: 1000,         // 最大输出宽度
         maxHeight: 1000,        // 最大输出高度
     }
- * uploadRequest[Function]:     上传处理方法, default: 无
+ * uploadMethod[Function]:      上传处理方法, 接收两个参数（file/blob, fileName），default: 无
  * responseTransfer[Function]:  接口返回数据 与 fileList 数据格式转换函数, default: (response) => return response;
  * quickType[Object]:           自定义文件类型, default: 
     {
@@ -38,10 +40,10 @@
 
  * */
 import Vue from "vue";
-import { upload as uploadRequest } from "@/main/api/common";
+import { upload as uploadMethod } from "@/main/api/common";
 
 export default {
-    uploadRequest,
+    uploadMethod,
     beforeUpload(file) {
         // 尺寸校验
         if (file.size > 100 * 1024 * 1024) {
