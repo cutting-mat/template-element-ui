@@ -205,11 +205,27 @@ export default {
             id: data.id,
           })
           .then((res) => {
-            this.fetchData();
-            this.$alert(`密码已重置，请牢记新密码：<code>${res.data.password}</code>`, {
-              confirmButtonText: "我知道了",
-              dangerouslyUseHTMLString: true
-            });
+            if (res.data.password) {
+              this.$clipboard(res.data.password).then(() => {
+                this.$alert(`新密码已复制到剪贴板，请保管好新密码：<code>${res.data.password}</code>`, {
+                  confirmButtonText: "我知道了",
+                  dangerouslyUseHTMLString: true
+                }).then(() => {
+                  this.fetchData();
+                })
+              }).catch(() => {
+                this.$alert(`密码已重置，请牢记新密码：<code>${res.data.password}</code>`, {
+                  confirmButtonText: "我知道了",
+                  dangerouslyUseHTMLString: true
+                }).then(() => {
+                  this.fetchData();
+                })
+              })
+
+            } else {
+              this.$message.warning('操作失败，请重试')
+            }
+
           })
           .catch(() => {
             this.loading = false;

@@ -25,20 +25,11 @@ const filters = {
 }
 
 /**
- * 全局方法
- * */ 
-const methods = {
-    globalMethod: function(){
-        return ('test globalMethod output!')
-    }
-}
-
-/**
  * 全局指令
  * */ 
 const directives = {
     'auth': {
-        // 不开启权限控制时避免v-auth指令报错
+        // 误删，避免不开启权限控制时v-auth指令报错
     },
     'test': {
         // 用于测试可删除
@@ -53,17 +44,29 @@ const directives = {
 /**
  * 实例方法
  * */ 
+import clipboard from "@/main/assets/clipboard";
+
 const $methods = {
+    $clipboard: clipboard,
     $myMethod: function(){
         // 用于测试可删除
         return ('test instance method output!')
     }
 }
 
+/**
+ * 全局方法
+ * */ 
+ const methods = {
+    globalMethod: function(){
+        return ('test globalMethod output!')
+    }
+}
+
 export default {
     components,
     filters,
-    methods,
     directives,
-    $methods
+    $methods,
+    methods
 }

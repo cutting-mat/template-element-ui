@@ -6,7 +6,7 @@
       <!-- 菜单 -->
       <SubNav />
       <!-- 首页 -->
-      <dashboard v-if="$route.path == '/'" class="flex-1" />
+      <HomePage v-if="$route.path == '/'" class="flex-1" />
       <!-- 内页 -->
       <router-view v-else class="flex-1 main" />
         
@@ -18,7 +18,7 @@
 
 export default {
   components: {
-    dashboard: () => import("../components/TheDashboard.vue"),
+    HomePage: () => import("../components/HomePage.vue"),
   },
   data() {
     return {};
