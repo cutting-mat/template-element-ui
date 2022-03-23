@@ -1,4 +1,6 @@
-import Vue from 'vue';
+import Store from '@cutting-mat/vue-store';
+const $store = Store();
+
 import { util, routeGenerator } from "@/core";
 
 const routeInstance = routeGenerator()
@@ -10,13 +12,13 @@ export default {
 
 // 获取用户登录凭据方法
 export const GetAccountToken = () => {
-    const storageFun = Vue.$store.state.rememberLogin ? localStorage : sessionStorage;
+    const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
     return util.storage("auth", undefined, storageFun)
 }
 
 // 设置用户登录凭据方法
 export const SetAccountToken = token => {
-    const storageFun = Vue.$store.state.rememberLogin ? localStorage : sessionStorage;
+    const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
     return util.storage("auth", token, storageFun)
 }
 
@@ -24,8 +26,8 @@ export const SetAccountToken = token => {
 export const GetTokenFromLogin = res => res.data.accessToken
 
 // 获取用户权限数据方法（需要返Promise）
-export const GetPermission = () => Vue.$store.action("permission");
+export const GetPermission = () => $store.action("permission");
 
 // 获取路由权限后回调
-export const AfterGetDynamicRoute = routes => Vue.$store.set("DynamicRoute", routes);
+export const AfterGetDynamicRoute = routes => $store.set("DynamicRoute", routes);
 

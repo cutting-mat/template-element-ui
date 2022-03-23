@@ -98,9 +98,6 @@ export default {
             }
 
         }
-    },
-    created() {
-        console.log(components)
     }
 };
 </script>

@@ -12,15 +12,16 @@
         {{ (item.meta && item.meta.title) || item.name }}
       </li>
     </ul>
+
     <el-dropdown
-      v-if="state.user && state.user.accountName"
+      v-if="user && user.accountName"
       class="userAvat"
       trigger="click"
       @command="handleCommand"
     >
       <span class="el-dropdown-link">
         <el-avatar icon="el-icon-user-solid"></el-avatar>
-        <span class="accountName">{{ state.user.accountName }}</span>
+        <span class="accountName">{{ user.accountName }}</span>
         <i class="el-icon-caret-bottom"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -38,9 +39,13 @@ import { util } from "@/core";
 export default {
   data() {
     return {
-      state: this.$store.state,
       list: []
     };
+  },
+  computed: {
+    user(){
+      return this.$store.state.user
+    }
   },
   methods: {
     handleCommand: function (command) {
@@ -65,7 +70,7 @@ export default {
         util.emit("logout");
       });
     },
-  },
+  }
 };
 </script>
 

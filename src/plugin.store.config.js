@@ -16,7 +16,7 @@ import * as userApi from "@/system/api/personal";
 
 export default {
     state: {
-        testValue: null,            // 仅用于测试
+        testValue: 0,            // 仅用于测试
         rememberLogin: true,        // 记录登录状态
         accessToken: null,          // token
         permission: [],             // 用户权限
