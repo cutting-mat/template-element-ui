@@ -6,8 +6,9 @@ import { util, routeGenerator } from "@/core";
 const routeInstance = routeGenerator()
 // 权限插件配置
 export default {
-    AccessControl: false,    // 权限控制
-    routeInstance
+    routeInstance,              // 必传路由实例
+    AccessControl: false,       // 是否开启权限控制
+    interceptorsRequest: true   // 是否开启请求拦截（需开启权限控制）
 }
 
 // 获取用户登录凭据方法

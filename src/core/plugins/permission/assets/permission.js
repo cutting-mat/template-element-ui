@@ -56,7 +56,7 @@ export default {
                             console.log("Token 已自动续期");
                         }
                         if (config.AccessControl) {
-                            resolve(AccessControl(Vue, config.routeInstance))
+                            resolve(AccessControl(Vue, config.routeInstance, config.interceptorsRequest))
                         } else {
                             resolve()
                         }

@@ -53,7 +53,7 @@ const getRoutePermission = function (userPermissions) {
     return routePermission;
 }
 
-export default function (Vue, routeInstance) {
+export default function (Vue, routeInstance, interceptorsRequest) {
     console.log("[Core] AccessControl Open.")
 
     return new Promise((resolve, reject) => {
@@ -78,20 +78,22 @@ export default function (Vue, routeInstance) {
             /*
              * 设置Axios请求拦截
              */
-            axiosInstance.interceptors.request.use((config) => {
-                // 支持 header 携带自定义请求权限
-                let requestPermission = config.headers["X-Request-Permission"] || [config.method, config.url.replace(config.baseURL, "").split("?")[0]].join(",");
+            if (interceptorsRequest) {
+                axiosInstance.interceptors.request.use((config) => {
+                    // 支持 header 携带自定义请求权限
+                    let requestPermission = config.headers["X-Request-Permission"] || [config.method, config.url.replace(config.baseURL, "").split("?")[0]].join(",");
 
-                if (!resourcePermission[requestPermission]) {
-                    return Promise.reject({
-                        response: {
-                            status: 403,
-                            data: `${requestPermission} 请求未授权`,
-                        }
-                    });
-                }
-                return config;
-            });
+                    if (!resourcePermission[requestPermission]) {
+                        return Promise.reject({
+                            response: {
+                                status: 403,
+                                data: `${requestPermission} 请求未授权`,
+                            }
+                        });
+                    }
+                    return config;
+                });
+            }
 
             /*
              * 根据路由权限动态添加路由
