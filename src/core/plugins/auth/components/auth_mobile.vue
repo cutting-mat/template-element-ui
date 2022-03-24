@@ -15,8 +15,8 @@
                 prefix-icon="el-icon-message"
             ></el-input>
         </el-form-item>
-        <el-form-item prop="validCode">
-            <el-input v-model="formData.validCode" placeholder="请输入验证码">
+        <el-form-item prop="userInput">
+            <el-input v-model="formData.userInput" placeholder="请输入验证码">
                 <countdownButton
                     ref="countdownButton"
                     slot="append"
@@ -26,14 +26,18 @@
             </el-input>
         </el-form-item>
         <el-form-item>
-            <el-button native-type="button" type="primary" style="width:100%" @click="handleSubmit">立即验证</el-button>
+            <el-button
+                native-type="button"
+                type="primary"
+                style="width:100%"
+                @click="handleSubmit"
+            >立即验证</el-button>
         </el-form-item>
     </el-form>
 </template>
 
 <script>
-import { mobileValidCode } from "@/main/api/common"
-import { authCode } from "@/system/api/personal";
+import { mobileValidCode, validateMobileValidCode } from "@/main/api/common"
 
 export default {
     data() {
@@ -51,14 +55,15 @@ export default {
         return {
             loading: false,
             formData: {
-                validCode: null,
+                id: null,
+                userInput: null,
                 inputMobile: null,
             },
             rules: {
                 inputMobile: [
                     { validator: validateEmail }
                 ],
-                validCode: [
+                userInput: [
                     { required: true, message: '请输入验证码', trigger: 'blur' },
                     { min: 4, max: 6, message: '请输入正确的验证码', trigger: 'blur' }
                 ]
@@ -73,7 +78,7 @@ export default {
             if (this.userMobile) {
                 const mobileArray = this.userMobile.split('');
                 const mobileString = mobileArray.map((s, i) => {
-                    if (i <3 || (mobileArray.length - i < 3)) {
+                    if (i < 3 || (mobileArray.length - i < 3)) {
                         return s
                     }
                     return "*"
@@ -89,11 +94,17 @@ export default {
                 if (!err) {
                     this.loading = true;
                     mobileValidCode({
-                        mobile: this.inputMobile
-                    }).then(() => {
+                        mobile: this.formData.inputMobile
+                    }).then((res) => {
                         this.loading = false;
                         // 验证码已经发送
-                        this.$refs.countdownButton.count()
+                        if (res.data.id) {
+                            this.formData.id = res.data.id;
+                            this.$refs.countdownButton.count()
+                        } else {
+                            this.$message.warning(`验证码发送失败，请稍后重试`)
+                        }
+
                     }).catch(() => {
                         this.loading = false;
                     })
@@ -101,17 +112,16 @@ export default {
             })
         },
         handleSubmit() {
-            this.$refs.form.validateField('validCode', err => {
+            this.$refs.form.validateField('userInput', err => {
                 if (!err) {
                     this.loading = true;
-                    authCode({
-                        mobileValidCode: this.formData.validCode
-                    }).then(res => {
+                    validateMobileValidCode(this.formData).then(res => {
                         this.loading = false;
-                        if (res.data.authCode) {
-                            this.$emit('success', res.data.authCode)
+                        if (res.data) {
+                            this.$emit('success', res.data)
                         } else {
-                            this.$message.warning(`验证失败：${res.data}`)
+                            this.$refs.form.resetFields()
+                            this.$message.warning(`验证失败，请稍后重试`)
                         }
 
                     }).catch(() => {

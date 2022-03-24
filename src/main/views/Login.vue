@@ -5,7 +5,7 @@
 
       <el-form
         ref="validForm"
-        :model="queryParam"
+        :model="formData"
         :rules="rules"
         class="login-form"
         @submit.native.prevent="login"
@@ -13,11 +13,14 @@
         <h2 class="sub-title">
           <span class="_text">请登录</span>
         </h2>
-        <el-form-item prop="accountNumber">
-          <el-input :autofocus="true" placeholder="输入用户名" v-model="queryParam.accountNumber"></el-input>
+        <el-form-item prop="account">
+          <el-input :autofocus="true" placeholder="输入用户名" v-model="formData.account"></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input placeholder="输入密码" type="password" v-model="queryParam.password" show-password></el-input>
+          <el-input placeholder="输入密码" type="password" v-model="formData.password" show-password></el-input>
+        </el-form-item>
+        <el-form-item prop="captcha">
+          <inputCapthaImage ref="validCode" />
         </el-form-item>
         <div>
           <el-checkbox
@@ -40,19 +43,33 @@
 </template>
 
 <script>
-import * as user from "@/system/api/personal";
 import { util } from "@/core";
+import { login } from "@/main/api/common";
 
 export default {
+  components: {
+    inputCapthaImage: (resolve) => require(['../components/InputCaptchaImage.vue'], resolve)
+  },
   data() {
+    const validImage = () => {
+      return new Promise((resolve) => {
+        if (this.formData.captcha) {
+          resolve()
+        } else {
+          return this.$refs.validCode.valid().then(captcha => this.formData.captcha = captcha)
+        }
+      })
+    };
+
     return {
       loading: false,
-      queryParam: {
-        accountNumber: "",
+      formData: {
+        account: "",
         password: "",
+        captcha: ""
       },
       rules: {
-        accountNumber: [
+        account: [
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
             min: 3,
@@ -70,16 +87,21 @@ export default {
             trigger: "blur",
           },
         ],
+        captcha: [
+          { validator: validImage, trigger: 'blur' }
+        ]
       },
     };
   },
   methods: {
     login() {
+      if(this.loading){
+        return null;
+      }
+      this.loading = true;
       this.$refs.validForm.validate((valid) => {
         if (valid) {
-          this.loading = true;
-          user
-            .login(this.queryParam)
+          login(this.formData)
             .then((res) => {
               this.loading = false;
               // 登录后全局发布 login 事件, 将在app.vue里接收
@@ -92,7 +114,7 @@ export default {
               this.loading = false;
             });
         } else {
-          return false;
+          this.loading = false;
         }
       });
     },

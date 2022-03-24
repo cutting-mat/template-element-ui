@@ -12,7 +12,9 @@
  *    @param payload[Any]:      store.action(key, payload) 所传递的参数, 可用于 actions.action 方法的内部逻辑
  * */
 
-import * as userApi from "@/system/api/personal";
+import { permission } from "@/main/api/common";
+
+import { profile } from "@/system/api/personal";
 
 export default {
     state: {
@@ -24,16 +26,16 @@ export default {
         user: {},                   // 用户信息
     },
     actions: {
-        testAction: function(context){
+        testAction: function (context) {
             return new Promise(resolve => {
                 setTimeout(() => {
-                    context.set('testValue', parseInt(context.get('testValue')+1))
+                    context.set('testValue', parseInt(context.get('testValue') + 1))
                     resolve()
                 }, 500)
             })
         },
         permission: function (context, payload) {
-            return userApi.permission(null, Object.assign({
+            return permission(null, Object.assign({
                 cache: true
             }, payload || {})).then(res => {
                 return {
@@ -43,7 +45,7 @@ export default {
             })
         },
         user: function (context, payload) {
-            return userApi.info(null, Object.assign({
+            return profile(null, Object.assign({
                 cache: true
             }, payload || {})).then(res => {
                 return res.data

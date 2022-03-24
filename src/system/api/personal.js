@@ -1,17 +1,7 @@
 import { axiosInstance as instance } from "@/core";
 
-//登录
-export const login = params => {
-    return instance.post(`/login`, params)
-}
-
-//用户权限
-export const permission = (params, opt) => {
-    return instance.get(`/getPermissions`, { params }, opt)
-}
-
 //用户信息
-export const info = (params, opt) => {
+export const profile = (params, opt) => {
     return instance.get(`/getAccountInfo`, { params }, opt)
 }
 
@@ -22,7 +12,7 @@ export const editPassword = params => {
 
 //切换身份
 export const switchRole = params => {
-    return instance.get(`/switchIdentity`, { params })
+    return instance.get(`/account/front/identity/switch`, { params })
 }
 
 // 验证身份

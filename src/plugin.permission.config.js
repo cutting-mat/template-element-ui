@@ -23,7 +23,7 @@ export const SetAccountToken = token => {
 }
 
 // 登录接口数据转用户凭据方法
-export const GetTokenFromLogin = res => res.data.accessToken
+export const GetTokenFromLogin = res => res.data
 
 // 获取用户权限数据方法（需要返Promise）
 export const GetPermission = () => $store.action("permission");

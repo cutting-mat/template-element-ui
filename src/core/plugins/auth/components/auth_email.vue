@@ -15,8 +15,8 @@
                 prefix-icon="el-icon-message"
             ></el-input>
         </el-form-item>
-        <el-form-item prop="validCode">
-            <el-input v-model="formData.validCode" placeholder="请输入验证码">
+        <el-form-item prop="userInput">
+            <el-input v-model="formData.userInput" placeholder="请输入验证码">
                 <countdownButton
                     ref="countdownButton"
                     slot="append"
@@ -32,8 +32,7 @@
 </template>
 
 <script>
-import { emailValidCode } from "@/main/api/common"
-import { authCode } from "@/system/api/personal";
+import { emailValidCode, validEmailValidCode } from "@/main/api/common"
 
 export default {
     data() {
@@ -51,14 +50,15 @@ export default {
         return {
             loading: false,
             formData: {
-                validCode: null,
+                id: null,
+                userInput: null,
                 inputEmail: null,
             },
             rules: {
                 inputEmail: [
                     { validator: validateEmail }
                 ],
-                validCode: [
+                userInput: [
                     { required: true, message: '请输入验证码', trigger: 'blur' },
                     { min: 4, max: 6, message: '请输入正确的验证码', trigger: 'blur' }
                 ]
@@ -89,11 +89,17 @@ export default {
                 if (!err) {
                     this.loading = true;
                     emailValidCode({
-                        email: this.inputEmail
-                    }).then(() => {
+                        email: this.formData.inputEmail
+                    }).then((res) => {
                         this.loading = false;
                         // 验证码已经发送
-                        this.$refs.countdownButton.count()
+                        if(res.data.id){
+                            this.formData.id = res.data.id;
+                            this.$refs.countdownButton.count()
+                        }else{
+                            this.$message.warning(`验证邮件发送失败，请稍后重试`)
+                        }
+                        
                     }).catch(() => {
                         this.loading = false;
                     })
@@ -101,17 +107,16 @@ export default {
             })
         },
         handleSubmit() {
-            this.$refs.form.validateField('validCode', err => {
+            this.$refs.form.validateField('userInput', err => {
                 if (!err) {
                     this.loading = true;
-                    authCode({
-                        emailValidCode: this.formData.validCode
-                    }).then(res => {
+                    validEmailValidCode(this.formData).then(res => {
                         this.loading = false;
-                        if (res.data.authCode) {
-                            this.$emit('success', res.data.authCode)
+                        if (res.data) {
+                            this.$emit('success', res.data)
                         } else {
-                            this.$message.warning(`验证失败：${res.data}`)
+                            this.$refs.form.resetFields()
+                            this.$message.warning(`验证失败，请稍后重试`)
                         }
 
                     }).catch(() => {

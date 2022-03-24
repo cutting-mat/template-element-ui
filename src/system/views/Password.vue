@@ -11,7 +11,7 @@
       @submit.native.prevent="submitForm"
     >
       <el-alert
-        v-if="!formData.authCode"
+        v-if="!formData.captcha"
         title="未验证用户身份，请返回重试！"
         type="error"
         show-icon
@@ -60,7 +60,7 @@ export default {
     return {
       loading: false,
       formData: {
-        authCode: "",
+        captcha: "",
         checkPass: "",
         newPassword: "",
       },
@@ -108,7 +108,7 @@ export default {
   },
   created: function () {
     if (this.$route.query.authCode) {
-      this.formData.authCode = this.$route.query.authCode
+      this.formData.captcha = this.$route.query.authCode
     }
   },
 };
