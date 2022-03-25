@@ -6,6 +6,7 @@ export default [
         response: config => {
 
             return {
+                url: config.url,
                 data: 'test',
                 msg: 'ok'
             }

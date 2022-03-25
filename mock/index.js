@@ -156,7 +156,7 @@ export const runJsonMock = function () {
             } catch (err) {
                 console.warn(e.path, e.res_body, err)
             }
-            const template = resBody.$schema ? getTemplate(e.res_body) : resBody
+            const template = (resBody.$schema || resBody.mock || (resBody.type && resBody.properties)) ? getTemplate(e.res_body) : resBody
             return {
                 url: e.path,
                 type: e.method.toLowerCase(),
