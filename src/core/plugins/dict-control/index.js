@@ -1,3 +1,12 @@
+/**
+ * 字典控件
+ * 输出：
+ * 全局组件<DictCascader>
+ * 全局组件<DictCheckbox>
+ * 全局组件<DictRadio>
+ * 全局组件<DictSelect>
+ * */ 
+
 const components = {
     DictCascader: () => import("./components/DictCascader.vue"),
     DictCheckbox: () => import("./components/DictCheckbox.vue"),

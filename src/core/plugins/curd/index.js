@@ -1,7 +1,13 @@
+/**
+ * 增删改查组件
+ * 输出：
+ * 全局组件<CURD>
+ * */ 
+
 const components = {
-    DictCascader:  () => import("./components/CURD.vue"),
-    DictCheckbox:  () => import("./components/CURDColumn.vue"),
-    DictRadio:  () => import("./components/CURDForm.vue"),
+    CURD:  () => import("./components/CURD.vue"),
+    CURDColumn:  () => import("./components/CURDColumn.vue"),
+    CURDForm:  () => import("./components/CURDForm.vue"),
 }
 export const install = function (Vue, option) {
     Vue.$CURD = option || {};

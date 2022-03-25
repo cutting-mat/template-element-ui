@@ -1,12 +1,12 @@
 /**
  * DictControl 配置文件 
  * 
- * valueKey[String]:              允许上传的文件类型, 同el-upload, 额外支持自定义文件类型（见下方 quickType ）
- * labelKey[String]:
- * nullAble[Boolean]:
- * request[Function]:
- * param[Any]:
- * responseTransfer[Function]:
+ * valueKey[String]:            控件数据中的 value 字段名
+ * labelKey[String]:            控件数据中的 label 字段名
+ * nullAble[Boolean]:           是否需要值为null的默认选项，默认true
+ * request[Function]:           请求方法
+ * param[Any]:                  请求参数
+ * responseTransfer[Function]:  将请求返回数据转换成控件数据格式的方法
  * */
 import { itemList } from "@/system/api/dict";
 
