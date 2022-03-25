@@ -7,8 +7,27 @@ Mock.setup({
     timeout: '100-600'
 })
 
-// schema 转 template
-const getValue = function (schemaObject) {
+/**
+ * 获取url中的query值
+ * @param keyName[String] 要获取的参数名
+ * @param url[String] 目标url, 默认当前窗口url
+ * @return keyName参数的值
+*/
+export const getUrlParam = function (keyName, url) {
+    if (keyName && keyName.split) {
+        let urlParamReg = new RegExp("(^|&)" + keyName + "=([^&#/]*)", "i");
+        let s = (url ? url : window.location.href).split('?')[1] || '';
+        let r = s.match(urlParamReg);
+        if (r !== null) {
+            return decodeURI(r[2]);
+        }
+    }
+    
+    return null;
+};
+
+// resbody 转 template
+const getTemplate = function (schemaObject) {
     if (!schemaObject) {
         return {}
     }
@@ -16,18 +35,19 @@ const getValue = function (schemaObject) {
         schemaObject = JSON.parse(schemaObject)
     }
     let result;
+    // 基础类型
     try {
         result = schemaObject.mock ? schemaObject.mock.mock || schemaObject.mock : ''
     } catch (e) {
-        console.log(e, schemaObject)
+        console.warn(e, schemaObject)
     }
-
+    // 复杂类型
     switch (schemaObject.type) {
         case "object":
             result = objectTransfer(schemaObject.properties)
             break;
         case "array":
-            result = [getValue(schemaObject.items)]
+            result = [getTemplate(schemaObject.items)]
             break;
         case "number":
             result = isNaN(Number(result)) ? result : Number(result)
@@ -38,6 +58,7 @@ const getValue = function (schemaObject) {
     return result
 }
 
+// object 转 template
 const objectTransfer = function (object) {
     let keys = Object.keys(object).map(key => {
         if (object[key].type === "array") {
@@ -48,13 +69,47 @@ const objectTransfer = function (object) {
     let result = {}
     for (const key of keys) {
         if (key.indexOf('|') !== -1) {
-            result[key] = getValue(object[key.split('|')[0]])
+            result[key] = getTemplate(object[key.split('|')[0]])
         } else {
-            result[key] = getValue(object[key])
+            result[key] = getTemplate(object[key])
         }
 
     }
     return result;
+}
+
+// template 转 function
+const tFunction = function (templateObject) {
+    return function (option) {
+        let templateStr = JSON.stringify(templateObject)
+        const match = templateStr.match(/\$\{([^.]+)\.([^.}]+)\}/g);
+        if(match && match.length){
+            match.forEach(matchStr => {
+                let result = ''
+                const match2 = matchStr.match(/\$\{([^.]+)\.([^.}]+)\}/);
+                if (match2) {
+                    const dataFrom = match2[1];
+                    const dataKey = match2[2];
+                    if (dataFrom === 'query') {
+                        result = getUrlParam(dataKey, option.url)
+                    } else if (dataFrom === 'body') {
+                        try{
+                            result = JSON.parse(option.body)[dataKey]
+                        }catch(e){
+                            result = getUrlParam(dataKey, option.body)
+                            console.warn(`tFunction解析错误`, e)
+                        }
+                        
+                    } else {
+                        console.warn(`tFunction解析错误：${option.url}, ${match[0]}`)
+                    }
+                }
+                templateStr = templateStr.replace(matchStr, result)
+            })
+            
+        }
+        return Mock.mock(JSON.parse(templateStr));
+    }
 }
 
 // 手写 mock 脚本
@@ -93,61 +148,29 @@ export const runJsonMock = function () {
         });
 
         jsonmocks = jsonmocks.flat().flatMap(json => json.list).map(e => {
+            let resBody = e.res_body;
+            try {
+                if (resBody.split) {
+                    resBody = e.res_body ? JSON.parse(e.res_body) : ""
+                }
+            } catch (err) {
+                console.warn(e.path, e.res_body, err)
+            }
+            const template = resBody.$schema ? getTemplate(e.res_body) : resBody
             return {
                 url: e.path,
                 type: e.method.toLowerCase(),
-                template: getValue(e.res_body)
+                function: tFunction(template)
             }
         })
         console.log('[Mock] Requests from ./*.json:', jsonmocks)
         for (const mock of jsonmocks) {
-            Mock.mock(new RegExp(mock.url), mock.type, mock.template)
+            Mock.mock(new RegExp(mock.url), mock.type, mock.function)
         }
     }
 }
 
-export default function(){
+export default function () {
     runJsMock()
     runJsonMock()
 }
-
-
-// 测试解析yapi导出数据
-// const schemaObject = {
-//     "$schema": "http://json-schema.org/draft-04/schema#",
-//     "type": "object",
-//     "properties": {
-//         "data": {
-//             "type": "array",
-//             "items": {
-//                 "type": "object",
-//                 "properties": {
-//                     "id": {
-//                         "type": "number",
-//                         "mock": {
-//                             "mock": "@integer(1,5)"
-//                         }
-//                     },
-//                     "name": {
-//                         "type": "string",
-//                         "mock": {
-//                             "mock": "@cword(1,3)角色"
-//                         }
-//                     }
-//                 },
-//                 "required": [
-//                     "id",
-//                     "name"
-//                 ]
-//             },
-//             "uniqueItems": true,
-//             "minItems": 2,
-//             "maxItems": 5
-//         }
-//     },
-//     "required": [
-//         "data"
-//     ]
-// }
-
-//console.log('getValue:', getValue(schemaObject))

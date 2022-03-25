@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { mobileValidCode, validateMobileValidCode } from "@/main/api/common"
+import { mobileValidCode, validateMobileValidCode } from "@/main/api/auth"
 
 export default {
     data() {
@@ -121,7 +121,7 @@ export default {
                             this.$emit('success', res.data)
                         } else {
                             this.$refs.form.resetFields()
-                            this.$message.warning(`验证失败，请稍后重试`)
+                            this.$message.warning(`验证失败`)
                         }
 
                     }).catch(() => {

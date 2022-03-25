@@ -2,7 +2,7 @@
  * vue-cli配置
  * */
 module.exports = {
-    transpileDependencies: ['@cutting-mat/axios', '@cutting-mat/el-upload', '@cutting-mat/vue-store'],                                  // 需要babel编译的依赖包名
+    transpileDependencies: ['@cutting-mat/axios', '@cutting-mat/el-upload'],    // 需要babel编译的依赖包名
     css: {
         sourceMap: true                                         // 开启css map, 方便调试
     },

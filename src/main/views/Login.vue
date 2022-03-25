@@ -52,11 +52,14 @@ export default {
   },
   data() {
     const validImage = () => {
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         if (this.formData.captcha) {
           resolve()
         } else {
-          return this.$refs.validCode.valid().then(captcha => this.formData.captcha = captcha)
+          return this.$refs.validCode.valid().then(captcha => {
+            this.formData.captcha = captcha;
+            resolve()
+          }).catch(reject)
         }
       })
     };

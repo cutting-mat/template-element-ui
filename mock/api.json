@@ -64,7 +64,7 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 0,
+        "index": 1,
         "tag": [],
         "_id": 2991,
         "method": "POST",
@@ -102,84 +102,6 @@
       },
       {
         "query_path": {
-          "path": "/mobileValidCode",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "undone",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3025,
-        "method": "GET",
-        "catid": 2010,
-        "title": "发手机验证码",
-        "path": "/mobileValidCode",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "uid": 38,
-        "add_time": 1647689742,
-        "up_time": 1647768323,
-        "req_query": [
-          {
-            "required": "1",
-            "_id": "6236f303f1bf0506f3872967",
-            "name": "mobile",
-            "desc": "手机号"
-          }
-        ],
-        "req_headers": [],
-        "req_body_form": [],
-        "__v": 0,
-        "desc": "",
-        "markdown": "",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}"
-      },
-      {
-        "query_path": {
-          "path": "/emailValidCode",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "undone",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3026,
-        "method": "GET",
-        "catid": 2010,
-        "title": "发邮箱验证码",
-        "path": "/emailValidCode",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [
-          {
-            "required": "1",
-            "_id": "6236f2fbf1bf0506f3872966",
-            "name": "email",
-            "desc": "邮箱"
-          }
-        ],
-        "req_headers": [],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}",
-        "uid": 38,
-        "add_time": 1647689829,
-        "up_time": 1647768315,
-        "__v": 0
-      },
-      {
-        "query_path": {
           "path": "/oss/{id}",
           "params": []
         },
@@ -189,7 +111,7 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 0,
+        "index": 2,
         "tag": [],
         "_id": 2992,
         "method": "GET",
@@ -216,6 +138,367 @@
         "add_time": 1647311482,
         "up_time": 1647311482,
         "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/getPermissions",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 3,
+        "tag": [],
+        "_id": 2997,
+        "method": "GET",
+        "catid": 2010,
+        "title": "当前用户权限",
+        "path": "/getPermissions",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,40)\"}},\"method\":{\"type\":\"string\",\"mock\":{\"mock\":\"GET\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(3)资源\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(0,10)\"}},\"remark\":{\"type\":\"string\",\"mock\":{\"mock\":\"@csentence\"}},\"route\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word()\"}},\"type\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(0,1)\"},\"description\":\"0路由 1请求\"},\"url\":{\"type\":\"string\",\"mock\":{\"mock\":\"/@word()/@word()\"}}},\"required\":[\"id\",\"method\",\"name\",\"route\",\"type\",\"url\",\"pid\"]},\"uniqueItems\":true,\"minItems\":10,\"maxItems\":20}},\"required\":[\"data\"]}",
+        "uid": 38,
+        "add_time": 1647311482,
+        "up_time": 1648103498,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/login",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
+        "_id": 3005,
+        "method": "POST",
+        "catid": 2010,
+        "title": "登录",
+        "path": "/login",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "623c102ef1bf0506f387298e",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"account\":{\"type\":\"string\"},\"password\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"account\",\"password\"]}",
+        "req_body_type": "json",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"},\"description\":\"token\"}",
+        "uid": 38,
+        "add_time": 1647311483,
+        "up_time": 1648103470,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/password/valid",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 5,
+        "tag": [],
+        "_id": 3002,
+        "method": "GET",
+        "catid": 2010,
+        "title": "验证密码",
+        "path": "/password/valid",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [
+          {
+            "required": "0",
+            "_id": "623d4c89f1bf0506f38729a4",
+            "name": "password",
+            "desc": "密码验证"
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "uid": 38,
+        "add_time": 1647311483,
+        "up_time": 1648184457,
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "req_body_type": "form",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}"
+      },
+      {
+        "query_path": {
+          "path": "/captcha/sms",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 6,
+        "tag": [],
+        "_id": 3025,
+        "method": "GET",
+        "catid": 2010,
+        "title": "发手机验证码",
+        "path": "/captcha/sms",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1647689742,
+        "up_time": 1648102915,
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c0e03f1bf0506f3872988",
+            "name": "mobile",
+            "desc": "手机号"
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/captcha/sms/validate",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 7,
+        "tag": [],
+        "_id": 3029,
+        "method": "GET",
+        "catid": 2010,
+        "title": "验证手机验证码",
+        "path": "/captcha/sms/validate",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1648102986,
+        "up_time": 1648103056,
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c0e90f1bf0506f387298c",
+            "name": "id",
+            "desc": ""
+          },
+          {
+            "required": "1",
+            "_id": "623c0e90f1bf0506f387298b",
+            "name": "userInput",
+            "example": "",
+            "desc": ""
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@id\"}}"
+      },
+      {
+        "query_path": {
+          "path": "/emailValidCode",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 8,
+        "tag": [],
+        "_id": 3026,
+        "method": "GET",
+        "catid": 2010,
+        "title": "发邮箱验证码",
+        "path": "/emailValidCode",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c1833f1bf0506f387299d",
+            "name": "email",
+            "desc": "邮箱"
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}}},\"required\":[\"id\"]}",
+        "uid": 38,
+        "add_time": 1647689829,
+        "up_time": 1648105523,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/emailValidCode/valid",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 9,
+        "tag": [],
+        "_id": 3032,
+        "method": "GET",
+        "catid": 2010,
+        "title": "验证邮箱验证码",
+        "path": "/emailValidCode/valid",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1648104646,
+        "up_time": 1648104797,
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c155df1bf0506f387299c",
+            "name": "id",
+            "desc": ""
+          },
+          {
+            "required": "1",
+            "_id": "623c155df1bf0506f387299b",
+            "name": "userInput",
+            "example": "",
+            "desc": ""
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}"
+      },
+      {
+        "query_path": {
+          "path": "/captcha/image",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 10,
+        "tag": [],
+        "_id": 3030,
+        "method": "GET",
+        "catid": 2010,
+        "title": "获取图形验证码",
+        "path": "/captcha/image",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1648103892,
+        "up_time": 1648104178,
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}},\"content\":{\"type\":\"string\",\"mock\":{\"mock\":\"@image(200x100,@hex,fff,1234)\"}}},\"required\":[\"id\",\"content\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/captcha/image/validate",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 11,
+        "tag": [],
+        "_id": 3031,
+        "method": "GET",
+        "catid": 2010,
+        "title": "验证图形验证码",
+        "path": "/captcha/image/validate",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1648104251,
+        "up_time": 1648127251,
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c6d13f1bf0506f38729a1",
+            "name": "id",
+            "desc": ""
+          },
+          {
+            "required": "1",
+            "_id": "623c6d13f1bf0506f38729a0",
+            "name": "userInput",
+            "example": "",
+            "desc": ""
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@guid\"}}"
       }
     ]
   },
@@ -398,38 +681,6 @@
     "list": [
       {
         "query_path": {
-          "path": "/getPermissions",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "done",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 2997,
-        "method": "GET",
-        "catid": 2024,
-        "title": "列表(当前用户)",
-        "path": "/getPermissions",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [],
-        "req_headers": [],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(1,40)\"}},\"method\":{\"type\":\"string\",\"mock\":{\"mock\":\"GET\"}},\"name\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(3)资源\"}},\"pid\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(0,10)\"}},\"remark\":{\"type\":\"string\",\"mock\":{\"mock\":\"@csentence\"}},\"route\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word()\"}},\"type\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(0,1)\"},\"description\":\"0路由 1请求\"},\"url\":{\"type\":\"string\",\"mock\":{\"mock\":\"/@word()/@word()\"}}},\"required\":[\"id\",\"method\",\"name\",\"route\",\"type\",\"url\",\"pid\"]},\"uniqueItems\":true,\"minItems\":10,\"maxItems\":20}},\"required\":[\"data\"]}",
-        "uid": 38,
-        "add_time": 1647311482,
-        "up_time": 1647311482,
-        "__v": 0
-      },
-      {
-        "query_path": {
           "path": "/resource",
           "params": []
         },
@@ -592,10 +843,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"accountNumber\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word\"}},\"accountName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cname\"}},\"avatar\":{\"type\":\"null\",\"mock\":{\"mock\":\"@image(200x200,@hex,fff,IMAGE)\"}},\"contactNumber\":{\"type\":\"number\",\"mock\":{\"mock\":\"13@string(\\\"number\\\", 9)\"}},\"state\":{\"type\":\"boolean\"},\"createTime\":{\"type\":\"number\",\"mock\":{\"mock\":\"@timestamp\"}},\"orgId\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"orgName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(3)组织\"}},\"roleId\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"email\":{\"type\":\"string\",\"mock\":{\"mock\":\"@email\"}}},\"required\":[\"id\",\"accountNumber\",\"accountName\",\"avatar\",\"contactNumber\",\"state\",\"createTime\",\"orgId\",\"orgName\",\"roleId\",\"email\"]}},\"required\":[\"data\"]}",
+        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}},\"accountNumber\":{\"type\":\"string\",\"mock\":{\"mock\":\"@word\"}},\"accountName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cname\"}},\"avatar\":{\"type\":\"string\",\"mock\":{\"mock\":\"@image(200x200,@hex,fff,IMAGE)\"}},\"contactNumber\":{\"type\":\"number\",\"mock\":{\"mock\":\"13@string(\\\"number\\\", 9)\"}},\"state\":{\"type\":\"boolean\"},\"createTime\":{\"type\":\"number\",\"mock\":{\"mock\":\"@timestamp\"}},\"orgId\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"orgName\":{\"type\":\"string\",\"mock\":{\"mock\":\"@cword(3)组织\"}},\"roleId\":{\"type\":\"number\",\"mock\":{\"mock\":\"@id\"}},\"email\":{\"type\":\"string\",\"mock\":{\"mock\":\"@email\"}}},\"required\":[\"id\",\"accountNumber\",\"accountName\",\"avatar\",\"contactNumber\",\"state\",\"createTime\",\"orgId\",\"orgName\",\"roleId\",\"email\"]}},\"required\":[\"data\"]}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647764321,
+        "up_time": 1648104142,
         "__v": 0
       },
       {
@@ -623,7 +874,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "6236e036f1bf0506f3872965",
+            "_id": "623c1112f1bf0506f3872991",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -631,17 +882,17 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"newPassword\":{\"type\":\"string\"},\"authCode\":{\"type\":\"string\"}},\"required\":[\"newPassword\",\"authCode\"]}",
+        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"newPassword\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"newPassword\",\"captcha\"]}",
         "req_body_type": "json",
         "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647763510,
+        "up_time": 1648103698,
         "__v": 0
       },
       {
         "query_path": {
-          "path": "/switchIdentity",
+          "path": "/account/front/identity/switch",
           "params": []
         },
         "edit_uid": 0,
@@ -653,18 +904,25 @@
         "index": 0,
         "tag": [],
         "_id": 3004,
-        "method": "POST",
+        "method": "GET",
         "catid": 2031,
         "title": "切换身份",
-        "path": "/switchIdentity",
+        "path": "/account/front/identity/switch",
         "project_id": 125,
         "req_params": [],
         "res_body_type": "json",
-        "req_query": [],
+        "req_query": [
+          {
+            "required": "1",
+            "_id": "623c10d7f1bf0506f387298f",
+            "name": "id",
+            "desc": ""
+          }
+        ],
         "req_headers": [
           {
             "required": "1",
-            "_id": "6226b355f1bf0506f3872801",
+            "_id": "623c10d7f1bf0506f3872990",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -674,106 +932,11 @@
         "markdown": "",
         "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\"}},\"required\":[\"id\"]}",
         "req_body_type": "json",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"accessToken\":{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}},\"required\":[\"accessToken\"]}},\"required\":[\"data\"]}",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"},\"description\":\"token\"}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647311483,
+        "up_time": 1648103639,
         "__v": 0
-      },
-      {
-        "query_path": {
-          "path": "/login",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "done",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3005,
-        "method": "POST",
-        "catid": 2031,
-        "title": "登录",
-        "path": "/login",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [],
-        "req_headers": [
-          {
-            "required": "1",
-            "_id": "6226b2ecf1bf0506f38727ff",
-            "name": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"accountNumber\":{\"type\":\"string\"},\"password\":{\"type\":\"string\"}},\"required\":[\"accountNumber\",\"password\"]}",
-        "req_body_type": "json",
-        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"data\":{\"type\":\"object\",\"properties\":{\"accessToken\":{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}},\"required\":[\"accessToken\"]}},\"required\":[\"data\"]}",
-        "uid": 38,
-        "add_time": 1647311483,
-        "up_time": 1647311483,
-        "__v": 0
-      },
-      {
-        "query_path": {
-          "path": "/authCode",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "undone",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3002,
-        "method": "GET",
-        "catid": 2031,
-        "title": "验证身份",
-        "path": "/authCode",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [
-          {
-            "required": "0",
-            "_id": "62392acef1bf0506f3872982",
-            "name": "password",
-            "desc": "密码验证"
-          },
-          {
-            "required": "0",
-            "_id": "62392acef1bf0506f3872981",
-            "name": "mobileValidCode",
-            "example": "",
-            "desc": "手机验证码"
-          },
-          {
-            "required": "0",
-            "_id": "62392acef1bf0506f3872980",
-            "name": "emailValidCode",
-            "example": "",
-            "desc": "邮箱验证码"
-          }
-        ],
-        "req_headers": [],
-        "req_body_form": [],
-        "uid": 38,
-        "add_time": 1647311483,
-        "up_time": 1647913678,
-        "__v": 0,
-        "desc": "",
-        "markdown": "",
-        "req_body_type": "form",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"authCode\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}}},\"required\":[\"authCode\"]}"
       }
     ]
   },
@@ -1385,7 +1548,7 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "6238031ff1bf0506f3872977",
+            "_id": "623d5431f1bf0506f38729a5",
             "name": "pid",
             "example": "1",
             "desc": ""
@@ -1395,10 +1558,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": " {\n    \"data|2-6\": [\n        {\n\n          \"id\": \"@id\",\n          \"name\": \"@cword(4)组织\",\n          \"fullName\": \"@cword(8)组织\",\n          \"pid\": \"${query.pid}\",\n          \"createTime\":\"@timestamp\",\n          \"hasChildren\": \"@boolean\"\n        },\n    ]\n  }",
+        "res_body": "{\n   \"data|2-6\": [\n      {\n         \"id\": \"@id\",\n         \"name\": \"@cword(4)组织\",\n         \"fullName\": \"@cword(8)组织\",\n         \"pid\": \"${query.pid}\",\n         \"createTime\": \"@timestamp\",\n         \"hasChildren\": \"@boolean\"\n      }\n   ]\n}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1647837983,
+        "up_time": 1648186417,
         "__v": 0
       },
       {

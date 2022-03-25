@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { authCode } from "@/system/api/personal";
+import { validPassword } from "@/main/api/auth";
 
 export default {
     data() {
@@ -45,14 +45,16 @@ export default {
             this.$refs.form.validateField('password', err => {
                 if (!err) {
                     this.loading = true;
-                    authCode({
+
+                    validPassword({
                         password: this.formData.password
                     }).then(res => {
                         this.loading = false;
-                        if (res.data.authCode) {
-                            this.$emit('success', res.data.authCode)
+                        if (res.data) {
+                            this.$emit('success', res.data)
                         } else {
-                            this.$message.warning(`验证失败：${res.data}`)
+                            this.$refs.form.resetFields()
+                            this.$message.warning(`验证失败`)
                         }
 
                     }).catch(() => {

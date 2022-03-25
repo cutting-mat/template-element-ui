@@ -1,4 +1,4 @@
-import Store from '@cutting-mat/vue-store';
+import Store from '@/core/plugins/store/store';
 const $store = Store();
 
 import { util, routeGenerator } from "@/core";
