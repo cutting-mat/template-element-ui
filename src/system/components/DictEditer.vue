@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy, buildTree } from "@/core";
 import * as dict from "../api/dict";
 
 export default {
@@ -161,7 +161,7 @@ export default {
     save() {
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
           formData.dictCode = this.queryParam.dictCode;
           this.handleCloseDialog();
           this.loading = true;
@@ -224,7 +224,7 @@ export default {
       this.loading = true;
       dict.itemList(this.queryParam).then((res) => {
         this.loading = false;
-        this.list = util.buildTree(res.data);
+        this.list = buildTree(res.data);
       });
     },
     handleInit() {

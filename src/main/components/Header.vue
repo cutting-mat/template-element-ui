@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { event } from "@/core";
 
 export default {
   data() {
@@ -67,7 +67,7 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(() => {
-        util.emit("logout");
+        event.emit("logout");
       });
     },
   }

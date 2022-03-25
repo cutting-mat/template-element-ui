@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy } from "@/core";
 import * as role from "../api/role";
 
 export default {
@@ -124,7 +124,7 @@ export default {
   },
   methods: {
     edit(data) {
-      this.editForm = util.deepcopy(data);
+      this.editForm = deepcopy(data);
       this.$set(this.editForm, "resources", data.resources);
       this.dialogVisible = true;
     },
@@ -134,7 +134,7 @@ export default {
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
           this.loading = true;
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
           let doAction = !formData.id ? role.add : role.edit;
           // 分类型提交

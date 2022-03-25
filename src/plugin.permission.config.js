@@ -1,7 +1,7 @@
 import Store from '@/core/plugins/store/store';
 const $store = Store();
 
-import { util, routeGenerator } from "@/core";
+import { storage, routeGenerator } from "@/core";
 
 const routeInstance = routeGenerator()
 /**
@@ -22,7 +22,7 @@ export default {
  * */ 
 export const GetAccountToken = () => {
     const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
-    return util.storage("auth", undefined, storageFun)
+    return storage("auth", undefined, storageFun)
 }
 
 /**
@@ -32,7 +32,7 @@ export const GetAccountToken = () => {
  * */ 
 export const SetAccountToken = token => {
     const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
-    return util.storage("auth", token, storageFun)
+    return storage("auth", token, storageFun)
 }
 
 /**

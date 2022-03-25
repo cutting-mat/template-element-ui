@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy, buildTree } from "@/core";
 
 export default {
   props: {
@@ -339,7 +339,7 @@ export default {
     update: async function(data) {
       // 暴露方法：更新
       this.editForm = !this.getItemFromDetaiApi
-        ? util.deepcopy(data)
+        ? deepcopy(data)
         : await this.fetchDetail(data[this.dataKey]);
       this.editScope = "update";
       this.dialogVisible = true;
@@ -348,7 +348,7 @@ export default {
       // 保存
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
           let doAction = this.api[this.editScope];
           if(typeof doAction !== 'function'){
@@ -430,9 +430,9 @@ export default {
           this.loading = false;
           const data = res.data;
           if (Array.isArray(data)) {
-            this.list = util.buildTree(data);
+            this.list = buildTree(data);
           } else if (Array.isArray(data.list)) {
-            this.list = util.buildTree(data.list);
+            this.list = buildTree(data.list);
             this.totalCount = data.totalCount;
             this.totalPage = data.totalPage;
           }

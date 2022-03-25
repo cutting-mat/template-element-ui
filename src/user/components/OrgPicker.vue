@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { buildTree, deepcopy } from "@/core";
 import { list } from "../api/org";
 
 export default {
@@ -87,7 +87,7 @@ export default {
         .then((res) => {
           this.loading = false;
           if (res.data) {
-            this.list = util.buildTree(res.data);
+            this.list = buildTree(res.data);
           }
         })
         .catch(() => {
@@ -96,7 +96,7 @@ export default {
     },
     submit() {
       if (this.checkedNode && this.checkedNode[0]) {
-        this.submitNode = util.deepcopy(this.checkedNode[0])
+        this.submitNode = deepcopy(this.checkedNode[0])
         this.$emit("change", this.checkedNode[0].id);
       }
 

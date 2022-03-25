@@ -119,7 +119,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy } from "@/core";
 import * as account from "../api/account";
 import { list as requestRoles } from "../api/role";
 
@@ -245,7 +245,7 @@ export default {
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
           this.loading = true;
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
           let doAction = !formData.id ? account.add : account.edit;
           doAction(formData)

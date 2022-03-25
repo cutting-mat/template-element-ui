@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy } from "@/core";
 import * as org from "../api/org";
 
 export default {
@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         edit(data) {
-            this.editForm = util.deepcopy(data);
+            this.editForm = deepcopy(data);
             this.dialogVisible = true;
         },
         add(data){
@@ -95,7 +95,7 @@ export default {
             let vm = this;
             vm.$refs["editForm"].validate(valid => {
                 if (valid) {
-                    let formData = util.deepcopy(vm.editForm);
+                    let formData = deepcopy(vm.editForm);
                     this.handleCloseDialog();
 
                     if (!formData.id) {

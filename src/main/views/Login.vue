@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { event } from "@/core";
 import { login } from "@/main/api/common";
 
 export default {
@@ -108,7 +108,7 @@ export default {
             .then((res) => {
               this.loading = false;
               // 登录后全局发布 login 事件, 将在app.vue里接收
-              util.emit("login", {
+              event.emit("login", {
                 redirect: this.$router.currentRoute.query.redirect || "/",
                 data: res.data,
               });

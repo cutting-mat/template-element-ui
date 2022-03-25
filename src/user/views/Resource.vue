@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { buildTree, deepcopy } from "@/core";
 import * as resource from "../api/resource";
 
 export default {
@@ -119,7 +119,7 @@ export default {
   },
   methods: {
     edit: function (data) {
-      this.editForm = util.deepcopy(data);
+      this.editForm = deepcopy(data);
       this.editForm.method = this.editForm.method.toLowerCase();
     },
     append(item) {
@@ -145,7 +145,7 @@ export default {
       // 表单验证
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
 
           const handleApi = resource;
           //处理级联pid数组为单一pid
@@ -216,7 +216,7 @@ export default {
         })
         .then((userPermissions) => {
           this.loading = false;
-          this.list = util.buildTree(
+          this.list = buildTree(
             userPermissions.menus.concat(userPermissions.resources)
           );
         })

@@ -1,5 +1,5 @@
 import AccessControl from "./access-control";
-import { util, axiosInstance } from "@/core";
+import { event, axiosInstance } from "@/core";
 import { MainRoute, BypassRoute } from "@/route.config";
 import { GetAccountToken, SetAccountToken, GetTokenFromLogin } from "@/plugin.permission.config";
 
@@ -69,7 +69,7 @@ export default {
                 }
             }
 
-            util.on("login", (res) => {
+            event.on("login", (res) => {
                 /*
                  * 监听 "login" 事件
                  */
@@ -84,7 +84,7 @@ export default {
 
             });
 
-            util.on("logout", () => {
+            event.on("logout", () => {
                 /*
                  * 监听 "logout" 事件
                  */

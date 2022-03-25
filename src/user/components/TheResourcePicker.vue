@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { throttle, buildTree } from "@/core";
 import * as resource from "../api/resource";
 
 export default {
@@ -164,7 +164,7 @@ export default {
     },
     fetchData: function () {
       this.$store.action("permission").then((userPermissions) => {
-        this.list = util.buildTree(
+        this.list = buildTree(
           userPermissions.menus.concat(userPermissions.resources)
         );
         //设置已勾选
@@ -183,7 +183,7 @@ export default {
   },
   mounted() {
     // 数据变更监听器, 批量模式支持函数节流
-    this.trigger = util.throttle(() => {
+    this.trigger = throttle(() => {
       const checked = this.$refs.tree.getCheckedNodes();
       this.$emit(
         "change",

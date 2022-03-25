@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { util } from "@/core";
+import { deepcopy } from "@/core";
 import * as dict from "../api/dict";
 
 export default {
@@ -220,7 +220,7 @@ export default {
       
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
-          let formData = util.deepcopy(this.editForm);
+          let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
 
           if (!formData.id) {

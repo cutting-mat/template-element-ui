@@ -1,7 +1,7 @@
 import Vue from 'vue'
 //import axios from 'axios';
 import axios from '@cutting-mat/axios';
-import { util, routeGenerator } from '@/core'
+import { event, routeGenerator } from '@/core'
 import requestConfig from '@/request.config';
 console.log('[Core] Request Start.')
 
@@ -32,7 +32,7 @@ instance.interceptors.response.use(function (response) {
     }
     // token临近过期, 重新签发token
     if (response.headers['jwt-update-token']) {
-        util.emit('login', {
+        event.emit('login', {
             updateToken: true,
             data: {
                 accessToken: response.headers['jwt-update-token']
@@ -76,7 +76,7 @@ const catchError = function (error) {
                     message: getStringFromData(error.response.data, '未授权或授权已过期'),
                     type: 'warning',
                     onClose: function () {
-                        util.emit('logout')
+                        event.emit('logout')
                     }
                 });
                 break;

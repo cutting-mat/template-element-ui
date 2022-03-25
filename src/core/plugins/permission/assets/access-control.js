@@ -1,4 +1,4 @@
-import { util, axiosInstance } from "@/core";
+import { buildTree, axiosInstance } from "@/core";
 
 import { MainRoute } from "@/route.config";
 import { SetAccountToken, GetPermission, AfterGetDynamicRoute } from "@/plugin.permission.config";
@@ -47,7 +47,7 @@ const getRoutePermission = function (userPermissions) {
         });
     };
     if (Array.isArray(userPermissions.menus)) {
-        let arrayMenus = util.buildTree(userPermissions.menus);
+        let arrayMenus = buildTree(userPermissions.menus);
         setMenu2Hash(arrayMenus);
     }
     return routePermission;
