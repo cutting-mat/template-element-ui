@@ -1,4 +1,3 @@
-
 /* 滚动条美化 */
 ::-webkit-scrollbar {
     width : 6px;
@@ -37,8 +36,10 @@
 
 .iconfont {
     font-family            : "iconfont" !important;
-    font-size              : 1.1em;
+    font-size              : 1.2em;
     font-style             : normal;
+    font-weight            : 400;
+    font-variant           : normal;
     -webkit-font-smoothing : antialiased;
     -moz-osx-font-smoothing: grayscale;
 }

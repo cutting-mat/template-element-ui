@@ -35,7 +35,7 @@ export default {
   top: 0;
   z-index: 9;
   padding: 8px 0;
-  margin: 16px 0;
+  margin: 0 0 16px;
   background: #fff;
   border-bottom: 1px solid #d8dee4;
 }
