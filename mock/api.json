@@ -1557,7 +1557,7 @@
         "req_query": [
           {
             "required": "0",
-            "_id": "623d5431f1bf0506f38729a5",
+            "_id": "62419f8ef1bf0506f3872b2d",
             "name": "pid",
             "example": "1",
             "desc": ""
@@ -1567,10 +1567,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": "{\n   \"data|2-6\": [\n      {\n         \"id\": \"@id\",\n         \"name\": \"@cword(4)组织\",\n         \"fullName\": \"@cword(8)组织\",\n         \"pid\": \"${query.pid}\",\n         \"createTime\": \"@timestamp\",\n         \"hasChildren\": \"@boolean\"\n      }\n   ]\n}",
+        "res_body": "{\n   \"data|2-6\": [\n      {\n         \"id\": \"@id\",\n         \"name\": \"@cword(4)组织\",\n         \"fullName\": \"@cword(8)组织\",\n         \"pid\": \"${query.pid}\",\n         \"createTime\": \"@integer(1648460000000,1700000000000)\",\n         \"hasChildren\": \"@boolean\"\n      }\n   ]\n}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1648186417,
+        "up_time": 1648467854,
         "__v": 0
       },
       {
