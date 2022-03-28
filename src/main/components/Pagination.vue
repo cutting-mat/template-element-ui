@@ -2,11 +2,13 @@
   <el-pagination
     class="pagination"
     background
-    layout="prev, pager, next"
+    :page-sizes="[10, 20, 30, 50]"
+    layout="prev, pager, next, sizes"
     :page-size="pageSize"
     :current-page="currentPage"
     :total="totalCount"
     @current-change="$emit('current-change', $event)"
+    @size-change="$emit('size-change', $event)"
   ></el-pagination>
 </template>
 

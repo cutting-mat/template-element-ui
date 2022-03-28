@@ -9,8 +9,23 @@
         @click="dialogVisible = true"
       >添加</el-button>
     </ToolBar>
-
+    <!-- search -->
+    <el-form ref="searchForm" inline :model="queryParam" size="small">
+      <el-form-item label="账号">
+        <el-input v-model="queryParam.accountNumber"></el-input>
+      </el-form-item>
+      <el-form-item label="用户名">
+        <el-input v-model="queryParam.accountName" ></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" icon="el-icon-search" @click="fetchData(true)">查询</el-button>
+        <el-button icon="el-icon-refresh" @click="resetSearch()">重置</el-button>
+      </el-form-item>
+    </el-form>
     <!-- list -->
+    <p>
+      <i class="el-icon-info"></i> 共 <el-button type="text">{{totalCount}}</el-button> 条记录
+    </p>
     <el-table :data="list">
       <el-table-column prop="accountNumber" label="账号" align="center"></el-table-column>
       <el-table-column prop="accountName" label="用户名" align="center"></el-table-column>
@@ -51,7 +66,8 @@
       :current-page="queryParam.p"
       :total-count="totalCount"
       :total-page="totalPage"
-      @current-change="handleCurrentChange"
+      @current-change="queryParam.p = $event; fetchData()"
+      @size-change="queryParam.pageSize = $event; fetchData(true)"
     />
     <!-- 弹窗 -->
     <el-dialog
@@ -165,6 +181,8 @@ export default {
       queryParam: {
         pageSize: 10,
         p: 1,
+        accountNumber: "",
+        accountName: "",
       },
       totalCount: 0,
       totalPage: 0,
@@ -183,12 +201,18 @@ export default {
     };
   },
   methods: {
+    resetSearch(){
+      this.queryParam = {
+        pageSize: 10,
+        p: 1,
+        accountNumber: "",
+        accountName: "",
+      }
+
+      this.fetchData(true)
+    },
     orgAdapter(value, obj) {
       return obj.name || this.editForm.belongOrgName || value;
-    },
-    handleCurrentChange: function (currentPage) {
-      this.queryParam.p = currentPage;
-      this.fetchData();
     },
     resetPassword: function (data) {
       if (!data) {

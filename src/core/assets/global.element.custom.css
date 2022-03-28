@@ -95,7 +95,9 @@
 .el-table th>.cell {
   padding-left: 20px;
 }
-
+.el-table__header th.el-table__cell{
+  background: #fafafa;
+}
 
 /*form 表单校验*/
 .el-form-item .el-input__validateIcon {
@@ -121,6 +123,11 @@
 
 .el-pagination.is-background .el-pager li:not(.disabled).active {
   border: none;
+}
+
+.el-pagination__sizes .el-input__inner{
+  height     : 32px;
+  line-height: 32px;
 }
 
 /*dataPicker 日期选择器*/
