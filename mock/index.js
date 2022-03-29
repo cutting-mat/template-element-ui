@@ -1,3 +1,9 @@
+/**
+ * Mock数据
+ * 同目录*.js文件将视为定义接口文件，将尝试注册为Mock接口
+ * 同目录*.json文件将视为YAPI导出的json数据，将自动解析并注册为Mock接口
+ * */
+
 import Vue from 'vue'
 Vue.DebugRequest = true;
 console.log(`[Mock] Start. Please make sure that main.js => AccessControl is closed, otherwise it will not work properly`)
@@ -121,7 +127,7 @@ export const runJsMock = function () {
         let jsmocks = []
 
         jsctx.keys().forEach((key) => {
-            if (key !== './index.js') {
+            if (key !== './index.js' && Array.isArray(jsctx(key).default)) {
                 jsmocks.push(jsctx(key).default)
             }
         });

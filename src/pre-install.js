@@ -1,3 +1,4 @@
+// 组件库按需引入
 import {
     Loading,
     Pagination,
@@ -177,8 +178,13 @@ const components = [
 
 import 'element-ui/lib/theme-chalk/index.css';
 
+// 加载全局样式
+import '@/core/assets/global.css';
+
+// 预安装插件
 export default {
     install: function (Vue, opts = {}) {
+        // 安装ElementUI
         components.forEach(component => {
             Vue.use(component);
         });

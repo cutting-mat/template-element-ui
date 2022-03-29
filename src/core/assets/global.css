@@ -1,6 +1,6 @@
 @import url('./global.reset.css');
 @import url('./global.component.css');
-@import url('./global.element.custom.css');
+@import url('./global.ui.custom.css');
 
 
 /* page layout */
@@ -28,7 +28,7 @@ body {
 }
 
 .wrap {
-    width   : 900px;
+    width       : 900px;
     margin-left : auto;
     margin-right: auto;
 }
