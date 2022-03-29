@@ -9,10 +9,8 @@ import Vue from 'vue';
 // mocker()
 
 // UI库
-import ElementUI from 'element-ui';
-import 'element-ui/lib/theme-chalk/index.css';
+import ElementUI from '@/element-ui.install';
 Vue.use(ElementUI);
-
 // 全局样式
 import '@/core/assets/global.css';
 

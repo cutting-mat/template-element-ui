@@ -22,7 +22,7 @@ export const getUrlParam = function (keyName, url) {
             return decodeURI(r[2]);
         }
     }
-    
+
     return null;
 };
 
@@ -83,7 +83,7 @@ const tFunction = function (templateObject) {
     return function (option) {
         let templateStr = JSON.stringify(templateObject)
         const match = templateStr.match(/\$\{([^.]+)\.([^.}]+)\}/g);
-        if(match && match.length){
+        if (match && match.length) {
             match.forEach(matchStr => {
                 let result = ''
                 const match2 = matchStr.match(/\$\{([^.]+)\.([^.}]+)\}/);
@@ -93,20 +93,20 @@ const tFunction = function (templateObject) {
                     if (dataFrom === 'query') {
                         result = getUrlParam(dataKey, option.url)
                     } else if (dataFrom === 'body') {
-                        try{
+                        try {
                             result = JSON.parse(option.body)[dataKey]
-                        }catch(e){
+                        } catch (e) {
                             result = getUrlParam(dataKey, option.body)
                             console.warn(`tFunction解析错误`, e)
                         }
-                        
+
                     } else {
                         console.warn(`tFunction解析错误：${option.url}, ${match[0]}`)
                     }
                 }
                 templateStr = templateStr.replace(matchStr, result)
             })
-            
+
         }
         return Mock.mock(JSON.parse(templateStr));
     }
@@ -156,7 +156,7 @@ export const runJsonMock = function () {
             } catch (err) {
                 console.warn(e.path, e.res_body, err)
             }
-            const template = (resBody.$schema || resBody.mock || (resBody.type && resBody.properties)) ? getTemplate(e.res_body) : resBody
+            const template = (resBody.$schema || resBody.mock || (resBody.type && resBody.properties) || (resBody.type && resBody.uniqueItems)) ? getTemplate(e.res_body) : resBody
             return {
                 url: e.path,
                 type: e.method.toLowerCase(),
