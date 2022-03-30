@@ -17,7 +17,7 @@
         maxHeight: 1000,           // 最大高度
     }
  * imgCrop[Boolean]:            开启图片上传前剪裁, default: false
- * imgCropOption[Object]:       图片剪裁配置, 选项同 [fengyuanchen/compressorjs], default: 
+ * imgCropOption[Object]:       图片剪裁配置, 选项同 [cropperjs](https://github.com/fengyuanchen/cropperjs), default: 
     {
         ratio: 1,               // 剪裁框宽高比
         minWidth: 0,            // 最小输出宽度
@@ -26,7 +26,7 @@
         maxHeight: 1000,        // 最大输出高度
     }
  * uploadMethod[Function]:      上传处理方法, 接收两个参数（file/blob, fileName），default: 无
- * responseTransfer[Function]:  接口返回数据 与 fileList 数据格式转换函数, default: (response) => return response;
+ * responseTransfer[Function]:  将上传接口返回数据转成文件数据格式的方法, default: (response) => return response;
  * quickType[Object]:           自定义文件类型, default: 
     {
         "t-image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".webp"],

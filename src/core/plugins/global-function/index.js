@@ -1,9 +1,9 @@
 /**
- * 全局功能注册
+ * Vue全局功能注册
  * 输出：
  * 注册框架内置全局资源
  * 注册用户配置（@/plugin.global-function.config）的全局资源
- * */ 
+ * */
 
 
 export { default as install } from "./assets/register";
