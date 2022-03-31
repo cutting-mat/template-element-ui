@@ -6,9 +6,10 @@ const ctx = require.context("./", true, /^\.\/[^__]+index\.js$/);
 export default {
     install: function (Vue) {
         ctx.keys().forEach((key) => {
+            console.log(key)
             if (ctx(key).install) {
                 Vue.use(ctx(key).install, ctx(key).config)
-                DEBUG && console.log(`[Core] Plugin Load => ${key.replace('./', '').replace('/index.js','')}`)
+                DEBUG && console.log(`[Core] Plugin Load => ${key.replace('./', '').replace('/index.js', '')}`)
             }
         });
     },

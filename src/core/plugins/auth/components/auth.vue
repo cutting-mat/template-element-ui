@@ -35,9 +35,9 @@
 </template>
 
 <script>
-import authTypes from "../config";
+import AlluthTypes from "../config";
 let components = {};
-authTypes.forEach(type => [
+AlluthTypes.forEach(type => [
     components[type.name] = type.component
 ])
 
@@ -52,13 +52,20 @@ export default {
             required: false,
             default: false
         },
+        types: {
+            type: Array,
+            required: false,
+            default() {
+                return AlluthTypes.map(e => e.name)
+            }
+        }
     },
     components,
     data() {
         return {
-            authTypes,
+            authTypes: [],
             dialogVisible: false,
-            currentAuthType: authTypes[0],
+            currentAuthType: null,
             result: null
         }
     },
@@ -70,9 +77,21 @@ export default {
         }
     },
     watch: {
+        types: {
+            handler() {
+                this.authTypes = AlluthTypes.filter(item => {
+                    return this.types.indexOf(item.name) !== -1
+                })
+                this.currentAuthType = this.authTypes[0]
+            },
+            immediate: true
+        },
         value: {
             handler() {
-                this.dialogVisible = this.value
+                if (this.currentAuthType) {
+                    this.dialogVisible = this.value
+                }
+
             },
             immediate: true
         },

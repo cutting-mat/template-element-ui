@@ -11,14 +11,6 @@ import Vue from 'vue';
 // 加载根组件
 import App from './App.vue';
 
-// 预安装
-import preInstall from '@/pre-install';
-Vue.use(preInstall);
-
-// 安装核心插件
-import plugins from '@/core/plugins';
-Vue.use(plugins);
-
 // 创建路由实例
 import { routeGenerator } from '@/core';
 const routeInstance = routeGenerator({
@@ -30,8 +22,19 @@ const routeInstance = routeGenerator({
     })
 })
 
-// 应用启动
-new Vue({
+// 预安装
+import preInstall from '@/pre-install';
+Vue.use(preInstall);
+
+// 加载核心插件
+import plugins from '@/core/plugins';
+Vue.use(plugins);
+
+// 创建应用
+const app = new Vue({
     router: routeInstance,
     render: h => h(App)
-}).$mount('#app');
+})
+
+// 挂载应用
+app.$mount('#app');

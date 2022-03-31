@@ -21,18 +21,17 @@ export const upload = (file, fileName) => {
 }
 // 保存JSON
 export const saveJSON = params => {
-    return instance.post(`/oss/${params.id || 'text'}`, params, {
+    return instance.post(`/oss/text/${params.id || ''}`, params, {
         headers: {
-            "X-Request-Permission": "post,/oss/**"
+            "X-Request-Permission": "post,/oss/text/**"
         }
     })
 }
 // 获取JSON
 export const getJSON = (params, opt) => {
-    return instance.get(`/oss/${params.id}`, {
+    return instance.get(`/oss/text/${params.id}`, {
         headers: {
-            "X-Request-Permission": "get,/oss/*"
+            "X-Request-Permission": "get,/oss/text/*"
         }
     }, opt)
 }
-
