@@ -91,6 +91,8 @@ export default function (Vue, routeInstance, interceptorsRequest) {
                             }
                         });
                     }
+                    // 删除权限模块的自定义头
+                    delete config.headers["X-Request-Permission"];
                     return config;
                 });
             }

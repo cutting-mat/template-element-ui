@@ -19,6 +19,12 @@ instance.interceptors.request.use(function (config) {
             }
         }
     }
+    // 如果没有开启请求控制，则删除相关自定义头，否则需要服务端设置 Access-Control-Allow-Headers
+    const permissionConfig = require("@/plugin.permission.config").default;
+    if (!(permissionConfig && permissionConfig.AccessControl && permissionConfig.interceptorsRequest)) {
+        delete config.headers["X-Request-Permission"];
+    }
+
     return config;
 }, function (error) {
     return Promise.reject(error);

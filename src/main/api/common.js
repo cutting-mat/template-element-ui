@@ -20,16 +20,16 @@ export const upload = (file, fileName) => {
     })
 }
 // 保存JSON
-export const saveJSON = params => {
-    return instance.post(`/oss/text/${params.id || ''}`, params, {
+export const saveJSON = (fileID, params) => {
+    return instance.post(`/file/text/${fileID}`, params, {
         headers: {
-            "X-Request-Permission": "post,/oss/text/**"
+            "X-Request-Permission": "get,/oss/text/*"
         }
     })
 }
 // 获取JSON
-export const getJSON = (params, opt) => {
-    return instance.get(`/oss/text/${params.id}`, {
+export const getJSON = (fileID, opt) => {
+    return instance.get(`/file/text/${fileID}`, {
         headers: {
             "X-Request-Permission": "get,/oss/text/*"
         }
