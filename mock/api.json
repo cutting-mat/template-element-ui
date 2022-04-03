@@ -96,54 +96,7 @@
       },
       {
         "query_path": {
-          "path": "/oss/text/{id}",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "done",
-        "type": "var",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 2,
-        "tag": [],
-        "_id": 2991,
-        "method": "POST",
-        "catid": 2010,
-        "title": "保存文本",
-        "path": "/oss/text/{id}",
-        "project_id": 125,
-        "req_params": [
-          {
-            "_id": "624596c8f1bf0506f3873480",
-            "name": "id",
-            "example": "test",
-            "desc": ""
-          }
-        ],
-        "res_body_type": "json",
-        "req_query": [],
-        "req_headers": [
-          {
-            "required": "1",
-            "_id": "624596c8f1bf0506f3873481",
-            "name": "Content-Type",
-            "value": "application/x-www-form-urlencoded"
-          }
-        ],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "req_body_type": "form",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}}},\"required\":[\"id\"]}",
-        "uid": 38,
-        "add_time": 1647311482,
-        "up_time": 1648727752,
-        "__v": 0
-      },
-      {
-        "query_path": {
-          "path": "/oss/text/{id}",
+          "path": "/file/text/{id}",
           "params": []
         },
         "edit_uid": 0,
@@ -154,17 +107,65 @@
         "api_opened": false,
         "index": 3,
         "tag": [],
+        "_id": 3231,
+        "method": "POST",
+        "catid": 2010,
+        "title": "保存文本",
+        "path": "/file/text/{id}",
+        "project_id": 125,
+        "req_params": [
+          {
+            "_id": "624832b5f1bf0506f38734df",
+            "name": "id",
+            "example": "2022-3225353453",
+            "desc": ""
+          }
+        ],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "624832b5f1bf0506f38734e0",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "req_body_type": "json",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"text/@uuid()\"}}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"field_2\":{\"type\":\"string\",\"description\":\"任意json数据\"}}}",
+        "uid": 38,
+        "add_time": 1648883318,
+        "up_time": 1648898741,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/file/text/{id}",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "var",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 4,
+        "tag": [],
         "_id": 2992,
         "method": "GET",
         "catid": 2010,
         "title": "获取文本",
-        "path": "/oss/text/{id}",
+        "path": "/file/text/{id}",
         "project_id": 125,
         "req_params": [
           {
-            "_id": "624596a9f1bf0506f387347f",
+            "_id": "624832b9f1bf0506f38734e1",
             "name": "id",
-            "example": "131-123123-3",
+            "example": "2022-1231233",
             "desc": ""
           }
         ],
@@ -174,10 +175,10 @@
         "req_body_form": [],
         "desc": "",
         "markdown": "",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\"任意字符\",\"mock\":{\"mock\":\"[{\\\\\\\"insert\\\\\\\":\\\\\\\"CuttingMat\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"header\\\\\\\":1},\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"},{\\\\\\\"insert\\\\\\\":\\\\\\\"RichText Test\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"header\\\\\\\":2},\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"color\\\\\\\":\\\\\\\"#66a3e0\\\\\\\"},\\\\\\\"insert\\\\\\\":\\\\\\\"Some Content\\\\\\\"},{\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"}]\"}},\"timestamp\":{\"type\":\"string\",\"mock\":{\"mock\":\"@timestamp\"}}},\"required\":[\"content\",\"timestamp\"]}",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"content\":{\"type\":\"string\",\"description\":\"任意字符\",\"mock\":{\"mock\":\"[{\\\\\\\"insert\\\\\\\":\\\\\\\"CuttingMat\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"header\\\\\\\":1},\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"},{\\\\\\\"insert\\\\\\\":\\\\\\\"RichText Test\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"header\\\\\\\":2},\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"},{\\\\\\\"attributes\\\\\\\":{\\\\\\\"color\\\\\\\":\\\\\\\"#66a3e0\\\\\\\"},\\\\\\\"insert\\\\\\\":\\\\\\\"Some Content\\\\\\\"},{\\\\\\\"insert\\\\\\\":\\\\\\\"\\\\\\\\n\\\\\\\"}]\"}}},\"required\":[\"content\"]}",
         "uid": 38,
         "add_time": 1647311482,
-        "up_time": 1648727721,
+        "up_time": 1648898745,
         "__v": 0
       },
       {
@@ -191,7 +192,7 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 4,
+        "index": 5,
         "tag": [],
         "_id": 2997,
         "method": "GET",
