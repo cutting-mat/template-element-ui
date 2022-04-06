@@ -7,8 +7,9 @@
 
 <script>
 export default {
+    name: "countdown-button",
     props: {
-        number: {
+        count: {
             type: Number,
             required: true
         },
@@ -21,9 +22,9 @@ export default {
         }
     },
     methods: {
-        count() {
+        start() {
             return new Promise(resolve => {
-                this.renderNumber = this.number;
+                this.renderNumber = this.count;
                 this.disabled = true;
                 this.timer = setInterval(() => {
                     if (this.renderNumber - 1 > 0) {
@@ -32,7 +33,7 @@ export default {
                         this.reset()
                         resolve()
                     }
-                    
+
                 }, 1000)
             })
         },

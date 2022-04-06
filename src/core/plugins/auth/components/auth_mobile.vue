@@ -20,7 +20,7 @@
                 <countdownButton
                     ref="countdownButton"
                     slot="append"
-                    :number="30"
+                    :count="30"
                     @click="sendValidCode"
                 >获取验证码</countdownButton>
             </el-input>
@@ -100,7 +100,7 @@ export default {
                         // 验证码已经发送
                         if (res.data.id) {
                             this.formData.id = res.data.id;
-                            this.$refs.countdownButton.count()
+                            this.$refs.countdownButton.start()
                         } else {
                             this.$message.warning(`验证码发送失败，请稍后重试`)
                         }

@@ -32,7 +32,7 @@ const getLength = function (value) {
 }
 
 export default {
-  name: "input-password",
+  name: "input-number",
   model: {
     prop: "value",
     event: "change",
