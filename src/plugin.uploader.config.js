@@ -30,7 +30,8 @@
  * quickType[Object]:           自定义文件类型, default: 
     {
         "t-image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".webp"],
-        "t-video": [".mp4", ".rmvb", ".avi", ".mov", "3.gp"],
+        "t-video": [".mp4", ".rmvb", ".avi", ".mov", ".3gp", ".webm"],
+        "t-audio": [".wav", ".mp3", ".ogg", ".acc"],
         "t-word": [".docx", ".doc"],
         "t-excel": [".xlsx", ".xls"],
         "t-ppt": [".ppt", ".pptx"],
