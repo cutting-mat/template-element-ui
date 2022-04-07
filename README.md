@@ -13,6 +13,6 @@
 - [x] 内置基础CSS
 - [x] 内置常用工具方法
 
-Live Demo: http://cutting-mat.refined-x.com/template-element-ui/
+Live Demo: https://cutting-mat.github.io/template-element-ui/
 
 输入任意符合长度要求的用户名密码
