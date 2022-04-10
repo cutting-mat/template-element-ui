@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div>
     <h1>{{ msg }}</h1>
   </div>
 </template>
@@ -7,8 +7,16 @@
 <script>
 export default {
   props: {
-    msg: String,
+    msg: {
+      type: String,
+      required: false
+    },
   },
+  data() {
+    return {
+
+    }
+  }
 };
 </script>
 
