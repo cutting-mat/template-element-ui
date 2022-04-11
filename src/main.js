@@ -5,8 +5,8 @@ import 'regenerator-runtime/runtime';
 import Vue from 'vue';
 
 // 开启 mock
-import mocker from '../mock';
-mocker()
+// import mocker from '../mock';
+// mocker()
 
 // 加载根组件
 import App from './App.vue';

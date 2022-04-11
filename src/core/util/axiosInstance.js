@@ -100,7 +100,7 @@ const catchError = function (error) {
                         type: 'warning'
                     });
                 } else {
-                    Router.push({
+                    Router.replace({
                         name: '服务异常',
                         query: {
                             message: getStringFromData(error.response.data, '服务异常')
@@ -124,7 +124,7 @@ const catchError = function (error) {
                 type: 'error'
             })
         } else {
-            Router.push({
+            Router.replace({
                 name: '服务异常',
                 query: {
                     message
