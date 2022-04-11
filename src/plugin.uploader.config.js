@@ -46,11 +46,6 @@ import { upload as uploadMethod } from "@/main/api/common";
 export default {
     uploadMethod,
     beforeUpload(file) {
-        // 尺寸校验
-        if (file.size > 100 * 1024 * 1024) {
-            Vue.prototype.$message.warning("文件超出最大限制");
-            return false;
-        }
         // 文件名不得超过500字符
         if (file.name.length > 500) {
             Vue.prototype.$message.warning(
