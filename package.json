@@ -9,7 +9,7 @@
   "homepage": "https://cutting-mat.github.io/template-element-ui/",
   "dependencies": {
     "@cutting-mat/axios": "^1.1.4",
-    "@cutting-mat/uploader": "^2.0.10",
+    "@cutting-mat/uploader": "^2.0.11",
     "element-ui": "^2.15.6",
     "tiny-emitter": "^2.1.0",
     "vue": "^2.6.14",

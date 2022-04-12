@@ -29,7 +29,7 @@
  * responseTransfer[Function]:  将上传接口返回数据转成文件数据格式的方法, default: (response) => return response;
  * quickType[Object]:           自定义文件类型, default: 
     {
-        "t-image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".tif", ".webp"],
+        "t-image": [".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp"],
         "t-video": [".mp4", ".rmvb", ".avi", ".mov", ".3gp", ".webm"],
         "t-audio": [".wav", ".mp3", ".ogg", ".acc"],
         "t-word": [".docx", ".doc"],
