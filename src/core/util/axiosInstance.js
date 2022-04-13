@@ -33,7 +33,7 @@ instance.interceptors.request.use(function (config) {
 // 响应后处理
 instance.interceptors.response.use(function (response) {
     // 业务失败处理(兼容原response.data.code格式)
-    if (response.status !== 200 || response.data.code === 500) {
+    if (response.data.code === 500) {
         return catchError({ response })
     }
     // token临近过期, 重新签发token
@@ -93,20 +93,12 @@ const catchError = function (error) {
                 });
                 break;
             default:
-                if (error.response.status > 200 && error.response.status < 300) {
-                    // 201 ~ 299 的情况
-                    Vue.prototype.$message({
-                        message: getStringFromData(error.response.data, '操作失败'),
-                        type: 'warning'
-                    });
-                } else {
-                    Router.replace({
-                        name: '服务异常',
-                        query: {
-                            message: getStringFromData(error.response.data, '服务异常')
-                        }
-                    });
-                }
+                Router.replace({
+                    name: '服务异常',
+                    query: {
+                        message: getStringFromData(error.response.data, '服务异常')
+                    }
+                });
         }
     } else if (error.message) {
         // Something happened in setting up the request that triggered an Error
