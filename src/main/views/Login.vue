@@ -14,10 +14,19 @@
           <span class="_text">请登录</span>
         </h2>
         <el-form-item prop="account">
-          <el-input :autofocus="true" placeholder="输入用户名" v-model="formData.account"></el-input>
+          <el-input
+            :autofocus="true"
+            placeholder="输入用户名"
+            v-model="formData.account"
+          ></el-input>
         </el-form-item>
         <el-form-item prop="password">
-          <el-input placeholder="输入密码" type="password" v-model="formData.password" show-password></el-input>
+          <el-input
+            placeholder="输入密码"
+            type="password"
+            v-model="formData.password"
+            show-password
+          ></el-input>
         </el-form-item>
         <el-form-item prop="captcha">
           <inputCapthaImage ref="validCode" />
@@ -26,17 +35,29 @@
           <el-checkbox
             :value="$store.state.rememberLogin"
             @change="$store.set('rememberLogin', $event)"
-          >记住我</el-checkbox>
+            >记住我</el-checkbox
+          >
         </div>
         <el-form-item class="submit-item">
-          <el-button native-type="submit" class="submit-button" type="primary" :loading="loading">登录</el-button>
+          <el-button
+            native-type="submit"
+            class="submit-button"
+            type="primary"
+            :loading="loading"
+            >登录</el-button
+          >
         </el-form-item>
       </el-form>
       <div class="footer-info">
         @2022 版权所有 占位文字
         <span class="_s">|</span>
         Github：
-        <el-link type="primary" href="https://github.com/cutting-mat" target="_blank">cutting-mat</el-link>
+        <el-link
+          type="primary"
+          href="https://github.com/cutting-mat"
+          target="_blank"
+          >cutting-mat</el-link
+        >
       </div>
     </div>
   </div>
@@ -48,20 +69,24 @@ import { login } from "@/main/api/common";
 
 export default {
   components: {
-    inputCapthaImage: (resolve) => require(['../components/InputCaptchaImage.vue'], resolve)
+    inputCapthaImage: (resolve) =>
+      require(["../components/InputCaptchaImage.vue"], resolve),
   },
   data() {
     const validImage = () => {
       return new Promise((resolve, reject) => {
         if (this.formData.captcha) {
-          resolve()
+          resolve();
         } else {
-          return this.$refs.validCode.valid().then(captcha => {
-            this.formData.captcha = captcha;
-            resolve()
-          }).catch(reject)
+          return this.$refs.validCode
+            .valid()
+            .then((captcha) => {
+              this.formData.captcha = captcha;
+              resolve();
+            })
+            .catch(reject);
         }
-      })
+      });
     };
 
     return {
@@ -69,7 +94,7 @@ export default {
       formData: {
         account: "",
         password: "",
-        captcha: ""
+        captcha: "",
       },
       rules: {
         account: [
@@ -90,15 +115,13 @@ export default {
             trigger: "blur",
           },
         ],
-        captcha: [
-          { validator: validImage, trigger: 'blur' }
-        ]
+        captcha: [{ validator: validImage, trigger: "blur" }],
       },
     };
   },
   methods: {
     login() {
-      if(this.loading){
+      if (this.loading) {
         return null;
       }
       this.loading = true;
@@ -106,12 +129,19 @@ export default {
         if (valid) {
           login(this.formData)
             .then((res) => {
-              this.loading = false;
-              // 登录后全局发布 login 事件, 将在app.vue里接收
-              event.emit("login", {
-                redirect: this.$router.currentRoute.query.redirect || "/",
-                data: res.data,
-              });
+              if (res.status === 200) {
+                this.loading = false;
+                // 登录后全局发布 login 事件, 将被 权限模块 接收
+                event.emit("login", {
+                  redirect: this.$router.currentRoute.query.redirect || "/",
+                  data: res.data,
+                });
+              } else {
+                this.$message({
+                  message: "登陆失败",
+                  type: "warning",
+                });
+              }
             })
             .catch(() => {
               this.loading = false;

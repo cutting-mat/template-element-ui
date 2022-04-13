@@ -1,29 +1,65 @@
 <template>
   <div>
-    <el-table ref="table"
+    <el-table
+      ref="table"
       :data="list"
-      v-bind="Object.assign({
-        'border': true,
-        'default-expand-all': true,
-        'row-key': 'id'
-      }, tableAttribute)"
+      v-bind="
+        Object.assign(
+          {
+            border: true,
+            'default-expand-all': true,
+            'row-key': 'id',
+          },
+          tableAttribute
+        )
+      "
       @select="(selection, row) => $emit('select', selection, row)"
       @select-all="(selection) => $emit('select-all', selection)"
       @selection-change="(selection) => $emit('selection-change', selection)"
-      @cell-mouse-enter="(row, column, cell, event) => $emit('cell-mouse-enter', row, column, cell, event)"
-      @cell-mouse-leave="(row, column, cell, event) => $emit('cell-mouse-leave', row, column, cell, event)"
-      @cell-click="(row, column, cell, event) => $emit('cell-click', row, column, cell, event)"
-      @cell-dblclick="(row, column, cell, event) => $emit('cell-dblclick', row, column, cell, event)"
-      @row-click="(row, column, event) => $emit('row-click', row, column, event)"
-      @row-contextmenu="(row, column, event) => $emit('row-click', row, column, event)"
-      @row-dblclick="(row, column, event) => $emit('row-dblclick', row, column, event)"
+      @cell-mouse-enter="
+        (row, column, cell, event) =>
+          $emit('cell-mouse-enter', row, column, cell, event)
+      "
+      @cell-mouse-leave="
+        (row, column, cell, event) =>
+          $emit('cell-mouse-leave', row, column, cell, event)
+      "
+      @cell-click="
+        (row, column, cell, event) =>
+          $emit('cell-click', row, column, cell, event)
+      "
+      @cell-dblclick="
+        (row, column, cell, event) =>
+          $emit('cell-dblclick', row, column, cell, event)
+      "
+      @row-click="
+        (row, column, event) => $emit('row-click', row, column, event)
+      "
+      @row-contextmenu="
+        (row, column, event) => $emit('row-click', row, column, event)
+      "
+      @row-dblclick="
+        (row, column, event) => $emit('row-dblclick', row, column, event)
+      "
       @header-click="(column, event) => $emit('header-click', column, event)"
-      @header-contextmenu="(column, event) => $emit('header-contextmenu', column, event)"
-      @sort-change="(column, prop, order) => $emit('sort-change', column, prop, order)"
+      @header-contextmenu="
+        (column, event) => $emit('header-contextmenu', column, event)
+      "
+      @sort-change="
+        (column, prop, order) => $emit('sort-change', column, prop, order)
+      "
       @filter-change="(filters) => $emit('filter-change', filters)"
-      @current-change="(currentRow, oldCurrentRow) => $emit('current-change', currentRow, oldCurrentRow)"
-      @header-dragend="(newWidth, oldWidth, column, event) => $emit('header-dragend', newWidth, oldWidth, column, event)"
-      @expand-change="(row, expandedRows ) => $emit('expand-change', row, expandedRows)"
+      @current-change="
+        (currentRow, oldCurrentRow) =>
+          $emit('current-change', currentRow, oldCurrentRow)
+      "
+      @header-dragend="
+        (newWidth, oldWidth, column, event) =>
+          $emit('header-dragend', newWidth, oldWidth, column, event)
+      "
+      @expand-change="
+        (row, expandedRows) => $emit('expand-change', row, expandedRows)
+      "
     >
       <!-- 支持el-table append插槽 -->
       <template slot="append">
@@ -31,9 +67,9 @@
       </template>
       <!-- 支持多选 -->
       <el-table-column
-        v-if="selectionNode && selectionNode.type==='selection'"
+        v-if="selectionNode && selectionNode.type === 'selection'"
         v-bind="selectionNode"
-        >
+      >
       </el-table-column>
       <!-- 列循环 -->
       <CURDColumn
@@ -41,8 +77,17 @@
         :key="'col' + index"
         :column="column"
       >
-        <template v-for="slotName in Object.keys($scopedSlots)"  :slot="slotName" slot-scope="scope" >
-          <slot :name="slotName" :column="scope.column" :row="scope.row" :prop="scope.prop"></slot>
+        <template
+          v-for="slotName in Object.keys($scopedSlots)"
+          :slot="slotName"
+          slot-scope="scope"
+        >
+          <slot
+            :name="slotName"
+            :column="scope.column"
+            :row="scope.row"
+            :prop="scope.prop"
+          ></slot>
         </template>
       </CURDColumn>
     </el-table>
@@ -58,15 +103,21 @@
     <!-- 弹窗 -->
     <el-dialog
       :visible="dialogVisible"
-      v-bind="Object.assign({
-        'title': '详情',
-        'width': '800px',
-        'close-on-click-modal': false,
-        'append-to-body': true
-      }, dialogAttribute)"
+      v-bind="
+        Object.assign(
+          {
+            title: '详情',
+            width: '800px',
+            'close-on-click-modal': false,
+            'append-to-body': true,
+          },
+          dialogAttribute
+        )
+      "
       @close="handleCloseDialog"
     >
-      <CURDForm v-if="dialogVisible"
+      <CURDForm
+        v-if="dialogVisible"
         ref="editForm"
         :model="modelData"
         :default="editForm"
@@ -115,7 +166,7 @@ export default {
             required: false,
             validator: null,
             message: null,
-            asynValid: false
+            asynValid: false,
           },
         };
       },
@@ -131,7 +182,7 @@ export default {
           {
             // tableColumnAttributes,
             hidden: false,
-            slotName: ''
+            slotName: "",
           },
         ];
       },
@@ -139,7 +190,7 @@ export default {
     dataKey: {
       type: String,
       required: false,
-      default: "id"
+      default: "id",
     },
     immediate: {
       type: Boolean,
@@ -161,23 +212,23 @@ export default {
     tableAttribute: {
       type: Object,
       required: false,
-      default(){
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     dialogAttribute: {
       type: Object,
       required: false,
-      default(){
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
     formAttribute: {
       type: Object,
       required: false,
-      default(){
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
   },
   filters: {
@@ -199,7 +250,7 @@ export default {
       loading: false,
       list: [],
       editForm: {},
-      editScope: '',
+      editScope: "",
       queryParamFinnal: {
         p: 1,
         pageSize: 10,
@@ -210,31 +261,31 @@ export default {
       table: {
         // 暴露 el-table 方法
         clearSelection: () => {
-          return this.$refs.table.clearSelection()
+          return this.$refs.table.clearSelection();
         },
         toggleRowSelection: (row, selected) => {
-          return this.$refs.table.toggleRowSelection(row, selected)
+          return this.$refs.table.toggleRowSelection(row, selected);
         },
         toggleAllSelection: () => {
-          return this.$refs.table.toggleAllSelection()
+          return this.$refs.table.toggleAllSelection();
         },
         toggleRowExpansion: (row, expanded) => {
-          return this.$refs.table.toggleRowExpansion(row, expanded)
+          return this.$refs.table.toggleRowExpansion(row, expanded);
         },
         setCurrentRow: (row) => {
-          return this.$refs.table.setCurrentRow(row)
+          return this.$refs.table.setCurrentRow(row);
         },
         clearSort: () => {
-          return this.$refs.table.clearSort()
+          return this.$refs.table.clearSort();
         },
         clearFilter: (columnKey) => {
-          return this.$refs.table.clearFilter(columnKey)
+          return this.$refs.table.clearFilter(columnKey);
         },
         doLayout: () => {
-          return this.$refs.table.doLayout()
+          return this.$refs.table.doLayout();
         },
         sort: (prop, order) => {
-          return this.$refs.table.clearFilter(prop, order)
+          return this.$refs.table.clearFilter(prop, order);
         },
       },
       form: {
@@ -251,7 +302,7 @@ export default {
         clearValidate: () => {
           return this.$refs.editForm.clearValidate();
         },
-      }
+      },
     };
   },
   computed: {
@@ -266,26 +317,33 @@ export default {
       this.modelKey.forEach((key) => {
         // 模型默认配置
         let obj = Object.assign({}, result[key]);
-        result[key] = Object.assign({
-          type: "string",
-          default: {
-            array: [],
-            object: {}
-          }[obj.type] || null,
-          control: {
-              boolean: "el-switch",
-              array: "DictCheckbox",
-            }[obj.type] || "el-input",
+        result[key] = Object.assign(
+          {
+            type: "string",
+            default:
+              {
+                array: [],
+                object: {},
+              }[obj.type] || null,
+            control:
+              {
+                boolean: "el-switch",
+                array: "DictCheckbox",
+              }[obj.type] || "el-input",
             scope: ["create", "update"],
-            required: !!obj.required
-        }, obj);
+            required: !!obj.required,
+          },
+          obj
+        );
         // 输入控件默认长度限制
-        if(obj.control==='el-input'){
-          obj.controlOption = Object.assign({
-            maxlength: 100
-          }, obj.controlOption)
+        if (obj.control === "el-input") {
+          obj.controlOption = Object.assign(
+            {
+              maxlength: 100,
+            },
+            obj.controlOption
+          );
         }
-
       });
       return result;
     },
@@ -297,25 +355,32 @@ export default {
       return result;
     },
     columnsData() {
-      return this.columns.filter(column => {
-        // 支持el-table 多选功能
-        if(column.type==='selection'){
-          this.selectionNode = Object.assign({}, column);
-          return false;
-        }
-        return !column.hidden;
-      }).map((column) => {
-        // 列默认配置
-        let result = Object.assign({
-          align: "center"
-        }, column)
+      return this.columns
+        .filter((column) => {
+          // 支持el-table 多选功能
+          if (column.type === "selection") {
+            this.selectionNode = Object.assign({}, column);
+            return false;
+          }
+          return !column.hidden;
+        })
+        .map((column) => {
+          // 列默认配置
+          let result = Object.assign(
+            {
+              align: "center",
+            },
+            column
+          );
 
-        // type selection/expand 警告
-        if(result.type==='selection' || result.type==='expand'){
-          console.warn('BaseCURD组件：columns=>type属性只支持"default"和"index"')
-        }
-        return result;
-      });
+          // type selection/expand 警告
+          if (result.type === "selection" || result.type === "expand") {
+            console.warn(
+              'BaseCURD组件：columns=>type属性只支持"default"和"index"'
+            );
+          }
+          return result;
+        });
     },
   },
   watch: {
@@ -325,7 +390,7 @@ export default {
     },
   },
   methods: {
-    handleCurrentChange: function(currentPage) {
+    handleCurrentChange: function (currentPage) {
       // 翻页组件回调
       this.queryParamFinnal.p = currentPage;
       this.fetchList();
@@ -336,7 +401,7 @@ export default {
       this.editScope = "create";
       this.dialogVisible = true;
     },
-    update: async function(data) {
+    update: async function (data) {
       // 暴露方法：更新
       this.editForm = !this.getItemFromDetaiApi
         ? deepcopy(data)
@@ -351,17 +416,24 @@ export default {
           let formData = deepcopy(this.editForm);
           this.handleCloseDialog();
           let doAction = this.api[this.editScope];
-          if(typeof doAction !== 'function'){
-            return console.warn(`api.${this.editScope}()未定义`)
+          if (typeof doAction !== "function") {
+            return console.warn(`api.${this.editScope}()未定义`);
           }
           this.loading = true;
           doAction(formData)
-            .then(() => {
-              this.$message({
-                message: "操作成功",
-                type: "success",
-              });
-              this.fetchList();
+            .then((res) => {
+              if (res.status === 200) {
+                this.$message({
+                  message: "操作成功",
+                  type: "success",
+                });
+                this.fetchList();
+              } else {
+                this.$message({
+                  message: "操作失败",
+                  type: "warning",
+                });
+              }
             })
             .catch(() => {
               this.loading = false;
@@ -385,12 +457,19 @@ export default {
             .delete({
               [this.dataKey]: item[this.dataKey],
             })
-            .then(() => {
-              this.fetchList();
-              this.$message({
-                message: "删除成功",
-                type: "success",
-              });
+            .then((res) => {
+              if (res.status === 200) {
+                this.fetchList();
+                this.$message({
+                  message: "删除成功",
+                  type: "success",
+                });
+              } else {
+                this.$message({
+                  message: "删除失败",
+                  type: "warning",
+                });
+              }
             })
             .catch(() => {
               this.loading = false;
@@ -398,19 +477,19 @@ export default {
         })
         .catch(() => {});
     },
-    handleCloseDialog: function() {
+    handleCloseDialog: function () {
       this.dialogVisible = false;
       this.editForm = Object.assign({}, this.modelValue);
     },
-    fetchDetail: function(dataKey) {
-      if(!dataKey){
-        return console.warn(`api.detail(): 参数${this.dataKey}无效`)
+    fetchDetail: function (dataKey) {
+      if (!dataKey) {
+        return console.warn(`api.detail(): 参数${this.dataKey}无效`);
       }
       this.loading = true;
       return this.api
-        .detail({ 
-          [this.dataKey]: dataKey
-         })
+        .detail({
+          [this.dataKey]: dataKey,
+        })
         .then((res) => {
           this.loading = false;
           return res.data;
@@ -419,7 +498,7 @@ export default {
           this.loading = false;
         });
     },
-    fetchList: function(reload) {
+    fetchList: function (reload) {
       if (reload) {
         this.queryParamFinnal.p = 1;
       }
@@ -449,7 +528,6 @@ export default {
       });
       this.fetchList(true);
     },
-    
   },
   created() {
     // props:api检查
@@ -473,9 +551,8 @@ export default {
     if (this.immediate) {
       this.search();
     }
-  }
+  },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

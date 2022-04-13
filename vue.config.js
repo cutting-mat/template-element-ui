@@ -4,7 +4,6 @@
 module.exports = {
     transpileDependencies: [                                    // 需要babel编译的依赖包名
         '@cutting-mat/axios',
-        '@cutting-mat/uploader',
         'tiny-emitter'
     ],
     css: {
