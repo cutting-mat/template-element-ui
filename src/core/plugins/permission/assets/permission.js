@@ -1,7 +1,7 @@
 import AccessControl from "./access-control";
 import { event, axiosInstance } from "@/core";
 import { MainRoute, BypassRoute } from "@/route.config";
-import { GetAccountToken, SetAccountToken, GetTokenFromLogin } from "@/plugin.permission.config";
+import { GetAccountToken, SetAccountToken, GetTokenFromLogin, AuthFailedCallback } from "@/plugin.permission.config";
 
 let routeAuthWhiteList;
 
@@ -29,15 +29,8 @@ export default {
                 if (routeAuthWhiteList.indexOf('/' + to.path.split('/')[1]) !== -1) {
                     // console.log('未登录访问白名单')
                     return next();
-                } else if (to.path !== "/login") {
-                    // 未登录跳转登录页
-                    let query = {
-                        redirect: to.fullPath
-                    };
-                    return next({
-                        path: "/login",
-                        query
-                    });
+                } else {
+                    return AuthFailedCallback(to, from, next)
                 }
             }
             next()
