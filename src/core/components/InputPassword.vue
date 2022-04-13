@@ -15,13 +15,15 @@
       :readonly="readonly"
       :clearable="clearable"
       :autofocus="autofocus"
-      @paste.native.capture.prevent="false;"
-      @copy.native.capture.prevent="false;"
-      @cut.native.capture.prevent="false;"
+      @paste.native.capture.prevent="false"
+      @copy.native.capture.prevent="false"
+      @cut.native.capture.prevent="false"
       @input="handleInput"
     >
       <div slot="append" v-if="myValue">
-        <div class="_text" :style="scoreStyle.textStyle">{{ format(score) }}</div>
+        <div class="_text" :style="scoreStyle.textStyle">
+          {{ format(score) }}
+        </div>
         <div class="_progress">
           <div class="_bar" :style="scoreStyle.progressStyle"></div>
         </div>
@@ -140,14 +142,9 @@ export default {
       type: Array,
       required: false,
       default() {
-        return [
-          '#F56C6C',
-          '#E6A23C',
-          '#9fcc8a',
-          '#67c23a'
-        ]
-      }
-    }
+        return ["#F56C6C", "#E6A23C", "#9fcc8a", "#67c23a"];
+      },
+    },
   },
   data() {
     return {
@@ -162,8 +159,8 @@ export default {
     scoreStyle() {
       let targetIndex;
       for (let i = 0; i < this.color.length; i++) {
-        const maxScore = parseInt((i + 1) / this.color.length * 100);
-        const minScore = parseInt((i) / this.color.length * 100);
+        const maxScore = parseInt(((i + 1) / this.color.length) * 100);
+        const minScore = parseInt((i / this.color.length) * 100);
         if (this.score < maxScore && this.score >= minScore) {
           targetIndex = i;
           break;
@@ -171,10 +168,10 @@ export default {
       }
       return {
         textStyle: {
-          color: this.color[targetIndex]
+          color: this.color[targetIndex],
         },
         progressStyle: {
-          width: `${parseInt((targetIndex + 1) / this.color.length * 100)}%`,
+          width: `${parseInt(((targetIndex + 1) / this.color.length) * 100)}%`,
           background: `linear-gradient(
             to right,
             ${this.color[targetIndex]},
@@ -182,9 +179,9 @@ export default {
             transparent 12px,
             transparent
           ) 0  0/16px 100%`,
-        }
-      }
-    }
+        },
+      };
+    },
   },
   watch: {
     value: {
@@ -208,8 +205,8 @@ export default {
       this.myValue = newVal
         .toString()
         .trim()
-        .replace(/[^a-zA-Z0-9!@#$%^&*(),./]/g, '');
-      this.$emit('verify', this.score)
+        .replace(/[^a-zA-Z0-9!@#$%^&*(),./]/g, "");
+      this.$emit("verify", this.score);
     },
   },
 };
