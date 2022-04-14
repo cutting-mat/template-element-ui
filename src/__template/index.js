@@ -1,12 +1,12 @@
 export default [{
     path: '/template',
     name: '模块模板',
-    component: (resolve) => require(['./views/Index.vue'], resolve),
+    component: () => import("./views/Index.vue"),
     redirect: '/template/list',
     children: [{
         path: 'list',
         name: '列表',
-        component: (resolve) => require(['./views/List.vue'], resolve),
+        component: () => import("./views/List.vue"),
         meta: {
             icon: '',                   // 字体图标
             title: '',                  // 展示名

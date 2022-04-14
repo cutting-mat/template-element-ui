@@ -241,8 +241,8 @@ export default {
     },
   },
   components: {
-    CURDForm: (resolve) => require(["./CURDForm"], resolve),
-    CURDColumn: (resolve) => require(["./CURDColumn"], resolve),
+    CURDForm: () => import("./CURDForm"),
+    CURDColumn: () => import("./CURDColumn"),
   },
   data() {
     return {

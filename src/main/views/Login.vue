@@ -69,8 +69,7 @@ import { login } from "@/main/api/common";
 
 export default {
   components: {
-    inputCapthaImage: (resolve) =>
-      require(["../components/InputCaptchaImage.vue"], resolve),
+    inputCapthaImage: () => import("../components/InputCaptchaImage.vue"),
   },
   data() {
     const validImage = () => {

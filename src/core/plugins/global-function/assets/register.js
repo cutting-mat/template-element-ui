@@ -2,9 +2,7 @@
 export default {
     install: function (Vue, resources) {
         // 注册过滤器
-        Object.keys(resources.filters).forEach(key => {
-            Vue.filter(key, resources.filters[key])
-        })
+        Vue.prototype.$filter = resources.filters
 
         // 注册组件
         Object.keys(resources.components).forEach(key => {
@@ -21,10 +19,10 @@ export default {
             Vue.directive(key, resources.directives[key])
         })
 
-         // 注册实例方法
-         Object.keys(resources.$methods).forEach(key => {
+        // 注册实例方法
+        Object.keys(resources.$methods).forEach(key => {
             Vue.prototype[key] = resources.$methods[key]
         })
-        
+
     }
 }

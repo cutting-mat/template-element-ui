@@ -64,8 +64,7 @@ import * as resource from "../api/resource";
 
 export default {
   components: {
-    TheResourcePicker: (resolve) =>
-      require(["@/user/components/TheResourcePicker.vue"], resolve),
+    TheResourcePicker: () => import("@/user/components/TheResourcePicker.vue"),
   },
   data() {
     const checkMethod = (rule, value, callback) => {

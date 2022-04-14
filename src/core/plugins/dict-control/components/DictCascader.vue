@@ -5,7 +5,7 @@
     :options="list"
     :props="{
       value: this.valueKey,
-      label: this.labelKey
+      label: this.labelKey,
     }"
     @change="$emit('change', $event)"
   ></el-cascader>
@@ -29,33 +29,33 @@ export default {
       type: String,
       required: false,
       default() {
-        return getDefaultValue("valueKey", "value")
-      }
+        return getDefaultValue("valueKey", "value");
+      },
     },
     labelKey: {
       type: String,
       required: false,
       default() {
-        return getDefaultValue("labelKey", "label")
-      }
+        return getDefaultValue("labelKey", "label");
+      },
     },
     nullAble: {
       type: Boolean,
       required: false,
       default() {
-        return getDefaultValue("nullAble", true)
-      }
+        return getDefaultValue("nullAble", true);
+      },
     },
     request: {
       type: Function,
-      required: false
+      required: false,
     },
     param: {
       type: String,
       required: false,
       default() {
-        return getDefaultValue("param", undefined)
-      }
+        return getDefaultValue("param", undefined);
+      },
     },
     responseTransfer: {
       type: Function,
@@ -90,18 +90,13 @@ export default {
   },
   methods: {
     fetchData: async function () {
-      if (
-        !Vue.$DictControl &&
-        !Vue.$DictControl.request &&
-        !this.request
-      ) {
+      if (!Vue.$DictControl && !Vue.$DictControl.request && !this.request) {
         return console.warn(
           "DictControl: The required configuration [request] is missing!"
         );
       }
 
-      const DataRequest =
-        this.request || Vue.$DictControl.request;
+      const DataRequest = this.request || Vue.$DictControl.request;
       if (typeof DataRequest !== "function") {
         return console.warn("DictControl: [request] must be a Function!");
       }
@@ -114,5 +109,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

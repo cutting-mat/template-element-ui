@@ -1,10 +1,9 @@
-import Vue from 'vue'
 //import axios from 'axios';
 import axios from '@cutting-mat/axios';
 import { event, routeGenerator } from '@/core'
 import requestConfig from '@/request.config';
 console.log('[Core] Request Start.')
-
+import { Message } from 'element-ui';
 // 创建请求实例
 const instance = axios.create(requestConfig);
 
@@ -46,7 +45,7 @@ instance.interceptors.response.use(function (response) {
         })
     }
     // 控制台输出接口返回
-    if (Vue.DebugRequest) {
+    if (window.DebugRequest) {
         console.log(response.request.custom.options.type, response.request.custom.options.url, ' => ', response.data)
     }
 
@@ -72,13 +71,13 @@ const catchError = function (error) {
         // that falls out of the range of 2xx
         switch (error.response.status) {
             case 400:
-                Vue.prototype.$message({
+                Message({
                     message: getStringFromData(error.response.data, '请求参数异常'),
                     type: 'error'
                 });
                 break;
             case 401:
-                Vue.prototype.$message({
+                Message({
                     message: getStringFromData(error.response.data, '未授权或授权已过期'),
                     type: 'warning',
                     onClose: function () {
@@ -87,7 +86,7 @@ const catchError = function (error) {
                 });
                 break;
             case 403:
-                Vue.prototype.$message({
+                Message({
                     message: getStringFromData(error.response.data, '无访问权限, 请联系企业管理员'),
                     type: 'warning'
                 });
@@ -105,13 +104,13 @@ const catchError = function (error) {
         let message = error.message;
         if (message.indexOf('timeout') > -1) {
             message = '请求超时, 请重试'
-            Vue.prototype.$message({
+            Message({
                 message,
                 type: 'error'
             })
         } else if (message.indexOf('Network') > -1) {
             message = '网络异常'
-            Vue.prototype.$message({
+            Message({
                 message,
                 type: 'error'
             })

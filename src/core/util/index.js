@@ -1,5 +1,3 @@
-import Vue from 'vue'
-
 /**
  * 本地存储
  * @param key[String] 要存/取的键
@@ -8,7 +6,7 @@ import Vue from 'vue'
  * */
 const STORAGE_SPACE = '';           // 指定命名空间, 防止同域子项目间存储混淆
 export const storage = function (key, value, storageFun = localStorage) {
-    key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;           
+    key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;
     if (value === void (0)) {
         // get
         let lsVal = storageFun.getItem(key);
@@ -161,46 +159,6 @@ export const formatDate = (value, fmt) => {
     }
     return fmt
 }
-
-/**
- * 全局事件
- * 特性：
- * 1. 重复注册同一个事件, 只保留最后一次。使单页面应用反复进入页面不会重复注册事件
- * 2. 可以通过别名方式将一个事件多次注册。在1的前提下允许同一个事件多次注册
-*/
-const bus = new Vue();
-let busQueue = {};
-/**
- * 全局事件监听
- * @param eventName[String] 自定义事件名称, 支持用双下划线添加别名, 如 eventName__ANYSTRING
- * @param eventHandle[Function] 事件回调方法, 参数接收触发事件方法发送的参数; 如果不传将关闭该事件监听
-*/
-export const on = function (eventName, eventHandle) {
-    if (eventName && eventName.split) {
-        if (busQueue[eventName]) {
-            bus.$off(eventName, busQueue[eventName])
-        }
-        if (typeof eventHandle === 'function') {
-            busQueue[eventName] = eventHandle;
-            return bus.$on(eventName, eventHandle)
-        } else {
-            bus.$off(eventName)
-        }
-    }
-};
-/**
- * 全局事件触发
- * @param eventName[String] 要触发的事件名称, 不需要包含别名部分, 如 myEvent__alias1, 只需要传入 myEvent
- * @param msg[any] 触发事件时携带的参数
-*/
-export const emit = function (eventName, msg) {
-    const busQueueKeys = Object.keys(busQueue);
-    busQueueKeys.forEach(key => {
-        if (eventName === key.split('__')[0]) {
-            return bus.$emit(key, msg)
-        }
-    })
-};
 
 /**
  * 提取文件名中的扩展名

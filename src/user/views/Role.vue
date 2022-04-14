@@ -7,7 +7,7 @@
         size="small"
         icon="el-icon-plus"
         @click="dialogVisible = true"
-        >
+      >
         添加
       </el-button>
     </ToolBar>
@@ -63,7 +63,11 @@
           <el-input v-model.trim="editForm.name" :maxlength="100"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="remark">
-          <el-input v-model.trim="editForm.remark" type="textarea" :maxlength="1000"></el-input>
+          <el-input
+            v-model.trim="editForm.remark"
+            type="textarea"
+            :maxlength="1000"
+          ></el-input>
         </el-form-item>
 
         <el-form-item label="权限">
@@ -88,7 +92,7 @@ import * as role from "../api/role";
 
 export default {
   components: {
-    TheResourcePicker: (resolve) => require(["@/user/components/TheResourcePicker.vue"], resolve)
+    TheResourcePicker: () => import("@/user/components/TheResourcePicker.vue"),
   },
   data() {
     return {
@@ -129,7 +133,6 @@ export default {
       this.dialogVisible = true;
     },
     save() {
-      
       // 表单验证
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
@@ -206,5 +209,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

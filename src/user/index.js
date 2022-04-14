@@ -4,23 +4,23 @@ export default [{
     meta: {
         icon: ''
     },
-    component: (resolve) => require(['./views/Index.vue'], resolve),
+    component: () => import("./views/Index.vue"),
     redirect: '/user/Account',
     children: [{
         path: 'Account',
         name: '账号管理',
-        component: (resolve) => require(['./views/Account.vue'], resolve)
+        component: () => import("./views/Account.vue")
     }, {
         path: 'Organization',
         name: '组织管理',
-        component: (resolve) => require(['./views/Organization.vue'], resolve)
+        component: () => import("./views/Organization.vue")
     }, {
         path: 'Role',
         name: '角色管理',
-        component: (resolve) => require(['./views/Role.vue'], resolve)
+        component: () => import("./views/Role.vue")
     }, {
         path: 'Resource',
         name: '资源管理',
-        component: (resolve) => require(['./views/Resource.vue'], resolve)
+        component: () => import("./views/Resource.vue")
     }]
 }]

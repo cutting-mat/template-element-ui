@@ -4,8 +4,7 @@
  * 同目录*.json文件将视为YAPI导出的json数据，将自动解析并注册为Mock接口
  * */
 
-import Vue from 'vue'
-Vue.DebugRequest = true;
+window.DebugRequest = true;
 console.log(`[Mock] Start. Please make sure that main.js => AccessControl is closed, otherwise it will not work properly`)
 
 const Mock = require('mockjs')

@@ -1,17 +1,11 @@
 <template>
-  <div class="scrollbar">
-    HomePage
-  </div>
+  <div class="scrollbar">HomePage</div>
 </template>
 
 <script>
 // import { util } from "@/core";
 
-export default {
-  
-};
+export default {};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

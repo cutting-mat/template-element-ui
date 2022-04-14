@@ -5,7 +5,7 @@
  * 全局组件<DictCheckbox>
  * 全局组件<DictRadio>
  * 全局组件<DictSelect>
- * */ 
+ * */
 
 const components = {
     DictCascader: () => import("./components/DictCascader.vue"),

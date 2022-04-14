@@ -1,4 +1,4 @@
-import index from './views/Index'
+import index from './views/Index.vue'
 
 export default [
     {
@@ -8,14 +8,14 @@ export default [
     }, {
         path: '/login',
         name: '登录',
-        component: (resolve) => require(['./views/Login.vue'], resolve)
+        component: () => import('./views/Login.vue')
     }, {
         path: '/500',
         name: '服务异常',
-        component: (resolve) => require(['./views/500.vue'], resolve)
+        component: () => import('./views/500.vue')
     }, {
         path: '/404',
         name: '找不到页面',
-        component: (resolve) => require(['./views/404.vue'], resolve)
+        component: () => import('./views/404.vue')
     }
 ]

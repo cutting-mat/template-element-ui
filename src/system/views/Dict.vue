@@ -9,7 +9,7 @@
         icon="el-icon-plus"
         @click="dialogVisible = true"
       >
-      添加
+        添加
       </el-button>
     </ToolBar>
 
@@ -136,7 +136,7 @@ export default {
     },
   },
   components: {
-    DictEditer: (resolve) => require(["../components/DictEditer"], resolve),
+    DictEditer: () => import("../components/DictEditer"),
   },
   data() {
     return {
@@ -155,7 +155,7 @@ export default {
         p: 1,
         dictName: "",
         testNull: null,
-        testStr: ''
+        testStr: "",
       },
       totalCount: 0,
       totalPage: 0,
@@ -217,7 +217,6 @@ export default {
       this.dialogVisible = true;
     },
     save() {
-      
       this.$refs["editForm"].validate((valid) => {
         if (valid) {
           let formData = deepcopy(this.editForm);

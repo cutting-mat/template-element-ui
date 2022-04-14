@@ -7,7 +7,8 @@
         size="small"
         icon="el-icon-plus"
         @click="dialogVisible = true"
-      >添加</el-button>
+        >添加</el-button
+      >
     </ToolBar>
     <!-- search -->
     <el-form ref="searchForm" inline :model="queryParam" size="small">
@@ -15,21 +16,38 @@
         <el-input v-model="queryParam.accountNumber"></el-input>
       </el-form-item>
       <el-form-item label="用户名">
-        <el-input v-model="queryParam.accountName" ></el-input>
+        <el-input v-model="queryParam.accountName"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" icon="el-icon-search" @click="fetchData(true)">查询</el-button>
-        <el-button icon="el-icon-refresh" @click="resetSearch()">重置</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="fetchData(true)"
+          >查询</el-button
+        >
+        <el-button icon="el-icon-refresh" @click="resetSearch()"
+          >重置</el-button
+        >
       </el-form-item>
     </el-form>
     <!-- list -->
     <p>
-      <i class="el-icon-info"></i> 共 <el-button type="text">{{totalCount}}</el-button> 条记录
+      <i class="el-icon-info"></i> 共
+      <el-button type="text">{{ totalCount }}</el-button> 条记录
     </p>
     <el-table :data="list">
-      <el-table-column prop="accountNumber" label="账号" align="center"></el-table-column>
-      <el-table-column prop="accountName" label="用户名" align="center"></el-table-column>
-      <el-table-column prop="roleName" label="角色" align="center"></el-table-column>
+      <el-table-column
+        prop="accountNumber"
+        label="账号"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="accountName"
+        label="用户名"
+        align="center"
+      ></el-table-column>
+      <el-table-column
+        prop="roleName"
+        label="角色"
+        align="center"
+      ></el-table-column>
       <el-table-column label="状态" width="80" align="center">
         <template slot-scope="scope">
           <template v-if="!scope.row.state">
@@ -42,21 +60,25 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
-          <el-button v-auth="account.edit" size="mini" @click="edit(scope.row)">编辑</el-button>
+          <el-button v-auth="account.edit" size="mini" @click="edit(scope.row)"
+            >编辑</el-button
+          >
           <el-button
             v-auth="account.resetPassword"
             size="mini"
             type="warning"
             plain
             @click="resetPassword(scope.row)"
-          >重置密码</el-button>
+            >重置密码</el-button
+          >
           <el-button
             v-auth="account.remove"
             size="mini"
             type="danger"
             plain
             @click="remove(scope.row)"
-          >删除</el-button>
+            >删除</el-button
+          >
         </template>
       </el-table-column>
     </el-table>
@@ -66,8 +88,14 @@
       :current-page="queryParam.p"
       :total-count="totalCount"
       :total-page="totalPage"
-      @current-change="queryParam.p = $event; fetchData()"
-      @size-change="queryParam.pageSize = $event; fetchData(true)"
+      @current-change="
+        queryParam.p = $event;
+        fetchData();
+      "
+      @size-change="
+        queryParam.pageSize = $event;
+        fetchData(true);
+      "
     />
     <!-- 弹窗 -->
     <el-dialog
@@ -78,7 +106,13 @@
       width="600px"
       @close="handleCloseDialog"
     >
-      <el-form size="small" ref="editForm" :rules="rules" :model="editForm" label-width="80px">
+      <el-form
+        size="small"
+        ref="editForm"
+        :rules="rules"
+        :model="editForm"
+        label-width="80px"
+      >
         <el-form-item label="头像" prop="avatar">
           <uploader
             class="upload_avatar"
@@ -86,24 +120,41 @@
             :value="editForm.avatar ? [{ url: editForm.avatar }] : []"
             imgCrop
             :show-file-list="false"
-            :on-success="(res) => { $set(editForm, 'avatar', res.url) }"
+            :on-success="
+              (res) => {
+                $set(editForm, 'avatar', res.url);
+              }
+            "
           >
             <img v-if="editForm.avatar" :src="editForm.avatar" alt />
             <span v-else>上传头像</span>
           </uploader>
         </el-form-item>
         <el-form-item label="账号" prop="accountNumber">
-          <el-input v-model.trim="editForm.accountNumber" :maxlength="100"></el-input>
+          <el-input
+            v-model.trim="editForm.accountNumber"
+            :maxlength="100"
+          ></el-input>
         </el-form-item>
         <el-form-item label="用户名" prop="accountName">
-          <el-input v-model.trim="editForm.accountName" :maxlength="100"></el-input>
+          <el-input
+            v-model.trim="editForm.accountName"
+            :maxlength="100"
+          ></el-input>
         </el-form-item>
         <template v-if="!editForm.id">
           <el-form-item label="密码" prop="password">
-            <input-password v-model="editForm.password" autocomplete="off"></input-password>
+            <input-password
+              v-model="editForm.password"
+              autocomplete="off"
+            ></input-password>
           </el-form-item>
           <el-form-item label="确认密码" prop="checkPass">
-            <el-input type="password" v-model="editForm.checkPass" autocomplete="off"></el-input>
+            <el-input
+              type="password"
+              v-model="editForm.checkPass"
+              autocomplete="off"
+            ></el-input>
           </el-form-item>
         </template>
         <el-form-item label="所属组织" prop="orgId">
@@ -114,7 +165,11 @@
           ></OrgPicker>
         </el-form-item>
         <el-form-item label="角色">
-          <DictSelect v-model="editForm.roleId" :request="requestRoles" labelKey="name" />
+          <DictSelect
+            v-model="editForm.roleId"
+            :request="requestRoles"
+            labelKey="name"
+          />
         </el-form-item>
         <el-form-item label="状态">
           <el-switch
@@ -141,8 +196,7 @@ import { list as requestRoles } from "../api/role";
 
 export default {
   components: {
-    OrgPicker: (resolve) =>
-      require(["../components/OrgPicker.vue"], resolve)
+    OrgPicker: () => import("../components/OrgPicker.vue"),
   },
   data() {
     const validatePass = (rule, value, callback) => {
@@ -197,19 +251,19 @@ export default {
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
         orgId: [{ required: true, message: "请选择所属组织" }],
       },
-      requestRoles
+      requestRoles,
     };
   },
   methods: {
-    resetSearch(){
+    resetSearch() {
       this.queryParam = {
         pageSize: 10,
         p: 1,
         accountNumber: "",
         accountName: "",
-      }
+      };
 
-      this.fetchData(true)
+      this.fetchData(true);
     },
     orgAdapter(value, obj) {
       return obj.name || this.editForm.belongOrgName || value;
@@ -230,26 +284,32 @@ export default {
           })
           .then((res) => {
             if (res.data.password) {
-              this.$clipboard(res.data.password).then(() => {
-                this.$alert(`新密码已复制到剪贴板，请保管好新密码：<code>${res.data.password}</code>`, {
-                  confirmButtonText: "我知道了",
-                  dangerouslyUseHTMLString: true
-                }).then(() => {
-                  this.fetchData();
+              this.$clipboard(res.data.password)
+                .then(() => {
+                  this.$alert(
+                    `新密码已复制到剪贴板，请保管好新密码：<code>${res.data.password}</code>`,
+                    {
+                      confirmButtonText: "我知道了",
+                      dangerouslyUseHTMLString: true,
+                    }
+                  ).then(() => {
+                    this.fetchData();
+                  });
                 })
-              }).catch(() => {
-                this.$alert(`密码已重置，请牢记新密码：<code>${res.data.password}</code>`, {
-                  confirmButtonText: "我知道了",
-                  dangerouslyUseHTMLString: true
-                }).then(() => {
-                  this.fetchData();
-                })
-              })
-
+                .catch(() => {
+                  this.$alert(
+                    `密码已重置，请牢记新密码：<code>${res.data.password}</code>`,
+                    {
+                      confirmButtonText: "我知道了",
+                      dangerouslyUseHTMLString: true,
+                    }
+                  ).then(() => {
+                    this.fetchData();
+                  });
+                });
             } else {
-              this.$message.warning('操作失败，请重试')
+              this.$message.warning("操作失败，请重试");
             }
-
           })
           .catch(() => {
             this.loading = false;
@@ -344,11 +404,9 @@ export default {
           this.loading = false;
         });
     },
-
   },
   created: function () {
     this.fetchData();
-
   },
 };
 </script>

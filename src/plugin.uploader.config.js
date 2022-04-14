@@ -40,7 +40,7 @@
     }
 
  * */
-import Vue from "vue";
+import { Message } from 'element-ui';
 import { upload as uploadMethod } from "@/main/api/common";
 
 export default {
@@ -48,13 +48,13 @@ export default {
     beforeUpload(file) {
         // 文件名不得超过500字符
         if (file.name.length > 500) {
-            Vue.prototype.$message.warning(
+            Message.warning(
                 `文件名不得超过 500 字符`
             );
             return false;
         }
     },
     onExceed() {
-        Vue.prototype.$message.warning("超出上传数量限制");
+        Message.warning("超出上传数量限制");
     },
 }
