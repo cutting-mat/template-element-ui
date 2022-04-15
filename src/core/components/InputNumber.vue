@@ -89,13 +89,15 @@ export default {
     value: {
       handler(newVal) {
         let inputValue = newVal;
+        if (!isNaN(parseFloat(inputValue))) {
+          if (inputValue < this.min && this.myValue !== "") {
+            inputValue = this.min;
+          }
+          if (inputValue > this.max) {
+            inputValue = this.max;
+          }
+        }
 
-        if (inputValue < this.min && this.myValue !== "") {
-          inputValue = this.min;
-        }
-        if (inputValue > this.max) {
-          inputValue = this.max;
-        }
         this.myValue = inputValue;
       },
       immediate: true,
