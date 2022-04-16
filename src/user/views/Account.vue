@@ -60,12 +60,12 @@
       </el-table-column>
       <el-table-column label="操作" width="300" align="center">
         <template slot-scope="scope">
-          <el-button v-auth="account.edit" size="mini" @click="edit(scope.row)"
+          <el-button v-auth="account.edit" size="small" @click="edit(scope.row)"
             >编辑</el-button
           >
           <el-button
             v-auth="account.resetPassword"
-            size="mini"
+            size="small"
             type="warning"
             plain
             @click="resetPassword(scope.row)"
@@ -73,7 +73,7 @@
           >
           <el-button
             v-auth="account.remove"
-            size="mini"
+            size="small"
             type="danger"
             plain
             @click="remove(scope.row)"

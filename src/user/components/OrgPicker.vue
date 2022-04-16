@@ -17,14 +17,22 @@
       width="1000px"
       @open="dialogOpen"
     >
-    
       <div class="orgPicker">
-        <OrgTree v-if="dialogVisible" :value="list" picker @pick="checkedNode = $event"></OrgTree>
+        <OrgTree
+          v-if="dialogVisible"
+          :value="list"
+          picker
+          @pick="checkedNode = $event"
+        ></OrgTree>
       </div>
 
       <div slot="footer">
-        <el-button size="medium" type="primary" @click="submit">确 定</el-button>
-        <el-button size="medium" @click="dialogVisible = false">取 消</el-button>
+        <el-button size="medium" type="primary" @click="submit"
+          >确 定</el-button
+        >
+        <el-button size="medium" @click="dialogVisible = false"
+          >取 消</el-button
+        >
       </div>
     </el-dialog>
   </div>
@@ -50,8 +58,8 @@ export default {
       type: Function,
       required: false,
       default(value, obj) {
-        return obj.name || value
-      }
+        return obj.name || value;
+      },
     },
     size: {
       type: String,
@@ -60,7 +68,7 @@ export default {
     },
   },
   components: {
-    OrgTree: resolve => require(["../components/OrgTree"], resolve),
+    OrgTree: (resolve) => require(["../components/OrgTree.vue"], resolve),
   },
   data() {
     return {
@@ -78,8 +86,8 @@ export default {
   },
   methods: {
     dialogOpen() {
-      this.checkedNode = {}
-      this.submitNode = {}
+      this.checkedNode = {};
+      this.submitNode = {};
     },
     fetchData: function () {
       this.loading = true;
@@ -96,13 +104,12 @@ export default {
     },
     submit() {
       if (this.checkedNode && this.checkedNode[0]) {
-        this.submitNode = deepcopy(this.checkedNode[0])
+        this.submitNode = deepcopy(this.checkedNode[0]);
         this.$emit("change", this.checkedNode[0].id);
       }
 
       this.dialogVisible = false;
     },
-
   },
   created() {
     this.fetchData();

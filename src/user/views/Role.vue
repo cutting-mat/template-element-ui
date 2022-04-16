@@ -25,7 +25,7 @@
         <template slot-scope="scope">
           <el-button
             v-auth="role.edit"
-            size="mini"
+            size="small"
             type="info"
             plain
             @click="edit(scope.row)"
@@ -33,7 +33,7 @@
           >
           <el-button
             v-auth="role.remove"
-            size="mini"
+            size="small"
             type="danger"
             plain
             @click="remove(scope.row)"

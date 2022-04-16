@@ -20,13 +20,13 @@
         </span>
         <el-tag
           v-if="data.type === 1"
-          size="mini"
+          size="small"
           :type="typeColor[data.method]"
         >
           <i class="el-icon-position"></i>
           {{ data.method.toUpperCase() }}
         </el-tag>
-        <el-tag size="mini" type="info">
+        <el-tag size="small" type="info">
           <i v-if="data.type === 0" class="el-icon-link"></i>
           {{ data.type === 0 ? data.route : data.url }}
         </el-tag>

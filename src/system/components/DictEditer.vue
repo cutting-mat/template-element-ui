@@ -38,19 +38,19 @@
             <template slot-scope="scope">
               <el-button
                 v-auth="dict.itemEdit"
-                size="mini"
+                size="small"
                 @click="edit(scope.row)"
                 >编辑</el-button
               >
               <el-button
                 v-auth="dict.itemEdit"
-                size="mini"
+                size="small"
                 @click="append(scope.row)"
                 >添加下级</el-button
               >
               <el-button
                 v-auth="dict.itemRemove"
-                size="mini"
+                size="small"
                 type="danger"
                 plain
                 @click="remove(scope.row)"

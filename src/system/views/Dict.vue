@@ -44,12 +44,12 @@
       ></el-table-column>
       <el-table-column label="操作" width="300" align="center" v-if="!picker">
         <template slot-scope="scope">
-          <el-button v-auth="dict.edit" size="mini" @click="edit(scope.row)"
+          <el-button v-auth="dict.edit" size="small" @click="edit(scope.row)"
             >编辑</el-button
           >
           <el-button
             v-auth="dict.itemEdit"
-            size="mini"
+            size="small"
             type="warning"
             plain
             @click="editItem(scope.row)"
@@ -57,7 +57,7 @@
           >
           <el-button
             v-auth="dict.remove"
-            size="mini"
+            size="small"
             type="danger"
             plain
             @click="remove(scope.row)"
@@ -136,7 +136,7 @@ export default {
     },
   },
   components: {
-    DictEditer: () => import("../components/DictEditer"),
+    DictEditer: () => import("../components/DictEditer.vue"),
   },
   data() {
     return {

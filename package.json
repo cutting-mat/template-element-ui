@@ -1,6 +1,6 @@
 {
   "name": "template-element-ui",
-  "version": "2.8.11",
+  "version": "2.8.12",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
