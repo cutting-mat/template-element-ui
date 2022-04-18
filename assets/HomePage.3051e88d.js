@@ -1,1 +1,0 @@
-import{n as r}from"./index.afc5b2ba.js";var o=function(){var e=this,t=e.$createElement,_=e._self._c||t;return _("div",{staticClass:"scrollbar"},[e._v("HomePage")])},a=[];const s={},n={};var c=r(s,o,a,!1,l,"4ded0bf5",null,null);function l(e){for(let t in n)this[t]=n[t]}var i=function(){return c.exports}();export{i as default};
