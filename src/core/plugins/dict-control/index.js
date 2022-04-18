@@ -16,7 +16,7 @@ const components = {
 export const install = function (Vue, option) {
     Vue.$DictControl = option || {};
 
-    for (let name in components) {
+    for (const name in components) {
         Vue.component(name, components[name])
     }
 }

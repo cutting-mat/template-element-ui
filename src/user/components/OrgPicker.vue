@@ -68,7 +68,7 @@ export default {
     },
   },
   components: {
-    OrgTree: (resolve) => require(["../components/OrgTree.vue"], resolve),
+    OrgTree: () => import("../components/OrgTree.vue"),
   },
   data() {
     return {

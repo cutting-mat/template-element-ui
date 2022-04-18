@@ -4,23 +4,23 @@
  * @param value[any] 要存的值, 若缺省则返回key的值
  * @return 只传key会返回该key的值
  * */
-const STORAGE_SPACE = '';           // 指定命名空间, 防止同域子项目间存储混淆
+const STORAGE_SPACE = '' // 指定命名空间, 防止同域子项目间存储混淆
 export const storage = function (key, value, storageFun = localStorage) {
-    key = `${STORAGE_SPACE || process.env.BASE_URL}_${key}`;
+    key = `${STORAGE_SPACE || import.meta.env.BASE_URL}_${key}`
     if (value === void (0)) {
         // get
-        let lsVal = storageFun.getItem(key);
+        const lsVal = storageFun.getItem(key)
         if (lsVal && lsVal.indexOf('autostringify-') === 0) {
-            return JSON.parse(lsVal.split('autostringify-')[1]);
+            return JSON.parse(lsVal.split('autostringify-')[1])
         } else {
-            return lsVal;
+            return lsVal
         }
     } else {
         // set
         if ((Object.prototype.toString.call(value) === '[object Object]') || Array.isArray(value)) {
-            value = 'autostringify-' + JSON.stringify(value);
+            value = 'autostringify-' + JSON.stringify(value)
         }
-        return storageFun.setItem(key, value);
+        return storageFun.setItem(key, value)
     }
 }
 
@@ -31,14 +31,14 @@ export const storage = function (key, value, storageFun = localStorage) {
  * */
 export const deepcopy = function (source) {
     if (!source) {
-        return source;
+        return source
     }
-    let sourceCopy = source instanceof Array ? [] : {};
-    for (let item in source) {
-        sourceCopy[item] = typeof source[item] === 'object' ? deepcopy(source[item]) : source[item];
+    const sourceCopy = source instanceof Array ? [] : {}
+    for (const item in source) {
+        sourceCopy[item] = typeof source[item] === 'object' ? deepcopy(source[item]) : source[item]
     }
-    return sourceCopy;
-};
+    return sourceCopy
+}
 
 /**
  * 一维对象数组转树形结构
@@ -49,22 +49,22 @@ export const deepcopy = function (source) {
  * */
 export const buildTree = function (flatArray, parentKey, sortFunction) {
     // 存储id map
-    let IdMap = {};
+    const IdMap = {}
     // 数组浅拷贝
-    let items = flatArray.map(item => {
+    const items = flatArray.map(item => {
         // 生成id map
-        IdMap[item.id] = true;
+        IdMap[item.id] = true
         return Object.assign({}, item)
-    });
-    parentKey = parentKey || 'pid';
+    })
+    parentKey = parentKey || 'pid'
     // 存放结果集
-    const result = [];
+    const result = []
     // 存放中转map
-    const itemMap = {};
+    const itemMap = {}
     // 一次遍历
     for (const item of items) {
-        const id = item.id;
-        const pid = item[parentKey];
+        const id = item.id
+        const pid = item[parentKey]
 
         if (!itemMap[id]) {
             itemMap[id] = {}
@@ -72,14 +72,14 @@ export const buildTree = function (flatArray, parentKey, sortFunction) {
 
         itemMap[id] = {
             ...item,
-            children: Array.isArray(itemMap[id]['children']) ? itemMap[id]['children'] : null
+            children: Array.isArray(itemMap[id].children) ? itemMap[id].children : null
         }
 
-        const treeItem = itemMap[id];
+        const treeItem = itemMap[id]
 
         if (!pid || pid === id || !IdMap[pid]) {
             // 无可用pid视为根节点
-            result.push(treeItem);
+            result.push(treeItem)
         } else {
             if (!itemMap[pid]) {
                 itemMap[pid] = {
@@ -91,27 +91,26 @@ export const buildTree = function (flatArray, parentKey, sortFunction) {
             }
             itemMap[pid].children.push(treeItem)
         }
-
     }
     // 排序
     if (typeof sortFunction === 'function') {
-        let sortByFun = function (objectArray) {
-            objectArray.sort(sortFunction);
+        const sortByFun = function (objectArray) {
+            objectArray.sort(sortFunction)
             objectArray.forEach(item => {
                 if (Array.isArray(item.children) && item.children.length) {
                     sortByFun(item.children)
                 }
             })
         }
-        sortByFun(result);
+        sortByFun(result)
     }
-    return result;
+    return result
 }
 
 /**
  * 日期格式化
  * @param value[milliseconds/dateString] 可以通过new Date()方法创建日期对象的毫秒数或日期字符串
- * @param fmt[String/undefined] 日期格式化模板字符串, 内置四种快捷方式："year","month","day","day-time" 
+ * @param fmt[String/undefined] 日期格式化模板字符串, 内置四种快捷方式："year","month","day","day-time"
  * @return 格式化后的日期字符串
  * */
 export const formatDate = (value, fmt) => {
@@ -123,36 +122,36 @@ export const formatDate = (value, fmt) => {
     }
     switch (fmt) {
         case 'year':
-            fmt = "yyyy"
-            break;
+            fmt = 'yyyy'
+            break
         case 'month':
-            fmt = "yyyy/MM"
-            break;
+            fmt = 'yyyy/MM'
+            break
         case 'day':
-            fmt = "yyyy/MM/dd"
-            break;
+            fmt = 'yyyy/MM/dd'
+            break
         case 'day-time':
-            fmt = "yyyy/MM/dd hh:mm"
-            break;
+            fmt = 'yyyy/MM/dd hh:mm'
+            break
     }
     if (!isNaN(parseInt(value))) {
         value = parseInt(value)
     }
 
-    let getDate = new Date(value);
-    let o = {
+    const getDate = new Date(value)
+    const o = {
         'M+': getDate.getMonth() + 1,
         'd+': getDate.getDate(),
         'h+': getDate.getHours(),
         'm+': getDate.getMinutes(),
         's+': getDate.getSeconds(),
         'q+': Math.floor((getDate.getMonth() + 3) / 3),
-        'S': getDate.getMilliseconds()
+        S: getDate.getMilliseconds()
     }
     if (/(y+)/.test(fmt)) {
         fmt = fmt.replace(RegExp.$1, (getDate.getFullYear() + '').substr(4 - RegExp.$1.length))
     }
-    for (let k in o) {
+    for (const k in o) {
         if (new RegExp('(' + k + ')').test(fmt)) {
             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
         }
@@ -166,12 +165,12 @@ export const formatDate = (value, fmt) => {
  * @return 转小写后的扩展名字符串
 */
 export const getSuffix = (filename) => {
-    let pos = filename.lastIndexOf('.')
+    const pos = filename.lastIndexOf('.')
     let suffix = ''
     if (pos != -1) {
         suffix = filename.substring(pos + 1)
     }
-    return suffix.toLowerCase();
+    return suffix.toLowerCase()
 }
 
 /**
@@ -183,25 +182,25 @@ export const getSuffix = (filename) => {
 */
 
 export const throttle = function throttle(method, delay, duration) {
-    let timer = null,
-        begin = new Date();
-    delay = delay ? delay : 128;
-    duration = duration ? duration : 1000;
+    let timer = null
+    let begin = new Date()
+    delay = delay || 128
+    duration = duration || 1000
     return function () {
-        let context = this,
-            args = arguments,
-            current = new Date();
-        clearTimeout(timer);
+        const context = this
+        const args = arguments
+        const current = new Date()
+        clearTimeout(timer)
         if (current - begin >= duration) {
-            method.apply(context, args);
-            begin = current;
+            method.apply(context, args)
+            begin = current
         } else {
             timer = setTimeout(function () {
-                method.apply(context, args);
-            }, delay);
+                method.apply(context, args)
+            }, delay)
         }
-    };
-};
+    }
+}
 
 /**
  * 获取url中的query值
@@ -211,14 +210,13 @@ export const throttle = function throttle(method, delay, duration) {
 */
 export const getUrlParam = function (keyName, url) {
     if (keyName && keyName.split) {
-        let urlParamReg = new RegExp("(^|&)" + keyName + "=([^&#/]*)", "i");
-        let s = (url ? url : window.location.href).split('?')[1] || '';
-        let r = s.match(urlParamReg);
+        const urlParamReg = new RegExp('(^|&)' + keyName + '=([^&#/]*)', 'i')
+        const s = (url || window.location.href).split('?')[1] || ''
+        const r = s.match(urlParamReg)
         if (r !== null) {
-            return decodeURI(r[2]);
+            return decodeURI(r[2])
         }
     }
 
-    return null;
-};
-
+    return null
+}

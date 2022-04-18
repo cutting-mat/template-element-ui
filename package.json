@@ -2,9 +2,9 @@
   "name": "template-element-ui",
   "version": "2.8.12",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "serve": "vite --host",
+    "build": "vite build",
+    "preview": "vite preview --host"
   },
   "homepage": "https://cutting-mat.github.io/template-element-ui/",
   "dependencies": {
@@ -16,17 +16,15 @@
     "vue-router": "^3.5.2"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^4.5.13",
-    "@vue/cli-plugin-eslint": "^4.5.13",
-    "@vue/cli-service": "^4.5.13",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-component": "^1.1.1",
-    "chokidar": "^3.5.1",
-    "core-js": "^3.13.1",
-    "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.10.0",
-    "mockjs": "^1.1.0",
-    "vue-template-compiler": "^2.6.14",
-    "webpack-bundle-analyzer": "^4.5.0"
+    "@vitejs/plugin-legacy": "^1.8.1",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^5.2.0",
+    "eslint-plugin-vue": "^8.6.0",
+    "unplugin-element-plus": "^0.4.0",
+    "vite": "^2.9.5",
+    "vite-plugin-vue2": "^1.9.3"
   }
 }

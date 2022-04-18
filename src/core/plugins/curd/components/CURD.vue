@@ -241,8 +241,8 @@ export default {
     },
   },
   components: {
-    CURDForm: () => import("./CURDForm"),
-    CURDColumn: () => import("./CURDColumn"),
+    CURDForm: () => import("./CURDForm.vue"),
+    CURDColumn: () => import("./CURDColumn.vue"),
   },
   data() {
     return {

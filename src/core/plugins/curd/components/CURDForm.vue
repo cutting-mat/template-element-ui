@@ -2,10 +2,15 @@
   <el-form
     ref="editForm"
     :model="editForm"
-    v-bind="Object.assign({
-      'size': 'small',
-      'label-width': '80px'
-    }, formAttribute)"
+    v-bind="
+      Object.assign(
+        {
+          size: 'small',
+          'label-width': '80px',
+        },
+        formAttribute
+      )
+    "
   >
     <el-form-item
       v-for="key in modelKey"
@@ -19,19 +24,22 @@
         message: model[key].message,
       }"
     >
-      <component v-if="model[key].type==='string'"
+      <component
+        v-if="model[key].type === 'string'"
         :is="model[key].control"
         v-model.trim="editForm[key]"
         v-bind="model[key].controlOption"
         @change="handleChange(key)"
       ></component>
-      <component v-else-if="model[key].type==='number'"
+      <component
+        v-else-if="model[key].type === 'number'"
         :is="model[key].control"
         v-model.number="editForm[key]"
         v-bind="model[key].controlOption"
         @change="handleChange(key)"
       ></component>
-      <component v-else
+      <component
+        v-else
         :is="model[key].control"
         v-model="editForm[key]"
         v-bind="model[key].controlOption"
@@ -42,7 +50,7 @@
 </template>
 
 <script>
-//import { deepcopy } from "@/core";
+// import { deepcopy } from "@/core";
 
 export default {
   props: {
@@ -65,9 +73,9 @@ export default {
     formAttribute: {
       type: Object,
       required: false,
-      default(){
-        return {}
-      }
+      default() {
+        return {};
+      },
     },
   },
   data() {
@@ -86,33 +94,31 @@ export default {
     validate(callback) {
       return this.$refs.editForm.validate(callback);
     },
-    validateField(props, callback){
+    validateField(props, callback) {
       return this.$refs.editForm.validateField(props, callback);
     },
-    resetFields(){
+    resetFields() {
       return this.$refs.editForm.resetFields();
     },
     clearValidate() {
       return this.$refs.editForm.clearValidate();
     },
     genItemValid(key) {
-      if(typeof(this.model[key].validator)==='function'){
+      if (typeof this.model[key].validator === "function") {
         return (rule, value, callback) => {
           this.model[key].validator(this.editForm, value, callback);
         };
       }
-      return this.model[key].validator
+      return this.model[key].validator;
     },
     handleChange(key) {
       // 异步校验
-      if(this.model[key].asynValid){
+      if (this.model[key].asynValid) {
         this.validateField(key);
       }
-      
-    }
+    },
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

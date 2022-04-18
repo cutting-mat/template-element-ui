@@ -1,12 +1,9 @@
-// 根据.browserslistrc 配置加载polyfill, 需同时替换babel.config.js中注释的presets配置
-import 'core-js/stable';
-import 'regenerator-runtime/runtime';
 
 import Vue from 'vue';
 
 // 开启 mock
-import mocker from '../mock';
-mocker()
+// import mocker from '../mock';
+// mocker()
 
 // 加载根组件
 import App from './App.vue';
