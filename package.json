@@ -1,6 +1,6 @@
 {
   "name": "template-element-ui",
-  "version": "2.9.1",
+  "version": "2.9.2",
   "scripts": {
     "serve": "vite --host",
     "build": "vite build",
@@ -23,6 +23,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-vue": "^8.6.0",
+    "mockjs": "^1.1.0",
     "vite": "^2.9.5",
     "vite-plugin-vue2": "^1.9.3"
   }

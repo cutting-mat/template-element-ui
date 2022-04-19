@@ -1,8 +1,8 @@
-import Vue from 'vue';
-
 // 开启 mock
 import mocker from '../mock';
 mocker()
+
+import Vue from 'vue';
 
 // 加载根组件
 import App from './App.vue';

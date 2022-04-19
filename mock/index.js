@@ -7,7 +7,7 @@
 window.DebugRequest = true;
 console.log(`[Mock] Start. Please make sure that main.js => AccessControl is closed, otherwise it will not work properly`)
 
-const Mock = require('mockjs')
+import Mock from 'mockjs'
 Mock.setup({
     timeout: '100-600'
 })
@@ -119,15 +119,15 @@ const tFunction = function (templateObject) {
 
 // 手写 mock 脚本
 export const runJsMock = function () {
-    const jsctx = require.context("./", true, /.+js$/);
+    const jsctx = import.meta.globEager("./!(__)*.js");
 
-    if (jsctx.keys().length) {
+    if (Object.keys(jsctx).length) {
         //console.log(jsctx.keys())
         let jsmocks = []
 
-        jsctx.keys().forEach((key) => {
-            if (key !== './index.js' && Array.isArray(jsctx(key).default)) {
-                jsmocks.push(jsctx(key).default)
+        Object.keys(jsctx).forEach((key) => {
+            if (key !== './index.js' && Array.isArray(jsctx[key].default)) {
+                jsmocks.push(jsctx[key].default)
             }
         });
         jsmocks = jsmocks.flat()
@@ -141,17 +141,16 @@ export const runJsMock = function () {
 
 // yapi 导出 mock 数据
 export const runJsonMock = function () {
-    const jsonctx = require.context("./", true, /.+json$/);
-    if (jsonctx.keys().length) {
-        //console.log(jsonctx.keys())
+    const jsonctx = import.meta.globEager("./!(__)*.json");
+
+    if (Object.keys(jsonctx).length) {
         let jsonmocks = []
 
-        jsonctx.keys().forEach((key) => {
+        Object.keys(jsonctx).forEach((key) => {
             if (key !== './index.js') {
-                jsonmocks.push(jsonctx(key))
+                jsonmocks.push(jsonctx[key].default)
             }
         });
-
         jsonmocks = jsonmocks.flat().flatMap(json => json.list).map(e => {
             let resBody = e.res_body;
             try {
