@@ -1,0 +1,1 @@
+import{i as r}from"./index.2024d5b4.js";const t=e=>r.get("/resources",{params:e}),o=e=>r.post("/resource",e),s=e=>r.put("/resource",e),n=e=>r.delete("/resource",{params:e});var c=Object.freeze(Object.defineProperty({__proto__:null,list:t,add:o,edit:s,remove:n},Symbol.toStringTag,{value:"Module"}));export{c as r};
