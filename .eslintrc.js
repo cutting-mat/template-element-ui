@@ -16,9 +16,9 @@ module.exports = {
   ],
   rules: {
     'space-before-function-paren': [0],
-    'semi': [0],
-    'quotes': [0],
+    semi: [0],
+    quotes: [0],
     'comma-dangle': [0],
-    'indent': [0],
+    indent: [0],
   }
 }

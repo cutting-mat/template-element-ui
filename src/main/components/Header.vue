@@ -20,14 +20,17 @@
       @command="handleCommand"
     >
       <span class="el-dropdown-link">
-        <el-avatar icon="el-icon-user-solid"></el-avatar>
+        <el-image :src="user.avatar" fit="cover" class="_image">
+          <div slot="error">
+            <i class="el-icon-user-solid"></i>
+          </div>
+        </el-image>
         <span class="accountName">{{ user.accountName }}</span>
         <i class="el-icon-caret-bottom"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="userInfo">个人信息</el-dropdown-item>
         <el-dropdown-item command="logout">退出登录</el-dropdown-item>
-        
       </el-dropdown-menu>
     </el-dropdown>
   </header>
@@ -39,19 +42,19 @@ import { event } from "@/core";
 export default {
   data() {
     return {
-      list: []
+      list: [],
     };
   },
   computed: {
-    user(){
-      return this.$store.state.user
-    }
+    user() {
+      return this.$store.state.user;
+    },
   },
   methods: {
     handleCommand: function (command) {
       switch (command) {
         case "userInfo":
-          this.$router.push({name: "个人信息"})
+          this.$router.push({ name: "个人信息" });
           break;
         case "logout":
           this.logout();
@@ -70,7 +73,7 @@ export default {
         event.emit("logout");
       });
     },
-  }
+  },
 };
 </script>
 
@@ -92,8 +95,10 @@ export default {
   color: #fff;
   cursor: pointer;
 }
-.userAvat .el-avatar {
+.userAvat ._image {
   vertical-align: middle;
+  border-radius: 50%;
+  height: 40px;
 }
 .userAvat .accountName {
   display: inline-block;

@@ -1,9 +1,8 @@
 import { resolve } from 'path'
-import { defineConfig } from 'vite'
 import { createVuePlugin } from 'vite-plugin-vue2'
 import legacy from '@vitejs/plugin-legacy'
 
-export default defineConfig({
+export default {
   plugins: [
     createVuePlugin(),
     legacy({
@@ -14,10 +13,17 @@ export default defineConfig({
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, 'src') }]
   },
-  base: process.env.NODE_ENV === 'production'           // 生产/开发环境构建路径, 默认'/template-element-ui/'
-    ? '/template-element-ui/'
+  base: process.env.NODE_ENV === 'production'
+    ? '/template-element-ui/'     // 生产环境构建路径, 默认'/template-element-ui/'
     : '/',
   build: {
-    outDir: 'dist'
-  }
-})
+    outDir: 'dist',
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          ui: ['element-ui'],
+        }
+      }
+    }
+  },
+}
