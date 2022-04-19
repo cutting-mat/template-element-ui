@@ -65,6 +65,7 @@ export default {
       dialogVisible: false,
       currentAuthType: null,
       result: null,
+      token: null, // 用于未登录修改密码
     };
   },
   computed: {
@@ -99,7 +100,8 @@ export default {
     },
   },
   methods: {
-    handleSuccess(authCode) {
+    handleSuccess(authCode, token) {
+      this.token = token;
       this.result = authCode;
       this.dialogVisible = false;
       this.$emit("success", authCode);
@@ -109,7 +111,13 @@ export default {
         this.result = null;
         this.dialogVisible = true;
         return new Promise((resolve) => {
-          this.$watch("result", resolve);
+          this.$watch("result", (authCode) => {
+            console.log(authCode, this.token);
+            resolve({
+              authCode,
+              token: this.token,
+            });
+          });
         });
       }
     },

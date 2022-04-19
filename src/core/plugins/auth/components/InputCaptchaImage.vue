@@ -23,7 +23,10 @@
 </template>
 
 <script>
-import { captchaImage, validateCaptchaImage } from "@/main/api/auth";
+import {
+  captchaImage,
+  validateCaptchaImage,
+} from "@/core/plugins/auth/api/auth";
 
 export default {
   props: {

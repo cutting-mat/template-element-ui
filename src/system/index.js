@@ -11,13 +11,6 @@ export default [{
         name: '个人信息',
         component: () => import("./views/Profile.vue")
     }, {
-        path: 'Password',
-        name: '修改密码',
-        meta: {
-            hide: true
-        },
-        component: () => import("./views/Password.vue")
-    }, {
         path: 'Dict',
         name: '字典管理',
         meta: {

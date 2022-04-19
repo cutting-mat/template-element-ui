@@ -24,7 +24,9 @@
         </el-form-item>
         <el-form-item label="手机号">{{ userInfo.accountNumber }}</el-form-item>
         <el-form-item label="所属组织">{{ userInfo.orgName }}</el-form-item>
-        <el-form-item label="联系地址">江苏省苏州市吴中区吴中大道 1188 号</el-form-item>
+        <el-form-item label="联系地址"
+          >江苏省苏州市吴中区吴中大道 1188 号</el-form-item
+        >
       </el-form>
     </div>
     <!-- 验证身份 -->
@@ -33,13 +35,13 @@
 </template>
 
 <script>
-import { edit } from "@/user/api/account"
+import { edit } from "@/user/api/account";
 
 export default {
   data() {
     return {
       loading: false,
-      openAuth: false
+      openAuth: false,
     };
   },
   computed: {
@@ -52,32 +54,35 @@ export default {
       if (res.url) {
         this.loading = true;
         const newInfo = Object.assign({}, this.$store.state.user, {
-          avatar: res.url
-        })
-        edit(newInfo).then(() => {
-          this.$store.action('user', {
-            cache: 'update'
-          }).then(() => {
-            this.loading = false;
-            this.$message.success('更新成功！')
+          avatar: res.url,
+        });
+        edit(newInfo)
+          .then(() => {
+            this.$store
+              .action("user", {
+                cache: "update",
+              })
+              .then(() => {
+                this.loading = false;
+                this.$message.success("更新成功！");
+              });
           })
-
-        }).catch(() => {
-          this.loading = false;
-        })
+          .catch(() => {
+            this.loading = false;
+          });
       }
     },
     handleChangePw() {
-      this.$refs.auth.auth().then(authCode => {
+      this.$refs.auth.auth().then((res) => {
         this.$router.push({
-          name: '修改密码',
+          name: "修改密码",
           query: {
-            authCode
-          }
-        })
-      })
-    }
-  }
+            authCode: res.authCode,
+          },
+        });
+      });
+    },
+  },
 };
 </script>
 

@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import { validPassword } from "@/main/api/auth";
+import { validPassword } from "@/core/plugins/auth/api/auth";
 
 export default {
   data() {

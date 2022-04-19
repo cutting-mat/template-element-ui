@@ -29,14 +29,17 @@
           ></el-input>
         </el-form-item>
         <el-form-item prop="captcha">
-          <inputCapthaImage ref="validCode" />
+          <InputCaptchaImage ref="validCode" />
         </el-form-item>
-        <div>
-          <el-checkbox
-            :value="$store.state.rememberLogin"
-            @change="$store.set('rememberLogin', $event)"
-            >记住我</el-checkbox
-          >
+        <div class="flex-row align-center">
+          <div class="flex-1">
+            <el-checkbox
+              :value="$store.state.rememberLogin"
+              @change="$store.set('rememberLogin', $event)"
+              >记住我</el-checkbox
+            >
+          </div>
+          <el-link type="info" @click="handleChangePw"> 忘记密码？ </el-link>
         </div>
         <el-form-item class="submit-item">
           <el-button
@@ -60,6 +63,8 @@
         >
       </div>
     </div>
+    <!-- 验证身份 -->
+    <auth ref="auth" :types="['email', 'mobile']" />
   </div>
 </template>
 
@@ -68,9 +73,6 @@ import { event } from "@/core";
 import { login } from "@/main/api/common";
 
 export default {
-  components: {
-    inputCapthaImage: () => import("../components/InputCaptchaImage.vue"),
-  },
   data() {
     const validImage = () => {
       return new Promise((resolve, reject) => {
@@ -148,6 +150,17 @@ export default {
         } else {
           this.loading = false;
         }
+      });
+    },
+    handleChangePw() {
+      this.$refs.auth.auth().then((res) => {
+        this.$router.push({
+          name: "修改密码",
+          query: {
+            authCode: res.authCode,
+            token: res.token,
+          },
+        });
       });
     },
   },

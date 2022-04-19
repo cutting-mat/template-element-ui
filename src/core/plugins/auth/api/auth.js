@@ -32,3 +32,7 @@ export const emailValidCode = params => {
 export const validEmailValidCode = params => {
     return instance.get(`/emailValidCode/valid`, { params })
 }
+// 校验用户是否存在
+export const validUserExist = params => {
+    return instance.get(`/user/field`, { params })
+}

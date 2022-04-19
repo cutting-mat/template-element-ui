@@ -3,8 +3,11 @@
  * 输出：
  * 全局组件<auth>
  * */
-import auth from "./components/Auth.vue";
+import Auth from "./components/Auth.vue";
+import InputCaptchaImage from "./components/InputCaptchaImage.vue";
+
 
 export const install = function (Vue) {
-    Vue.component('Auth', auth)
+    Vue.component('Auth', Auth)
+    Vue.component('InputCaptchaImage', InputCaptchaImage)
 }

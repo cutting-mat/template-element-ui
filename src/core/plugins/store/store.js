@@ -86,7 +86,7 @@ export default function installer(app, options) {
         store.state = Vue.observable(mergeState)
         // 监听
         Object.keys(mergeState).forEach(key => {
-            if(typeof watchQueue[key] === 'function'){
+            if (typeof watchQueue[key] === 'function') {
                 watchQueue[key]()
             }
             watchQueue[key] = vm.$watch(
@@ -103,6 +103,14 @@ export default function installer(app, options) {
 
     if (app) {
         app.prototype.$store = store
+
+        app.mixin({
+            data() {
+                return {
+                    $state: store.state
+                }
+            }
+        })
     }
 
     return store
