@@ -1,1 +1,0 @@
-System.register(["./ui-legacy.2c1236a5.js"],(function(t){"use strict";var e;return{setters:[function(t){e=t.V}],execute:function(){t("g",(function(t,n){var r=e.$DictControl;return-1!==Object.keys(r).indexOf(t)?r[t]:n}))}}}));
