@@ -1,6 +1,6 @@
 {
   "name": "template-element-ui",
-  "version": "2.9.3",
+  "version": "2.9.4",
   "scripts": {
     "serve": "vite --host",
     "build": "vite build",

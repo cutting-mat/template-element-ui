@@ -103,14 +103,6 @@ export default function installer(app, options) {
 
     if (app) {
         app.prototype.$store = store
-
-        app.mixin({
-            data() {
-                return {
-                    $state: store.state
-                }
-            }
-        })
     }
 
     return store

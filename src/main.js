@@ -1,6 +1,6 @@
 // 开启 mock
-// import mocker from '../mock';
-// mocker()
+import mocker from '../mock';
+mocker()
 
 import Vue from 'vue';
 

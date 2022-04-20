@@ -64,7 +64,7 @@
       </div>
     </div>
     <!-- 验证身份 -->
-    <auth ref="auth" :types="['email', 'mobile']" />
+    <auth ref="auth" :types="['email', 'mobile']" command="reset-pw" />
   </div>
 </template>
 
@@ -153,12 +153,11 @@ export default {
       });
     },
     handleChangePw() {
-      this.$refs.auth.auth().then((res) => {
+      this.$refs.auth.auth().then((authCode) => {
         this.$router.push({
           name: "修改密码",
           query: {
-            authCode: res.authCode,
-            token: res.token,
+            authCode,
           },
         });
       });

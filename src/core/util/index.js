@@ -174,24 +174,24 @@ export const getSuffix = (filename) => {
 }
 
 /**
- * 函数节流
- * @param method[Function] 要节流的函数方法
- * @param delay[Number] 过滤执行的间隔毫秒数, 默认128
- * @param duration 至少执行一次的间隔毫秒数, 默认1000
- * @return 具有节流特性的新函数
+ * 节流防抖
+ * @param method[Function] 要执行的函数方法
+ * @param delay[Number] 防抖阈值，即过滤执行的间隔毫秒数, 默认128
+ * @param duration 节流阈值，即至少执行一次的间隔毫秒数, 默认无节流设置
+ * @return 具有节流防抖特性的新函数
 */
 
 export const throttle = function throttle(method, delay, duration) {
     let timer = null
     let begin = new Date()
     delay = delay || 128
-    duration = duration || 1000
+    duration = duration || 0
     return function () {
         const context = this
         const args = arguments
         const current = new Date()
         clearTimeout(timer)
-        if (current - begin >= duration) {
+        if (duration && (current - begin >= duration)) {
             method.apply(context, args)
             begin = current
         } else {

@@ -14,7 +14,11 @@
       :closable="false"
       style="margin-bottom: 20px"
     ></el-alert>
-    <component :is="currentAuthType.name" @success="handleSuccess" />
+    <component
+      :is="currentAuthType.name"
+      :command="command"
+      @success="handleSuccess"
+    />
     <div class="otherType" v-if="otherTypes.length">
       <ul class="flex-row">
         <li
@@ -57,6 +61,11 @@ export default {
         return AlluthTypes.map((e) => e.name);
       },
     },
+    command: {
+      type: String,
+      required: false,
+      default: "common", // reset-pw
+    },
   },
   components,
   data() {
@@ -65,7 +74,6 @@ export default {
       dialogVisible: false,
       currentAuthType: null,
       result: null,
-      token: null, // 用于未登录修改密码
     };
   },
   computed: {
@@ -100,8 +108,7 @@ export default {
     },
   },
   methods: {
-    handleSuccess(authCode, token) {
-      this.token = token;
+    handleSuccess(authCode) {
       this.result = authCode;
       this.dialogVisible = false;
       this.$emit("success", authCode);
@@ -111,13 +118,7 @@ export default {
         this.result = null;
         this.dialogVisible = true;
         return new Promise((resolve) => {
-          this.$watch("result", (authCode) => {
-            console.log(authCode, this.token);
-            resolve({
-              authCode,
-              token: this.token,
-            });
-          });
+          this.$watch("result", resolve);
         });
       }
     },

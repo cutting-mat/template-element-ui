@@ -8,6 +8,93 @@
     "list": [
       {
         "query_path": {
+          "path": "/auth/password",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "done",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3003,
+        "method": "PUT",
+        "catid": 2010,
+        "title": "修改密码(公开访问)",
+        "path": "/auth/password",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "625fbbf5f1bf0506f38739b8",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"newPassword\":{\"type\":\"string\"},\"token\":{\"type\":\"string\"}},\"required\":[\"newPassword\",\"token\"]}",
+        "req_body_type": "json",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}",
+        "uid": 38,
+        "add_time": 1647311483,
+        "up_time": 1650441205,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/user/field",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3353,
+        "method": "GET",
+        "catid": 2010,
+        "title": "校验用户是否存在（忘记密码）",
+        "path": "/user/field",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "uid": 38,
+        "add_time": 1650361851,
+        "up_time": 1650418211,
+        "req_query": [
+          {
+            "required": "0",
+            "_id": "625f6223f1bf0506f38739a3",
+            "name": "mobile",
+            "desc": ""
+          },
+          {
+            "required": "0",
+            "_id": "625f6223f1bf0506f38739a2",
+            "name": "email",
+            "example": "",
+            "desc": ""
+          }
+        ],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"}},\"accountNumber\":{\"type\":\"string\",\"mock\":{\"mock\":\"@name\"}}},\"required\":[\"id\",\"accountNumber\"]}"
+      },
+      {
+        "query_path": {
           "path": "/login",
           "params": []
         },
@@ -96,7 +183,7 @@
       },
       {
         "query_path": {
-          "path": "/file/text/{id}",
+          "path": "/file/text/{path}/{id}",
           "params": []
         },
         "edit_uid": 0,
@@ -111,13 +198,19 @@
         "method": "POST",
         "catid": 2010,
         "title": "保存文本",
-        "path": "/file/text/{id}",
+        "path": "/file/text/{path}/{id}",
         "project_id": 125,
         "req_params": [
           {
-            "_id": "624832b5f1bf0506f38734df",
+            "_id": "624841e5f1bf0506f38734eb",
+            "name": "path",
+            "example": "2022",
+            "desc": ""
+          },
+          {
+            "_id": "624841e5f1bf0506f38734ea",
             "name": "id",
-            "example": "2022-3225353453",
+            "example": "3225-353-453",
             "desc": ""
           }
         ],
@@ -126,7 +219,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "624832b5f1bf0506f38734e0",
+            "_id": "624841e5f1bf0506f38734ec",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -135,11 +228,11 @@
         "desc": "",
         "markdown": "",
         "req_body_type": "json",
-        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"text/@uuid()\"}}",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"text/@now('yyyy')/@uuid()\"}}",
         "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"field_2\":{\"type\":\"string\",\"description\":\"任意json数据\"}}}",
         "uid": 38,
         "add_time": 1648883318,
-        "up_time": 1648898741,
+        "up_time": 1648902629,
         "__v": 0
       },
       {
@@ -224,7 +317,7 @@
     "list": [
       {
         "query_path": {
-          "path": "/password/valid",
+          "path": "/captcha/sms/register",
           "params": []
         },
         "edit_uid": 0,
@@ -233,34 +326,117 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 5,
+        "index": 0,
         "tag": [],
-        "_id": 3002,
-        "method": "GET",
+        "_id": 3356,
+        "method": "POST",
         "catid": 2241,
-        "title": "验证密码",
-        "path": "/password/valid",
+        "title": "发手机验证码（注册）",
+        "path": "/captcha/sms/register",
         "project_id": 125,
         "req_params": [],
         "res_body_type": "json",
-        "req_query": [
+        "req_query": [],
+        "req_headers": [
           {
-            "required": "0",
-            "_id": "62416a56f1bf0506f3872b21",
-            "name": "password",
-            "desc": "密码验证"
+            "required": "1",
+            "_id": "625fbeacf1bf0506f38739c2",
+            "name": "Content-Type",
+            "value": "application/json"
           }
         ],
-        "req_headers": [],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}",
+        "req_body_type": "json",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"mobile\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"mobile\"]}",
+        "uid": 38,
+        "add_time": 1650441889,
+        "up_time": 1650441900,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/captcha/sms/reset-password",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3357,
+        "method": "POST",
+        "catid": 2241,
+        "title": "发手机验证码（重置密码）",
+        "path": "/captcha/sms/reset-password",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "625fbec3f1bf0506f38739c4",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}",
+        "req_body_type": "json",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"mobile\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"mobile\"]}",
+        "uid": 38,
+        "add_time": 1650441912,
+        "up_time": 1650441923,
+        "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/auth/password/validate",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 3002,
+        "method": "POST",
+        "catid": 2241,
+        "title": "验证密码",
+        "path": "/auth/password/validate",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "625fbbcbf1bf0506f38739b7",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
         "req_body_form": [],
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1648454230,
+        "up_time": 1650441163,
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "req_body_type": "form",
-        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}"
+        "req_body_type": "json",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"},\"description\":\"token\"}",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"password\":{\"type\":\"string\"}},\"required\":[\"password\"]}"
       },
       {
         "query_path": {
@@ -273,33 +449,76 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 6,
+        "index": 1,
         "tag": [],
         "_id": 3025,
-        "method": "GET",
+        "method": "POST",
         "catid": 2241,
-        "title": "发手机验证码",
+        "title": "发手机验证码（通用）",
         "path": "/captcha/sms",
         "project_id": 125,
         "req_params": [],
         "res_body_type": "json",
         "uid": 38,
         "add_time": 1647689742,
-        "up_time": 1648454239,
-        "req_query": [
+        "up_time": 1650441875,
+        "req_query": [],
+        "req_headers": [
           {
             "required": "1",
-            "_id": "62416a5ff1bf0506f3872b22",
-            "name": "mobile",
-            "desc": "手机号"
+            "_id": "625fbe93f1bf0506f38739c0",
+            "name": "Content-Type",
+            "value": "application/json"
           }
         ],
-        "req_headers": [],
         "req_body_form": [],
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}"
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}",
+        "req_body_type": "json",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"mobile\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"mobile\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/captcha/sms/login",
+          "params": []
+        },
+        "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": true,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 2,
+        "tag": [],
+        "_id": 3355,
+        "method": "POST",
+        "catid": 2241,
+        "title": "发手机验证码（登录）",
+        "path": "/captcha/sms/login",
+        "project_id": 125,
+        "req_params": [],
+        "res_body_type": "json",
+        "req_query": [],
+        "req_headers": [
+          {
+            "required": "1",
+            "_id": "625fbe87f1bf0506f38739bf",
+            "name": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "req_body_form": [],
+        "desc": "",
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"id\":{\"type\":\"string\",\"mock\":{\"mock\":\"@id\"},\"description\":\"验证码ID\"}},\"required\":[\"id\"]}",
+        "req_body_type": "json",
+        "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"mobile\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"mobile\"]}",
+        "uid": 38,
+        "add_time": 1650441850,
+        "up_time": 1650441863,
+        "__v": 0
       },
       {
         "query_path": {
@@ -312,7 +531,7 @@
         "req_body_is_json_schema": false,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 7,
+        "index": 3,
         "tag": [],
         "_id": 3029,
         "method": "GET",
@@ -324,17 +543,17 @@
         "res_body_type": "json",
         "uid": 38,
         "add_time": 1648102986,
-        "up_time": 1648454248,
+        "up_time": 1650441238,
         "req_query": [
           {
             "required": "1",
-            "_id": "62416a68f1bf0506f3872b24",
+            "_id": "625fbc16f1bf0506f38739ba",
             "name": "id",
             "desc": ""
           },
           {
             "required": "1",
-            "_id": "62416a68f1bf0506f3872b23",
+            "_id": "625fbc16f1bf0506f38739b9",
             "name": "userInput",
             "example": "",
             "desc": ""
@@ -358,7 +577,7 @@
         "req_body_is_json_schema": true,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 8,
+        "index": 4,
         "tag": [],
         "_id": 3026,
         "method": "GET",
@@ -397,7 +616,7 @@
         "req_body_is_json_schema": false,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 9,
+        "index": 5,
         "tag": [],
         "_id": 3032,
         "method": "GET",
@@ -443,7 +662,7 @@
         "req_body_is_json_schema": false,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 10,
+        "index": 6,
         "tag": [],
         "_id": 3030,
         "method": "GET",
@@ -475,7 +694,7 @@
         "req_body_is_json_schema": false,
         "res_body_is_json_schema": true,
         "api_opened": false,
-        "index": 11,
+        "index": 7,
         "tag": [],
         "_id": 3031,
         "method": "GET",
@@ -857,47 +1076,6 @@
         "uid": 38,
         "add_time": 1647311483,
         "up_time": 1648104142,
-        "__v": 0
-      },
-      {
-        "query_path": {
-          "path": "/updatePassword",
-          "params": []
-        },
-        "edit_uid": 0,
-        "status": "done",
-        "type": "static",
-        "req_body_is_json_schema": true,
-        "res_body_is_json_schema": true,
-        "api_opened": false,
-        "index": 0,
-        "tag": [],
-        "_id": 3003,
-        "method": "PUT",
-        "catid": 2031,
-        "title": "修改密码",
-        "path": "/updatePassword",
-        "project_id": 125,
-        "req_params": [],
-        "res_body_type": "json",
-        "req_query": [],
-        "req_headers": [
-          {
-            "required": "1",
-            "_id": "623c1112f1bf0506f3872991",
-            "name": "Content-Type",
-            "value": "application/json"
-          }
-        ],
-        "req_body_form": [],
-        "desc": "",
-        "markdown": "",
-        "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"newPassword\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"newPassword\",\"captcha\"]}",
-        "req_body_type": "json",
-        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{}}",
-        "uid": 38,
-        "add_time": 1647311483,
-        "up_time": 1648103698,
         "__v": 0
       },
       {

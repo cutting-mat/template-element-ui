@@ -10,12 +10,12 @@ export default [
         name: '登录',
         component: () => import('./views/Login.vue')
     }, {
-        path: '/Edit-Password',
+        path: '/update-password',
         name: '修改密码',
         meta: {
             hide: true
         },
-        component: () => import("./views/Password.vue")
+        component: () => import("./views/UpdatePassword.vue")
     }, {
         path: '/500',
         name: '服务异常',

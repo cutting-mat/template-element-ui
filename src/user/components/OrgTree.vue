@@ -20,7 +20,7 @@
         $filter.date(scope.row.createTime)
       }}</template>
     </el-table-column>
-    <el-table-column label="操作" width="260">
+    <el-table-column label="操作" width="260" v-if="!picker">
       <template slot-scope="scope">
         <slot name="action" :row="scope.row" />
       </template>

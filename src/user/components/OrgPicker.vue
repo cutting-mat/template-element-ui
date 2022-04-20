@@ -15,7 +15,7 @@
       title="选择组织"
       :visible.sync="dialogVisible"
       width="1000px"
-      @open="dialogOpen"
+      @open="checkedNode = []"
     >
       <div class="orgPicker">
         <OrgTree
@@ -57,8 +57,8 @@ export default {
       // 输入框显示适配
       type: Function,
       required: false,
-      default(value, obj) {
-        return obj.name || value;
+      default(value) {
+        return value;
       },
     },
     size: {
@@ -75,20 +75,15 @@ export default {
       loading: false,
       dialogVisible: false,
       list: [],
-      checkedNode: {},
-      submitNode: {},
+      checkedNode: [],
     };
   },
   computed: {
     showTitle() {
-      return this.adapter(this.value, this.submitNode);
+      return this.adapter(this.value);
     },
   },
   methods: {
-    dialogOpen() {
-      this.checkedNode = {};
-      this.submitNode = {};
-    },
     fetchData: function () {
       this.loading = true;
       list()
@@ -104,8 +99,11 @@ export default {
     },
     submit() {
       if (this.checkedNode && this.checkedNode[0]) {
-        this.submitNode = deepcopy(this.checkedNode[0]);
-        this.$emit("change", this.checkedNode[0].id);
+        this.$emit(
+          "change",
+          this.checkedNode[0].id,
+          deepcopy(this.checkedNode[0])
+        );
       }
 
       this.dialogVisible = false;

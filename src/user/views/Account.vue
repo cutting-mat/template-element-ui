@@ -126,7 +126,12 @@
               }
             "
           >
-            <img v-if="editForm.avatar" :src="editForm.avatar" alt />
+            <img
+              v-if="editForm.avatar"
+              class="upload_avatar_img"
+              :src="editForm.avatar"
+              alt
+            />
             <span v-else>上传头像</span>
           </uploader>
         </el-form-item>
@@ -161,7 +166,12 @@
           <OrgPicker
             v-model="editForm.orgId"
             :adapter="orgAdapter"
-            @change="$refs.editForm.validateField('orgId')"
+            @change="
+              (id, item) => {
+                editForm.belongOrgName = item.name;
+                $refs.editForm.validateField('orgId');
+              }
+            "
           ></OrgPicker>
         </el-form-item>
         <el-form-item label="角色">
@@ -181,7 +191,7 @@
           ></el-switch>
         </el-form-item>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span slot="footer">
         <el-button type="primary" @click="save">确 定</el-button>
         <el-button @click="dialogVisible = false">取 消</el-button>
       </span>
@@ -265,8 +275,8 @@ export default {
 
       this.fetchData(true);
     },
-    orgAdapter(value, obj) {
-      return obj.name || this.editForm.belongOrgName || value;
+    orgAdapter(value) {
+      return this.editForm.belongOrgName || value;
     },
     resetPassword: function (data) {
       if (!data) {
@@ -412,7 +422,7 @@ export default {
 </script>
 
 <style scoped>
-.userEditDialog >>> .upload_avatar {
+.upload_avatar {
   display: block;
   width: 120px;
   height: 120px;
@@ -420,9 +430,9 @@ export default {
   background: #dedede;
   text-align: center;
 }
-.userEditDialog >>> .upload_avatar img {
-  width: 100%;
-  height: 100%;
+.upload_avatar_img {
+  width: 120px;
+  height: 120px;
   object-fit: cover;
 }
 </style>

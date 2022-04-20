@@ -73,11 +73,11 @@ export default {
       }
     },
     handleChangePw() {
-      this.$refs.auth.auth().then((res) => {
+      this.$refs.auth.auth().then((authCode) => {
         this.$router.push({
           name: "修改密码",
           query: {
-            authCode: res.authCode,
+            authCode,
           },
         });
       });
