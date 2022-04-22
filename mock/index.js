@@ -5,7 +5,7 @@
  * */
 
 window.DebugRequest = true;
-console.log(`[Mock] Start. Please make sure that main.js => AccessControl is closed, otherwise it will not work properly`)
+console.log(`[Mock] Start. Please make sure that plugin.permission.config.js -> 'AccessControl' option is closed, otherwise it will not work properly`)
 
 import Mock from 'mockjs'
 Mock.setup({

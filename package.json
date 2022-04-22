@@ -1,6 +1,6 @@
 {
   "name": "template-element-ui",
-  "version": "2.9.4",
+  "version": "2.10.1",
   "scripts": {
     "serve": "vite --host",
     "build": "vite build",
@@ -10,6 +10,7 @@
   "dependencies": {
     "@cutting-mat/axios": "^1.1.4",
     "@cutting-mat/uploader": "^2.0.15",
+    "crypto-js": "^4.1.1",
     "element-ui": "^2.15.6",
     "tiny-emitter": "^2.1.0",
     "vue": "^2.6.14",

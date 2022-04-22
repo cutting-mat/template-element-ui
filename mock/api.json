@@ -118,7 +118,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "623c102ef1bf0506f387298e",
+            "_id": "6261fbf3f1bf0506f38739da",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -128,10 +128,10 @@
         "markdown": "",
         "req_body_other": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"account\":{\"type\":\"string\"},\"password\":{\"type\":\"string\"},\"captcha\":{\"type\":\"string\"}},\"required\":[\"account\",\"password\"]}",
         "req_body_type": "json",
-        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"},\"description\":\"token\"}",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@word(8).@word(8).@word(8)\"},\"description\":\"token\"}",
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1648103470,
+        "up_time": 1650588659,
         "__v": 0
       },
       {
@@ -422,7 +422,7 @@
         "req_headers": [
           {
             "required": "1",
-            "_id": "625fbbcbf1bf0506f38739b7",
+            "_id": "6261fc0af1bf0506f38739db",
             "name": "Content-Type",
             "value": "application/json"
           }
@@ -430,12 +430,12 @@
         "req_body_form": [],
         "uid": 38,
         "add_time": 1647311483,
-        "up_time": 1650441163,
+        "up_time": 1650588682,
         "__v": 0,
         "desc": "",
         "markdown": "",
         "req_body_type": "json",
-        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"},\"description\":\"token\"}",
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@word(8).@word(8).@word(8)\"},\"description\":\"token\"}",
         "req_body_other": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"password\":{\"type\":\"string\"}},\"required\":[\"password\"]}"
       },
       {
@@ -543,17 +543,17 @@
         "res_body_type": "json",
         "uid": 38,
         "add_time": 1648102986,
-        "up_time": 1650441238,
+        "up_time": 1650588691,
         "req_query": [
           {
             "required": "1",
-            "_id": "625fbc16f1bf0506f38739ba",
+            "_id": "6261fc13f1bf0506f38739dd",
             "name": "id",
             "desc": ""
           },
           {
             "required": "1",
-            "_id": "625fbc16f1bf0506f38739b9",
+            "_id": "6261fc13f1bf0506f38739dc",
             "name": "userInput",
             "example": "",
             "desc": ""
@@ -564,7 +564,7 @@
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@id\"}}"
+        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@word(8).@word(8).@word(8)\"}}"
       },
       {
         "query_path": {
@@ -628,17 +628,17 @@
         "res_body_type": "json",
         "uid": 38,
         "add_time": 1648104646,
-        "up_time": 1648454265,
+        "up_time": 1650588698,
         "req_query": [
           {
             "required": "1",
-            "_id": "62416a79f1bf0506f3872b27",
+            "_id": "6261fc1af1bf0506f38739df",
             "name": "id",
             "desc": ""
           },
           {
             "required": "1",
-            "_id": "62416a79f1bf0506f3872b26",
+            "_id": "6261fc1af1bf0506f38739de",
             "name": "userInput",
             "example": "",
             "desc": ""
@@ -649,7 +649,7 @@
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@guid\"}}"
+        "res_body": "{\"type\":\"string\",\"mock\":{\"mock\":\"@word(8).@word(8).@word(8)\"}}"
       },
       {
         "query_path": {
@@ -706,17 +706,17 @@
         "res_body_type": "json",
         "uid": 38,
         "add_time": 1648104251,
-        "up_time": 1648454280,
+        "up_time": 1650588704,
         "req_query": [
           {
             "required": "1",
-            "_id": "62416a88f1bf0506f3872b29",
+            "_id": "6261fc20f1bf0506f38739e1",
             "name": "id",
             "desc": ""
           },
           {
             "required": "1",
-            "_id": "62416a88f1bf0506f3872b28",
+            "_id": "6261fc20f1bf0506f38739e0",
             "name": "userInput",
             "example": "",
             "desc": ""
@@ -727,7 +727,7 @@
         "__v": 0,
         "desc": "",
         "markdown": "",
-        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@guid\"}}"
+        "res_body": "{\"type\":\"string\",\"description\":\"token\",\"mock\":{\"mock\":\"@word(8).@word(8).@word(8)\"}}"
       }
     ]
   },
