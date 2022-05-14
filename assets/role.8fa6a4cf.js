@@ -1,1 +1,0 @@
-import{i as t}from"./index.301731d1.js";const r=e=>t.get("/role/s",{params:e}),o=e=>t.get("/role",{params:e}),l=e=>t.post("/role",e),s=e=>t.put("/role",e),a=e=>t.delete("/role",{params:e});var d=Object.freeze(Object.defineProperty({__proto__:null,list:r,detail:o,add:l,edit:s,remove:a},Symbol.toStringTag,{value:"Module"}));export{l as a,a as b,s as e,r as l,d as r};
