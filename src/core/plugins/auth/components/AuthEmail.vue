@@ -6,6 +6,7 @@
     label-position="left"
     class="auth_email"
     :v-loading="loading"
+    @submit.native.prevent="handleSubmit"
   >
     <el-form-item v-if="anonymousEmail"
       >安全邮箱：{{ anonymousEmail }}</el-form-item
@@ -30,13 +31,9 @@
       </el-input>
     </el-form-item>
     <el-form-item>
-      <el-button
-        native-type="button"
-        type="primary"
-        style="width: 100%"
-        @click="handleSubmit"
-        >立即验证</el-button
-      >
+      <el-button native-type="submit" type="primary" style="width: 100%">
+        立即验证
+      </el-button>
     </el-form-item>
   </el-form>
 </template>
