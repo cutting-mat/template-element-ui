@@ -20,14 +20,13 @@
     </el-form-item>
     <el-form-item prop="userInput">
       <el-input v-model="formData.userInput" placeholder="请输入验证码">
-        <CountdownButton
-          ref="countdownButton"
-          slot="append"
-          :count="30"
-          @click="sendValidCode"
-        >
-          获取验证码
-        </CountdownButton>
+        <template slot="append">
+          <el-button @click="sendValidCode">
+            <Countdown ref="countdownButton" :count="30">
+              获取验证码
+            </Countdown>
+          </el-button>
+        </template>
       </el-input>
     </el-form-item>
     <el-form-item>
@@ -145,23 +144,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.auth_email >>> .el-input-group__append {
-  background-color: #409eff;
-  border: 0;
-}
-.auth_email >>> .el-input-group__append .el-button {
-  border-radius: 0;
-  margin: 0 -20px;
-}
-.auth_email >>> .el-input-group__append .countdownButton {
-  color: #fff;
-  background-color: #409eff;
-  border: 1px solid #409eff;
-}
-
-.auth_email >>> .el-input-group__append .el-button.is-disabled {
-  background-color: #a0cfff;
-  border-color: #a0cfff;
-}
-</style>
+<style scoped></style>

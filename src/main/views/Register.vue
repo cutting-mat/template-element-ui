@@ -11,7 +11,7 @@
         @submit.native.prevent="login"
       >
         <h2 class="sub-title">
-          <span class="_text">请登录</span>
+          <span class="_text">注册</span>
         </h2>
         <el-form-item prop="account">
           <el-input
@@ -31,16 +31,7 @@
         <el-form-item prop="captcha">
           <InputCaptchaImage ref="validCode" />
         </el-form-item>
-        <div class="flex-row align-center">
-          <div class="flex-1">
-            <el-checkbox
-              :value="$store.state.rememberLogin"
-              @change="$store.set('rememberLogin', $event)"
-              >记住我</el-checkbox
-            >
-          </div>
-          <el-link type="info" @click="handleChangePw"> 忘记密码？ </el-link>
-        </div>
+
         <el-form-item class="submit-item">
           <el-button
             native-type="submit"
@@ -52,8 +43,9 @@
         </el-form-item>
         <div class="flex-row">
           <div class="flex-1"></div>
-          <el-link type="primary" @click="$router.push({ name: '注册' })">
-            立即注册
+          已有账号？
+          <el-link type="primary" @click="$router.push({ name: '登录' })">
+            立即登录
             <i class="el-icon-right"></i>
           </el-link>
         </div>

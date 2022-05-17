@@ -162,7 +162,7 @@
             :adapter="orgAdapter"
             @change="
               (id, item) => {
-                editForm.belongOrgName = item.name;
+                editForm.org = item;
                 $refs.editForm.validateField('orgId');
               }
             "
@@ -266,7 +266,7 @@ export default {
       this.fetchData(true);
     },
     orgAdapter(value) {
-      return this.editForm.belongOrgName || value;
+      return this.editForm.org?.name || value;
     },
     resetPassword: function (data) {
       if (!data) {

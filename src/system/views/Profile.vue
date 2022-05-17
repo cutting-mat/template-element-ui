@@ -2,31 +2,49 @@
   <div v-loading="loading">
     <ToolBar></ToolBar>
     <!-- 内容 -->
-    <div class="infoBox wrap">
+    <div class="infoBox wrap" v-if="userDetail && userDetail.id">
       <uploader
         class="upload_avatar"
         accept="t-image"
-        :value="userInfo.avatar ? [{ url: userInfo.avatar }] : []"
+        :value="userDetail.avatarExt ? [{ url: userDetail.avatarExt.url }] : []"
         imgCrop
         :show-file-list="false"
         :on-success="handleUpload"
       >
-        <img v-if="userInfo.avatar" :src="userInfo.avatar" alt />
+        <img v-if="userDetail.avatarExt" :src="userDetail.avatarExt.url" alt />
         <span v-else>上传头像</span>
       </uploader>
-      <el-form label-width="80px" label-position="left" size="small">
-        <el-form-item label="用户名">{{ userInfo.name }}</el-form-item>
+      <el-form label-width="80px" label-position="right" size="small">
+        <el-form-item label="用户名">{{ userDetail.name }}</el-form-item>
         <el-form-item label="密码">
           <el-button type="text" @click="handleChangePw">
             修改密码
             <i class="el-icon-edit"></i>
           </el-button>
         </el-form-item>
-        <el-form-item label="手机号">{{ userInfo.mobile }}</el-form-item>
-        <el-form-item label="所属组织">{{ userInfo.orgName }}</el-form-item>
-        <el-form-item label="联系地址"
-          >江苏省苏州市吴中区吴中大道 1188 号</el-form-item
-        >
+        <el-form-item label="手机号">{{ userDetail.mobile }}</el-form-item>
+        <el-form-item label="所属组织">{{
+          userDetail.org && userDetail.org.name
+        }}</el-form-item>
+      </el-form>
+      <el-form
+        ref="validForm"
+        :model="userDetail"
+        :rules="rules"
+        label-width="80px"
+        label-position="right"
+        size="small"
+        @submit.native.prevent="() => {}"
+      >
+        <el-form-item label="联系地址" prop="address">
+          <el-input v-model="userDetail.address" />
+        </el-form-item>
+        <el-form-item label="个人介绍" prop="introduction">
+          <el-input v-model="userDetail.introduction" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="handleSubmit"> 保 存 </el-button>
+        </el-form-item>
       </el-form>
     </div>
     <!-- 验证身份 -->
@@ -35,13 +53,14 @@
 </template>
 
 <script>
-import { edit } from "@/user/api/account";
+import { detail, edit } from "@/user/api/account";
 
 export default {
   data() {
     return {
       loading: false,
-      openAuth: false,
+      userDetail: {},
+      rules: {},
     };
   },
   computed: {
@@ -49,27 +68,49 @@ export default {
       return this.$store.state.user;
     },
   },
+  watch: {
+    userInfo: {
+      handler() {
+        if (this.userInfo && this.userInfo.id) {
+          this.fetchData();
+        }
+      },
+      immediate: true,
+    },
+  },
   methods: {
-    handleUpload(res) {
-      if (res.url) {
-        this.loading = true;
-        const newInfo = Object.assign({}, this.$store.state.user, {
-          avatar: res.url,
+    handleSubmit() {
+      this.$refs.validForm.validate(async (valid) => {
+        if (valid) {
+          this.doSubmit(this.userDetail);
+        }
+      });
+    },
+    doSubmit(ext = {}) {
+      this.loading = true;
+      edit({
+        ...this.userDetail,
+        ...ext,
+      })
+        .then(() => {
+          this.$store
+            .action("user", {
+              cache: "update",
+            })
+            .then(() => {
+              this.loading = false;
+              this.$message.success("更新成功！");
+            });
+        })
+        .catch(() => {
+          this.loading = false;
         });
-        edit(newInfo)
-          .then(() => {
-            this.$store
-              .action("user", {
-                cache: "update",
-              })
-              .then(() => {
-                this.loading = false;
-                this.$message.success("更新成功！");
-              });
-          })
-          .catch(() => {
-            this.loading = false;
-          });
+    },
+    handleUpload(res) {
+      if (res.id) {
+        this.doSubmit({
+          avatar: res.id,
+        });
       }
     },
     handleChangePw() {
@@ -81,6 +122,19 @@ export default {
           },
         });
       });
+    },
+    fetchData() {
+      this.loading = true;
+      detail({
+        id: this.userInfo.id,
+      })
+        .then((res) => {
+          this.loading = false;
+          this.userDetail = res.data;
+        })
+        .catch(() => {
+          this.loading = false;
+        });
     },
   },
 };
@@ -98,8 +152,8 @@ export default {
   cursor: pointer;
 }
 .upload_avatar img {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 200px;
   object-fit: cover;
 }
 </style>
