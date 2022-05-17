@@ -14,18 +14,16 @@
     </ul>
 
     <el-dropdown
-      v-if="user && user.accountName"
+      v-if="user && user.name"
       class="userAvat"
       trigger="click"
       @command="handleCommand"
     >
       <span class="el-dropdown-link">
-        <el-image :src="user.avatar" fit="cover" class="_image">
-          <div slot="error">
-            <i class="el-icon-user-solid"></i>
-          </div>
-        </el-image>
-        <span class="accountName">{{ user.accountName }}</span>
+        <div class="_image">
+          <img :src="user.avatar" v-if="user.avatar" />
+        </div>
+        <span class="name">{{ user.name }}</span>
         <i class="el-icon-caret-bottom"></i>
       </span>
       <el-dropdown-menu slot="dropdown">
@@ -96,11 +94,20 @@ export default {
   cursor: pointer;
 }
 .userAvat ._image {
+  display: inline-block;
   vertical-align: middle;
   border-radius: 50%;
   height: 40px;
+  width: 40px;
+  background: #ccc;
+  overflow: hidden;
 }
-.userAvat .accountName {
+.userAvat ._image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.userAvat .name {
   display: inline-block;
   vertical-align: middle;
   margin: 0 5px 0 10px;

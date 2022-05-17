@@ -13,10 +13,10 @@
     <!-- search -->
     <el-form ref="searchForm" inline :model="queryParam" size="small">
       <el-form-item label="账号">
-        <el-input v-model="queryParam.accountNumber"></el-input>
+        <el-input v-model="queryParam.account"></el-input>
       </el-form-item>
       <el-form-item label="用户名">
-        <el-input v-model="queryParam.accountName"></el-input>
+        <el-input v-model="queryParam.name"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" icon="el-icon-search" @click="fetchData(true)"
@@ -34,12 +34,12 @@
     </p>
     <el-table :data="list">
       <el-table-column
-        prop="accountNumber"
+        prop="account"
         label="账号"
         align="center"
       ></el-table-column>
       <el-table-column
-        prop="accountName"
+        prop="name"
         label="用户名"
         align="center"
       ></el-table-column>
@@ -50,7 +50,7 @@
       ></el-table-column>
       <el-table-column label="状态" width="80" align="center">
         <template slot-scope="scope">
-          <template v-if="!scope.row.state">
+          <template v-if="scope.row.disabled">
             <span style="color: #ff4949">已禁用</span>
           </template>
           <template v-else>
@@ -135,17 +135,11 @@
             <span v-else>上传头像</span>
           </uploader>
         </el-form-item>
-        <el-form-item label="账号" prop="accountNumber">
-          <el-input
-            v-model.trim="editForm.accountNumber"
-            :maxlength="100"
-          ></el-input>
+        <el-form-item label="账号" prop="account">
+          <el-input v-model.trim="editForm.account" :maxlength="100"></el-input>
         </el-form-item>
-        <el-form-item label="用户名" prop="accountName">
-          <el-input
-            v-model.trim="editForm.accountName"
-            :maxlength="100"
-          ></el-input>
+        <el-form-item label="用户名" prop="name">
+          <el-input v-model.trim="editForm.name" :maxlength="100"></el-input>
         </el-form-item>
         <template v-if="!editForm.id">
           <el-form-item label="密码" prop="password">
@@ -183,11 +177,11 @@
         </el-form-item>
         <el-form-item label="状态">
           <el-switch
-            v-model="editForm.state"
+            v-model="editForm.disabled"
             active-text="启用"
             inactive-text="禁用"
-            :active-value="1"
-            :inactive-value="0"
+            :active-value="false"
+            :inactive-value="true"
           ></el-switch>
         </el-form-item>
       </el-form>
@@ -236,27 +230,23 @@ export default {
       list: [],
       editForm: {
         id: "",
-        accountNumber: "",
-        accountName: "",
+        account: "",
+        name: "",
         password: "",
         roles: [],
-        state: 1,
+        disabled: false,
       },
       queryParam: {
         pageSize: 10,
         p: 1,
-        accountNumber: "",
-        accountName: "",
+        account: "",
+        name: "",
       },
       totalCount: 0,
       totalPage: 0,
       rules: {
-        accountNumber: [
-          { required: true, message: "请输入账号", trigger: "blur" },
-        ],
-        accountName: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-        ],
+        account: [{ required: true, message: "请输入账号", trigger: "blur" }],
+        name: [{ required: true, message: "请输入用户名", trigger: "blur" }],
         password: [{ validator: validatePass, trigger: "blur" }],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
         orgId: [{ required: true, message: "请选择所属组织" }],
@@ -269,8 +259,8 @@ export default {
       this.queryParam = {
         pageSize: 10,
         p: 1,
-        accountNumber: "",
-        accountName: "",
+        account: "",
+        name: "",
       };
 
       this.fetchData(true);
@@ -282,7 +272,7 @@ export default {
       if (!data) {
         return null;
       }
-      this.$confirm(`确定重置账号 ${data.accountNumber} 的密码?`, "提示", {
+      this.$confirm(`确定重置账号 ${data.account} 的密码?`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消",
         type: "warning",
@@ -360,11 +350,11 @@ export default {
       this.dialogVisible = false;
       this.editForm = {
         id: "",
-        accountNumber: "",
-        accountName: "",
+        account: "",
+        name: "",
         password: "",
         roles: [],
-        state: 1,
+        disabled: false,
       };
       this.$refs.editForm && this.$refs.editForm.resetFields();
     },

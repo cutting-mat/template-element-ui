@@ -15,14 +15,14 @@
         <span v-else>上传头像</span>
       </uploader>
       <el-form label-width="80px" label-position="left" size="small">
-        <el-form-item label="用户名">{{ userInfo.accountName }}</el-form-item>
+        <el-form-item label="用户名">{{ userInfo.name }}</el-form-item>
         <el-form-item label="密码">
           <el-button type="text" @click="handleChangePw">
             修改密码
             <i class="el-icon-edit"></i>
           </el-button>
         </el-form-item>
-        <el-form-item label="手机号">{{ userInfo.accountNumber }}</el-form-item>
+        <el-form-item label="手机号">{{ userInfo.mobile }}</el-form-item>
         <el-form-item label="所属组织">{{ userInfo.orgName }}</el-form-item>
         <el-form-item label="联系地址"
           >江苏省苏州市吴中区吴中大道 1188 号</el-form-item
@@ -30,7 +30,7 @@
       </el-form>
     </div>
     <!-- 验证身份 -->
-    <auth ref="auth" />
+    <auth ref="auth" :types="['password', 'email', 'mobile']" />
   </div>
 </template>
 

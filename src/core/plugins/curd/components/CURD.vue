@@ -151,7 +151,7 @@ export default {
          * scope 用于确认当前模型字段的提交时机, 默认更新和创建均提交
          * */
         return {
-          accountName: {
+          name: {
             // 数据
             type: "string",
             default: null,
