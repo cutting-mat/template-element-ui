@@ -71,7 +71,7 @@
       </div>
     </div>
     <!-- 验证身份 -->
-    <auth ref="auth" :types="['email', 'mobile']" command="reset-pw" />
+    <auth ref="auth" :types="['email', 'mobile']" command="reset" />
   </div>
 </template>
 

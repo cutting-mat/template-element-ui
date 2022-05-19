@@ -64,7 +64,7 @@ export default {
     command: {
       type: String,
       required: false,
-      default: "common", // reset-pw
+      default: "common", // reset
     },
   },
   components,

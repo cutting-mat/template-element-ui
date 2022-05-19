@@ -1,113 +1,137 @@
 <template>
-  <div class="flex-row align-center justify-center loginPage">
-    <div>
-      <h1 class="main-title">平台名称文字占位符后台管理系统</h1>
-
+  <div class="flex-row align-center justify-center registerPage">
+    <div class="register-box">
+      <div class="title">注册账号</div>
       <el-form
         ref="validForm"
         :model="formData"
         :rules="rules"
-        class="login-form"
-        @submit.native.prevent="login"
+        label-width="100px"
+        hide-required-asterisk
+        @submit.native.prevent="register"
+        size="medium"
       >
-        <h2 class="sub-title">
-          <span class="_text">注册</span>
-        </h2>
-        <el-form-item prop="account">
-          <el-input
-            :autofocus="true"
-            placeholder="输入用户名"
-            v-model="formData.account"
-          ></el-input>
+        <el-form-item prop="mobile" label="手机号：">
+          <input-valid
+            v-model="formData.mobile"
+            validType="mobile"
+            required
+            label="手机号"
+            @ready="(rule) => (rules.mobile = rule)"
+          />
         </el-form-item>
-        <el-form-item prop="password">
-          <el-input
-            placeholder="输入密码"
-            type="password"
+        <el-form-item prop="validCodeUserInput" label="验证码：">
+          <el-input v-model="formData.validCodeUserInput">
+            <template slot="append">
+              <el-button @click="sendValidCode">
+                <countdown ref="countdownButton" :count="30">
+                  获取验证码
+                </countdown>
+              </el-button>
+            </template>
+          </el-input>
+        </el-form-item>
+        <el-form-item prop="name" label="姓名：">
+          <el-input v-model.trim="formData.name"></el-input>
+        </el-form-item>
+        <el-form-item prop="company" label="工作单位：">
+          <el-input v-model.trim="formData.company"></el-input>
+        </el-form-item>
+        <el-form-item prop="password" label="设置密码：">
+          <input-password
             v-model="formData.password"
-            show-password
+            autocomplete="off"
+          ></input-password>
+        </el-form-item>
+        <el-form-item prop="checkPass" label="重复密码：">
+          <el-input
+            type="password"
+            v-model="formData.checkPass"
+            autocomplete="off"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="captcha">
-          <InputCaptchaImage ref="validCode" />
-        </el-form-item>
-
         <el-form-item class="submit-item">
           <el-button
             native-type="submit"
             class="submit-button"
             type="primary"
             :loading="loading"
-            >登录</el-button
+            >确 认</el-button
           >
         </el-form-item>
-        <div class="flex-row">
-          <div class="flex-1"></div>
-          已有账号？
-          <el-link type="primary" @click="$router.push({ name: '登录' })">
-            立即登录
-            <i class="el-icon-right"></i>
-          </el-link>
-        </div>
       </el-form>
-      <div class="footer-info">
-        @2022 版权所有 占位文字
-        <span class="_s">|</span>
-        Github：
-        <el-link
-          type="primary"
-          href="https://github.com/cutting-mat"
-          target="_blank"
-          >cutting-mat</el-link
+      <div class="flex-row">
+        <div class="flex-1"></div>
+        已有账号？<el-link
+          type="danger"
+          class="first"
+          @click="$router.push({ name: '登录' })"
         >
+          点击登录
+        </el-link>
       </div>
     </div>
     <!-- 验证身份 -->
-    <auth ref="auth" :types="['email', 'mobile']" command="reset-pw" />
+    <auth ref="auth" :types="['captcha']" />
   </div>
 </template>
 
 <script>
-import { event } from "@/core";
-import { login } from "@/main/api/common";
+import { register } from "@/main/api/common";
+import { smsRegister, validateMobileValidCode } from "@/main/api/auth";
 
 export default {
   data() {
-    const validImage = () => {
-      return new Promise((resolve, reject) => {
-        if (this.formData.captcha) {
-          resolve();
-        } else {
-          return this.$refs.validCode
-            .valid()
-            .then((captcha) => {
-              this.formData.captcha = captcha;
-              resolve();
-            })
-            .catch(reject);
+    const validatePass = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请输入密码"));
+      } else {
+        if (this.formData.checkPass !== "") {
+          this.$refs.validForm.validateField("checkPass");
         }
-      });
+        callback();
+      }
+    };
+    const validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.formData.password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
     };
 
     return {
       loading: false,
       formData: {
-        account: "",
-        password: "",
-        captcha: "",
+        account: null,
+        mobile: null,
+        token: null,
+        name: null,
+        company: null,
+        password: null,
+        checkPass: null,
+        orgId: 3, // 其他
+        validCodeUserInput: null, // 验证码
+      },
+      sendCode: {
+        captcha: null,
+      },
+      validCode: {
+        id: null,
       },
       rules: {
-        account: [
-          { required: true, message: "请输入用户名", trigger: "blur" },
-          {
-            min: 3,
-            max: 30,
-            message: "长度在 3 到 30 个字符",
-            trigger: "blur",
-          },
+        mobile: [],
+        validCodeUserInput: [
+          { required: true, message: "请输入验证码", trigger: "change" },
+        ],
+        name: [{ required: true, message: "请输入姓名", trigger: "change" }],
+        company: [
+          { required: true, message: "请输入工作单位", trigger: "change" },
         ],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
+          { validator: validatePass, trigger: "blur" },
           {
             min: 6,
             max: 30,
@@ -115,110 +139,126 @@ export default {
             trigger: "blur",
           },
         ],
-        captcha: [{ validator: validImage, trigger: "blur" }],
+        checkPass: [{ validator: validatePass2, trigger: "blur" }],
       },
     };
   },
   methods: {
-    login() {
+    sendValidCode() {
       if (this.loading) {
         return null;
       }
-      this.loading = true;
-      this.$refs.validForm.validate((valid) => {
-        if (valid) {
-          login(this.formData)
+      this.$refs.validForm.validateField("mobile", (err) => {
+        if (!err) {
+          this.loading = true;
+          smsRegister(
+            Object.assign(
+              {},
+              {
+                mobile: this.formData.mobile,
+              },
+              this.sendCode
+            )
+          )
             .then((res) => {
+              this.loading = false;
+              // 验证码已经发送
               if (res.status === 200) {
-                this.loading = false;
-                // 登录后全局发布 login 事件, 将被 权限模块 接收
-                event.emit("login", {
-                  redirect: this.$router.currentRoute.query.redirect || "/",
-                  data: res.data,
+                this.validCode.id = res.data.id;
+                this.$refs.countdownButton.start();
+              } else if (res.status === 298) {
+                // 需要图形验证
+                this.$refs.auth.auth().then((authCode) => {
+                  this.sendCode.captcha = authCode;
+                  this.sendValidCode();
                 });
               } else {
-                this.$message({
-                  message: "登陆失败",
-                  type: "warning",
-                });
+                this.$message.warning(
+                  `${res.data.message || "验证码发送失败，请稍后重试"}`
+                );
               }
             })
             .catch(() => {
               this.loading = false;
             });
+        }
+      });
+    },
+    register() {
+      if (this.loading) {
+        return null;
+      }
+      this.loading = true;
+      this.$refs.validForm.validate(async (valid) => {
+        if (valid) {
+          // 设置账号字段
+          this.formData.account = this.formData.mobile;
+          // 校验短信验证码
+          const validCodeRes = await validateMobileValidCode(
+            Object.assign({}, this.validCode, {
+              userInput: this.formData.validCodeUserInput,
+            })
+          );
+          console.log("validCodeRes", validCodeRes);
+          if (validCodeRes.status == 200) {
+            this.formData.token = validCodeRes.data;
+            // 注册
+            register(this.formData)
+              .then((res) => {
+                this.loading = false;
+                if (res.status === 200) {
+                  this.$alert("注册成功,请登录", "注册成功", {
+                    confirmButtonText: "确定",
+                    callback: () => {
+                      this.$router.replace({ name: "登录" });
+                    },
+                  });
+                } else {
+                  this.$message.error(res.data.message);
+                }
+              })
+              .catch(() => {
+                this.loading = false;
+              });
+          } else {
+            this.$message.error(validCodeRes.data.message);
+            console.warn(`校验短信验证码:`, validCodeRes);
+          }
         } else {
           this.loading = false;
         }
       });
     },
-    handleChangePw() {
-      this.$refs.auth.auth().then((authCode) => {
-        this.$router.push({
-          name: "修改密码",
-          query: {
-            authCode,
-          },
-        });
-      });
-    },
   },
+  created() {},
 };
 </script>
 
 <style scoped>
-.loginPage {
+.registerPage {
   background: url(../assets/img/b.jpg) center no-repeat;
   background-size: cover;
 }
-
-.login-form {
-  width: 320px;
-  background: #fff;
-  border-radius: 10px;
-  padding: 20px 40px;
-  margin: auto;
+.register-box {
+  width: 600px;
+  background: #ffffff;
+  box-shadow: 0px 1px 4px 0px #a3a3a3;
+  border-radius: 6px;
+  padding: 50px 100px;
+  box-sizing: border-box;
 }
-.main-title {
-  font-size: 28px;
-  color: #257ff7;
-  margin-bottom: 40px;
-  text-align: center;
-}
-.sub-title {
-  font-size: 18px;
-  font-weight: normal;
-  text-align: center;
-  color: #257ff7;
+.title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #94070a;
+  line-height: 24px;
+  letter-spacing: 1px;
   margin-bottom: 20px;
-}
-.sub-title ._text {
-  display: inline-block;
-  line-height: 1.4;
-  border-bottom: 3px solid #257ff7;
-}
-.des {
   text-align: center;
-  color: #999;
-  margin-bottom: 2em;
 }
 
-.submit-item {
-  margin-top: 20px;
-}
 .submit-button {
   width: 100%;
-}
-.footer-info {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  text-align: center;
-  font-size: 0.9em;
-  color: #999;
-}
-.footer-info ._s {
-  display: inline-block;
-  margin: 0 0.5em;
+  font-size: 18px;
 }
 </style>

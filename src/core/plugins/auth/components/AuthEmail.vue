@@ -21,10 +21,15 @@
     <el-form-item prop="userInput">
       <el-input v-model="formData.userInput" placeholder="请输入验证码">
         <template slot="append">
-          <el-button @click="sendValidCode">
-            <Countdown ref="countdownButton" :count="30">
+          <el-button :disabled="buttonDisabled" @click="sendValidCode">
+            <CountDown
+              ref="countdownButton"
+              :count="30"
+              @start="buttonDisabled = true"
+              @end="buttonDisabled = false"
+            >
               获取验证码
-            </Countdown>
+            </CountDown>
           </el-button>
         </template>
       </el-input>
@@ -74,6 +79,7 @@ export default {
           { min: 4, max: 6, message: "请输入正确的验证码", trigger: "blur" },
         ],
       },
+      buttonDisabled: false,
     };
   },
   computed: {
