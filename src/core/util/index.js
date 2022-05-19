@@ -7,7 +7,7 @@
 const STORAGE_SPACE = ""; // 指定命名空间, 防止同域子项目间存储混淆
 export const storage = function (key, value, storageFun = localStorage) {
   key = `${STORAGE_SPACE || import.meta.env.BASE_URL}_${key}`;
-  if (value === void 0) {
+  if (value === undefined) {
     // get
     const lsVal = storageFun.getItem(key);
     if (lsVal && lsVal.indexOf("autostringify-") === 0) {
@@ -123,7 +123,7 @@ export const formatDate = (value, fmt) => {
   if (!value) {
     return null;
   }
-  if (fmt === void 0) {
+  if (fmt === undefined) {
     fmt = "day-time";
   }
   switch (fmt) {

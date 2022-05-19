@@ -11,25 +11,16 @@
         @submit.native.prevent="register"
         size="medium"
       >
-        <el-form-item prop="mobile" label="手机号：">
-          <input-valid
-            v-model="formData.mobile"
-            validType="mobile"
-            required
-            label="手机号"
-            @ready="(rule) => (rules.mobile = rule)"
-          />
+        <el-form-item prop="mobile" required label="手机号：">
+          <el-input v-model="formData.mobile" />
         </el-form-item>
-        <el-form-item prop="validCodeUserInput" label="验证码：">
-          <el-input v-model="formData.validCodeUserInput">
-            <template slot="append">
-              <el-button @click="sendValidCode">
-                <countdown ref="countdownButton" :count="30">
-                  获取验证码
-                </countdown>
-              </el-button>
-            </template>
-          </el-input>
+        <el-form-item prop="userInput" label="验证码：">
+          <InputSMS
+            ref="InputSMS"
+            type="register"
+            :mobile="formData.mobile"
+            @click="sendValidCode"
+          />
         </el-form-item>
         <el-form-item prop="name" label="姓名：">
           <el-input v-model.trim="formData.name"></el-input>
@@ -38,10 +29,10 @@
           <el-input v-model.trim="formData.company"></el-input>
         </el-form-item>
         <el-form-item prop="password" label="设置密码：">
-          <input-password
+          <InputPassword
             v-model="formData.password"
             autocomplete="off"
-          ></input-password>
+          ></InputPassword>
         </el-form-item>
         <el-form-item prop="checkPass" label="重复密码：">
           <el-input
@@ -77,11 +68,34 @@
 </template>
 
 <script>
+import { validator } from "@/core";
 import { register } from "@/main/api/common";
-import { smsRegister, validateMobileValidCode } from "@/main/api/auth";
 
 export default {
   data() {
+    const validMobile = () => {
+      return validator({
+        required: true,
+        validType: "mobile",
+        value: () => {
+          return this.formData?.mobile;
+        },
+      });
+    };
+
+    const validCode = () => {
+      return new Promise((resolve, reject) => {
+        this.$refs.InputSMS.valid()
+          .then((captcha) => {
+            this.resData = captcha;
+            resolve();
+          })
+          .catch((msg) => {
+            reject(msg);
+          });
+      });
+    };
+
     const validatePass = (rule, value, callback) => {
       if (value === "") {
         callback(new Error("请输入密码"));
@@ -105,27 +119,22 @@ export default {
     return {
       loading: false,
       formData: {
-        account: null,
         mobile: null,
         token: null,
         name: null,
         company: null,
         password: null,
         checkPass: null,
-        orgId: 3, // 其他
-        validCodeUserInput: null, // 验证码
-      },
-      sendCode: {
-        captcha: null,
-      },
-      validCode: {
-        id: null,
+        userInput: null, // 验证码
       },
       rules: {
-        mobile: [],
-        validCodeUserInput: [
-          { required: true, message: "请输入验证码", trigger: "change" },
+        mobile: [
+          {
+            validator: validMobile,
+            trigger: [],
+          },
         ],
+        userInput: [{ validator: validCode, trigger: [] }],
         name: [{ required: true, message: "请输入姓名", trigger: "change" }],
         company: [
           { required: true, message: "请输入工作单位", trigger: "change" },
@@ -141,46 +150,14 @@ export default {
         ],
         checkPass: [{ validator: validatePass2, trigger: "blur" }],
       },
+      resData: null,
     };
   },
   methods: {
     sendValidCode() {
-      if (this.loading) {
-        return null;
-      }
       this.$refs.validForm.validateField("mobile", (err) => {
         if (!err) {
-          this.loading = true;
-          smsRegister(
-            Object.assign(
-              {},
-              {
-                mobile: this.formData.mobile,
-              },
-              this.sendCode
-            )
-          )
-            .then((res) => {
-              this.loading = false;
-              // 验证码已经发送
-              if (res.status === 200) {
-                this.validCode.id = res.data.id;
-                this.$refs.countdownButton.start();
-              } else if (res.status === 298) {
-                // 需要图形验证
-                this.$refs.auth.auth().then((authCode) => {
-                  this.sendCode.captcha = authCode;
-                  this.sendValidCode();
-                });
-              } else {
-                this.$message.warning(
-                  `${res.data.message || "验证码发送失败，请稍后重试"}`
-                );
-              }
-            })
-            .catch(() => {
-              this.loading = false;
-            });
+          this.$refs.InputSMS.send();
         }
       });
     },
@@ -191,39 +168,25 @@ export default {
       this.loading = true;
       this.$refs.validForm.validate(async (valid) => {
         if (valid) {
-          // 设置账号字段
-          this.formData.account = this.formData.mobile;
-          // 校验短信验证码
-          const validCodeRes = await validateMobileValidCode(
-            Object.assign({}, this.validCode, {
-              userInput: this.formData.validCodeUserInput,
+          this.formData.token = this.resData;
+          // 注册
+          register(this.formData)
+            .then((res) => {
+              this.loading = false;
+              if (res.status === 200) {
+                this.$alert("注册成功,请登录", "注册成功", {
+                  confirmButtonText: "确定",
+                  callback: () => {
+                    this.$router.replace({ name: "登录" });
+                  },
+                });
+              } else {
+                this.$message.error(res.data.message);
+              }
             })
-          );
-          console.log("validCodeRes", validCodeRes);
-          if (validCodeRes.status == 200) {
-            this.formData.token = validCodeRes.data;
-            // 注册
-            register(this.formData)
-              .then((res) => {
-                this.loading = false;
-                if (res.status === 200) {
-                  this.$alert("注册成功,请登录", "注册成功", {
-                    confirmButtonText: "确定",
-                    callback: () => {
-                      this.$router.replace({ name: "登录" });
-                    },
-                  });
-                } else {
-                  this.$message.error(res.data.message);
-                }
-              })
-              .catch(() => {
-                this.loading = false;
-              });
-          } else {
-            this.$message.error(validCodeRes.data.message);
-            console.warn(`校验短信验证码:`, validCodeRes);
-          }
+            .catch(() => {
+              this.loading = false;
+            });
         } else {
           this.loading = false;
         }
