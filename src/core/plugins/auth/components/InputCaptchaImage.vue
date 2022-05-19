@@ -73,7 +73,7 @@ export default {
     valid() {
       return new Promise((resolve, reject) => {
         if (this.loading) {
-          reject();
+          reject("loading");
         }
         if (this.formData.userInput) {
           this.loading = true;
@@ -83,11 +83,13 @@ export default {
               if (res.status === 200) {
                 resolve(res.data);
               } else {
+                this.fetchData();
                 reject(`验证失败，请重试`);
               }
             })
             .catch(() => {
               this.loading = false;
+              this.fetchData();
               reject(`验证失败，请重试`);
             });
         } else {

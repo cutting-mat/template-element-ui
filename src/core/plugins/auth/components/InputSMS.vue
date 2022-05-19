@@ -79,10 +79,15 @@ export default {
       }
     },
     valid() {
-      if (this.loading) {
-        return null;
-      }
       return new Promise((resolve, reject) => {
+        if (this.loading) {
+          return reject("loading");
+        }
+
+        if (!this.formData.id) {
+          return reject("请先发送验证码");
+        }
+
         if (this.formData.userInput) {
           this.loading = true;
           validateMobileValidCode(this.formData)

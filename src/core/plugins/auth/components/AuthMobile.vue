@@ -57,6 +57,19 @@ export default {
       }
     };
 
+    const validCode = () => {
+      return new Promise((resolve, reject) => {
+        this.$refs.InputSMS.valid()
+          .then((captcha) => {
+            this.resData = captcha;
+            resolve();
+          })
+          .catch((msg) => {
+            reject(msg);
+          });
+      });
+    };
+
     return {
       formData: {
         id: null,
@@ -64,7 +77,9 @@ export default {
       },
       rules: {
         inputMobile: [{ validator: validateMobile, trigger: [] }],
+        userInput: [{ validator: validCode, trigger: [] }],
       },
+      resData: null,
     };
   },
   computed: {
@@ -96,13 +111,11 @@ export default {
       });
     },
     handleSubmit() {
-      this.$refs.InputSMS.valid()
-        .then((resData) => {
-          this.$emit("success", resData);
-        })
-        .catch((err) => {
-          this.$message.warning(`${err}`);
-        });
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$emit("success", this.resData);
+        }
+      });
     },
   },
 };

@@ -22,26 +22,34 @@
 <script>
 export default {
   data() {
+    const validCode = () => {
+      return new Promise((resolve, reject) => {
+        this.$refs.InputSMS.valid()
+          .then((captcha) => {
+            this.resData = captcha;
+            resolve();
+          })
+          .catch((msg) => {
+            reject(msg);
+          });
+      });
+    };
+
     return {
-      loading: false,
       formData: {},
       rules: {
-        captcha: [{ required: true, message: "请输入验证码", trigger: "blur" }],
+        captcha: [{ validator: validCode, trigger: [] }],
       },
+      resData: null,
     };
   },
   methods: {
     handleSubmit() {
-      this.loading = true;
-      this.$refs.validCode
-        .valid()
-        .then((resData) => {
-          this.loading = false;
-          this.$emit("success", resData);
-        })
-        .catch(() => {
-          this.loading = false;
-        });
+      this.$refs.form.validate((valid) => {
+        if (valid) {
+          this.$emit("success", this.resData);
+        }
+      });
     },
   },
 };

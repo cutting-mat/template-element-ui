@@ -29,7 +29,7 @@
           ></el-input>
         </el-form-item>
         <el-form-item prop="captcha">
-          <InputCaptchaImage ref="validCode" />
+          <InputCaptchaImage ref="InputCaptchaImage" />
         </el-form-item>
         <div class="flex-row align-center">
           <div class="flex-1">
@@ -86,13 +86,16 @@ export default {
         if (this.formData.captcha) {
           resolve();
         } else {
-          return this.$refs.validCode
-            .valid()
+          this.$refs.InputCaptchaImage.valid()
             .then((captcha) => {
+              console.log("then", captcha);
               this.formData.captcha = captcha;
               resolve();
             })
-            .catch(reject);
+            .catch((msg) => {
+              console.log("catch", msg);
+              reject(msg);
+            });
         }
       });
     };
@@ -123,7 +126,7 @@ export default {
             trigger: "blur",
           },
         ],
-        captcha: [{ validator: validImage, trigger: "blur" }],
+        captcha: [{ validator: validImage, trigger: [] }],
       },
     };
   },
