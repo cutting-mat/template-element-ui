@@ -129,5 +129,5 @@ export const CryptoConfig = {
     }
     return response;
   },
-  WhiteList: ["/url/disable-crypto"],
+  WhiteList: ["/url/disable-crypto"], // 无需加密的请求
 };

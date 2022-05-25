@@ -5,32 +5,46 @@
  * 注册用户配置（@/plugin.global-function.config）的全局资源
  * */
 
-
 export { default as install } from "./assets/register";
 
-// 内置组件 
+// 内置组件
 import coreComponents from "@/core/components";
 
 // 内置过滤器：日期格式化
-import { formatDate } from '@/core/util'
+import { formatDate } from "@/core";
 
 // 内置实例方法：剪切板
-import clipboard from "@/core/util/clipboard";
+import { clipboard } from "@/core";
 
 // 用户配置全局资源
-import { components, filters, directives, $methods, methods } from "@/plugin.global-function.config";
+import {
+  components,
+  filters,
+  directives,
+  $methods,
+  methods,
+} from "@/plugin.global-function.config";
 export const config = {
-    components: Object.assign(coreComponents, components),
-    filters: Object.assign({
-        date: formatDate
-    }, filters),
-    directives: Object.assign({
-        'auth': {
-            // 空v-auth指令，避免不开启权限控制时报错
-        },
-    }, directives),
-    $methods: Object.assign({
-        $clipboard: clipboard,
-    }, $methods),
-    methods: Object.assign({}, methods)
-}
+  components: Object.assign(coreComponents, components),
+  filters: Object.assign(
+    {
+      date: formatDate,
+    },
+    filters
+  ),
+  directives: Object.assign(
+    {
+      auth: {
+        // 空v-auth指令，避免不开启权限控制时报错
+      },
+    },
+    directives
+  ),
+  $methods: Object.assign(
+    {
+      $clipboard: clipboard,
+    },
+    $methods
+  ),
+  methods: Object.assign({}, methods),
+};
