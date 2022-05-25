@@ -1,0 +1,1 @@
+import{n as _}from"./index.e94e32bd.js";import"./ui.b381569e.js";var o=function(){var e=this,t=e.$createElement,r=e._self._c||t;return r("div",{staticClass:"scrollbar"},[e._v("HomePage")])},a=[];const s={},n={};var c=_(s,o,a,!1,l,"4ded0bf5",null,null);function l(e){for(let t in n)this[t]=n[t]}var u=function(){return c.exports}();export{u as default};
