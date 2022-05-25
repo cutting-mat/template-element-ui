@@ -67,13 +67,13 @@ export default {
       /**密码最小位数 */
       type: Number,
       require: false,
-      default: 6,
+      default: 8,
     },
     maxlength: {
       /**密码最大位数 */
       type: Number,
       require: false,
-      default: 16,
+      default: 20,
     },
     suffixIcon: {
       /**后缀图标 */
