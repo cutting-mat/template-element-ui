@@ -78,7 +78,9 @@ instance.interceptors.response.use(
           SecretKey
         );
         CryptoConfig.Debug && console.log("请求>>>>", reqData);
-        response.data = CryptoConfig.DecryptResponse(response.data, SecretKey);
+        response.data = JSON.parse(
+          CryptoConfig.DecryptResponse(response.data, SecretKey)
+        );
         CryptoConfig.Debug && console.log("响应<<<<<", response);
       }
     }

@@ -93,7 +93,7 @@ export const CryptoConfig = {
   Enable: false, // process.env.NODE_ENV === 'production', // 加密开关
   Debug: process.env.NODE_ENV === "development", // 调试开关
   GetCryptoUrl: (requestConfig) => {
-    // 自定义加密请求地址方法
+    // 生成加密请求地址方法
     return `/sapi/${CryptoJS.MD5(requestConfig.url + "|sogdata.com")}`;
   },
   GetSecretKey: (requestConfig) => {
@@ -117,17 +117,17 @@ export const CryptoConfig = {
     };
     return enCrypto(JSON.stringify(baseParam), SecretKey);
   },
-  DecryptResponse: function (response, SecretKey) {
+  DecryptResponse: function (string, SecretKey) {
     // 自定义解密方法
-    if (SecretKey && response.split) {
-      const decData = deCrypto(response, SecretKey);
+    if (SecretKey && string && string.split) {
+      const decData = deCrypto(string, SecretKey);
       if (decData) {
-        return JSON.parse(decData);
+        return decData;
       } else {
         return console.warn(`DecryptResponse(): 解密失败`);
       }
     }
-    return response;
+    return string;
   },
   WhiteList: ["/url/disable-crypto"], // 无需加密的请求
 };
