@@ -73,13 +73,13 @@ instance.interceptors.response.use(
     if (needCrypto(response.config)) {
       const SecretKey = CryptoConfig.GetSecretKey(response.config);
       if (SecretKey) {
-        const reqData = CryptoConfig.DecryptResponse(
+        const reqData = CryptoConfig.DecryptData(
           JSON.parse(response.config.data).data,
           SecretKey
         );
         CryptoConfig.Debug && console.log("请求>>>>", reqData);
         response.data = JSON.parse(
-          CryptoConfig.DecryptResponse(response.data, SecretKey)
+          CryptoConfig.DecryptData(response.data, SecretKey)
         );
         CryptoConfig.Debug && console.log("响应<<<<<", response);
       }

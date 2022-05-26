@@ -96,13 +96,22 @@ export const CryptoConfig = {
     // 生成加密请求地址方法
     return `/sapi/${CryptoJS.MD5(requestConfig.url + "|sogdata.com")}`;
   },
-  GetSecretKey: (requestConfig) => {
-    // 自定义加解密密钥方法
-    const token =
-      requestConfig.headers.Authorization ||
-      (requestConfig.headers.common &&
-        requestConfig.headers.common.Authorization);
-    if (token) {
+  GetSecretKey: async (requestConfig) => {
+    // 前端获取密钥方法
+    let token;
+    if (requestConfig && requestConfig.headers) {
+      token =
+        requestConfig.headers.Authorization ||
+        (requestConfig.headers.common &&
+          requestConfig.headers.common.Authorization);
+    } else {
+      // 支持从本地直接获取token
+      let GetAccountToken = await import("./plugin.permission.config");
+      GetAccountToken = GetAccountToken.GetAccountToken;
+      token = GetAccountToken();
+    }
+
+    if (token && token.split) {
       return token.split(".")[2];
     } else {
       return null;
@@ -117,14 +126,14 @@ export const CryptoConfig = {
     };
     return enCrypto(JSON.stringify(baseParam), SecretKey);
   },
-  DecryptResponse: function (string, SecretKey) {
+  DecryptData: function (string, SecretKey) {
     // 自定义解密方法
     if (SecretKey && string && string.split) {
       const decData = deCrypto(string, SecretKey);
       if (decData) {
         return decData;
       } else {
-        return console.warn(`DecryptResponse(): 解密失败`);
+        return console.warn(`DecryptData(): 解密失败`);
       }
     }
     return string;
