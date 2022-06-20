@@ -1,9 +1,9 @@
-import Store from '@/core/plugins/store/store';
+import Store from "@/core/plugins/store/store";
 const $store = Store();
 
 import { storage, routeGenerator } from "@/core";
 
-const routeInstance = routeGenerator()
+const routeInstance = routeGenerator();
 /**
  * 权限模块功能配置
  * routeInstance：路由实例，必传
@@ -11,49 +11,50 @@ const routeInstance = routeGenerator()
  * interceptorsRequest：是否开启请求拦截（需开启权限控制）
  * */
 export default {
-    routeInstance,
-    AccessControl: false,
-    interceptorsRequest: true
-}
+  routeInstance,
+  AccessControl: false,
+  interceptorsRequest: true,
+};
 
 /**
  * 获取用户登录凭据方法
  * @return Token[String]
  * */
 export const GetAccountToken = () => {
-    const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
-    return storage("auth", undefined, storageFun)
-}
+  const storageFun = $store.rememberLogin ? localStorage : sessionStorage;
+  return storage("auth", undefined, storageFun);
+};
 
 /**
  * 设置用户登录凭据方法
  * @param token[String] 用户登录凭据
  * @return [Any] 存储token，可被GetAccountToken()获取
  * */
-export const SetAccountToken = token => {
-    const storageFun = $store.state.rememberLogin ? localStorage : sessionStorage;
-    return storage("auth", token, storageFun)
-}
+export const SetAccountToken = (token) => {
+  const storageFun = $store.rememberLogin ? localStorage : sessionStorage;
+  return storage("auth", token, storageFun);
+};
 
 /**
  * 登录接口返回数据转用户凭据的方法
  * @param res[String] 登录接口返回数据
  * @return token[String] 用户登录凭据
  * */
-export const GetTokenFromLogin = res => res.data
+export const GetTokenFromLogin = (res) => res.data;
 
 /**
  * 获取用户权限数据方法
  * @return request[Promise] 请求用户权限数据的Promise实例
  * */
-export const GetPermission = () => $store.action("permission");
+export const GetPermission = () => $store.getPermission();
 
 /**
  * 获取路由权限后回调
  * @param routes[Array] 动态路由
  * @return [Any]
  * */
-export const AfterGetDynamicRoute = routes => $store.set("DynamicRoute", routes);
+export const AfterGetDynamicRoute = (routes) =>
+  $store.set("DynamicRoute", routes);
 
 /**
  * 用户认证失败回调
@@ -63,14 +64,14 @@ export const AfterGetDynamicRoute = routes => $store.set("DynamicRoute", routes)
  * @return next() || [Any]
  * */
 export const AuthFailedCallback = (to, from, next) => {
-    if (to.path !== "/login") {
-        // 未登录跳转登录页
-        let query = {
-            redirect: to.fullPath
-        };
-        return next({
-            path: "/login",
-            query
-        });
-    }
-}
+  if (to.path !== "/login") {
+    // 未登录跳转登录页
+    let query = {
+      redirect: to.fullPath,
+    };
+    return next({
+      path: "/login",
+      query,
+    });
+  }
+};

@@ -157,7 +157,7 @@ export default {
       });
     },
     fetchData: function () {
-      this.$store.action("permission").then((userPermissions) => {
+      this.$store.getPermission().then((userPermissions) => {
         this.list = buildTree(
           userPermissions.menus.concat(userPermissions.resources)
         );

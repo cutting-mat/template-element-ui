@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     userEmail() {
-      return this.$store.state.user.email || "";
+      return this.$store.user.email || "";
     },
     anonymousEmail() {
       if (this.userEmail) {

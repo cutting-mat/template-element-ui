@@ -65,7 +65,7 @@ export default {
   },
   computed: {
     userInfo() {
-      return this.$store.state.user;
+      return this.$store.user;
     },
   },
   watch: {
@@ -94,7 +94,7 @@ export default {
       })
         .then(() => {
           this.$store
-            .action("user", {
+            .getUser({
               cache: "update",
             })
             .then(() => {

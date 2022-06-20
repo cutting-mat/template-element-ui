@@ -210,7 +210,7 @@ export default {
     fetchData: function () {
       this.loading = true;
       this.$store
-        .action("permission", {
+        .getPermission({
           cache: "update",
         })
         .then((userPermissions) => {

@@ -26,10 +26,12 @@ Vue.use(preInstall);
 import plugins from "@/core/plugins";
 Vue.use(plugins);
 
+import { pinia } from "@/core/plugins/store";
 // 创建应用
 const app = new Vue({
   router: routeInstance,
   render: (h) => h(App),
+  pinia,
 });
 
 // 挂载应用

@@ -84,7 +84,7 @@ export default {
   },
   computed: {
     userMobile() {
-      return String(this.$store.state.user.mobile || "");
+      return String(this.$store.user.mobile || "");
     },
     anonymousMobile() {
       if (this.userMobile) {
