@@ -226,7 +226,7 @@ export const getUrlParam = function (keyName, url) {
     const s = (url || window.location.href).split("?")[1] || "";
     const r = s.match(urlParamReg);
     if (r !== null) {
-      return decodeURI(r[2]);
+      return decodeURIComponent(r[2]);
     }
   }
 
