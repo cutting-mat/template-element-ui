@@ -10,7 +10,6 @@ import { profile } from "@/system/api/personal";
 export default {
   state: () => ({
     testValue: 0, // 仅用于测试
-    rememberLogin: true, // 记录登录状态
     accessToken: null, // token
     permission: [], // 用户权限
     DynamicRoute: [], // 动态路由

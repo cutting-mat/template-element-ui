@@ -20,8 +20,7 @@ export default {
  * @return Token[String]
  * */
 export const GetAccountToken = () => {
-  const storageFun = Store.rememberLogin ? localStorage : sessionStorage;
-  return storage("auth", undefined, storageFun);
+  return storage("auth");
 };
 
 /**
@@ -30,8 +29,7 @@ export const GetAccountToken = () => {
  * @return [Any] 存储token，可被GetAccountToken()获取
  * */
 export const SetAccountToken = (token) => {
-  const storageFun = Store.rememberLogin ? localStorage : sessionStorage;
-  return storage("auth", token, storageFun);
+  return storage("auth", token);
 };
 
 /**

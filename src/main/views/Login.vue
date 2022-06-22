@@ -33,7 +33,7 @@
         </el-form-item>
         <div class="flex-row align-center">
           <div class="flex-1">
-            <el-checkbox v-model="$store.rememberLogin">记住我</el-checkbox>
+            <!-- <el-checkbox v-model="$store.rememberLogin">记住我</el-checkbox> -->
           </div>
           <el-link type="info" @click="handleChangePw"> 忘记密码？ </el-link>
         </div>
