@@ -27,6 +27,7 @@
     "eslint-plugin-promise": "^5.2.0",
     "eslint-plugin-vue": "^8.6.0",
     "mockjs": "^1.1.0",
+    "terser": "^5.14.1",
     "vite": "^2.9.5",
     "vite-plugin-vue2": "^1.9.3"
   }
