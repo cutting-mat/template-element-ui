@@ -11,7 +11,7 @@
     "@cutting-mat/axios": "^1.1.4",
     "@cutting-mat/uploader": "^2.0.15",
     "@vue/composition-api": "^1.6.2",
-    "crypto-js": "^4.1.1",
+    "crypto-js": "^3.3.0",
     "element-ui": "^2.15.6",
     "pinia": "^2.0.14",
     "tiny-emitter": "^2.1.0",

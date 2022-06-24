@@ -8,7 +8,7 @@ import { storage } from "@/core";
  * interceptorsRequest：是否开启请求拦截（需开启权限控制）
  * */
 export default {
-  AccessControl: true,
+  AccessControl: false,
   interceptorsRequest: false,
 };
 
