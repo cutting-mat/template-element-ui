@@ -1,0 +1,1 @@
+import{i as e}from"./index.4ba80ac1.js";const a=a=>e.get("/orgs",{params:a}),r=a=>e.post("/org",a),o=a=>e.put("/org",a),t=a=>e.delete("/org",{params:a});var s=Object.freeze(Object.defineProperty({__proto__:null,list:a,get:a=>e.get("/org",{params:a}),add:r,edit:o,remove:t},Symbol.toStringTag,{value:"Module"}));export{r as a,o as e,a as l,s as o,t as r};
