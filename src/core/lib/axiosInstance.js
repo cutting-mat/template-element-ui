@@ -3,6 +3,7 @@ import axios from "@cutting-mat/axios";
 import { event, routeGenerator } from "@/core";
 import { default as requestConfig, CryptoConfig } from "@/request.config";
 import { Message } from "element-ui";
+import { SetAccountToken } from "@/plugin.permission.config";
 
 console.log(
   `[Core] Request Start. Encryption: ${
@@ -87,11 +88,9 @@ instance.interceptors.response.use(
 
     // token临近过期, 重新签发token
     if (response.headers["jwt-update-token"]) {
-      event.emit("login", {
-        updateToken: true,
-        data: {
-          accessToken: response.headers["jwt-update-token"],
-        },
+      SetAccountToken(response.headers["jwt-update-token"]);
+      event.emit("login", () => {
+        console.warn(`[Core] Request. token 已续期`);
       });
     }
 

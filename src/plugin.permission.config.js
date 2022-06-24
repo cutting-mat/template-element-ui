@@ -1,18 +1,15 @@
-import { Store } from "@/core/plugins/store";
+import { store } from "@/core/plugins/store";
 
-import { storage, routeGenerator } from "@/core";
+import { storage } from "@/core";
 
-const routeInstance = routeGenerator();
 /**
  * 权限模块功能配置
- * routeInstance：路由实例，必传
  * AccessControl：是否开启权限控制
  * interceptorsRequest：是否开启请求拦截（需开启权限控制）
  * */
 export default {
-  routeInstance,
-  AccessControl: false,
-  interceptorsRequest: true,
+  AccessControl: true,
+  interceptorsRequest: false,
 };
 
 /**
@@ -33,28 +30,20 @@ export const SetAccountToken = (token) => {
 };
 
 /**
- * 登录接口返回数据转用户凭据的方法
- * @param res[String] 登录接口返回数据
- * @return token[String] 用户登录凭据
- * */
-export const GetTokenFromLogin = (res) => res.data;
-
-/**
  * 获取用户权限数据方法
  * @return request[Promise] 请求用户权限数据的Promise实例
  * */
-export const GetPermission = () => Store.getPermission();
+export const GetPermission = () => store.getPermission();
 
 /**
  * 获取路由权限后回调
  * @param routes[Array] 动态路由
  * @return [Any]
  * */
-export const AfterGetDynamicRoute = (routes) =>
-  Store.set("DynamicRoute", routes);
+export const AfterGetDynamicRoute = (routes) => (store.DynamicRoute = routes);
 
 /**
- * 用户认证失败回调
+ * 未认证用户回调
  * @param to[Object] 路由守卫(beforeEach)方法的同名参数
  * @param from[Object] 路由守卫(beforeEach)方法的同名参数
  * @param next[Object] 路由守卫(beforeEach)方法的同名参数

@@ -3,7 +3,7 @@ import CryptoJS from "crypto-js";
 // 各环境BaseURL配置
 const ENVIRONMENT = {
   mock: "http://yapi.smart-xwork.cn/mock/154414", // YAPI项目
-  dev: "http://retire.kaifa/japi",
+  dev: "http://medicalshare.kaifa/japi",
   test: "http://test.com/api",
   master: "//master.com/api",
 };

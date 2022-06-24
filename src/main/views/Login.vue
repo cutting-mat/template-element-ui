@@ -74,6 +74,7 @@
 <script>
 import { event } from "@/core";
 import { login } from "@/main/api/common";
+import { SetAccountToken } from "@/plugin.permission.config";
 
 export default {
   data() {
@@ -138,10 +139,13 @@ export default {
             .then((res) => {
               if (res.status === 200) {
                 this.loading = false;
+                // 存储token
+                SetAccountToken(res.data);
                 // 登录后全局发布 login 事件, 将被 权限模块 接收
-                event.emit("login", {
-                  redirect: this.$router.currentRoute.query.redirect || "/",
-                  data: res.data,
+                event.emit("login", () => {
+                  this.$router.replace({
+                    path: this.$router.currentRoute.query.redirect || "/",
+                  });
                 });
               } else {
                 this.$message({

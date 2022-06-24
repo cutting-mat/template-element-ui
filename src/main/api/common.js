@@ -2,7 +2,7 @@ import { axiosInstance as instance } from "@/core";
 
 //登录
 export const login = (params) => {
-  return instance.post(`/login`, params);
+  return instance.post(`/auth/login`, params);
 };
 // 注册
 export const register = (params) => {
@@ -10,7 +10,7 @@ export const register = (params) => {
 };
 //用户权限
 export const permission = (params, opt) => {
-  return instance.get(`/getPermissions`, { params }, opt);
+  return instance.get(`/resource/all`, { params }, opt);
 };
 
 // 上传文件
