@@ -1,22 +1,10 @@
 /**
  * Vue全局功能注册
  * 输出：
- * 注册框架内置全局资源
  * 注册用户配置（@/plugin.global-function.config）的全局资源
  * */
 
-export { default as install } from "./assets/register";
-
-// 内置组件
-import coreComponents from "@/core/components";
-
-// 内置过滤器：日期格式化
-import { formatDate } from "@/core";
-
-// 内置实例方法：剪切板
-import { clipboard } from "@/core";
-
-// 用户配置全局资源
+// 全局资源配置
 import {
   components,
   filters,
@@ -24,14 +12,12 @@ import {
   $methods,
   methods,
 } from "@/plugin.global-function.config";
+
+export { default as install } from "./assets/register";
+
 export const config = {
-  components: Object.assign(coreComponents, components),
-  filters: Object.assign(
-    {
-      date: formatDate,
-    },
-    filters
-  ),
+  components,
+  filters,
   directives: Object.assign(
     {
       auth: {
@@ -40,11 +26,6 @@ export const config = {
     },
     directives
   ),
-  $methods: Object.assign(
-    {
-      $clipboard: clipboard,
-    },
-    $methods
-  ),
-  methods: Object.assign({}, methods),
+  $methods,
+  methods,
 };
