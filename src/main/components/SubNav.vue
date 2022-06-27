@@ -22,17 +22,17 @@
           </div>
           <template v-for="(child, ci) in route.children">
             <!-- 三层 -->
-            <el-menu-item-group
-              v-if="child.children && child.children.length"
-              :route="child"
-              :index="child.name"
-              :key="'child' + ci"
-            >
-              <template slot="title">
-                <span>
+            <template v-if="child.children && child.children.length">
+              <el-menu-item
+                :route="child"
+                :index="child.name"
+                :key="'child' + ci"
+                class="second"
+              >
+                <span slot="title" class="flex-row align-center">
                   {{ (child.meta && child.meta.title) || child.name }}
                 </span>
-              </template>
+              </el-menu-item>
               <el-menu-item
                 v-for="(grandson, grandsonindex) in child.children"
                 :route="grandson"
@@ -44,13 +44,13 @@
                   {{ (grandson.meta && grandson.meta.title) || grandson.name }}
                 </span>
               </el-menu-item>
-            </el-menu-item-group>
+            </template>
             <!-- 两层 -->
             <el-menu-item
               v-else
               :route="child"
               :index="child.name"
-              :key="'child' + ci"
+              :key="'child2' + ci"
               class="second"
             >
               <span slot="title" class="flex-row align-center">
@@ -89,7 +89,7 @@ import { deepcopy } from "@/core";
 // 过滤隐藏路由，扩展fullPath
 let filterRoutes = function (routeArray, base) {
   const array = routeArray.filter((e) => !e.meta || !e.meta.hide);
-  return array.map(item => {
+  return array.map((item) => {
     const route = deepcopy(item);
     let pathKey =
       route.path.indexOf("/") === 0
@@ -113,8 +113,8 @@ export default {
     subMenu: {
       type: Boolean,
       required: false,
-      default: false
-    }
+      default: false,
+    },
   },
   data() {
     return {
@@ -125,9 +125,12 @@ export default {
   },
   computed: {
     menu: function () {
-      return this.$AccessControl
-        ? this.state.DynamicRoute[0].children
-        : filterRoutes(MainRoute[0].children);
+      // 侧边导航数据
+      return [
+        ...(this.$AccessControl
+          ? this.state.DynamicRoute[0].children
+          : filterRoutes(MainRoute[0].children)),
+      ];
     },
     activeIndex() {
       if (this.$route.meta && this.$route.meta.belong) {
@@ -139,8 +142,8 @@ export default {
   watch: {
     $route: {
       handler(newRoute) {
-        if(!this.subMenu){
-          return null
+        if (!this.subMenu) {
+          return null;
         }
         let targetIndex = -1;
         if (Array.isArray(this.list)) {
@@ -172,11 +175,11 @@ export default {
       immediate: true,
     },
   },
-  created(){
-    if(!this.subMenu){
-      this.list=this.menu
+  created() {
+    if (!this.subMenu) {
+      this.list = this.menu;
     }
-  }
+  },
 };
 </script>
 

@@ -16,7 +16,7 @@
     "pinia": "^2.0.14",
     "tiny-emitter": "^2.1.0",
     "vue": "^2.6.14",
-    "vue-router": "^3.5.2"
+    "vue-router": "^3.5.4"
   },
   "devDependencies": {
     "@vitejs/plugin-legacy": "^1.8.2",
