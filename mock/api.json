@@ -1971,10 +1971,42 @@
     "list": [
       {
         "query_path": {
-          "path": "/file/images",
+          "path": "/data/chart",
           "params": []
         },
         "edit_uid": 0,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 2170309,
+        "method": "GET",
+        "catid": 462761,
+        "title": "可视化图表数据",
+        "path": "/data/chart",
+        "project_id": 154414,
+        "req_params": [],
+        "res_body_type": "json",
+        "desc": "",
+        "uid": 125461,
+        "add_time": 1656489736,
+        "up_time": 1656493402,
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "markdown": "",
+        "res_body": "{\"type\":\"object\",\"title\":\"empty object\",\"properties\":{\"data\":{\"type\":\"array\",\"items\":{\"type\":\"object\",\"properties\":{\"label\":{\"type\":\"array\",\"items\":{\"type\":\"string\",\"mock\":{\"mock\":\"@province\"}},\"uniqueItems\":true,\"minItems\":5,\"maxItems\":10},\"value\":{\"type\":\"array\",\"items\":{\"type\":\"number\",\"mock\":{\"mock\":\"@integer(0,1000)\"}},\"uniqueItems\":true,\"minItems\":15,\"maxItems\":15}},\"required\":[\"label\",\"value\"]},\"uniqueItems\":true,\"minItems\":2,\"maxItems\":2}},\"required\":[\"data\"]}"
+      },
+      {
+        "query_path": {
+          "path": "/file/images",
+          "params": []
+        },
+        "edit_uid": 125461,
         "status": "undone",
         "type": "static",
         "req_body_is_json_schema": true,
@@ -2013,7 +2045,7 @@
           "path": "/return/fail",
           "params": []
         },
-        "edit_uid": 0,
+        "edit_uid": 125461,
         "status": "done",
         "type": "static",
         "req_body_is_json_schema": true,
@@ -2077,7 +2109,7 @@
           "path": "/Unauthorized",
           "params": []
         },
-        "edit_uid": 0,
+        "edit_uid": 125461,
         "status": "done",
         "type": "static",
         "req_body_is_json_schema": true,
@@ -2103,6 +2135,38 @@
         "add_time": 1653872720,
         "up_time": 1653872720,
         "__v": 0
+      },
+      {
+        "query_path": {
+          "path": "/return/test",
+          "params": []
+        },
+        "edit_uid": 125461,
+        "status": "undone",
+        "type": "static",
+        "req_body_is_json_schema": false,
+        "res_body_is_json_schema": true,
+        "api_opened": false,
+        "index": 0,
+        "tag": [],
+        "_id": 2170354,
+        "method": "GET",
+        "catid": 462761,
+        "title": "测试数据",
+        "path": "/return/test",
+        "project_id": 154414,
+        "req_params": [],
+        "res_body_type": "json",
+        "desc": "",
+        "uid": 125461,
+        "add_time": 1656491896,
+        "up_time": 1656491915,
+        "req_query": [],
+        "req_headers": [],
+        "req_body_form": [],
+        "__v": 0,
+        "markdown": "",
+        "res_body": "{\"$schema\":\"http://json-schema.org/draft-04/schema#\",\"type\":\"object\",\"properties\":{\"success\":{\"type\":\"boolean\"},\"status\":{\"type\":\"boolean\"},\"msg\":{\"type\":\"string\"},\"data\":{\"type\":\"string\"}},\"required\":[\"success\",\"status\",\"msg\",\"data\"]}"
       }
     ]
   }
