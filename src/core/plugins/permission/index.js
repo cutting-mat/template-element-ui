@@ -9,7 +9,7 @@
  * 用户鉴权 => Token 自动续期
  * 权限控制 => 实例方法 this.$_auth
  * 权限控制 => 全局指令 v-auth
- * */ 
+ * */
 
-export { default as install } from "./assets/permission";
+export { install } from "./assets/permission";
 export { default as config } from "@/plugin.permission.config";
