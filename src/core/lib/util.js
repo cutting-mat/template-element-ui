@@ -188,8 +188,8 @@ export const getSuffix = (filename) => {
 /**
  * 节流防抖
  * @param method[Function] 要执行的函数方法
- * @param delay[Number] 防抖阈值，即过滤执行的间隔毫秒数, 默认128
- * @param duration[Number] 节流阈值，即至少执行一次的间隔毫秒数, 默认无节流设置
+ * @param delay[Number] 防抖阈值,即过滤执行的间隔毫秒数, 默认128
+ * @param duration[Number] 节流阈值,即至少执行一次的间隔毫秒数, 默认无节流设置
  * @return 具有节流防抖特性的新函数
  */
 
@@ -244,4 +244,143 @@ export const domRect = function (dom) {
   } else {
     return dom;
   }
+};
+
+/**
+ * 加载JS文件
+ * @param filePath[String/Array] 文件路径,支持多个
+ * @param option[Object] 配置
+ * @param option.css[Boolean/String] 同时加载css, 可以指定css路径,或传入true加载同名css; 默认false
+ * @param option.beforeLoad[Function] 加载前执行
+ * @param option.rely[Boolean] 多个脚本是否依次加载; 默认false
+ * */
+export const loadScript = function (filePath, option) {
+  return new Promise((resolve, reject) => {
+    if (
+      (filePath && filePath.split) ||
+      (Array.isArray(filePath) && filePath.length)
+    ) {
+      const opt = Object.assign(
+        {
+          css: false,
+          beforeLoad: null,
+          rely: false,
+        },
+        option || {}
+      );
+      let cssLoaded = false;
+      const loadScript = function (filePath, hold) {
+        /*
+        @filePath:请求url
+        @hold:是否阻断默认回调,为function将阻断默认回调并执行自身
+        */
+        const headNode = document.getElementsByTagName("head")[0];
+        let script = document.createElement("script");
+        const scriptError = function (xhr, settings, exception) {
+          headNode.removeChild(script);
+          script = document.createElement("script");
+          console.warn(settings.url + "加载失败,正在重试~");
+          load(function () {
+            reject(settings.url + "加载失败了!");
+          });
+        };
+        const scriptOnload = function (data, status) {
+          if (!data) {
+            data = status = null;
+          }
+          if (hold) {
+            if (typeof hold === "function") {
+              hold();
+            }
+          } else {
+            setTimeout(resolve, 0);
+          }
+        };
+        const load = function (errorCallback) {
+          errorCallback = errorCallback || scriptError;
+          if (typeof opt.beforeLoad === "function") {
+            opt.beforeLoad();
+          }
+          script.type = "text/javascript";
+          if (script.addEventListener) {
+            script.addEventListener("load", scriptOnload, false);
+          } else if (script.readyState) {
+            script.onreadystatechange = function () {
+              if (
+                script.readyState === "loaded" ||
+                script.readyState === "complete"
+              ) {
+                script.onreadystatechange = null;
+                scriptOnload();
+              }
+            };
+          } else {
+            script.onload = scriptOnload;
+          }
+          script.onerror = errorCallback;
+          script.src = filePath;
+          headNode.appendChild(script);
+        };
+        if (opt.css && !cssLoaded) {
+          let cssfile = "";
+          const appendCss = function (href) {
+            href = href.replace(/\.css\.js$/, ".css").replace(/\.js$/, ".css");
+            let _css = document.createElement("link");
+            _css.rel = "stylesheet";
+            _css.onerror = function (e) {
+              headNode.removeChild(_css);
+              _css = null;
+              return null;
+            };
+            _css.href = href;
+            headNode.appendChild(_css);
+          };
+          if (opt.css.split) {
+            cssfile = opt.css;
+            appendCss(cssfile);
+            cssLoaded = true;
+          } else if (Array.isArray(opt.css)) {
+            opt.css.forEach((href) => {
+              appendCss(href);
+            });
+
+            cssLoaded = true;
+          } else {
+            appendCss(filePath);
+          }
+        }
+        load();
+      };
+      if (filePath.split) {
+        loadScript(filePath);
+      } else if (Array.isArray(filePath)) {
+        const scriptsLength = filePath.length;
+        let scriptsCount = 0;
+        if (opt.rely) {
+          // 线性依赖
+          const getNext = function (isLast) {
+            let hold;
+            if (!isLast) {
+              hold = function () {
+                scriptsCount++;
+                getNext(scriptsCount >= scriptsLength - 1);
+              };
+            }
+            loadScript(filePath[scriptsCount], hold);
+          };
+          getNext();
+        } else {
+          // 同时发起
+          let scriptRoad;
+          while (scriptsCount < scriptsLength) {
+            scriptRoad = filePath[scriptsCount];
+            scriptsCount++;
+            loadScript(scriptRoad, scriptsLength > scriptsCount);
+          }
+        }
+      }
+    } else {
+      reject("getScript()参数错误！");
+    }
+  });
 };
