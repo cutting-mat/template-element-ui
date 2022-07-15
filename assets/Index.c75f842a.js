@@ -1,1 +1,0 @@
-import{n as t}from"./index.6cae45c0.js";import"./ui.98a3144a.js";var r=function(){var t=this.$createElement;return(this._self._c||t)("router-view",{staticClass:"scrollbar"})},e=[];const a={};var n=t({data:()=>({}),methods:{},created:function(){}},r,e,!1,s,"4faedf63",null,null);function s(t){for(let r in a)this[r]=a[r]}var i=function(){return n.exports}();export{i as default};
