@@ -1,10 +1,10 @@
 import { resolve } from "path";
-import { createVuePlugin } from "vite-plugin-vue2";
+import vue from "@vitejs/plugin-vue2";
 import legacy from "@vitejs/plugin-legacy";
 
 export default {
   plugins: [
-    createVuePlugin(),
+    vue(),
     legacy({
       targets: ["ie >= 11"],
       additionalLegacyPolyfills: ["regenerator-runtime/runtime"],

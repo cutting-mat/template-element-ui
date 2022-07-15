@@ -190,17 +190,17 @@ export default {
   box-sizing: border-box;
   background: #f5f6f7;
 }
-.custom-menu >>> .el-menu {
+.custom-menu :deep(.el-menu) {
   border-right: 0;
   background: transparent;
 }
-.custom-menu >>> .ico {
+.custom-menu :deep(.ico) {
   font-size: 1.3em;
   display: inline-block;
   margin-right: 8px;
 }
-.custom-menu >>> .el-menu-item,
-.custom-menu >>> .el-submenu__title {
+.custom-menu :deep(.el-menu-item),
+.custom-menu :deep(.el-submenu__title) {
   min-width: 100px;
   height: 40px;
   line-height: 40px;
@@ -211,7 +211,7 @@ export default {
   margin-top: 2px;
 }
 
-.custom-menu >>> .second {
+.custom-menu :deep(.second) {
   padding-left: 40px;
   padding-right: 0;
   box-sizing: border-box;
@@ -219,24 +219,24 @@ export default {
   border-radius: 6px;
 }
 
-.custom-menu >>> .is-active {
+.custom-menu :deep(.is-active) {
   color: #0265ed;
   background: #e6ecf8;
 }
-.custom-menu >>> .el-menu-item:hover {
+.custom-menu :deep(.el-menu-item:hover) {
   background: #e6ecf8;
 }
-.custom-menu >>> .el-menu-item-group__title {
+.custom-menu :deep(.el-menu-item-group__title) {
   color: rgba(52, 104, 248, 0.8);
   padding: 12px 0;
 }
 .custom-menu ul > li:last-child {
   margin-bottom: 0;
 }
-.custom-menu >>> .el-submenu .el-menu {
+.custom-menu :deep(.el-submenu .el-menu) {
   padding: 0 20px;
 }
-.custom-menu >>> .el-submenu.is-active.is-opened {
+.custom-menu :deep(.el-submenu.is-active.is-opened) {
   background: transparent;
 }
 </style>

@@ -105,13 +105,13 @@ export default {
 </script>
 
 <style scoped>
-.InputCaptchaImage >>> .valid_image_wrap {
+.InputCaptchaImage :deep(.valid_image_wrap) {
   position: relative;
   overflow: hidden;
   text-align: center;
   cursor: pointer;
 }
-.InputCaptchaImage >>> .valid_image {
+.InputCaptchaImage :deep(.valid_image) {
   position: absolute;
   left: 0;
   top: 0;

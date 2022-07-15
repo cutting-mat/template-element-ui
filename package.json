@@ -1,6 +1,6 @@
 {
   "name": "template-element-ui",
-  "version": "2.12.2",
+  "version": "2.13.0",
   "scripts": {
     "serve": "vite --host",
     "build": "vite build",
@@ -10,16 +10,16 @@
   "dependencies": {
     "@cutting-mat/axios": "^1.2.0",
     "@cutting-mat/uploader": "^2.0.15",
-    "@vue/composition-api": "^1.6.2",
     "crypto-js": "^3.3.0",
     "element-ui": "^2.15.6",
     "pinia": "^2.0.14",
     "tiny-emitter": "^2.1.0",
-    "vue": "^2.6.14",
+    "vue": "^2.7.5",
     "vue-router": "^3.5.4"
   },
   "devDependencies": {
-    "@vitejs/plugin-legacy": "^1.8.2",
+    "@vitejs/plugin-vue2": "^1.1.2",
+    "@vitejs/plugin-legacy": "^2.0.0",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.26.0",
@@ -28,7 +28,6 @@
     "eslint-plugin-vue": "^8.6.0",
     "mockjs": "^1.1.0",
     "terser": "^5.14.1",
-    "vite": "^2.9.12",
-    "vite-plugin-vue2": "^1.9.3"
+    "vite": "^3.0.0"
   }
 }

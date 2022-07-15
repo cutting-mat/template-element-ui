@@ -221,7 +221,7 @@ export default {
   flex: 1;
   min-width: 0;
 }
-.input-password >>> .el-input-group__append {
+.input-password :deep(.el-input-group__append) {
   background: #fcfcfc;
   padding: 0 12px;
 }

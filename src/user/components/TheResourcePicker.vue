@@ -198,7 +198,7 @@ export default {
   color: #999;
   font-size: 14px;
 }
-.custom-tree >>> .el-tree-node__content {
+.custom-tree :deep(.el-tree-node__content) {
   height: 32px;
   line-height: 32px;
 }
