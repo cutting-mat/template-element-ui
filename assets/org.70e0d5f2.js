@@ -1,0 +1,1 @@
+import{i as e}from"./index.9f62cd52.js";const o=o=>e.get("/orgs",{params:o}),r=o=>e.post("/org",o),t=o=>e.put("/org",o),a=o=>e.delete("/org",{params:o}),s=Object.freeze(Object.defineProperty({__proto__:null,list:o,get:o=>e.get("/org",{params:o}),add:r,edit:t,remove:a},Symbol.toStringTag,{value:"Module"}));export{r as a,t as e,o as l,s as o,a as r};
