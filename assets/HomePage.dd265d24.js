@@ -1,1 +1,0 @@
-import{n as s,m as e}from"./index.9f62cd52.js";import"./ui.5d05d0a0.js";const l=s({created(){e(["/lib/jquery-3.6.0.min.js?v=1","/lib/jquery-3.6.0.min.js?v=2"]).then((()=>{console.log(window.jQuery)}))}},(function(){return(0,this._self._c)("div",{staticClass:"scrollbar"},[this._v("HomePage")])}),[],!1,null,"f262e38b",null,null).exports;export{l as default};
