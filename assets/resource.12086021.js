@@ -1,1 +1,0 @@
-import{i as e}from"./index.943e8306.js";const r=Object.freeze(Object.defineProperty({__proto__:null,list:r=>e.get("/resources",{params:r}),add:r=>e.post("/resource",r),edit:r=>e.put("/resource",r),remove:r=>e.delete("/resource",{params:r})},Symbol.toStringTag,{value:"Module"}));export{r};
