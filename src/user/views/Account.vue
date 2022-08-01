@@ -237,7 +237,7 @@ export default {
         disabled: false,
       },
       queryParam: {
-        pageSize: 10,
+        pageSize: 20,
         p: 1,
         account: "",
         name: "",
@@ -257,7 +257,7 @@ export default {
   methods: {
     resetSearch() {
       this.queryParam = {
-        pageSize: 10,
+        pageSize: 20,
         p: 1,
         account: "",
         name: "",

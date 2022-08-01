@@ -151,7 +151,7 @@ export default {
         remark: "",
       },
       queryParam: {
-        pageSize: 10,
+        pageSize: 20,
         p: 1,
         dictName: "",
         testNull: null,

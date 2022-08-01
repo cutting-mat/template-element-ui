@@ -2,7 +2,7 @@
   <el-pagination
     class="pagination"
     background
-    :page-sizes="[10, 20, 30, 50]"
+    :page-sizes="[20, 30, 50]"
     layout="prev, pager, next, sizes"
     :page-size="pageSize"
     :current-page="currentPage"
@@ -18,7 +18,7 @@ export default {
     pageSize: {
       type: Number,
       required: true,
-      default: 10,
+      default: 20,
     },
     currentPage: {
       type: Number,
