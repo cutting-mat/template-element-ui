@@ -5,7 +5,6 @@
     :rules="rules"
     label-position="left"
     class="auth_image"
-    :v-loading="loading"
     @submit.native.prevent="handleSubmit"
   >
     <el-form-item prop="captcha">
