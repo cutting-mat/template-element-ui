@@ -1,4 +1,5 @@
-import { buildTree, axiosInstance } from "@/core";
+import { axiosInstance } from "@/core";
+import { buildTree } from "@/core/util";
 
 import { MainRoute } from "@/route.config";
 import {

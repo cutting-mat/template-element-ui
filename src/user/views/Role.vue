@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import { deepcopy } from "@/core";
+import { deepcopy } from "@/core/util";
 import * as role from "../api/role";
 
 export default {

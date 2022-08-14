@@ -3,8 +3,6 @@
 </template>
 
 <script>
-//import { util } from "@/core";
-
 export default {
   data() {
     return {};
@@ -14,5 +12,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

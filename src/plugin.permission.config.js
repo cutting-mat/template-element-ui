@@ -1,6 +1,6 @@
 import { store } from "@/core/plugins/store";
 
-import { storage } from "@/core";
+import { storage } from "@/core/util";
 
 /**
  * 权限模块功能配置

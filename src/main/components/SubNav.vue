@@ -85,7 +85,7 @@
 
 <script>
 import { MainRoute } from "@/route.config";
-import { deepcopy } from "@/core";
+import { deepcopy } from "@/core/util";
 // 过滤隐藏路由，扩展fullPath
 let filterRoutes = function (routeArray, base) {
   const array = routeArray.filter((e) => !e.meta || !e.meta.hide);

@@ -1,10 +1,7 @@
 /**
  * @/core 输出
  * */
-// 工具方法
-export * from "./lib/util";
-// 验证方法
-export * from "./lib/valid";
+
 // 请求实例
 export { default as axiosInstance } from "./lib/axiosInstance";
 // 路由实例

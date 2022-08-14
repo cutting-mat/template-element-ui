@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import { deepcopy } from "@/core";
+import { deepcopy } from "@/core/util";
 import * as org from "../api/org";
 
 export default {

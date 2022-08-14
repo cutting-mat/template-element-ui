@@ -9,16 +9,15 @@ export const components = {
   SubNav: () => import("@/main/components/SubNav.vue"),
   Pagination: () => import("@/main/components/Pagination.vue"),
   ToolBar: () => import("@/main/components/ToolBar.vue"),
-  CountDown: () => import("@/core/components/CountDown/CountDown.vue"),
-  InputNumber: () => import("@/core/components/InputNumber/InputNumber.vue"),
-  InputPassword: () =>
-    import("@/core/components/InputPassword/InputPassword.vue"),
+  CountDown: () => import("@/core/components/CountDown"),
+  InputNumber: () => import("@/core/components/InputNumber"),
+  InputPassword: () => import("@/core/components/InputPassword"),
 };
 
 /**
  * 全局过滤器
  * */
-import { formatDate } from "@/core";
+import { formatDate } from "@/core/util";
 export const filters = {
   date: formatDate,
 };

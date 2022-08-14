@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { validator } from "@/core";
+import { validator } from "@/core/valid";
 import { register } from "@/main/api/common";
 
 export default {

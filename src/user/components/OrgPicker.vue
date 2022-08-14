@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { buildTree, deepcopy } from "@/core";
+import { buildTree, deepcopy } from "@/core/util";
 import { list } from "../api/org";
 
 export default {

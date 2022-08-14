@@ -3,8 +3,7 @@
 </template>
 
 <script>
-// import { util } from "@/core";
-import { loadScript } from "@/core";
+import { loadScript } from "@/core/util";
 
 export default {
   created() {

@@ -194,7 +194,7 @@
 </template>
 
 <script>
-import { deepcopy } from "@/core";
+import { deepcopy } from "@/core/util";
 import * as account from "../api/account";
 import { list as requestRoles } from "../api/role";
 

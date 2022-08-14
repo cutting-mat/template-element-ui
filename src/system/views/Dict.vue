@@ -117,7 +117,7 @@
 </template>
 
 <script>
-import { deepcopy } from "@/core";
+import { deepcopy } from "@/core/util";
 import * as dict from "../api/dict";
 
 export default {

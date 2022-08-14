@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import { buildTree, deepcopy } from "@/core";
+import { buildTree, deepcopy } from "@/core/util";
 import * as resource from "../api/resource";
 
 export default {

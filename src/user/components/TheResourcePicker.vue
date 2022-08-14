@@ -82,7 +82,7 @@
 </template>
 
 <script>
-import { throttle, buildTree } from "@/core";
+import { throttle, buildTree } from "@/core/util";
 import * as resource from "../api/resource";
 
 export default {

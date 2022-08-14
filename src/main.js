@@ -18,11 +18,11 @@ const routeInstance = routeGenerator({
   },
 });
 
-// 预安装
+// 全局安装
 import preInstall from "@/pre-install";
 Vue.use(preInstall);
 
-// 加载核心插件
+// 加载框架插件
 import plugins from "@/core/plugins";
 Vue.use(plugins);
 
