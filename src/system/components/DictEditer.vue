@@ -144,8 +144,11 @@ export default {
     };
   },
   watch: {
-    dictCode: function () {
-      this.$set(this.queryParam, "dictCode", this.dictCode);
+    dictCode: {
+      handler() {
+        this.queryParam.dictCode = this.dictCode;
+      },
+      immediate: true,
     },
   },
   methods: {
